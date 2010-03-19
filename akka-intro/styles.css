@@ -1,0 +1,498 @@
+
+/*
+ * Adapted from Earth - a reusable CSS layout for readable web sites
+ *
+ * Author: Stefano Mazzocchi <stefano@apache.org>
+ * More Info: http://www.betaversion.org/~stefano/linotype/news/169/
+ * Dean Wampler: Major hacking in order to use it with S5. Still needs work, 
+ * e.g., for font sizes of the code samples and layout of the footer vs. 
+ * the content. 
+ */
+
+@import url("http://yui.yahooapis.com/2.6.0/build/reset-fonts-grids/reset-fonts-grids.css");
+
+/* ======================== Block elements ====================== */
+
+html {
+    font-size: 50%; /*62.5%;*/
+}
+
+body {
+    font-family: "Myriad Pro", "MyriadPro", "Trebuchet MS", "Arial", sans-serif; 
+    font-size: 1.2em;
+    background-color: #fff; 
+    color: #333;
+}
+.line .lines .content .block {
+  font-size: .8em;
+}
+div.content {
+    padding: 5 px;
+    background-color: #fff;
+    text-align: left;
+}
+
+.title,h1,h2,h3,h4,h5,h6 {
+    font-family: "Book Antiqua", "Palatino Linotype", "Palatino", "Georgia", "Times", "Times New Roman", serif;
+}
+.title {
+    font-size: 1.8em;
+/*    border-bottom: 1px solid #533D42;*/
+    style: bold;
+    color: #533D42;
+    margin: 1em 0em 0.6em 0em;    
+}
+.subtitle {
+    font-size: 1.6em;
+/*    border-bottom: 1px solid #795860;*/
+    color: #795860;
+    margin: 1em 0em 0.6em 0em;    
+}
+.subsubtitle {
+    font-size: 1.4em;
+/*    border-bottom: 1px solid #795860;*/
+    color: #795860;
+    margin: 1em 0em 0.6em 0em;    
+}
+h1:before {
+}
+h1.appendix:before {
+}
+h1 { 
+    font-size: 1.6em;
+/*    border-bottom: 1px solid #533D42;*/
+    color: #533D42;
+    margin: 1em 0em 0.6em 0em;
+}
+    
+h2:before {
+}
+h2 { 
+    font-variant: small-caps;
+    letter-spacing: 0.1em;
+    font-size: 1.3em;
+    color: #544F38; 
+    margin-top: 1em;
+    letter-spacing: 0.05em;
+}
+
+h3:before {
+}
+h3 {
+    font-size: 1.2em;
+    margin-top: 0.8em;
+    color: #a4936a;
+}
+
+h4:before {
+}
+h4 {
+    font-style: italic;
+    letter-spacing: 0.05em;
+    margin-top: 0.8em;
+    font-size: 1.2em;
+    color: #8f8661;
+}
+
+h1 + h2 {
+    margin-top: 0em;
+}
+h2 + h3 {
+    margin-top: 0.4em;
+}
+h3 + h4 {
+    margin-top: 0.4em;
+}
+
+h1.title { 
+    font-family: "Myriad Pro", "MyriadPro", "Trebuchet MS", "Arial", sans-serif; 
+    font-size: 2.0em;
+    color: #a4936a;
+    border: 0;
+    margin: 0.5em 0em 0.5em 0em;
+}
+h1.title + h2.subtitle {
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: #5f5c4b; 
+    font-size: 0.9em;
+    border: 0;
+    margin: -1.4em 0em 1.5em 0em;
+}
+
+p {
+    margin: 0.5em 0em;
+    text-align: left;
+}
+
+p.first {
+    margin-top: 2.0em;
+    text-indent: 0em;
+}
+p.first:first-letter {
+    font-family: "Imprint MT Shadow", "Times", "Times New Roman", serif; 
+    font-size: 2.4em;
+    line-height: 1.0em;
+    color: #222;
+}
+
+p.left-box {
+    float: left;
+    padding: 0.5em;
+    font-size: 1.30em;
+    line-height: 1.0em;
+    color: #6e7267;
+    margin: 0.2em 0.2em 0.2em 0.4em;
+    width: 30%;
+    text-align: left;
+    font-family: "Book Antiqua", "Palatino Linotype", "Palatino", "Georgia", "Times", "Times New Roman", serif;
+}
+p.right-box {
+    float: right;
+    padding: 0.5em;
+    font-size: 1.30em;
+    line-height: 1.0em;
+    color: #6e7267;
+    margin: 0.2em 0.4em 0.2em 0.2em;
+    width: 30%;
+    text-align: right;
+    font-family: "Book Antiqua", "Palatino Linotype", "Palatino", "Georgia", "Times", "Times New Roman", serif;
+}
+ 
+p.sidenote {
+    float: right;
+    width: 17.0em;
+    position: relative;
+    left: 20.0em;
+    top: 25.0em;
+    font-size: 0.9em;
+    text-align: left;
+    margin-top: -20.0em;
+    color: #888;
+}
+       
+p.figure {
+    text-align: center;
+    margin: 1.5em;
+}
+p.figure > img {
+    padding: 0.5em;
+    border: 1px solid #ccc;
+}
+   
+blockquote {
+    font-family: "Book Antiqua", "Palatino Linotype", "Palatino", "Georgia", "Times", "Times New Roman", serif;
+    color: #6e7267;
+    font-size: 1.4em;
+    line-height: 1.0em;
+    font-style: italic;
+    letter-spacing: 0.02em;
+    text-indent: 21px;
+    background: url("icons/quotes1.png");
+    background-position: 2px 17px;
+    background-repeat: no-repeat;
+    width: 60%;
+    padding: 1em 0em;
+    margin: 1em auto 1em 2em;
+}
+blockquote p {
+    display: inline;
+    margin: 0;
+    padding-right: 20px;
+    background: url("icons/quotes2.png");
+    background-position: bottom right;
+    background-repeat: no-repeat;
+}
+
+pre {
+    margin: 1em 1em;
+    font-family: "Lucida Console", "Courier New", "Courier";
+    font-size: 0.85em;
+    line-height: 1.1em;
+    letter-spacing: -0.03em;
+    padding: 0.5em 0.5em;
+    color: #4f5c54;
+    border: 1px solid #ddd;
+    overflow: auto;
+}
+
+table {
+    margin: 2em auto;
+}
+
+table.table th {
+    font-size: 0.9em;
+    color: #3a413f;
+    border: 1px solid #ccc;
+    border-left: 0;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-align: left;
+    padding: 0.6em 0.8em 0.4em 0.8em;
+/*    margin: 0.6em 0.8em 0.4em 0.8em;*/
+    background-color: #f0f0f0;
+}
+
+table.table th.nobg {
+    border-top: 0;
+    border-left: 0;
+    border-right: 1px solid #ccc;
+    background: none;
+}
+
+table.table th.lead {
+    border-left: 1px solid #ccc;
+    border-top: 0;
+    background-color: #fff;
+}
+
+table.table tr.alt th.lead {
+    border-left: 1px solid #ccc;
+    border-top: 0;
+    background-color: #fafafa;
+    color: #3a413f;
+}
+
+table.table td {
+    text-align: left;
+    font-size: 0.9em;
+    border-right: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+    background-color: #fff;
+    padding: 0.6em 0.8em 0.4em 0.8em;
+/*    margin: 0.6em 0.8em 0.4em 0.8em;*/
+    color: #3a413f;
+}
+
+table.table tr.alt td {
+    background: #fafafa;
+}
+
+
+div.caption {
+    font-style: italic; 
+    font-family: "Book Antiqua", "Palatino Linotype", "Palatino", "Georgia", "Times", "Times New Roman", serif;
+    margin: 1em auto 1em auto;
+    font-size: 1.0em;
+    text-align: center;
+    letter-spacing: 0.02em;
+}
+div.caption span {
+    font-style: normal;
+    font-size: 0.9em;
+    letter-spacing: 0em;
+}
+pre + div.caption {
+    margin-top: -0.5em;
+}
+table + div.caption {
+    margin-top: -1.5em;
+    margin-bottom: 2em;
+}
+p.figure + div.caption {
+    margin-top: -1.5em;
+}
+
+ul,ol {
+    margin: 0.8em 0em;
+    text-align: left;
+}
+li {
+    margin: 0.4em 0em 0.4em 2em;
+    list-style-type: disc;
+}
+
+ul.path {
+    text-align: left;
+    margin: 1em 0em;
+}
+ul.path > li {
+    margin: 0;
+    display: inline;
+    list-style-type: none;
+    padding-right: 0.3em;
+}
+ul.path > li:after {
+    content: "\00BB";
+    padding-left: 0.6em;
+    font-size: 1.1em;
+    font-family: "Times New Roman", serif;
+}
+ul.path > li.current:after {
+    content: "";
+}    
+        
+
+/* ======================== Inline elements ====================== */
+
+:link {
+    color: #8f8661;
+}
+:visited {
+    color: #a4936a;
+}
+:hover {
+/*    color: #891f13;*/
+}
+:focus {
+    color: #391f13;
+}
+:active {
+    color: #4e973e;
+}
+
+q {
+    font-family: "Georgia", "Times", "Times New Roman", serif;
+    quotes: "\201C" "\201D" "\2018" "\2019";
+}
+q:before {
+    content: "\201C";
+    padding-right: 0.05em;
+}
+q:after {
+    content: "\201D";
+    padding-left: 0.05em;
+}
+
+code {
+    font-family: "Lucida Console", "Courier New", "Courier";
+    font-size: 1.0em;
+    letter-spacing: -0.03em;
+    color: #4f5c54;
+}
+em, i {
+    font-style: italic; 
+    letter-spacing: 0.1em;
+}
+
+strong, b {
+    font-weight: bold;
+}
+
+acronym {
+    font-variant: small-caps;
+    color: #4f5c54;
+}
+
+span.new {
+    font-family: "Tahoma", sans-serif;
+    font-size: 0.75em;
+    position: relative;
+    letter-spacing: -0.05em;
+    bottom: 0.3em;
+    color: #b91f13;
+    margin-left: 0.2em;
+}
+
+/* ======================== ID-based selectors ====================== */
+
+#hd {
+    text-align: right;
+    margin: 0em;
+}
+#hd h1 {
+    font-family: "Myriad Pro", "MyriadPro", "Trebuchet MS", "Arial", sans-serif; 
+    color: #5f5c4b; 
+    border: 0;
+    font-size: 3.2em;
+    line-height: 0.9em;
+    margin: 0em;
+}
+#hd h2 {
+    font-family: "Lucida Grande", "Lucida Sans Unicode", "Arial", "Verdana", sans-serif;    
+    color: #a4936a;
+    font-size: 1.0em;
+    font-weight: normal; 
+    margin: 0em;
+    text-transform: none;
+}
+#hd h1 + h2 {
+    margin-top: -0.6em;
+}
+    
+#sidebar {
+    margin-top: 3.0em;
+    padding-left: 2em;
+}
+#sidebar h1 {
+    font-family: "Myriad Pro", "MyriadPro", "Trebuchet MS", "Arial", sans-serif; 
+    font-size: 1.2em;
+    border: 0;
+    line-height: 1.5em;
+    font-weight: normal; 
+    letter-spacing: 0.2em;
+    color: #4f5c54;
+    margin-bottom: 0em;
+} 
+#sidebar ul {
+    margin: 0em 0em 2em 0em;
+}
+#sidebar li {
+    margin: 0em 0em 0em 2em;
+    letter-spacing: 0.05em;
+    list-style-type: disc;
+}
+    
+#body {
+}
+
+#ft {
+    font-family: "Lucida Grande", "Lucida Sans Unicode", "Arial", "Verdana", sans-serif;    
+    font-size: 0.8em;
+    line-height: 1.4em;
+    margin: 5.0em 20.0em 5.0em 0em;
+    text-align: center;
+    border-bottom: 1px solid #C0Af8a;
+}
+
+#ft .credits {
+    margin: 0em 18%;
+    color: #6e7267;
+    background-color: #fff;
+    position: relative;
+    top: 0.8em;
+}
+
+/* ======================== Overloading Classes ====================== */
+
+.left {
+    text-align: left !important;
+}
+.right {
+    text-align: right !important;
+}
+.center {
+    text-align: center !important;
+}
+
+/* ======================== OS Specific ====================== */
+
+/* --- Windows --- */
+
+.win body {
+    font-size: 1.3em;
+}
+
+.win h1.title + h2.subtitle {
+    margin: -1.2em 0em 1.5em 0em;
+}
+
+.win #hd h1 + h2 {
+    margin-top: -0.4em;
+}
+
+.win pre, .win code {
+    font-size: 0.95em;
+}
+
+/* ======================== Browser Specific ====================== */
+
+/* --- IE --- */
+
+.ie ul.path > li:after {
+    padding-left: 0.3em;
+    padding-right: 0.2em;
+}
+    
+/* =============== End of File ============== */
+

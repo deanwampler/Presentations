@@ -1,0 +1,745 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" 
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<title>The Akka Framework</title>
+<!-- metadata -->
+<meta name="generator" content="S5" />
+<meta name="version" content="S5 1.1" />
+<meta name="presdate" content="20050728" />
+<meta name="author" content="Eric A. Meyer" />
+<meta name="author" content="Dean Wampler" />
+<meta name="company" content="Complex Spiral Consulting" />
+<meta name="company" content="DRW Holdings" />
+<!-- configuration parameters -->
+<meta name="defaultView" content="slideshow" />
+<meta name="controlVis" content="hidden" />
+<!-- style sheet links -->
+<link rel="stylesheet" href="ui/default/slides.css" type="text/css" media="projection" id="slideProj" />
+<link rel="stylesheet" href="ui/default/outline.css" type="text/css" media="screen" id="outlineStyle" />
+<link rel="stylesheet" href="ui/default/print.css" type="text/css" media="print" id="slidePrint" />
+<link rel="stylesheet" href="ui/default/opera.css" type="text/css" media="projection" id="operaFix" />
+<link href="styles.css" media="all" rel="Stylesheet" type="text/css" />
+<!-- Syntax highlighting -->
+<script type="text/javascript" src="scripts/shCore.js"></script>
+<script type="text/javascript" src="scripts/shBrushBash.js"></script>
+<script type="text/javascript" src="scripts/shBrushCpp.js"></script>
+<script type="text/javascript" src="scripts/shBrushCSharp.js"></script>
+<script type="text/javascript" src="scripts/shBrushCss.js"></script>
+<script type="text/javascript" src="scripts/shBrushDelphi.js"></script>
+<script type="text/javascript" src="scripts/shBrushDiff.js"></script>
+<script type="text/javascript" src="scripts/shBrushGroovy.js"></script>
+<script type="text/javascript" src="scripts/shBrushJava.js"></script>
+<script type="text/javascript" src="scripts/shBrushJScript.js"></script>
+<script type="text/javascript" src="scripts/shBrushPhp.js"></script>
+<script type="text/javascript" src="scripts/shBrushPlain.js"></script>
+<script type="text/javascript" src="scripts/shBrushPython.js"></script>
+<script type="text/javascript" src="scripts/shBrushRuby.js"></script>
+<script type="text/javascript" src="scripts/shBrushScala.js"></script>
+<script type="text/javascript" src="scripts/shBrushSql.js"></script>
+<script type="text/javascript" src="scripts/shBrushVb.js"></script>
+<script type="text/javascript" src="scripts/shBrushXml.js"></script>
+<link type="text/css" rel="stylesheet" href="styles/shCore.css"/>
+<link type="text/css" rel="stylesheet" href="styles/shThemeDefault.css"/>
+<script type="text/javascript">
+	SyntaxHighlighter.config.clipboardSwf = 'scripts/clipboard.swf';
+	SyntaxHighlighter.all();
+</script>
+<!-- S5 JS -->
+<script src="ui/default/slides.js" type="text/javascript"></script>
+</head>
+<body>
+
+<div class="layout">
+<div id="controls"><!-- DO NOT EDIT --></div>
+<div id="currentSlide"><!-- DO NOT EDIT --></div>
+<div id="header"></div>
+<div id="footer">
+<h1>The Akka Framework: Chicago-Area Scala Enthusiasts: 03/18/2010</h1>
+</div>
+
+</div>
+
+
+<div class="presentation">
+
+<div class="slide">
+<h1>The Akka Framework</h1>
+<p class="subtitle">Simpler Scalability, Fault-Tolerance, <br/>Concurrency and Remoting through Actors</p>
+<p class="subtitle">Dean Wampler</p>
+<p class="subsubtitle">
+dean@deanwampler.com<br/>
+@deanwampler</p>
+</div>
+
+
+<div class="slide">
+<h1 id="what_is_akka">What Is Akka</h1>
+
+<ul>
+<li><a href="http://akkasource.org Akka">http://akkasource.org</a>
+<ul>
+<li>Source at <a href="http://github.com/jboner/akka GitHub">http://github.com/jboner/akka</a></li>
+<li>Documentation at <a href="http://doc.akkasource.org Documentation">http://doc.akkasource.org</a></li>
+</ul></li>
+<li>A Scala and Java framework for scalability, fault-tolerance, concurrency and remoting through actors.</li>
+<li>Inspired by Erlang OTP.</li>
+<li>Started and led by Jonas Bon&#233;r.
+<ul>
+<li>Co-creator of AspectWerkz. </li>
+<li>Worked on JRocket and Terracotta.</li>
+</ul></li>
+<li>At V0.6. V0.7 released next week?</li>
+</ul>
+<div class="handout">
+</div>
+</div>
+
+<div class="slide">
+  <h1 id="highlights">Highlights (1/2)</h1>
+
+  <p>(Adapted from the <a href="akkasource.org">http://akkasource.org</a> web site.)</p>
+
+  <ul>
+    <li><b>Simpler Concurrency</b>: Write simpler concurrent (yet correct) applications using Actors, STM &amp; Transactors (transactional actors).</li>
+
+    <li><b>Event-driven Architecture</b>: The perfect platform for asynchronous, event-driven architectures. Never block.</li>
+
+    <li><b>True Scalability</b>: Scale out on multi-core or multiple nodes using asynchronous message passing.</li>
+  </ul>
+
+<div class="handout">
+</div>
+</div>
+
+<div class="slide">
+  <h1 id="highlights">Highlights (2/2)</h1>
+
+  <ul>
+    <li><b>Fault-tolerance</b>: Embrace failure. Write applications that self-heal using Erlang-style Actor supervisor hierarchies.</li>
+
+    <li><b>Transparent Remoting</b>: Remote Actors give you a high-performance, transparent-distributed programming model.</li>
+
+    <li><b>Scala and Java APIs</b>: Scala and Java APIs, as well as Spring and Guice integration. Deploy in your application server or run it stand-alone.</li>
+  </ul>
+
+<div class="handout">
+</div>
+</div>
+
+<div class="slide">
+  <h1 id="organization">Organization: Core Modules</h1>
+
+  <p>The &#8220;core&#8221; modules at the heart of Akka.</p>
+
+  <table class="table">
+    <tr><th>Module</th><th>Description</th></tr>
+    <tr><td><strong>Core</strong></td><td>Actors, remote actors, transactors and STM modules.</td></tr>
+    <tr><td><strong>Util</strong></td><td>Configuration, logging, UUID and other utilities.</td></tr>
+    <tr><td><strong>Java Util</strong></td><td>Java utilities.</td></tr>
+  </table>
+
+<div class="handout">
+</div>
+</div>
+
+<div class="slide">
+<h1>Organization: Add-on Modules (1/2):</h1>
+
+<p>Optional modules for other features.</p>
+
+<table class="table">
+  <tr><th>Module</th><th>Description</th></tr>
+  <tr><td><strong>Microkernel</strong></td><td>A standalone kernel for running Akka-based applications.</td></tr>
+  <tr><td><strong>Security</strong></td><td>Adapted from Lift&#8217;s authentication module.</td></tr>
+  <tr><td><strong>Persistence</strong></td><td>Redis, Mongo, Cassandra, and common (shared) modules.</td></tr>
+  <tr><td><strong>REST</strong></td><td>Module for REST-ful web services.</td></tr>
+  <tr><td><strong>Comet</strong></td><td>Module for Comet &#8220;persistent&#8221; connections.</td></tr>
+</table>
+<div class="handout">
+</div>
+</div>
+
+<div class="slide">
+<h1>Organization: Add-on Modules (2/2):</h1>
+<table class="table">
+  <tr><th>Module</th><th>Description</th></tr>
+  <tr><td><strong>Camel</strong></td><td>Module for the Apache Camel library, a DSL for routing definitions, Spring configuration definitions, <em>etc.</em></td></tr>
+  <tr><td><strong>AMQP</strong></td><td>Module for AMQP messaging.</td></tr>
+  <tr><td><strong>Scheduler</strong></td><td>For scheduling tasks in the future.</td></tr>
+  <tr><td><strong>Spring, Guice, and Lift</strong></td><td>Integration modules for these frameworks.</td></tr>
+  <tr><td><strong>Samples</strong></td><td>For Security, REST, Chat, and Lift.</td></tr>
+</table>
+
+<p>(The list is organized slightly differently on the <a href="http://doc.akkasource.org Documentation">http://doc.akkasource.org</a> site.)</p>
+
+<div class="handout">
+</div>
+</div>
+
+<div class="slide">
+  <h1 id="akka_core">Akka Core: Actors</h1>
+
+  <p>Most of the Scala&#8217;s standard actor API is supported.</p>
+  <ul>
+  <li>Message-passing abstraction for concurrency. </li>
+  <li>Originally developed by Hewitt in 1973.</li>
+  <li>A clean-room implementation of Scala actors.
+  <ul>
+  <li>Improvements and simplifications.</li>
+  <li>(Scala actor syntax patterned after Erlang actors)</li>
+  </ul></li>
+  </ul>
+  <p>Most of the Scala&#8217;s standard actor API is supported. Here are some examples that use Akka-specific syntax.</p>
+
+<div class="handout">
+</div>
+</div>
+
+<div class="slide">
+  <h1>An Akka Actor with an Initialization Body and Message Handler</h1>
+
+  <p>This example uses the <code>Actor</code> object&#8217;s <code>init</code> method to create an actor.</p>
+
+  <pre class="brush: scala;">
+  import se.scalablesolutions.akka.actor.Actor._
+  
+  val a = Actor.init {
+    ... // initializer block (optional)
+  } receive {
+    // Usual Scala PartialFunction stuff
+    case msg =&gt; ... // handle message 
+  }
+  </pre>
+
+<div class="handout">
+</div>
+</div>
+
+<div class="slide">
+  <h1>An Akka Actor with a LifeCycle</h1>
+
+  <p>The <code>LifeCycle</code> specification allows this actor to be managed by an Erlang-style supervisor.</p>
+
+  <pre class="brush: scala;">
+  import se.scalablesolutions.akka.actor.Actor._
+
+  val a = actor(LifeCycle(Temporary)) {
+    ... // init stuff
+  } receive {
+    case msg =&gt; ... // handle message
+  }
+  </pre>
+
+<div class="handout">
+</div>
+</div>
+
+<div class="slide">
+  <h1>An Akka Actor with a LifeCycle</h1>
+  
+  <p>This argument to <code>LifeCycle</code> is a <code>se.scalablesolutions.akka.config.ScalaConfig.Scope</code> object, one of the following:</p>
+  <ul>
+    <li><code>Temporary</code>: Do not restart the actor if it crashes.</li>
+    <li><code>Permanent</code>: Restart the actor when necessary; keep it running permanently.</li>
+  </ul>
+
+  <p><code>LifeCycle</code> can also take a second argument of callbacks to invoke when a supervisor restarts a (dead) <code>Permanent</code> actor.</p>
+
+<div class="handout">
+</div>
+</div>
+
+<div class="slide">
+  <h1>Spawn a Worker Task</h1>
+
+  <p>When you don&#8217;t need to send it messages&#8230;</p>
+
+  <pre class="brush: scala;">
+  import se.scalablesolutions.akka.actor.Actor._
+
+  spawn {
+    ... // do stuff
+  }
+  </pre>
+
+<div class="handout">
+</div>
+</div>
+
+<div class="slide">
+  <h1>Send a Message to an Actor (1/2)</h1>
+
+  <pre class="brush: scala;">
+  // Import Self when the current sender isn't an actor.
+  import Actor.Sender.Self   
+  ...
+  actor ! "Hello"             // Fire and forget
+
+  </pre>
+
+<div class="handout">
+</div>
+</div>
+
+<div class="slide">
+  <h1>Send a Message to an Actor (2/2)</h1>
+
+  <pre class="brush: scala;">
+    ...
+    (actor !! "Hello") match {  // fire and wait for reply...
+      case Some(reply) => ...   // handle reply
+      case None =>        ...   // got a timeout, handle that
+    }
+
+    val future = actor !!! "Hello"   // fire and return "future"
+  </pre>
+
+<div class="handout">
+</div>
+</div>
+
+<div class="slide">
+  <h1>Forward a Message</h1>
+
+  <p>Retains the original sender.</p>
+
+  <pre class="brush: scala;">
+  actor.forward("Hello")
+  </pre>
+  
+
+<div class="handout">
+</div>
+</div>
+
+<div class="slide">
+  <h1>&#8220;HotSwap&#8221; - Replace an Actor&#8217;s Message Loop</h1>
+
+  <p>Send a message <code>HotSwap</code> with the new <code>PartialFunction</code> defining the new message loop for the Actor.</p>
+
+  <pre class="brush: scala;">
+  actor ! HotSwap(Some({
+    case message =&gt; println("Hotswapped body...")
+  }))
+  </pre>
+
+
+<div class="handout">
+</div>
+</div>
+
+<div class="slide">
+  <h1>&#8220;HotSwap&#8221; - Rollback to Previous Version</h1>
+
+  <p>The old version is kept so you can rollback by sending <code>HotSwap</code> with <code>None</code>.</p>
+
+  <pre class="brush: scala;">actor ! HotSwap(None)
+  </pre>
+
+  <p>The original actor theory included this idea!</p>
+
+<div class="handout">
+</div>
+</div>
+
+<div class="slide">
+  <h1>STM</h1>
+
+  <p>Software Transactional Memory (STM) is the application of ACID (minus the D) transactional semantics to memory. It has been popularized by Clojure, of course.</p>
+
+<div class="handout">
+</div>
+</div>
+
+
+<div class="slide">
+  <h1>STM: Based on 2 Concepts</h1>
+
+  <ul>
+    <li><strong>Managed References</strong>: Memory cells, holding an immutable value, that implement CAS (Compare-And-Swap) semantics and are managed and enforced by the STM for coordinated changes across many References.</li>
+
+    <li><strong>Persistent Data Structures</strong>: Immutable but with constant time access and modification. The use of structural sharing and an insert or update does not ruin the old structure, hence &#8220;persistent&#8221;.</li>
+
+<div class="handout">
+</div>
+</div>
+
+
+<div class="slide">
+  <h1>STM: Implementation</h1>
+
+  <p>Akka&#8217;s persistent Map and Vector are ports of Clojure&#8217;s Map and Vector. The Managed References are implemented using the excellent <a href="http://code.google.com/p/multiverse/ Multiverse STM">Java Multiverse STM</a>.</p>
+
+<div class="handout">
+</div>
+</div>
+
+<div class="slide">
+  <h1>Transactors: Transactions + Actors</h1>
+
+  <p>Transactors combine Actors, which provide concurrency and asynchronous event-based programming, and STM, which provide compositional, transactional, shared state. Hence, transactors provide transactional, compositional, asynchronous, event-based message flows.</p>
+
+  <p>If you need durability (full ACID), use a persistent store, not one of the in-memory data structures.</p>
+
+  <p>There are several ways to impose &#8220;transaction required&#8221; semantics:</p>
+
+<div class="handout">
+</div>
+</div>
+
+<div class="slide">
+  <h1>Extend the <code>Transactor</code> Trait</h1>
+
+  <pre class="brush: scala;">
+  import se.scalablesolutions.akka.actor.Transactor
+
+  class MyActor extends Transactor {
+    ...
+  }
+  </pre>
+
+<div class="handout">
+</div>
+</div>
+
+<div class="slide">
+  <h1>Mix in the <code>TransactionRequired</code> Trait</h1>
+
+  <pre class="brush: scala;">
+  class MyActor extends Actor with TransactionRequired {
+    ...
+  }
+
+  </pre>
+
+<div class="handout">
+</div>
+</div>
+
+<div class="slide">
+  <h1>Call the <code>makeTransactionRequired</code> Method</h1>
+
+  <pre class="brush: scala;">
+  class MyActor extends Actor {
+    makeTransactionRequired
+    ...
+  }
+  </pre>
+
+<div class="handout">
+</div>
+</div>
+
+<div class="slide">
+
+<h1>Creating Persistent Data Structures within a Transactor</h1>
+
+<p>If you create a transactional Ref, Vector or Map in a Transactor constructor, either declare it <code>lazy</code>, to ensure that it is created within the scope of a transaction, or create the data structure inside an <code>atomic { ... }</code> block.</p>
+
+<div class="handout">
+</div>
+</div>
+
+<div class="slide">
+  <h1>Supervision and Fault Handling</h1>
+
+  <p>Akka subscribes to the <em>Let It Fail</em> strategy:</p>
+
+  <ul>
+  <li>Don&#8217;t build complicated logic to attempt recovery when things go wrong.</li>
+  <li>Distribute behavior among many actors</li>
+  <li>When one of them gets into trouble, kill it and restart it. </li>
+  </ul>
+
+<div class="handout">
+</div>
+</div>
+
+<div class="slide">
+  <h1>Supervisory Actors</h1>
+  <p>Actors are organized into supervisory hierarchies.</p>
+
+  <p>A supervisor starts, monitors, and stops other actors. There are two restart strategies:</p>
+
+  <ul>
+  <li><strong>One for One</strong>: Only restart the actor that has crashed. Used when the actors are autonomous.</li>
+  <li><strong>All for One</strong>: Restart all the actors the supervisor manages. Used when the actors depend on each other.</li>
+  </ul>
+
+<div class="handout">
+</div>
+</div>
+
+<div class="slide">
+  <h1>Supervisor Example</h1>
+
+  <pre class="brush: scala;">
+  object factory extends SupervisorFactory(
+    SupervisorConfig(
+      RestartStrategy(AllForOne, 3, 1000, List(classOf[Exception])),
+      Supervise(
+        new MyActor1,
+        LifeCycle(Permanent))
+      ::
+      Supervise(
+        new MyActor2,
+        LifeCycle(Permanent))
+      :: Nil))
+  }
+  val supervisor = factory.newInstance
+  supervisor.start // link and start up all actors
+  </pre>
+
+<div class="handout">
+</div>
+</div>
+
+<div class="slide">
+  <h1>Other Core Modules</h1>
+
+  <table class="table">
+    <tr><th>Module</th><th>Description</th></tr>
+    <tr><td><strong>Active Objects</strong></td><td>How Java is supported; instrumented POJOs using the AspectWerkz weaver.</td></tr>
+    <tr><td><strong>Remote Actors</strong></td><td>Mostly-transparent remote message passing.</td></tr>
+    <tr><td><strong>Dispatcher</strong></td><td>Configure and optimize messaging infrastructure, <em>etc.</em></td></tr>
+    <tr><td><strong>Serialization</strong></td><td>JSON, Protocol Buffers, and SBinary.</td></tr>
+    <tr><td><strong>Configuration</strong></td><td>Conventional text-based configuration files.</td></tr>
+    <tr><td><strong>Cluster Membership</strong></td><td>JGroups (P2P), Shoal (also P2P + JXTA), ZooKeeper (planned).</td></tr>
+  </table>
+
+
+<div class="handout">
+</div>
+</div>
+
+<div class="slide">
+  <h1>Microkernel Module</h1>
+
+  <ul>
+    <li>To start the kernel invoke:
+      <ul><li><code>java -jar $AKKA_HOME/dist/akka-&lt;version&gt;.jar</code></li></ul>
+    </li>
+    <li>Wait for all services to start up.</li>
+    <li>Profit!</li>
+  </ul>
+
+<div class="handout">
+</div>
+</div>
+
+<div class="slide">
+  <h1>Configuration</h1>
+
+  <p>The kernel will look for a configuration file <code>akka.conf</code>, <em>e.g.,</em> in <code>$AKKA_HOME/config/akka.conf</code> or on the <code>CLASSPATH</code>.</p>
+
+  <p>Some of the things you can configure:</p>
+
+  <ul>
+    <li>Logging.</li>
+    <li>Actor and STM default properties.</li>
+    <li>Persistence store properties.</li>
+    <li>Server and client hostnames and ports.</li>
+    <li>&#8230;</li>
+  </ul>
+
+<div class="handout">
+</div>
+</div>
+
+<div class="slide">
+  <h1>Persistence Module</h1>
+
+  <p>Akka provides persistent data structures using the STM API. They are really intended to provide the &#8220;D&#8221; for ACID persistence, as they back STM Maps, Vectors and References. The API doesn&#8217;t provide a general-purpose DSL for persistence.</p>
+
+  <table class="table">
+    <tr><th>Data Structure</th><th>Description</th></tr>
+    <tr><td><code>PersistentMap</code></td><td>Implements <code>scala.collection.mutable.Map</code></td></tr>
+    <tr><td><code>PersistentVector</code></td><td>Implements <code>scala.RandomAccessSeq</code></td></tr>
+    <tr><td><code>PersistentRef</code></td><td>Compare and Set (CAS) cell</td></tr>
+  </table>
+
+<div class="handout">
+</div>
+</div>
+
+<div class="slide">
+  <h1>Persistence Module</h1>
+  <p>They are backed by one of the three (at this time) supported <em>NoSQL</em> datastores:</p>
+
+  <ul>
+  <li>Cassandra</li>
+  <li>MongoDB</li>
+  <li>Redis</li>
+  </ul>
+
+
+<div class="handout">
+</div>
+</div>
+
+<div class="slide">
+  <h1>Cassandra Example (1/5)</h1>
+
+  <p>Requires an Akka configuration file, <code>akka-reference.conf</code>, for details like the host and port, and a Cassandra configuration file <code>storage-conf.xml</code>.</p>
+
+  <p>Create one of the persistent data structures:</p>
+
+  <pre class="brush: scala;">
+  val map =    CassandraStorage.newMap(id)     # omit (id) =&gt; will be autogenerated.
+  val vector = CassandraStorage.newVector(id)
+  val ref =    CassandraStorage.newRef(id)
+  </pre>
+
+<div class="handout">
+</div>
+</div>
+
+<div class="slide">
+  <h1>Cassandra Example (2/5)</h1>
+
+  <p>Retrieve a persistent data structure based on an explicit id (will be created if it doesn&#8217;t exist):</p>
+
+  <pre class="brush: scala;">
+  val map =    CassandraStorage.getMap(id)
+  val vector = CassandraStorage.getVector(id)
+  val ref =    CassandraStorage.getRef(id)
+  </pre>
+
+
+<div class="handout">
+</div>
+</div>
+
+<div class="slide">
+  <h1>Cassandra Example (3/5)</h1>
+
+  <p>Akka also provides a direct Cassandra API. It abstracts away session pooling, protocol <em>etc.</em> and lets us by-pass the STM persistence abstractions (Map, Vector and Ref). </p>
+
+  <pre class="brush: scala;">
+    import se.scalablesolutions.akka.state.CassandraSessionPool
+
+    val sessions = new CassandraSessionPool(
+      keyspace,
+      StackPool(SocketProvider(hostname, port)),
+      protocol,
+      ConsistencyLevel.QUORUM)
+    ...
+  </pre>
+
+
+<div class="handout">
+</div>
+</div>
+
+<div class="slide">
+  <h1>Cassandra Example (4/5)</h1>
+
+  <pre class="brush: scala;">
+    ...
+
+    // insert a column
+    sessions.withSession { session =&gt;
+      session ++| (key, new ColumnPath(columnFamily, null, columnName), 
+                   serializer.out(element), System.currentTimeMillis)
+    }
+    ...
+  </pre>
+
+
+<div class="handout">
+</div>
+</div>
+
+<div class="slide">
+  <h1>Cassandra Example (5/5)</h1>
+
+  <pre class="brush: scala;">
+    ...
+    // retrieve a column
+    val column: Option[ColumnOrSuperColumn] = sessions.withSession { session =&gt;
+      session | (key, new ColumnPath(columnFamily, null, columnName))
+    }
+
+    // get a range of colums
+    val columns: List[ColumnOrSuperColumn] = sessions.withSession { session =&gt;
+      session / (key, columnParent, slicePredicate, isAscending, count)
+    }
+  </pre>
+
+
+<div class="handout">
+</div>
+</div>
+
+<div class="slide">
+  <h1>Persistence Module: MongoDB and Redis</h1>
+  <p>There are similar APIs for MongoDB and Redis.</p>
+  <p>(But I don't think there are the same sorts of column "operators".)</p>
+
+<div class="handout">
+</div>
+</div>
+
+<div class="slide">
+  <h1>Demo!</h1>
+  
+  <ul>
+    <li><code>akka-sample-rest-scala</code>: Simple REST'ful Service.</li>
+    <li><code>akka-sample-chat</code>: Simple Chat Service.</li>
+  </ul>
+
+<div class="handout">
+</div>
+</div>
+
+<div class="slide">
+  <h1 id="highlights">Recap (1/2)</h1>
+
+  <ul>
+    <li><b>Simpler Concurrency</b>: Write simpler concurrent (yet correct) applications using Actors, STM &amp; Transactors (transactional actors).</li>
+
+    <li><b>Event-driven Architecture</b>: The perfect platform for asynchronous, event-driven architectures. Never block.</li>
+
+    <li><b>True Scalability</b>: Scale out on multi-core or multiple nodes using asynchronous message passing.</li>
+  </ul>
+
+<div class="handout">
+</div>
+</div>
+
+<div class="slide">
+  <h1 id="highlights">Recap (2/2)</h1>
+
+  <ul>
+    <li><b>Fault-tolerance</b>: Embrace failure. Write applications that self-heal using Erlang-style Actor supervisor hierarchies.</li>
+
+    <li><b>Transparent Remoting</b>: Remote Actors give you a high-performance, transparent-distributed programming model.</li>
+
+    <li><b>Scala and Java APIs</b>: Scala and Java APIs, as well as Spring and Guice integration. Deploy in your application server or run it stand-alone.</li>
+  </ul>
+
+<div class="handout">
+</div>
+</div>
+
+<div class="slide">
+  <h1>Thanks!</h1>
+  <ul>
+    <li><a href="akkasource.org">http://akkasource.org</a></li>
+    <li><a href="mailto:dean@deanwampler.com">dean@deanwampler.com</a></li>
+    <li><a href="http://twitter.com/deanwampler">@deanwampler</a> (Twitter)</li>
+    <li><a href="http://polyglotprogramming.com">polyglotprogramming.com</a></li>
+  </ul>
+
+<div class="handout">
+</div>
+</div>
+<!-- insert new slides here -->
+
+</div>
+
+</body>
+</html>
