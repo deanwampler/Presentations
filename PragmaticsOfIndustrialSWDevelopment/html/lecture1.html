@@ -1,0 +1,388 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" 
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<title>Pragmatics of Industrial Software Development</title>
+<!-- metadata -->
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="generator" content="S5" />
+<meta name="version" content="S5 1.1" />
+<meta name="date" content="August 5, 2010" />
+<meta name="author" content="Dean Wampler, Ph.D." />
+<meta name="company" content="Department of Computer Science,<br/>Loyola University Chicago" />
+<meta name="copyright" content="2010 Dean Wampler, All Rights Reserved" />
+<!-- configuration parameters -->
+<meta name="defaultView" content="slideshow" />
+<meta name="controlVis" content="hidden" />
+<!-- style sheet links -->
+<link rel="stylesheet" href="../ui/default/slides.css" type="text/css" media="projection" id="slideProj" />
+<link rel="stylesheet" href="../ui/default/outline.css" type="text/css" media="screen" id="outlineStyle" />
+<link rel="stylesheet" href="../lib/stylesheets/print.css" type="text/css" media="print" id="slidePrint" />
+<link rel="stylesheet" href="../ui/default/opera.css" type="text/css" media="projection" id="operaFix" />
+
+<link rel="stylesheet" href="../lib/stylesheets/pressie.css" type="text/css" />
+
+<!-- S5 JS -->
+<script src="../ui/default/slides.js" type="text/javascript"></script>
+
+<!-- Syntax Highlighter -->
+<!-- <link rel="stylesheet"  href="../lib/stylesheets/SyntaxHighlighter.css"></link> -->
+<link type="text/css" rel="stylesheet" href="../lib/stylesheets/shCore.css"/>
+<link type="text/css" rel="stylesheet" href="../lib/stylesheets/shThemeDefault.css"/>
+
+
+</head>
+<body>
+
+<div class="layout">
+<div id="controls"><!-- DO NOT EDIT --></div>
+<div id="currentSlide"><!-- DO NOT EDIT --></div>
+<div id="header"></div>
+<div id="footer">
+<h2>Copyright &copy; 2010 Dean Wampler, All Rights Reserved</h2>
+<h2>August 5, 2010</h2>
+</div>
+
+</div>
+
+
+<div class="presentation">
+<div class="slide">
+<h1>Lecture 1: Course Introduction and Scaling Computation, Part I</h1>
+</div>
+<div class="slide">
+<h1>Course Introduction</h1>
+<p>You have learned about many aspects of software development in your studies. This course looks at how different ideas actually succeed or fail when applied in modern &#8220;industrial&#8221; (i.e., professional) settings.</p>
+<p>It reflects my 20+ years of industry experience and my interest in the efficacy of academic Computer Science.</p>
+</div>
+<div class="slide">
+<h1>Course Learning Objectives</h1>
+<p>(See the course syllabus on <a href="http://blackboard.luc.edu/">Blackboard</a> for details.)</p>
+<ol>
+	<li>Understand why some ideas succeed, some fail, and others grow and decline in popularity as circumstances change.</li>
+	<li>Recognize key traits of successful systems, methods, and tools.
+	<ul>
+		<li>For example, the importance of <em>simplicity</em>.</li>
+	</ul></li>
+	<li>Gain hands-on experience with trending technologies.</li>
+</ol>
+</div>
+<div class="slide">
+<h1>General Principles Covered</h1>
+<ul>
+	<li>Scaling through concurrency &#8211; effective approaches.</li>
+	<li>Scaling data &#8211; new models of persistence and data analysis.</li>
+	<li>Object-oriented and functional programming &#8211; an assessment.</li>
+	<li>Simplicity in software design &#8211; why it’s important and how to achieve it.</li>
+	<li>Software development processes &#8211; what works and why.</li>
+</ul>
+</div>
+<div class="slide">
+<h1>Topics that Apply these Principles</h1>
+<ul>
+	<li>Models of fine-grained, concurrent software for robust, horizontal scalability.</li>
+	<li>Distributed systems for large-scale, course-grained scalability.</li>
+	<li><span class="caps">SQL</span> and “NoSQL” databases &#8211; finding the right persistence model.</li>
+	<li>Internet-scale data processing and analytics.</li>
+	<li><em>Agile Methodologies</em> for software development.</li>
+</ul>
+</div>
+<div class="slide">
+<h1>Course <em>Administrivia</em></h1>
+<table>
+	<tr>
+		<td> email: </td>
+		<td> <a href="mailto:kwampler@luc.edu">kwampler@luc.edu</a>  <br/> <a href="dean@deanwampler.com">dean@deanwampler.com</a> </td>
+	</tr>
+	<tr>
+		<td> twitter: </td>
+		<td> <a href="http://twitter.com/deanwampler">@deanwampler</a> </td>
+	</tr>
+	<tr>
+		<td> office hours: </td>
+		<td> Tuesday, 6:45 &#8211; ? and by appointment </td>
+	</tr>
+</table>
+</div>
+<div class="slide">
+<h1>Schedule</h1>
+<table>
+	<tr>
+		<td>  8/31 </td>
+		<td> Course Intro and Scaling Computation, Part I (Multithreaded Programming, Actor Concurrency) </td>
+	</tr>
+	<tr>
+		<td>  9/07 </td>
+		<td> Scaling Computation, Part II (Agents, Software Transactional Memory, Memory is the New Disk) </td>
+	</tr>
+	<tr>
+		<td>  9/14 </td>
+		<td> Scaling Systems, Part I (Vertical vs. Horizontal Scaling, Distributed Systems like <span class="caps">HTTP</span>, etc.) <em>Last day to withdraw without a W grade.</em> </td>
+	</tr>
+	<tr>
+		<td>  9/21 </td>
+		<td> Scaling Data, Part I (<span class="caps">SQL</span> vs. NoSQL databases) </td>
+	</tr>
+	<tr>
+		<td>  9/28 </td>
+		<td> Scaling Data, Part II (Example NoSQL databases) </td>
+	</tr>
+</table>
+</div>
+<div class="slide">
+<h1>Schedule (cont.)</h1>
+<table>
+	<tr>
+		<td> 10/05 </td>
+		<td> Scaling Data, Part <span class="caps">III</span> (Example NoSQL databases) </td>
+	</tr>
+	<tr>
+		<td> 10/12 </td>
+		<td> Midterm break </td>
+	</tr>
+	<tr>
+		<td> 10/19 </td>
+		<td> Midterm, Scaling Systems, Part II (Map/Reduce and Their Kin) </td>
+	</tr>
+	<tr>
+		<td> 10/26 </td>
+		<td> Recent Advances in Object-Oriented Programming </td>
+	</tr>
+	<tr>
+		<td> 11/02 </td>
+		<td> Functional Programming: Into the Real World </td>
+	</tr>
+	<tr>
+		<td> 11/09 </td>
+		<td>Object-Oriented Programming vs. Functional Programming: a Critique of Pure Programming </td>
+	</tr>
+</table>
+</div>
+<div class="slide">
+<h1>Schedule (cont.)</h1>
+<table>
+	<tr>
+		<td> 11/16 </td>
+		<td> Complexity vs. Simplicity Part I: Effective Software Development Processes </td>
+	</tr>
+	<tr>
+		<td> 11/23 </td>
+		<td> Complexity vs. Simplicity Part II: Scrum, XP, and Lean </td>
+	</tr>
+	<tr>
+		<td> 11/30 </td>
+		<td> Complexity vs. Simplicity Part <span class="caps">III</span>: Simple Systems </td>
+	</tr>
+	<tr>
+		<td> 12/07 </td>
+		<td> Student Presentations on the Code Project, Course Review </td>
+	</tr>
+	<tr>
+		<td> 12/14 </td>
+		<td> Final Example (regular class time) </td>
+	</tr>
+</table>
+</div>
+<div class="slide">
+<h1>Readings</h1>
+<p>Due to the broad scope and topical nature of this course, there is no assigned textbook. A list of books and papers will be recommended for further reference. Specific reading assignments of on-line or library materials will be given as homework.</p>
+<p>See the <a href="references.html">References</a>.</p>
+</div>
+<div class="slide">
+<h1>Course Components: Grading</h1>
+<table>
+  <tr><td colspan='2'>Midterm</td><td>30%</td></tr>
+  <tr><td colspan='2'>Final Exam</td><td>30%</td></tr>
+  <tr><td colspan='2'>Project</td><td>40%</td></tr>
+  <tr><td>20%</td><td>Code quality, correctness</td><td>&nbsp;</td></tr>
+  <tr><td>15%</td><td>Individual contributions</td><td>&nbsp;</td></tr>
+  <tr><td>5%</td><td>Final oral presentation</td><td>&nbsp;</td></tr>
+  <tr><td colspan='2'>&nbsp;</td><td>100%</td></tr>
+</table>
+</div>
+<div class="slide">
+<h1>Course Components: Readings and Lecture</h1>
+<ul>
+	<li><strong>Readings:</strong>  Expand on the current week&#8217;s topics and preview next week&#8217;s topics. Please read them before coming to class.</li>
+	<li><strong>Lecture:</strong>  Summarize and expand upon the readings, discuss the current project assignment. There will also be group discussions. The lecture notes will be posted to blackboard and <a href="http://github.com">GitHub.com</a> before each class.</li>
+</ul>
+</div>
+<div class="slide">
+<h1>Course Components: Project Exercises</h1>
+<ul>
+	<li>Start with a &#8220;running&#8221; 3-tier Scala application</li>
+	<li>Hosted on GitHub (http://github.com).</li>
+	<li>Uses <em>actors</em> to scale computation over a <span class="caps">NYSE</span> data set.</li>
+	<li>Add features during the semester.</li>
+	<li><em>Refactor</em> the code to improve it and accomodate new features.</li>
+</ul>
+</div>
+<div class="slide">
+<h1>Course Components: Project Exercises (cont.)</h1>
+<ul>
+	<li><em>You are encouraged to work together.</em></li>
+	<li>Like you would in an industrial setting&#8230;</li>
+	<li>I expect the solutions to look &#8220;similar&#8221;.</li>
+</ul>
+</div>
+<div class="slide">
+<h1>Course Components: Project Exercises (cont.)</h1>
+<p>&#8230; but</p>
+<ul>
+	<li>1/2 the grade differences will be based on GitHub checkin logs and the quality of those checkins.</li>
+	<li><strong>If you <em>pair program</em>, include <em>both</em> names in the commit comments!</strong></li>
+</ul>
+h1. Course Components: Project Exercises (cont.)
+<ul>
+	<li>5% will be based on an <strong>oral presentation</strong> on 12/7.</li>
+	<li>15 minutes or so, with time for questions and discussion.</li>
+	<li>Topics to be worked out with me.</li>
+</ul>
+</div>
+<div class="slide">
+<h1>Midterm and Final Exam</h1>
+<ul>
+	<li>Will cover the reading, lecture material, and concepts learned in the exercises.</li>
+	<li>Final exam content weighted:</li>
+	<li>2/3 of the material since the midterm</li>
+	<li>1/3 material before the midterm.</li>
+	<li>Midterm: 10/19 (first half of that evening&#8217;s session).</li>
+	<li>Final exam: 12/14 (usual class time).</li>
+</ul>
+</div>
+<div class="slide">
+<h1>Miscellaneous</h1>
+<ul>
+	<li>Academic Integrity Policy</li>
+	<li>Students with Disabilities</li>
+	<li>Attendance Policy</li>
+	<li>Use of Blackboard</li>
+	<li>Turning in Homework</li>
+</ul>
+</div>
+<div class="slide">
+<h1>Introduction to the semester project</h1>
+<ul>
+	<li>Installing, building, and running the project skeleton.</li>
+	<li>Walkthrough of major components and features.</li>
+</ul>
+</div>
+<div class="slide">
+<h1>Scaling Computation, Part I</h1>
+<ul>
+	<li>Two models of concurrency compared:</li>
+	<li>Multithreaded Programming.</li>
+	<li>The Actor Model of concurrency.</li>
+</ul>
+</div>
+<div class="slide">
+<h1>Multithreaded Programming</h1>
+<ul>
+	<li>Synchronized, shared access to <em>mutable</em> state.</li>
+	<li><em>Lock-based Concurrency</em></li>
+</ul>
+</div>
+<div class="slide">
+<h1>Multithreaded Programming</h1>
+<ul>
+	<li><strong>Very</strong> hard to get write.</li>
+	<li>Even experts stumble&#8230;</li>
+</ul>
+</div>
+<div class="slide">
+<h1>The importance of immutability</h1>
+</div>
+<div class="slide">
+<h1>This Week&#8217;s Assignment: Reading:</h1>
+<ul>
+	<li>Simon Peyton Jones, &#8220;Beautiful Concurrency&#8221;, Chapter 24 in <em>Beautiful Code</em>, pgs. 385-406. Online:  <a href="http://research.microsoft.com/en-us/um/people/simonpj/papers/stm/#beautiful">http://research.microsoft.com/en-us/um/people/simonpj/papers/stm/#beautiful</a></li>
+	<li><em>Software Transactional Memory</em> (<span class="caps">STM</span>) on Wikipedia <a href="http://en.wikipedia.org/wiki/Software_transactional_memory">wikipedia.org/wiki/Software_transactional_memory</a>.</li>
+</ul>
+<p>Browse the following Scala resources listed in the <a href="references.html">References</a> to learn more about Scala.</p>
+<p>Browse the Akka framework documentation at <a href="http://docs.akkasource.org">docs.akkasource.org</a>, to learn more about Akka, which is the foundation for the project code.</p>
+</div>
+<div class="slide">
+<h1>This Week&#8217;s Assignment: Project</h1>
+<p>The main goal is to get the project code and get it running, and begin to understand how it works. It&#8217;s not a trivial project to understand, especially if you&#8217;re new to Scala, but don&#8217;t be intimidated.</p>
+<p>Although you won&#8217;t be asked to turn anything in next week, you should still go through the steps as far as you can, even if you don&#8217;t finish, as they will set the stage for subsequent work.</p>
+</div>
+<div class="slide">
+<h1>Get the project code:</h1>
+<ul>
+	<li>Create a personal <a href="http://github.com">GitHub</a> account, if you don&#8217;t already have one.</li>
+	<li>&#8220;Fork&#8221; the project code.</li>
+	<li>&#8220;Clone&#8221; the code locally (on your computer), following the instructions provided by GitHub.</li>
+</ul>
+</div>
+<div class="slide">
+<h1>Build the Project</h1>
+<ul>
+	<li>Open the <code>README.md</code> file.</li>
+	<li>Follow its instructions for installing MongoDB and running the project tests.</li>
+	<li>Browse the code base and try to recall our discussion of it in class.</li>
+</ul>
+</div>
+<div class="slide">
+<h1>Add New Functionality</h1>
+<ul>
+	<li>In an editor, open the file <code>test/scala/server/finance/InstrumentAnalysisServerTest.scala</code>.</li>
+	<li>Find the two <code>TODO</code> comments, one each before a <code>test</code>.</li>
+	<li>In the <em>first</em> of those tests, comment out the line <code>pending</code> (like Java, you can put a <code>//</code> before the work <code>pending</code>).</li>
+</ul>
+</div>
+<div class="slide">
+<h1>Add New Functionality (cont)</h1>
+<ul>
+	<li>Run the <code>test</code> action in sbt. The two tests should now fail. You should see the following near the end of the output.</li>
+</ul>
+[error] Failed: : Total 96, Failed 1, Errors 0, Passed 91, Skipped 4
+<ul>
+	<li>Try to understand the error messages:</li>
+	<li>Look for the stack traces.</li>
+	<li>Ignore the verbose server messages (hint: most of those contain <code>akk</code> and <code>thread</code>), but notice the <code>org.scalatest.TestFailedException</code> messages.</li>
+	<li>Looking at the stack traces:</li>
+	<li>on what line <em>in the test file</em> did the failure occur? (That is, not a line in the ScalaTest <span class="caps">API</span>.)</li>
+	<li>what did the server return and what was the expected value in those two cases? (a <span class="caps">JSON</span> string&#8230;)</li>
+</ul>
+</div>
+<div class="slide">
+<h1>Add New Functionality (cont)</h1>
+<ul>
+	<li>In your editor, open the file <code>main/scala/server/finance/InstrumentAnalysisServer.scala</code> (the file being tested&#8230;)</li>
+	<li>Find the <code>TODO</code> before the method named <code>fetchPrices</code>.</li>
+	<li>This method already has the &#8220;instruments&#8221; (i.e., stocks) and statistics information.</li>
+	<li>In the line <code>Some(x) =&gt; filter(instruments, statistics, x)</code>, note that the <code>filter</code> method below it simply returns the <span class="caps">JSON</span> string that was passed in to it.</li>
+</ul>
+</div>
+<div class="slide">
+<h1>Add New Functionality (cont)</h1>
+<ul>
+	<li>How could we modify <code>filter</code> to filter by instruments? (To make it easier, assume there is only one instrument in the list, as in the test.)</li>
+</ul>
+<p>This is not easy, as we really need to parse the <span class="caps">JSON</span> into some representation, filter out the records (of the form <code>{"timestamp": 1283233404995, "symbol": "A", "price", "40.0"}</code>) using the <code>symbol</code>, then convert back to a string.</p>
+<p>Can you figure out how to do this with the Lift <span class="caps">JSON</span> APIs used in the application and <span class="caps">JSON</span> helper types provided, or using other 3rd-party <span class="caps">JSON</span> libraries?</p>
+<p>Actually, the right way to implement this feature is to support this filtering at the database level, which we will learn how to do with MongoDB.</div></p>
+
+  <!-- Syntax Highlighter -->
+  <script language="javascript" type="text/javascript" src="../lib/scripts/shCore.js"></script>
+  <script language="javascript" type="text/javascript" src="../lib/scripts/shBrushCpp.js"></script>
+  <script language="javascript" type="text/javascript" src="../lib/scripts/shBrushCSharp.js"></script>
+  <script language="javascript" type="text/javascript" src="../lib/scripts/shBrushCss.js"></script>
+  <script language="javascript" type="text/javascript" src="../lib/scripts/shBrushDelphi.js"></script>
+  <script language="javascript" type="text/javascript" src="../lib/scripts/shBrushJava.js"></script>
+  <script language="javascript" type="text/javascript" src="../lib/scripts/shBrushJScript.js"></script>
+  <script language="javascript" type="text/javascript" src="../lib/scripts/shBrushPhp.js"></script>
+  <script language="javascript" type="text/javascript" src="../lib/scripts/shBrushPython.js"></script>
+  <script language="javascript" type="text/javascript" src="../lib/scripts/shBrushRuby.js"></script>
+  <script language="javascript" type="text/javascript" src="../lib/scripts/shBrushScala.js"></script>
+  <script language="javascript" type="text/javascript" src="../lib/scripts/shBrushSql.js"></script>
+  <script language="javascript" type="text/javascript" src="../lib/scripts/shBrushVb.js"></script>
+  <script language="javascript" type="text/javascript" src="../lib/scripts/shBrushXml.js"></script>
+  <script language="javascript">
+    SyntaxHighlighter.config.clipboardSwf = 'scripts/clipboard.swf';
+    SyntaxHighlighter.all();
+  </script>
+</div>
+</body>
+</html>

@@ -1,0 +1,218 @@
+h1. Lecture 1: Course Introduction and Scaling Computation, Part I
+
+h1. Course Introduction
+
+You have learned about many aspects of software development in your studies. This course looks at how different ideas actually succeed or fail when applied in modern "industrial" (i.e., professional) settings. 
+
+It reflects my 20+ years of industry experience and my interest in the efficacy of academic Computer Science.
+
+h1. Course Learning Objectives
+
+(See the course syllabus on "Blackboard":http://blackboard.luc.edu/ for details.)
+
+# Understand why some ideas succeed, some fail, and others grow and decline in popularity as circumstances change.
+# Recognize key traits of successful systems, methods, and tools. 
+** For example, the importance of _simplicity_.
+# Gain hands-on experience with trending technologies.
+
+h1. General Principles Covered
+
+* Scaling through concurrency - effective approaches.
+* Scaling data - new models of persistence and data analysis.
+* Object-oriented and functional programming - an assessment.
+* Simplicity in software design - why it’s important and how to achieve it.
+* Software development processes - what works and why. 
+
+h1. Topics that Apply these Principles
+
+* Models of fine-grained, concurrent software for robust, horizontal scalability.
+* Distributed systems for large-scale, course-grained scalability.
+* SQL and “NoSQL” databases - finding the right persistence model.
+* Internet-scale data processing and analytics.
+* _Agile Methodologies_ for software development.
+
+h1. Course _Administrivia_
+
+| email: | "kwampler@luc.edu":mailto:kwampler@luc.edu  <br/> "dean@deanwampler.com":dean@deanwampler.com |
+| twitter: | "@deanwampler":http://twitter.com/deanwampler |
+| office hours: | Tuesday, 6:45 - ? and by appointment |
+
+h1. Schedule
+
+|  8/31 | Course Intro and Scaling Computation, Part I (Multithreaded Programming, Actor Concurrency) |
+|  9/07 | Scaling Computation, Part II (Agents, Software Transactional Memory, Memory is the New Disk) |
+|  9/14 | Scaling Systems, Part I (Vertical vs. Horizontal Scaling, Distributed Systems like HTTP, etc.) _Last day to withdraw without a W grade._ |
+|  9/21 | Scaling Data, Part I (SQL vs. NoSQL databases) |
+|  9/28 | Scaling Data, Part II (Example NoSQL databases) |
+
+h1. Schedule (cont.)
+
+| 10/05 | Scaling Data, Part III (Example NoSQL databases) |
+| 10/12 | Midterm break |
+| 10/19 | Midterm, Scaling Systems, Part II (Map/Reduce and Their Kin) |
+| 10/26 | Recent Advances in Object-Oriented Programming |
+| 11/02 | Functional Programming: Into the Real World |
+| 11/09 |Object-Oriented Programming vs. Functional Programming: a Critique of Pure Programming |
+
+h1. Schedule (cont.)
+
+| 11/16 | Complexity vs. Simplicity Part I: Effective Software Development Processes |
+| 11/23 | Complexity vs. Simplicity Part II: Scrum, XP, and Lean |
+| 11/30 | Complexity vs. Simplicity Part III: Simple Systems |
+| 12/07 | Student Presentations on the Code Project, Course Review |
+| 12/14 | Final Example (regular class time) |
+
+h1. Readings
+
+Due to the broad scope and topical nature of this course, there is no assigned textbook. A list of books and papers will be recommended for further reference. Specific reading assignments of on-line or library materials will be given as homework. 
+
+See the "References":references.html.
+
+h1. Course Components: Grading
+
+<table>
+  <tr><td colspan='2'>Midterm</td><td>30%</td></tr>
+  <tr><td colspan='2'>Final Exam</td><td>30%</td></tr>
+  <tr><td colspan='2'>Project</td><td>40%</td></tr>
+  <tr><td>20%</td><td>Code quality, correctness</td><td>&nbsp;</td></tr>
+  <tr><td>15%</td><td>Individual contributions</td><td>&nbsp;</td></tr>
+  <tr><td>5%</td><td>Final oral presentation</td><td>&nbsp;</td></tr>
+  <tr><td colspan='2'>&nbsp;</td><td>100%</td></tr>
+</table>
+
+h1. Course Components: Readings and Lecture
+
+* *Readings:*  Expand on the current week's topics and preview next week's topics. Please read them before coming to class.
+* *Lecture:*  Summarize and expand upon the readings, discuss the current project assignment. There will also be group discussions. The lecture notes will be posted to blackboard and "GitHub.com":http://github.com before each class.
+
+h1. Course Components: Project Exercises
+
+* Start with a "running" 3-tier Scala application
+ * Hosted on GitHub (http://github.com). 
+ * Uses _actors_ to scale computation over a NYSE data set.
+ * Add features during the semester.
+ * _Refactor_ the code to improve it and accomodate new features.
+
+h1. Course Components: Project Exercises (cont.)
+
+* _You are encouraged to work together._
+ * Like you would in an industrial setting...
+ * I expect the solutions to look "similar".
+
+h1. Course Components: Project Exercises (cont.)
+
+... but 
+
+* 1/2 the grade differences will be based on GitHub checkin logs and the quality of those checkins.
+* *If you _pair program_, include _both_ names in the commit comments!*
+
+  h1. Course Components: Project Exercises (cont.)
+
+* 5% will be based on an *oral presentation* on 12/7.
+* 15 minutes or so, with time for questions and discussion.
+* Topics to be worked out with me.
+  
+h1. Midterm and Final Exam
+
+* Will cover the reading, lecture material, and concepts learned in the exercises. 
+* Final exam content weighted:
+ * 2/3 of the material since the midterm 
+ * 1/3 material before the midterm. 
+* Midterm: 10/19 (first half of that evening's session).
+* Final exam: 12/14 (usual class time).
+
+h1. Miscellaneous
+
+* Academic Integrity Policy
+* Students with Disabilities
+* Attendance Policy
+* Use of Blackboard
+* Turning in Homework
+
+h1. Introduction to the semester project
+
+* Installing, building, and running the project skeleton.
+* Walkthrough of major components and features.
+
+h1. Scaling Computation, Part I
+
+* Two models of concurrency compared: 
+  * Multithreaded Programming.
+  * The Actor Model of concurrency.
+
+h1. Multithreaded Programming
+
+* Synchronized, shared access to _mutable_ state.
+* _Lock-based Concurrency_
+
+h1. Multithreaded Programming
+
+* *Very* hard to get write.
+* Even experts stumble...
+
+h1. The importance of immutability
+
+
+h1. This Week's Assignment: Reading: 
+
+* Simon Peyton Jones, "Beautiful Concurrency", Chapter 24 in _Beautiful Code_, pgs. 385-406. Online:  "http://research.microsoft.com/en-us/um/people/simonpj/papers/stm/#beautiful":http://research.microsoft.com/en-us/um/people/simonpj/papers/stm/#beautiful 
+* _Software Transactional Memory_ (STM) on Wikipedia "wikipedia.org/wiki/Software_transactional_memory":http://en.wikipedia.org/wiki/Software_transactional_memory.
+
+Browse the following Scala resources listed in the "References":references.html to learn more about Scala.
+ 
+Browse the Akka framework documentation at "docs.akkasource.org":http://docs.akkasource.org, to learn more about Akka, which is the foundation for the project code.
+
+h1. This Week's Assignment: Project
+
+The main goal is to get the project code and get it running, and begin to understand how it works. It's not a trivial project to understand, especially if you're new to Scala, but don't be intimidated. 
+
+Although you won't be asked to turn anything in next week, you should still go through the steps as far as you can, even if you don't finish, as they will set the stage for subsequent work.
+
+h1. Get the project code:
+
+* Create a personal "GitHub":http://github.com account, if you don't already have one.
+* "Fork" the project code.
+* "Clone" the code locally (on your computer), following the instructions provided by GitHub.
+
+h1. Build the Project
+
+* Open the @README.md@ file.
+* Follow its instructions for installing MongoDB and running the project tests.
+* Browse the code base and try to recall our discussion of it in class.
+
+h1. Add New Functionality
+
+* In an editor, open the file @test/scala/server/finance/InstrumentAnalysisServerTest.scala@.
+* Find the two @TODO@ comments, one each before a @test@.
+* In the _first_ of those tests, comment out the line @pending@ (like Java, you can put a @//@ before the work @pending@).
+
+h1. Add New Functionality (cont)
+
+* Run the @test@ action in sbt. The two tests should now fail. You should see the following near the end of the output.
+
+    [error] Failed: : Total 96, Failed 1, Errors 0, Passed 91, Skipped 4
+
+* Try to understand the error messages:
+* Look for the stack traces.
+* Ignore the verbose server messages (hint: most of those contain @akk@ and @thread@), but notice the @org.scalatest.TestFailedException@ messages.
+* Looking at the stack traces:
+* on what line _in the test file_ did the failure occur? (That is, not a line in the ScalaTest API.)
+* what did the server return and what was the expected value in those two cases? (a JSON string...)
+
+h1. Add New Functionality (cont)
+
+* In your editor, open the file @main/scala/server/finance/InstrumentAnalysisServer.scala@ (the file being tested...)
+* Find the @TODO@ before the method named @fetchPrices@.
+* This method already has the "instruments" (i.e., stocks) and statistics information.
+* In the line @Some(x) => filter(instruments, statistics, x)@, note that the @filter@ method below it simply returns the JSON string that was passed in to it. 
+
+h1. Add New Functionality (cont)
+
+* How could we modify @filter@ to filter by instruments? (To make it easier, assume there is only one instrument in the list, as in the test.)
+
+This is not easy, as we really need to parse the JSON into some representation, filter out the records (of the form @{"timestamp": 1283233404995, "symbol": "A", "price", "40.0"}@) using the @symbol@, then convert back to a string.
+
+Can you figure out how to do this with the Lift JSON APIs used in the application and JSON helper types provided, or using other 3rd-party JSON libraries?
+ 
+Actually, the right way to implement this feature is to support this filtering at the database level, which we will learn how to do with MongoDB.
+

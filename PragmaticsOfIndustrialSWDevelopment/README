@@ -1,0 +1,24 @@
+This is a remarkably trivial package that makes simply HTML-based presentations 
+from a set up source files written using Textile. It's designed to help when 
+creating slides that contain lots of code, as it allows code to be embedded from 
+external source files. This means that the code that you embed can come from 
+running (and tested) programs.
+
+The code in the resulting slides is syntax highlighted, and is hyperlinked to 
+the original source file, allowing that file to be brought up in Textmate.
+
+To get started
+
+* make sure you have Ruby 1.8.7 installed, along with the Rake and redcloth gems
+* type 'rake all' in the same directory as this README file
+* open html/all.html
+
+To use the code examples
+1) Any .java file can be compiled with the javac command.
+2) Any *_example.scala file must be executed directly with the "scala" command.
+3) Any other *.scala file must can be compiled with the "scalac" command. 
+Do these compiles first, as some of the *_example.scala files depend on these compiled files.
+Note: some files won't compile because they elide some of the code.
+
+See the file LICENSE for details on how all this may be used.
+
