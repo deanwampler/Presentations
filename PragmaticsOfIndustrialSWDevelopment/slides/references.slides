@@ -15,10 +15,10 @@ h1. Recommended Reading
 h1. Recommended Reading: Scala and Git Resources
 
 * "scala-lang.org":http://scala-lang.org: Downloads, tutorials, _Scaladocs_, etc.
-* "docs.akkasource.org":http://docs.akkasource.org: Documentation for the "Akka Framework":http://akkasource.org.
+* "Akka Framework":http://akkasource.org and the "documentation":http://docs.akkasource.org for it.
+* "Pro Git":http://progit.org/. A well regarded book.
 * "git-scm.com":http://git-scm.com for downloads and documentation.   
 * "github.com":http://github.com (where the project code will be hosted) also has helpful documentation. 
-* "Pro Git":http://progit.org/. A well regarded book.
 
 h1. Additional References: Programming
 
