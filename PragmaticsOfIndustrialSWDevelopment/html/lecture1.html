@@ -205,17 +205,17 @@
 <h1>Course Components: Readings and Lecture</h1>
 <ul>
 	<li><strong>Readings:</strong>  Expand on the current week&#8217;s topics and preview next week&#8217;s topics. Please read them before coming to class.</li>
-	<li><strong>Lecture:</strong>  Summarize and expand upon the readings, discuss the current project assignment. There will also be group discussions. The lecture notes will be posted to blackboard and <a href="http://github.com">GitHub.com</a> before each class.</li>
+	<li><strong>Lecture:</strong>  Summarize and expand upon the readings, discuss the current project assignment. There will also be group discussions. The lecture notes will be posted to blackboard and <a href="http://github.com/deanwampler/Presentations/tree/master/PragmaticsOfIndustrialSWDevelopment/">GitHub.com</a> before each class.</li>
 </ul>
 </div>
 <div class="slide">
 <h1>Course Components: Project Exercises</h1>
 <ul>
 	<li>Start with a &#8220;running&#8221; 3-tier Scala application</li>
-	<li>Hosted on GitHub (http://github.com).</li>
+	<li>Hosted on <a href="http://github.com">GitHub.com</a> at <a href="http://github.com/deanwampler/AkkaWebSampleExercise">github.com/deanwampler/AkkaWebSampleExercise</a>.</li>
 	<li>Uses <em>actors</em> to scale computation over a <span class="caps">NYSE</span> data set.</li>
 	<li>Add features during the semester.</li>
-	<li><em>Refactor</em> the code to improve it and accomodate new features.</li>
+	<li><em>Refactor</em> the code to improve it and accommodate new features.</li>
 </ul>
 </div>
 <div class="slide">
@@ -594,8 +594,30 @@ case object Start
 <h1>Get the Project Code</h1>
 <ul>
 	<li>Create a personal <a href="http://github.com">GitHub</a> account, if you don&#8217;t already have one.</li>
-	<li>&#8220;Fork&#8221; the project code.</li>
-	<li>&#8220;Clone&#8221; the code locally (on your computer), following the instructions provided by GitHub.</li>
+	<li>&#8220;Fork&#8221; the project code at <a href="http://github.com/deanwampler/AkkaWebSampleExercise">github.com/deanwampler/AkkaWebSampleExercise</a></li>
+	<li>Follow the instructions provided by GitHub to &#8220;clone&#8221; the code locally on your computer. For example, at your local terminal prompt, you might be asked to run the following command (in a suitable directory of your choosing):</li>
+</ul>
+<p><code>git clone git@github.com:myAwesomeUserName/AkkaWebSampleExercise.git</code></p>
+</div>
+<div class="slide">
+<h1>Get the Project Code (cont)</h1>
+<ul>
+	<li>We will actually do our work on &#8220;branch&#8221; called <code>COMP-388-488</code>, not the <code>master</code> branch:</li>
+</ul>
+<p><code>git checkout COMP-388-488</code></p>
+<ul>
+	<li>Type the following command to confirm you are on the correct branch:</li>
+</ul>
+<p><code>git branch</code></p>
+<ul>
+	<li>It should show the following:</li>
+</ul>
+<pre>
+* COMP-388-488
+  master
+</pre>
+<ul>
+	<li>The <code>*</code> shows the current branch.</li>
 </ul>
 </div>
 <div class="slide">
@@ -603,6 +625,18 @@ case object Start
 <p>I&#8217;m also keeping the lecture notes on GitHub. Unless you want to contribute patches ;) there&#8217;s no need to fork this project.</p>
 <ul>
 	<li>Clone <a href="http://github.com/deanwampler/Presentations">github.com/deanwampler/Presentations</a></li>
+</ul>
+<p><code>git clone http://github.com/deanwampler/Presentations</code></p>
+<p>You&#8217;ll see two directories:</p>
+<ul>
+	<li><code>akka-intro</code>: an introduction to the Akka Framework, which you might find useful since we&#8217;re using Akka for the project.</li>
+	<li><code>PragmaticsOfIndustrialSWDevelopment</code>: The class notes.</li>
+</ul>
+</div>
+<div class="slide">
+<h1>(Get the Lecture Notes! &#8211; cont)</h1>
+<ul>
+	<li>I will update the notes in the <code>PragmaticsOfIndustrialSWDevelopment</code> directory before each class, and also upload the latest version to blackboard.</li>
 	<li>See the <code>README</code> for instructions on building the presentation, or just</li>
 	<li>Open <code>html/all.html</code> in your browser.</li>
 </ul>
@@ -631,7 +665,7 @@ case object Start
 <p><code>[error] Failed: : Total 96, Failed 1, Errors 0, Passed 91, Skipped 4</code></p>
 <p>Try to understand the error messages:</p>
 <ul>
-	<li>Look for the stack traces.</li>
+	<li>Look for the stack trace.</li>
 	<li>Ignore the verbose server messages (hint: most of those contain the words <code>akka</code> and <code>thread</code>), but notice the <code>org.scalatest.TestFailedException</code> messages.</li>
 </ul>
 </div>
@@ -639,7 +673,7 @@ case object Start
 <h1>Add New Functionality (cont)</h1>
 <p>Looking at the stack trace:</p>
 <ul>
-	<li>On what line <em>in the test file</em> did the failure occur? (That is, not a line in the ScalaTest <span class="caps">API</span>.)</li>
+	<li>On what line <em>in the test file</em> did the failure occur? (That is, not a line in the <em>ScalaTest</em> <span class="caps">API</span>.)</li>
 	<li>What did the server return and what was the expected value in those two cases? (hint: it&#8217;s a <span class="caps">JSON</span> string&#8230;)</li>
 </ul>
 </div>

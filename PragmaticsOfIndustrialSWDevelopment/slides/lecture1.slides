@@ -83,15 +83,15 @@ h1. Course Components: Grading
 h1. Course Components: Readings and Lecture
 
 * *Readings:*  Expand on the current week's topics and preview next week's topics. Please read them before coming to class.
-* *Lecture:*  Summarize and expand upon the readings, discuss the current project assignment. There will also be group discussions. The lecture notes will be posted to blackboard and "GitHub.com":http://github.com before each class.
+* *Lecture:*  Summarize and expand upon the readings, discuss the current project assignment. There will also be group discussions. The lecture notes will be posted to blackboard and "GitHub.com":http://github.com/deanwampler/Presentations/tree/master/PragmaticsOfIndustrialSWDevelopment/ before each class.
 
 h1. Course Components: Project Exercises
 
 * Start with a "running" 3-tier Scala application
- * Hosted on GitHub (http://github.com). 
+ * Hosted on "GitHub.com":http://github.com at "github.com/deanwampler/AkkaWebSampleExercise":http://github.com/deanwampler/AkkaWebSampleExercise. 
  * Uses _actors_ to scale computation over a NYSE data set.
  * Add features during the semester.
- * _Refactor_ the code to improve it and accomodate new features.
+ * _Refactor_ the code to improve it and accommodate new features.
 
 h1. Course Components: Project Exercises (cont.)
 
@@ -322,14 +322,45 @@ Although you won't be asked to turn anything in next week, you should still go t
 h1. Get the Project Code
 
 * Create a personal "GitHub":http://github.com account, if you don't already have one.
-* "Fork" the project code.
-* "Clone" the code locally (on your computer), following the instructions provided by GitHub.
+* "Fork" the project code at "github.com/deanwampler/AkkaWebSampleExercise":http://github.com/deanwampler/AkkaWebSampleExercise
+* Follow the instructions provided by GitHub to "clone" the code locally on your computer. For example, at your local terminal prompt, you might be asked to run the following command (in a suitable directory of your choosing):
+
+<p><code>git clone git@github.com:myAwesomeUserName/AkkaWebSampleExercise.git</code></p>
+
+h1. Get the Project Code (cont)
+
+* We will actually do our work on "branch" called @COMP-388-488@, not the @master@ branch:
+
+@git checkout COMP-388-488@
+
+* Type the following command to confirm you are on the correct branch:
+
+@git branch@
+
+* It should show the following:
+
+<pre>
+* COMP-388-488
+  master
+</pre>
+
+* The @*@ shows the current branch.
 
 h1. (Get the Lecture Notes!)
 
 I'm also keeping the lecture notes on GitHub. Unless you want to contribute patches ;) there's no need to fork this project.
 
 * Clone "github.com/deanwampler/Presentations":http://github.com/deanwampler/Presentations 
+
+@git clone http://github.com/deanwampler/Presentations@
+
+You'll see two directories:
+* @akka-intro@: an introduction to the Akka Framework, which you might find useful since we're using Akka for the project.
+* @PragmaticsOfIndustrialSWDevelopment@: The class notes.
+
+h1. (Get the Lecture Notes! - cont)
+
+* I will update the notes in the @PragmaticsOfIndustrialSWDevelopment@ directory before each class, and also upload the latest version to blackboard.
 * See the @README@ for instructions on building the presentation, or just
 * Open @html/all.html@ in your browser.
 
