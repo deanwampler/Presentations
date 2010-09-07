@@ -50,7 +50,7 @@
 <div class="presentation">
 <div class="slide">
 <h1>References</h1>
-<p>Some of the books listed below are available through Loyola&#8217;s account on Safari Books Online.</p>
+<p>Some of the books listed below are available through <a href="http://proquestcombo.safaribooksonline.com.flagship.luc.edu/">Loyola&#8217;s account on Safari Books Online</a>.</p>
 </div>
 <div class="slide">
 <h1>Required Texts</h1>
@@ -58,20 +58,100 @@
 </div>
 <div class="slide">
 <h1>Recommended Reading</h1>
+<p>I don&#8217;t expect you to read all these references! Some will be assigned as homework reading. All are listed here for further investigation, as you see fit.</p>
 <ul>
-	<li>Dean Wampler and Alex Payne, &#8220;Programming Scala&#8221;, O&#8217;Reilly, 2009. <span class="caps">ISBN</span>: 0596155957. You can read it for free by following the links on <a href="http://programmingscala.com">http://programmingscala.com</a> or on <a href="http://proquestcombo.safaribooksonline.com.flagship.luc.edu/">Loyola&#8217;s Safari Books Online</a>.</li>
-	<li>Harold Abelson and Gerald Jay Sussman, &#8220;Structure and Interpretation of Computer Programs&#8221;, <span class="caps">MIT</span> Press, 1996. <span class="caps">ISBN</span>: 0262011530. <a href="http://mitpress.mit.edu/sicp/">Online access</a>.</li>
-	<li>Andrew Hunt and David Thomas, &#8220;The Pragmatic Programmer: From Journeyman to Master&#8221;, Addison-Wesley, 1999. <span class="caps">ISBN</span>: 020161622X.</li>
+	<li>Dean Wampler and Alex Payne, &#8220;Programming Scala&#8221;, O&#8217;Reilly, 2009. <span class="caps">ISBN</span>: 0596155957. My comprehensive introduction to Scala. You can read it for free by following the links on <a href="http://programmingscala.com">http://programmingscala.com</a> or on <a href="http://proquestcombo.safaribooksonline.com.flagship.luc.edu/">Loyola&#8217;s Safari Books Online</a>.</li>
+	<li>Harold Abelson and Gerald Jay Sussman, &#8220;Structure and Interpretation of Computer Programs&#8221;, <span class="caps">MIT</span> Press, 1996. <span class="caps">ISBN</span>: 0262011530. <a href="http://mitpress.mit.edu/sicp/">Online access</a>. A one-volume survey of computer science. Master this book and you&#8217;ll be well ahead of most software developers!</li>
+	<li>Andrew Hunt and David Thomas, &#8220;The Pragmatic Programmer: From Journeyman to Master&#8221;, Addison-Wesley, 1999. <span class="caps">ISBN</span>: 020161622X. Very good advice for growing your professional career.</li>
 </ul>
 </div>
 <div class="slide">
-<h1>Recommended Reading: Scala and Git Resources</h1>
+<h1>Recommended Reading: Scala and Akka</h1>
 <ul>
-	<li><a href="http://scala-lang.org">scala-lang.org</a>: Downloads, tutorials, <em>Scaladocs</em>, etc.</li>
-	<li><a href="http://akkasource.org">Akka Framework</a> and the <a href="http://docs.akkasource.org">documentation</a> for it.</li>
-	<li><a href="http://progit.org/">Pro Git</a>. A well regarded book.</li>
+	<li><a href="http://www.scala-lang.org/node/1305">Learning Scala</a> on the <a href="http://scala-lang.org">Scala Language Website</a>, where you&#8217;ll also find information about downloads, tutorials, <em>Scaladocs</em>, etc.</li>
+	<li><a href="http://www.naildrivin5.com/scalatour/wiki_pages/MainPage">Another Tour of Scala</a>. Concise guide to Scala.</li>
+	<li>The <a href="http://akkasource.org">Akka Framework</a> and the <a href="http://docs.akkasource.org">documentation</a> for it. The course project and many examples in the lectures use Akka.</li>
+	<li><a href="http://www.slideshare.net/jboner/akka-scala-summit-oscon-2010">Jonas Bon&#233;r&#8217;s presentation on Akka at <span class="caps">OSCON</span> 2010</a>, which is also shown on the home page for the Akka Framework documentation: <a href="http://doc.akkasource.org">doc.akkasource.org</a></li>
+	<li><a href="http://polyglotprogramming.com/papers/SeductionsOfScala.pdf">The Seductions of Scala</a> a presentation I occasionally give at conferences and user groups.</li>
+</ul>
+</div>
+<div class="slide">
+<h1>Recommended Reading: Lock-Based Concurrency</h1>
+<ul>
+	<li>Brian Goetz, Tim Peierls, Joshua Bloch, Joseph Bowbeer, David Holmes, Doug Lea, &#8220;Java Concurrency in Practice&#8221;, Addison-Wesley, 2006. <span class="caps">ISBN</span>: 0321349601. The <em>definitive</em> guide to lock-based concurrency on the <span class="caps">JVM</span> and related important topics like how Java&#8217;s memory model affects program behavior and correctness. Most of the concepts apply to any programming language.</li>
+	<li>Edward A. Lee. <em>The problem with threads</em>. <span class="caps">IEEE</span> Computer, 39(5):33–42, May 2006. An essay on why threads aren&#8217;t as beneficial as once thought.</li>
+</ul>
+</div>
+<div class="slide">
+<h1>Recommended Reading: Actor-Based Concurrency</h1>
+<ul>
+	<li><a href="http://en.wikipedia.org/wiki/Actor_model">Actor Model</a> (Wikipedia).</li>
+	<li>Akka&#8217;s Actor <a href="http://doc.akkasource.org/actors-scala">documentation</a>.</li>
+</ul>
+</div>
+<div class="slide">
+<h1>Recommended Reading: <span class="caps">STM</span></h1>
+<p>(See also the next section on transactions.)</p>
+<ul>
+	<li>Simon Peyton Jones, <em>Beautiful Concurrency</em>, in &#8220;Beautiful Code&#8221;, Chapter 24, pgs. 385-406. Online:  <a href="http://research.microsoft.com/en-us/um/people/simonpj/papers/stm/#beautiful">http://research.microsoft.com/en-us/um/people/simonpj/papers/stm/#beautiful</a>.</li>
+	<li>Simon Peyton Jones, QCon 2007 Keynote on <span class="caps">STM</span>, <a href="http://research.microsoft.com/~simonpj/papers/stm/STM-OSCON.pdf">slides</a>, <a href="http://blip.tv/file/get/OSCON-OSCON2007SimonPeytonJones914.mov">video</a>.</li>
+	<li><a href="http://en.wikipedia.org/wiki/Software_transactional_memory">Software Transactional Memory</a> (Wikipedia).</li>
+	<li>R. Mark Volkmann, <a href="http://java.ociweb.com/mark/stm/article.html">Software Transactional Memory</a> (<span class="caps">OCI</span> web site).</li>
+	<li>Michael L. Scott, et al. <a href="http://www.cs.rochester.edu/u/scott/papers/2006_TRANSACT_RSTM.pdf">Lowering the Overhead of Nonblocking Software Transactional Memory</a>.</li>
+	<li><a href="http://clojure.org/refs">Clojure <span class="caps">STM</span></a>.</li>
+	<li><a href="http://blog.higher-order.net/2009/02/01/understanding-clojures-persistentvector-implementation/">Understanding Clojures PersistentVector Implementation</a></li>
+</ul>
+</div>
+<div class="slide">
+<h1>Recommended Reading: <span class="caps">SQL</span> and NoSQL Databases</h1>
+<ul>
+	<li><a href="http://en.wikipedia.org/wiki/ACID"><span class="caps">ACID</span></a> (Wikipedia).</li>
+	<li><a href="http://nosqlsummer.org/paper/cap-theorem">The <span class="caps">CAP</span> Theorem</a>.</li>
+	<li><a href="http://nosqlsummer.org/papers">NoSQL Summer</a>.</li>
+	<li><a href="http://dbmsmusings.blogspot.com/2010/04/problems-with-cap-and-yahoos-little.html">My Problem with <span class="caps">CAP</span> and Yahoo&#8217;s Little Known NoSQL System</a>.</li>
+	<li><a href="http://www.nosqldatabases.com/main/2010/8/23/gremlin-a-graph-based-programming-language.html">Gremlin: a graph based programming language</a>.</li>
+</ul>
+</div>
+<div class="slide">
+<h1>Recommended Reading: Distributed Systems</h1>
+<ul>
+	<li><a href="http://en.wikipedia.org/wiki/Distributed_computing">Distributed Computing</a> (Wikipedia).</li>
+	<li><a href="http://en.wikipedia.org/wiki/Tuple_space">Tuple Space</a> (Wikipedia).</li>
+	<li><a href="http://www.terracotta.org/">Terracotta</a>. A toolkit that &#8220;virtualizes&#8221; a single <span class="caps">JVM</span> instance across multiple systems.</li>
+</ul>
+</div>
+<div class="slide">
+<h1>Recommended Reading: Distributed Systems (cont.)</h1>
+<ul>
+	<li>Jeffrey Dean and Sanjay Ghemawat, <a href="http://nosqlsummer.org/paper/google-mapreduce">MapReduce: Simplified Data Processing on Large Clusters</a>.</li>
+	<li>Jeffrey Dean and Sanjay Ghemawat, <em>Distributed Programming with Mapreduce</em>, in &#8220;Beautiful Code&#8221;, Chapter 23, pgs. 371-382. * <a href="http://hadoop.apache.org/">Hadoop</a>. An open source map-reduce framework, originally developed at Yahoo!</li>
+	<li><a href="http://www.slideshare.net/xefyr/pig-making-hadoop-easy">Pig: Making Hadoop Easy</a>.</li>
+	<li><a href="http://github.com/mesos/spark">Spark</a>. A framework for iterative and interactive cluster computing.</li>
+	<li><a href="http://blog.locut.us/main/2008/10/6/swarm-a-true-distributed-programming-language.html">Swarm: a true distributed programming language</a></li>
+</ul>
+</div>
+<div class="slide">
+<h1>Recommended Reading: Data and Analytics</h1>
+<ul>
+	<li>A <a href="http://www.quora.com/What-are-the-best-blogs-about-data">list of data blogs</a> posted on <a href="http://www.quora.com">Quora</a>.</li>
+</ul>
+</div>
+<div class="slide">
+<h1>Recommended Reading: Data Sources</h1>
+<ul>
+	<li><a href="http://infochimps.org/">infochimps.org</a></li>
+	<li><a href="http://www.freebase.com/">freebase.com</a></li>
+	<li><a href="http://www.trendingtopics.org/">trendingtopics.org</a></li>
+</ul>
+</div>
+<div class="slide">
+<h1>Recommended Reading: Git Resources</h1>
+<ul>
+	<li><a href="http://gitref.org">gitref.org</a>. Very good quick reference on git commands and concepts.</li>
+	<li><a href="http://progit.org/">Pro Git</a>. A well regarded book, available free online.</li>
 	<li><a href="http://git-scm.com">git-scm.com</a> for downloads and documentation.</li>
 	<li><a href="http://github.com">github.com</a> (where the project code will be hosted) also has helpful documentation.</li>
+	<li><a href="http://jeffkreeftmeijer.com/2010/why-arent-you-using-git-flow/">Why aren&#8217;t you using git-flow?</a>.</li>
 </ul>
 </div>
 <div class="slide">
@@ -82,7 +162,6 @@
 	<li>Toby Segaran and Jeff Hammerbacher, &#8220;Beautiful Data&#8221;, O&#8217;Reilly, 2009. <span class="caps">ISBN</span>: 0596157118.</li>
 	<li>Julie Steele and Noah Ilinsky, &#8220;Beautiful Visualization&#8221;, O&#8217;Reilly, 2010. <span class="caps">ISBN</span>: 1449379869.</li>
 	<li>Federico Biancuzzi and Chromatic, &#8220;Masterminds of Programming&#8221;, O&#8217;Reilly, 2009. <span class="caps">ISBN</span>: 9780596515171.</li>
-	<li>Brian Goetz, Tim Peierls, Joshua Bloch, Joseph Bowbeer, David Holmes, Doug Lea, &#8220;Java Concurrency in Practice&#8221;, Addison-Wesley, 2006. <span class="caps">ISBN</span>: 0321349601.</li>
 </ul>
 </div>
 <div class="slide">
@@ -91,6 +170,8 @@
 	<li>Kent Beck, &#8220;Extreme Programming Explained: Embrace Change&#8221;, 2nd Edition, Addison-Wesley, 2005. <span class="caps">ISBN</span>: 0321278658.</li>
 	<li>Mary and Tom Poppendieck, &#8220;Implementing Lean Software Development&#8221;, Addison-Wesley, 2007. <span class="caps">ISBN</span>: 0321437381.</li>
 	<li>Mike Cohn, &#8220;User Stories Applied&#8221;, Addison-Wesley, 2004. <span class="caps">ISBN</span>: 0321205685.</li>
+	<li>Mike Cohn, &#8220;Agile Estimating and Planning&#8221;, Addison-Wesley, 2006. <span class="caps">ISBN</span>: 0131479415.</li>
+	<li>Scott Berkun, &#8220;The Art of Project Management&#8221;, O&#8217;Reilly, 2005. <span class="caps">ISBN</span>: 0596007868.</li>
 </ul>
 </div>
 <div class="slide">

@@ -301,7 +301,7 @@ h1. Introduction to the semester project
 
 h1. This Week's Assignment: Reading
 
-* Brian Goetz, et al., Chapters 1 and 10 in "Java Concurrency in Practice" (see references - available through Loyola's access to Safari Online Books).
+* Brian Goetz, et al., Chapters 1 and 10 in "Java Concurrency in Practice" (see references - available through "Loyola's access to Safari Online Books":http://proquestcombo.safaribooksonline.com.flagship.luc.edu/).
 * _Actor Model_ on Wikipedia "wikipedia.org/wiki/Actor_model":http://en.wikipedia.org/wiki/Actor_model
 * Browse the Scala resources listed in the "References":references.html to learn more about Scala.
 * Browse the Akka framework documentation at "docs.akkasource.org":http://docs.akkasource.org, to learn more about Akka, which is the foundation for the project code.
@@ -374,7 +374,7 @@ h1. Add New Functionality
 
 * In an editor, open the file @test/scala/server/finance/InstrumentAnalysisServerTest.scala@.
 * Find the two @TODO@ comments, one each before a @test@.
-* In the _first_ of those tests, comment out the line @pending@ (like Java, you can put a @//@ before the work @pending@).
+* In the _first_ of those tests, comment out the line @pending@ (like Java, you can put a @//@ before the word @pending@).
 
 h1. Add New Functionality (cont)
 

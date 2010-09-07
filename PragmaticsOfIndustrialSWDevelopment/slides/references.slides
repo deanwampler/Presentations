@@ -1,6 +1,6 @@
 h1. References
 
-Some of the books listed below are available through Loyola's account on Safari Books Online.
+Some of the books listed below are available through "Loyola's account on Safari Books Online":http://proquestcombo.safaribooksonline.com.flagship.luc.edu/.
 
 h1. Required Texts
 
@@ -8,17 +8,81 @@ Various papers, blog posts, etc. will be assigned for each lecture.
 
 h1. Recommended Reading
 
-* Dean Wampler and Alex Payne, "Programming Scala", O'Reilly, 2009. ISBN: 0596155957. You can read it for free by following the links on "http://programmingscala.com":http://programmingscala.com or on "Loyola's Safari Books Online":http://proquestcombo.safaribooksonline.com.flagship.luc.edu/.
-* Harold Abelson and Gerald Jay Sussman, "Structure and Interpretation of Computer Programs", MIT Press, 1996. ISBN: 0262011530. "Online access":http://mitpress.mit.edu/sicp/.
-* Andrew Hunt and David Thomas, "The Pragmatic Programmer: From Journeyman to Master", Addison-Wesley, 1999. ISBN: 020161622X.
+I don't expect you to read all these references! Some will be assigned as homework reading. All are listed here for further investigation, as you see fit.
 
-h1. Recommended Reading: Scala and Git Resources
+* Dean Wampler and Alex Payne, "Programming Scala", O'Reilly, 2009. ISBN: 0596155957. My comprehensive introduction to Scala. You can read it for free by following the links on "http://programmingscala.com":http://programmingscala.com or on "Loyola's Safari Books Online":http://proquestcombo.safaribooksonline.com.flagship.luc.edu/.
+* Harold Abelson and Gerald Jay Sussman, "Structure and Interpretation of Computer Programs", MIT Press, 1996. ISBN: 0262011530. "Online access":http://mitpress.mit.edu/sicp/. A one-volume survey of computer science. Master this book and you'll be well ahead of most software developers!
+* Andrew Hunt and David Thomas, "The Pragmatic Programmer: From Journeyman to Master", Addison-Wesley, 1999. ISBN: 020161622X. Very good advice for growing your professional career.
 
-* "scala-lang.org":http://scala-lang.org: Downloads, tutorials, _Scaladocs_, etc.
-* "Akka Framework":http://akkasource.org and the "documentation":http://docs.akkasource.org for it.
-* "Pro Git":http://progit.org/. A well regarded book.
+h1. Recommended Reading: Scala and Akka
+
+* "Learning Scala":http://www.scala-lang.org/node/1305 on the "Scala Language Website":http://scala-lang.org, where you'll also find information about downloads, tutorials, _Scaladocs_, etc.
+* "Another Tour of Scala":http://www.naildrivin5.com/scalatour/wiki_pages/MainPage. Concise guide to Scala.
+* The "Akka Framework":http://akkasource.org and the "documentation":http://docs.akkasource.org for it. The course project and many examples in the lectures use Akka.
+* "Jonas Bon&#233;r's presentation on Akka at OSCON 2010":http://www.slideshare.net/jboner/akka-scala-summit-oscon-2010, which is also shown on the home page for the Akka Framework documentation: "doc.akkasource.org":http://doc.akkasource.org
+* "The Seductions of Scala":http://polyglotprogramming.com/papers/SeductionsOfScala.pdf a presentation I occasionally give at conferences and user groups.
+
+h1. Recommended Reading: Lock-Based Concurrency
+
+* Brian Goetz, Tim Peierls, Joshua Bloch, Joseph Bowbeer, David Holmes, Doug Lea, "Java Concurrency in Practice", Addison-Wesley, 2006. ISBN: 0321349601. The _definitive_ guide to lock-based concurrency on the JVM and related important topics like how Java's memory model affects program behavior and correctness. Most of the concepts apply to any programming language.
+* Edward A. Lee. _The problem with threads_. IEEE Computer, 39(5):33–42, May 2006. An essay on why threads aren't as beneficial as once thought.
+
+h1. Recommended Reading: Actor-Based Concurrency
+
+* "Actor Model":http://en.wikipedia.org/wiki/Actor_model (Wikipedia).
+* Akka's Actor "documentation":http://doc.akkasource.org/actors-scala.
+
+h1. Recommended Reading: STM
+
+(See also the next section on transactions.)
+
+* Simon Peyton Jones, _Beautiful Concurrency_, in "Beautiful Code", Chapter 24, pgs. 385-406. Online:  "http://research.microsoft.com/en-us/um/people/simonpj/papers/stm/#beautiful":http://research.microsoft.com/en-us/um/people/simonpj/papers/stm/#beautiful.
+* Simon Peyton Jones, QCon 2007 Keynote on STM, "slides":http://research.microsoft.com/~simonpj/papers/stm/STM-OSCON.pdf, "video":http://blip.tv/file/get/OSCON-OSCON2007SimonPeytonJones914.mov.
+* "Software Transactional Memory":http://en.wikipedia.org/wiki/Software_transactional_memory (Wikipedia).
+* R. Mark Volkmann, "Software Transactional Memory":http://java.ociweb.com/mark/stm/article.html (OCI web site).
+* Michael L. Scott, et al. "Lowering the Overhead of Nonblocking Software Transactional Memory":http://www.cs.rochester.edu/u/scott/papers/2006_TRANSACT_RSTM.pdf.
+* "Clojure STM":http://clojure.org/refs.
+* "Understanding Clojures PersistentVector Implementation":http://blog.higher-order.net/2009/02/01/understanding-clojures-persistentvector-implementation/
+
+h1. Recommended Reading: SQL and NoSQL Databases
+
+* "ACID":http://en.wikipedia.org/wiki/ACID (Wikipedia).
+* "The CAP Theorem":http://nosqlsummer.org/paper/cap-theorem.
+* "NoSQL Summer":http://nosqlsummer.org/papers.
+* "My Problem with CAP and Yahoo's Little Known NoSQL System":http://dbmsmusings.blogspot.com/2010/04/problems-with-cap-and-yahoos-little.html.
+* "Gremlin: a graph based programming language":http://www.nosqldatabases.com/main/2010/8/23/gremlin-a-graph-based-programming-language.html.
+
+h1. Recommended Reading: Distributed Systems
+
+* "Distributed Computing":http://en.wikipedia.org/wiki/Distributed_computing (Wikipedia).
+* "Tuple Space":http://en.wikipedia.org/wiki/Tuple_space (Wikipedia).
+* "Terracotta":http://www.terracotta.org/. A toolkit that "virtualizes" a single JVM instance across multiple systems.
+
+h1. Recommended Reading: Distributed Systems (cont.)
+
+* Jeffrey Dean and Sanjay Ghemawat, "MapReduce: Simplified Data Processing on Large Clusters":http://nosqlsummer.org/paper/google-mapreduce.
+* Jeffrey Dean and Sanjay Ghemawat, _Distributed Programming with Mapreduce_, in "Beautiful Code", Chapter 23, pgs. 371-382. * "Hadoop":http://hadoop.apache.org/. An open source map-reduce framework, originally developed at Yahoo!
+* "Pig: Making Hadoop Easy":http://www.slideshare.net/xefyr/pig-making-hadoop-easy.
+* "Spark":http://github.com/mesos/spark. A framework for iterative and interactive cluster computing.
+* "Swarm: a true distributed programming language":http://blog.locut.us/main/2008/10/6/swarm-a-true-distributed-programming-language.html
+
+h1. Recommended Reading: Data and Analytics
+
+* A "list of data blogs":http://www.quora.com/What-are-the-best-blogs-about-data posted on "Quora":http://www.quora.com.
+
+h1. Recommended Reading: Data Sources
+
+* "infochimps.org":http://infochimps.org/
+* "freebase.com":http://www.freebase.com/
+* "trendingtopics.org":http://www.trendingtopics.org/
+
+h1. Recommended Reading: Git Resources
+
+* "gitref.org":http://gitref.org. Very good quick reference on git commands and concepts.
+* "Pro Git":http://progit.org/. A well regarded book, available free online.
 * "git-scm.com":http://git-scm.com for downloads and documentation.   
 * "github.com":http://github.com (where the project code will be hosted) also has helpful documentation. 
+* "Why aren't you using git-flow?":http://jeffkreeftmeijer.com/2010/why-arent-you-using-git-flow/.
 
 h1. Additional References: Programming
 
@@ -27,13 +91,14 @@ h1. Additional References: Programming
 * Toby Segaran and Jeff Hammerbacher, "Beautiful Data", O'Reilly, 2009. ISBN: 0596157118.
 * Julie Steele and Noah Ilinsky, "Beautiful Visualization", O'Reilly, 2010. ISBN: 1449379869.
 * Federico Biancuzzi and Chromatic, "Masterminds of Programming", O'Reilly, 2009. ISBN: 9780596515171.
-* Brian Goetz, Tim Peierls, Joshua Bloch, Joseph Bowbeer, David Holmes, Doug Lea, "Java Concurrency in Practice", Addison-Wesley, 2006. ISBN: 0321349601.
 
 h1. Additional References: Software Process
 
 * Kent Beck, "Extreme Programming Explained: Embrace Change", 2nd Edition, Addison-Wesley, 2005. ISBN: 0321278658.
 * Mary and Tom Poppendieck, "Implementing Lean Software Development", Addison-Wesley, 2007. ISBN: 0321437381.
 * Mike Cohn, "User Stories Applied", Addison-Wesley, 2004. ISBN: 0321205685.
+* Mike Cohn, "Agile Estimating and Planning", Addison-Wesley, 2006. ISBN: 0131479415.
+* Scott Berkun, "The Art of Project Management", O'Reilly, 2005. ISBN: 0596007868.
 
 h1. Additional References: Business
 

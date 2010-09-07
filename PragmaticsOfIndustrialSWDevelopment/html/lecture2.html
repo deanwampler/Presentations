@@ -49,7 +49,550 @@
 
 <div class="presentation">
 <div class="slide">
-<h1>Lecture 2: Scaling Computation, Part II</div></h1>
+<h1>Lecture 2: Scaling Computation, Part II, and Course Project Rebooted</h1>
+</div>
+<div class="slide">
+<h1>Software Transactional Memory (<span class="caps">STM</span>)</h1>
+<ul>
+	<li>A concurrency model for safely mutating values.</li>
+	<li>Safer alternative to lock-based concurrency.</li>
+	<li>Can complement Actor concurrency.</li>
+	<li>Brings database-like transactions to memory.</li>
+</ul>
+</div>
+<div class="slide">
+<h1>History: A Few Milestones</h1>
+<table>
+	<tr>
+		<td> 1986 </td>
+		<td> Tom Knight proposes hardware-based transactional memory. </td>
+	</tr>
+	<tr>
+		<td> 1995 </td>
+		<td> Nir Shavit and Dan Touitou first propose <span class="caps">STM</span>. </td>
+	</tr>
+	<tr>
+		<td> mid-2000&#8217;s </td>
+		<td> Added to Haskell. </td>
+	</tr>
+	<tr>
+		<td> 2008 </td>
+		<td> In the first release of Clojure. </td>
+	</tr>
+</table>
+</div>
+<div class="slide">
+<h1>Some Notable Implementations</h1>
+<table>
+	<tr>
+		<td> <strong>Language</strong> </td>
+		<td> <strong>Name</strong> </td>
+		<td> <strong>Notes</strong> </td>
+	</tr>
+	<tr>
+		<td> Haskell </td>
+		<td> <em>N.A.</em> </td>
+		<td> Built into the language. Pioneering implementation copied by others. </td>
+	</tr>
+	<tr>
+		<td> Clojure </td>
+		<td> <em>N.A.</em> </td>
+		<td> Built into the language. Really driving interest in <span class="caps">STM</span> and Clojure! </td>
+	</tr>
+	<tr>
+		<td> Java and Scala</td>
+		<td> Multiverse </td>
+		<td> Used by Akka. </td>
+	</tr>
+</table>
+<p>Many others listed on the <a href="http://en.wikipedia.org/wiki/Software_transactional_memory"><span class="caps">STM</span> Wikipedia page</a>.</p>
+</div>
+<div class="slide">
+<h1><span class="caps">ACID</span></h1>
+<p>Properties of <em>database</em> transactions:</p>
+<ul>
+	<li><strong>A</strong>: Atomicity</li>
+	<li><strong>C</strong>: Consistency</li>
+	<li><strong>I</strong>: Isolation</li>
+	<li><strong>D</strong>: Durability</li>
+</ul>
+</div>
+<div class="slide">
+<h1>Atomicity</h1>
+<p>A transaction behaves as if it happens in one, uninterruptible, &#8220;all or nothing&#8221; step.</p>
+<ul>
+	<li>If any <em>internal</em> step fails, the whole transaction is rolled back to the beginning state.</li>
+	<li>Prevents inconsistent state changes from persisting.</li>
+	<li>Transactions can fail for many reasons: bugs, resource exhaustion, process or hardware failure, etc.</li>
+</ul>
+</div>
+<div class="slide">
+<h1>Atomicity: Example</h1>
+<p><strong>Scenario:</strong> A transaction T will transfer $100 from account #1, with starting balance $1100, to account #2, with starting balance $900. If successful, both accounts must have $1000.</p>
+<ul>
+	<li>T deducts $100 from account #1.</li>
+	<li>T fails to add $100 to account #2, because it is already in another transaction.</li>
+	<li>Rollback: T restores the balance of account #1 to $1100.</li>
+</ul>
+<p>If the transaction didn&#8217;t roll back, Account #1 would have $1000 and Account #2 would have $900.</p>
+</div>
+<div class="slide">
+<h1>Consistency</h1>
+<p>The state is always <em>consistent</em> and any transaction takes the database from one consistent state to another (as understood by the database).</p>
+<p>Example consistency rules:</p>
+<ul>
+	<li>Types must be respected (e.g., no strings are allowed in an integer location).</li>
+	<li>References to other entities must be valid. (<em>referential integrity</em>)</li>
+</ul>
+<p>Doesn&#8217;t cover things the database doesn&#8217;t know about, like business rules enshrined in Java&#8230;</p>
+</div>
+<div class="slide">
+<h1>Consistency: Example</h1>
+<p><strong>Scenario:</strong> A bank customer has two savings accounts, but decides to close one of them.</p>
+<p>Suppose the customer records are in one database table and the account records are in a separate table. It&#8217;s common to use a third <em>join table</em> to map the relationships between M customers and N accounts.</p>
+<p>So, in this scenario, the join table must be updated to remove mappings between the customer and the closed account.</p>
+</div>
+<div class="slide">
+<h1>Side Note: Is Data Ever Deleted?</h1>
+<p>In many real-world scenarios, you cannot delete data, just make it &#8220;obsolete&#8221;. The problem is that sometimes you need to undo past actions (e.g., the customer changes her mind and wants to reopen that savings account) and sometimes you need historical data for regulatory and other reasons.</p>
+<p><strong>Scenario:</strong> The customer who closed one of her savings accounts wants to print out all the statements for the year, for tax purposes.</p>
+<p>If you deleted the closed account, such records would be lost.</p>
+</div>
+<div class="slide">
+<h1>Isolation</h1>
+<p>Modified data in transaction A that hasn&#8217;t been committed is invisible to other transactions.</p>
+<p>Necessary to preserve data integrity and consistency.</p>
+</div>
+<div class="slide">
+<h1>Isolation: Example</h1>
+<p><strong>Scenario:</strong> Two transactions want to add money to an account.</p>
+<ul>
+	<li>Transaction A is adding money to an account; it increases the balance, but it has not committed the change yet.</li>
+	<li>Transaction B reads the balance inside transaction A and adds more money to the <em>value of transaction A&#8217;s</em> balance.</li>
+	<li>A fails and roles back the balance. (So, A leaves the data in a consistent state.)</li>
+	<li>B succeeds, committing its balance value, which is too high. (So, B leaves the data in an inconsistent state.)</li>
+</ul>
+</div>
+<div class="slide">
+<h1>Isolation (continued)</h1>
+<p><strong>Exception:</strong> <em>Dirty Reads</em> are sometimes allowed by databases.</p>
+<p>Transactions can read &#8220;in flight&#8221; data, but not modify it. Allowed in order to improve performance of concurrent transactions and to minimize potential deadlocks.</p>
+</div>
+<div class="slide">
+<h1>Durability</h1>
+<p>Committed transactions will survive system failure.</p>
+<p>Often implemented with a transaction log that can be &#8220;replayed&#8221; if recovery is required.</p>
+</div>
+<div class="slide">
+<h1>Durability: Example</h1>
+<p><strong>Scenario:</strong> Money is deposited to an account, then the hard disk holding that database record crashes.</p>
+<ul>
+	<li>Replace the hard drive.</li>
+	<li>Replay the transaction log for all transactions with data on that drive&#8230;</li>
+</ul>
+<p>(I&#8217;ve assumed we weren&#8217;t using <span class="caps">RAID</span> and other redundancy measures.)</p>
+<p><strong>Note:</strong> The transaction is considered completed when the log entry is written!</p>
+</div>
+<div class="slide">
+<h1>Implementing <span class="caps">ACID</span></h1>
+<ul>
+	<li>Locking</li>
+	<li>Multiversion Concurrency Control (<span class="caps">MCC</span> or <span class="caps">MVCC</span>)</li>
+</ul>
+</div>
+<div class="slide">
+<h1>Locking</h1>
+<ul>
+	<li>Used when data modified <em>in place</em> (e.g., an existing row is updated).</li>
+	<li>Locking of whole table or per row (typically)</li>
+	<li>Must lock for reads and writes, to ensure consistency.</li>
+</ul>
+</div>
+<div class="slide">
+<h1>Multiversion Concurrency Control</h1>
+<ul>
+	<li>Rather than modifying existing data, make new copies.</li>
+	<li>The old data is obsolete, but&#8230;</li>
+	<li>&#8230; readers may wish to access the old data to get a snapshot of state at a point in time.</li>
+</ul>
+<ul>
+	<li>So, read locks aren&#8217;t required, because all records are write-once/read-only.</li>
+</ul>
+</div>
+<div class="slide">
+<h1>Multiversion Concurrency Control (cont.)</h1>
+<ul>
+	<li>Note that the values are called <strong>persistent</strong>, because they don&#8217;t go away on their own (or change).</li>
+	<li>Need to periodically remove old records, to save space!</li>
+	<li>Copying data can be inefficient; we&#8217;ll return to this issue&#8230;</li>
+</ul>
+</div>
+<div class="slide">
+<h1>Multiversion Concurrency Control (cont.)</h1>
+<p><strong>Optimistic Locking:</strong></p>
+<ul>
+	<li>Don&#8217;t lock to prevent others from starting transactions on the same data.</li>
+	<li>When it&#8217;s time to commit, if another transaction has committed changes already (so you&#8217;re original copy is now <em>stale</em>), then fail the transaction (and usually start again).</li>
+</ul>
+<ul>
+	<li>Each transaction has its own copy of the data.</li>
+</ul>
+</div>
+<div class="slide">
+<h1><span class="caps">MVCC</span> Failure Example</h1>
+<ul>
+	<li>Transaction 1 reads data values from record R.</li>
+	<li>Transaction 1 begins modifications to those values.</li>
+	<li>Transaction 2 reads data values from record R.</li>
+	<li>Transaction 2 begins modifications to those values.</li>
+	<li>Transaction 2 commits changes.</li>
+	<li>Transaction 1 attempts to commit changes. Data is stale, so transaction rolls back.</li>
+	<li>Repeat Transaction 1.</li>
+</ul>
+</div>
+<div class="slide">
+<h1>Costs vs. Benefits of <span class="caps">MVCC</span></h1>
+<p>- Transaction failure and retry are costly, but in most systems, they&#8217;re infrequent.<br />
+- Copies are costly to make; must be cleaned periodically.</p>
+<p>+ No read locks.<br />
++ Optimistic locking for writes.<br />
++ Good concurrency, hence good scalability.<br />
++ Consistent state snapshots over time.</p>
+</div>
+<div class="slide">
+<h1>Software Transactional Memory</h1>
+<p>Brings the <span class="caps">ACI</span> (no D) to Memory.</p>
+<ul>
+	<li>No durability, by default</li>
+	<li>&#8230; but some frameworks, like Akka, let you plug in durability using a database as a backing-store.</li>
+	<li>Most implementations use <span class="caps">MVCC</span>.</li>
+</ul>
+</div>
+<div class="slide">
+<h1>Symantics (Using Akka Syntax)</h1>
+<ul>
+	<li>Separates <em>references</em> from <em>values</em>.</li>
+	<li>The <em>values</em> should be immutable.</li>
+	<li><strong>atomic:</strong> Marks a block controlled by <span class="caps">STM</span> where <em>refs</em> can be associated with new <em>values</em>.</li>
+</ul>
+<div class="code-normal">
+<pre name="code" id="code" class="brush: scala;">import se.scalablesolutions.akka.stm.local._
+
+val ref = Ref(0)        // initialize with 0
+def counter = atomic {  // demarcate "atomic" block
+  ref alter (_ + 1)     // change value using a function
+}
+ 
+counter  // -&gt; 1
+counter  // -&gt; 2
+ref.get  // -&gt; 2 (retrieve the value explicitly)</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/dwampler/Documents/presentations/git-hub/presentations/PragmaticsOfIndustrialSWDevelopment/code/akka-stm-example1.scala">code/akka-stm-example1.scala</a></div></p>
+</div>
+<div class="slide">
+<h1>Symantics (cont.)</h1>
+<ul>
+	<li>More syntax for working with references.</li>
+</ul>
+<div class="code-normal">
+<pre name="code" id="code" class="brush: scala;">import se.scalablesolutions.akka.stm.local._
+
+val ten = 10
+val ref = Ref(1) // initialize with 1 
+atomic {  
+  ref set 10     // set new value
+}                // (actually returns old value)
+ref.get          // -&gt; 10</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/dwampler/Documents/presentations/git-hub/presentations/PragmaticsOfIndustrialSWDevelopment/code/akka-stm-example2.scala">code/akka-stm-example2.scala</a></div></p>
+</div>
+<div class="slide">
+<h1>Symantics: Blocking (&#8220;Retry&#8221;)</h1>
+<ul>
+	<li><strong>Retry</strong>: Block on a condition and try again when the condition is met.</li>
+</ul>
+<div class="code-normal">
+<pre name="code" id="code" class="brush: scala;">// Inside a Transactor for bank transfers:
+def receive = {
+  case Transfer(from, to, amount) =&gt;
+    atomic {
+      if (from.get &lt; amount) {
+        log.info("not enough money - retrying")
+        retry  // &lt;= try again "later"
+      }
+      log.info("transferring")
+      from alter (_ - amount)
+      to alter (_ + amount)
+    }
+}
+</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/dwampler/Documents/presentations/git-hub/presentations/PragmaticsOfIndustrialSWDevelopment/code/akka-stm-example3.scala">code/akka-stm-example3.scala</a></div></p>
+<p>(See <strong>Blocking Transactions</strong> on the <a href="http://doc.akkasource.org/stm-scala">Akka <span class="caps">STM</span> page</a> for the full example.)</p>
+</div>
+<div class="slide">
+<h1>Symantics: Choice (&#8220;orElse&#8221;)</h1>
+<ul>
+	<li><strong>Choice:</strong> When we can block on two paths, proceed when one of them becomes unblocked.</li>
+</ul>
+<div class="code-small">
+<pre name="code" id="code" class="brush: scala;">def receive = {
+  case EitherOr(left, right, action) =&gt;
+    atomic {
+      either {
+        if (left.ok == false)
+          retry
+        else
+          action(left)
+      } orElse {
+        if (right.ok == false)
+          retry
+        else
+          action(right)        
+      }
+    }
+}
+</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/dwampler/Documents/presentations/git-hub/presentations/PragmaticsOfIndustrialSWDevelopment/code/akka-stm-example4.scala">code/akka-stm-example4.scala</a></div></p>
+</div>
+<div class="slide">
+<h1>Composability and Modularity</h1>
+<p>Recall in &#8220;Beautiful Concurrency&#8221;, Simon Peyton Jones described how <span class="caps">STM</span> transactions are <strong>modular</strong> in the sense that they are black boxes that can be <strong>composed</strong> to form larger transactions. <strong>Blocking</strong> and <strong>choice</strong> make this possible.</p>
+</div>
+<div class="slide">
+<h1>Misc. Akka Syntax</h1>
+<ul>
+	<li>There are more features in the <span class="caps">API</span>, including configuration of implementation behavior.</li>
+	<li><code>Transactors</code> are <code>Actors</code> with <span class="caps">STM</span> behavior.</li>
+</ul>
+</div>
+<div class="slide">
+<h1>Performance?</h1>
+<ul>
+	<li>Managing references to &#8220;snapshots&#8221; adds overhead (vs. unprotected reads and writes).</li>
+	<li>Copies can be expensive&#8230;</li>
+</ul>
+</div>
+<div class="slide">
+<h1>Minimizing Copy Overhead &#8211; Trees</h1>
+<p><strong>Hint:</strong> If you have a list of 200 items and you create a new version by inserting one item in the middle, the old and new versions can <em>share</em> the sublists on either side of the changed element! You can do this in a straightforward way with tree structures.</p>
+<p>Here&#8217;s an example of how Clojure&#8217;s <code>PersistentVector</code> is implemented. Most STMs use similar approaches.</p>
+</div>
+<div class="slide">
+<h1>A Value Before an Insert</h1>
+<p><img src="images/persistentvector1.png"><img><br />
+<br />
+(credit: <a href="http://blog.higher-order.net/2009/02/01/understanding-clojures-persistentvector-implementation/">Understanding Clojures PersistentVector Implementation</a>)</div>
+<div class="slide">
+<h1>A Value After an Insert</h1>
+<p><img src="images/persistentvector2.png"><img><br />
+<br />
+(credit: <a href="http://blog.higher-order.net/2009/02/01/understanding-clojures-persistentvector-implementation/">Understanding Clojures PersistentVector Implementation</a>)</div>
+<div class="slide">
+<h1><span class="caps">STM</span> Recap</h1>
+<p>+ A very power mechanism for <em>principled</em> mutation of state.<br />
++ Cleanly separates <em>values</em> from <em>references</em> to them.<br />
++ Composable, modular transactional semantics.<br />
+- Imposes some unavoidable overhead.</p>
+</div>
+<div class="slide">
+<h1>&#8220;Memory is the New Disk&#8221;</h1>
+<p><strong>1980&#8217;s &#8211; <em>Page Faulting</em>:</strong></p>
+<p>When total program memory exceeded physical memory, blocks (&#8220;pages&#8221;) of memory would be swapped to disk and back again, using a least-recently used algorithm. But you wanted to avoid it because of the performance penalty. It was several orders of magnitude slower than memory access.</p>
+</div>
+<div class="slide">
+<h1>&#8220;Memory is the New Disk&#8221; (cont.)</h1>
+<p><strong>2000&#8217;s &#8211; <em>Cache Misses</em>:</strong></p>
+<p>Memory, like CPUs, has also grown according to Moore&#8217;s Law, <em>but more slowly</em>. Also, bus speeds aren&#8217;t as fast as <span class="caps">CPU</span> clock speeds. So today, <strong>memory access</strong> is several orders of magnitude slower than on-chip <strong>cache</strong> access.</p>
+<p>So, for optimal performance, we should <em>really</em> program to minimize cache misses.</p>
+</div>
+<div class="slide">
+<h1>Akka Code Project Setup</h1>
+<p>For the 2nd half of tonight&#8217;s class, follow the instructions in the notes for Lecture 1 to setup the project. We&#8217;ll actually work through them together in this lecture. Then I&#8217;ll describe the exercise I want you to do for next week (see notes below).</p>
+</div>
+<div class="slide">
+<h1>This Week&#8217;s Assignment: Reading</h1>
+<p>More on the underpinnings of <span class="caps">STM</span>,</p>
+<ul>
+	<li><a href="http://en.wikipedia.org/wiki/ACID"><span class="caps">ACID</span></a> (Wikipedia).</li>
+	<li><a href="http://en.wikipedia.org/wiki/Multiversion_concurrency_control">Multiversion Concurrency Control</a> (Wikipedia).</li>
+</ul>
+<p>For a more detailed look at <span class="caps">STM</span>, see this <a href="http://java.ociweb.com/mark/stm/article.html">detailed paper</a> published by <span class="caps">OCI</span>. For information on Clojure&#8217;s persistent data structures, see for example <a href="http://blog.higher-order.net/2009/02/01/understanding-clojures-persistentvector-implementation/">Understanding Clojures PersistentVector Implementation</a></p>
+</div>
+<div class="slide">
+<h1>This Week&#8217;s Assignment: Reading (cont.)</h1>
+<p>If you need more information on Scala and Akka, see the following,</p>
+<ul>
+	<li>My <a href="http://polyglotprogramming.com/papers/SeductionsOfScala.pdf">Seductions of Scala</a> presentation. It should fill in a few Scala gaps. <strong><span class="caps">NOTE</span>:</strong> I am presenting this talk at the September 16th <a href="http://meetup.com/chicagoscala">Chicago Scala User&#8217;s Group</a> (<span class="caps">RSVP</span> required).</li>
+	<li><a href="http://www.naildrivin5.com/scalatour/wiki_pages/MainPage">Another Tour of Scala</a>.</li>
+	<li>This presentation on Akka: <a href="http://www.slideshare.net/jboner/akka-scala-summit-oscon-2010">slideshare.net/jboner/akka-scala-summit-oscon-2010</a>, which is also shown on the home page for the Akka Documentation: <a href="http://doc.akkasource.org">doc.akkasource.org</a>. See in particular the discussion of how actors, agents, and <span class="caps">STM</span> work in Akka.</li>
+</ul>
+<p>For more on Scala and Akka, see the Scala and Akka sections in the <a href="references.html">References</a>.</p>
+</div>
+<div class="slide">
+<h1>This Week&#8217;s Assignment: Reading (cont.)</h1>
+<ul>
+	<li><a href="http://en.wikipedia.org/wiki/Distributed_computing">Distributed Computing</a>. Focus on the Introduction, History, Applications, and Architectures sections.</li>
+</ul>
+</div>
+<div class="slide">
+<h1>This Week&#8217;s Assignment: Project</h1>
+<p>Complete the setup instructions in Lecture 1 that we went through this evening.</p>
+<ul>
+	<li>The <code>sbt update</code> command should be successful with no errors.</li>
+	<li>MongoDB should be installed and you should know how to start and stop it.</li>
+	<li>The <code>sbt test</code> command should work with no test failures.</li>
+</ul>
+</div>
+<div class="slide">
+<h1>This Week&#8217;s Assignment: Project</h1>
+<p>Work the suggested exercise from last week, but with the refinements I will describe now. I have repeated that section from the notes, with the changes I want you to do, in very specific detail (since I know most of you are new to Scala, as well as new to this code). Reminder: You are welcome to work on this assignment with your class mates.</p>
+<p>However, this week, I would like you to commit your changes to your cloned git repository on GitHub. I&#8217;ll tell you how at the end of the instructions.</p>
+</div>
+<div class="slide">
+<h1>Add New Functionality</h1>
+<p>(Adapted from the Lecture 1 notes.)</p>
+<ul>
+	<li>In an editor, open the file <code>test/scala/server/finance/InstrumentAnalysisServerTest.scala</code>.</li>
+	<li>Find the two <code>TODO</code> comments, one each before a <code>test</code>.</li>
+	<li>In the <em>first</em> of those tests, comment out the line <code>pending</code> (like Java, you can put a <code>//</code> before the word <code>pending</code>).</li>
+</ul>
+</div>
+<div class="slide">
+<h1>Add New Functionality (cont)</h1>
+<ul>
+	<li>Run the <code>test</code> action in sbt. The two tests should now fail. You should see the following near the end of the output.</li>
+</ul>
+<p><code>[error] Failed: : Total 110, Failed 1, Errors 0, Passed 104, Skipped 5</code></p>
+<p>Try to understand the error messages:</p>
+<ul>
+	<li>Look for the stack trace.</li>
+	<li>Ignore the verbose server messages (hint: most of those contain the words <code>akka</code> and <code>thread</code>), but notice the <code>org.scalatest.TestFailedException</code> messages.</li>
+</ul>
+</div>
+<div class="slide">
+<h1>Add New Functionality (cont)</h1>
+<p>When you find the stack trace, <em>above</em> it is this output:</p>
+<div class="code-tiny">
+<pre name="code" id="code" class="brush: scala;">[error] Test Failed: calculateStatistics returns a JSON string containing all data that matches the instrument criteria
+org.scalatest.TestFailedException: JObject(List(JField(criteria,JObject(List(JField(instruments,JArray(List(JString(A)))), JField(statistics,JArray(List(JString(price[$])))), JField(start,JInt(0)), JField(end,JInt(1283824964864))))), JField(results,JArray(List(JObject(List(JField(timestamp,JInt(1283824954864)), JField(symbol,JString(A)), JField(price,JDouble(0.0)))), JObject(List(JField(timestamp,JInt(1283824955864)), JField(symbol,JString(C)), JField(price,JDouble(10.0)))), JObject(List(JField(timestamp,JInt(1283824956864)), JField(symbol,JString(A)), JField(price,JDouble(20.0)))), JObject(List(JField(timestamp,JInt(1283824957864)), JField(symbol,JString(B)), JField(price,JDouble(30.0)))), JObject(List(JField(timestamp,JInt(1283824958864)), JField(symbol,JString(A)), JField(price,JDouble(40.0))))))))) did not equal JObject(List(JField(criteria,JObject(List(JField(instruments,JArray(List(JString(A)))), JField(statistics,JArray(List(JString(price[$])))), JField(start,JInt(0)), JField(end,JInt(1283824964864))))), JField(results,JArray(List(JObject(List(JField(timestamp,JInt(1283824954864)), JField(symbol,JString(A)), JField(price,JDouble(0.0)))), JObject(List(JField(timestamp,JInt(1283824958864)), JField(symbol,JString(A)), JField(price,JDouble(40.0)))), JObject(List(JField(timestamp,JInt(1283824956864)), JField(symbol,JString(A)), JField(price,JDouble(20.0)))))))))
+</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/dwampler/Documents/presentations/git-hub/presentations/PragmaticsOfIndustrialSWDevelopment/code/exercise1-test-failure.scala">code/exercise1-test-failure.scala</a></div></p>
+<p>(Yeah!)</p>
+</div>
+<div class="slide">
+<h1>Add New Functionality (cont)</h1>
+<p>This is <span class="caps">JSON</span> represented using the Scala <span class="caps">JSON</span> library that is part of the <a href="http://liftweb.net">Lift Web framework</a> (which the project uses). I find it easiest to copy and paste messy output like this to an editor where I can manipulate it&#8230;</p>
+<p>But we don&#8217;t really need to do that now. Look for the words <code>did not equal</code>. The &#8220;<span class="caps">JSON</span>&#8221; before these words is much longer than the &#8220;<span class="caps">JSON</span>&#8221; after them. The before case is what was actually returned, while the after case is what we expected. Recall the purpose of the test, to confirm that the results are filtered for just the <code>A</code> stocks. Look for these strings: <code>JField(instruments,JArray(List(JString(A)))</code>. The <code>A</code> is the instrument (stock symbol). The expected string only has <code>A</code> &#8220;fields&#8221;, while the actual also has <code>B</code> and <code>C</code> fields, too.</p>
+</div>
+<div class="slide">
+<h1>Add New Functionality (cont)</h1>
+<p>Now look again at the stack trace:</p>
+<ul>
+	<li>On what line <em>in the test file</em> did the failure occur? (That is, not a top line, which occurred in the <em>ScalaTest</em> <span class="caps">API</span>.)</li>
+</ul>
+<p>That line is 112 (at the time of this writing&#8230;). That line in <code>test/scala/server/finance/InstrumentAnalysisServerTest.scala</code> is</p>
+<div class="code-tiny">
+<pre name="code" id="code" class="brush: scala,;">
+
+analysisServer.calculateStatistics(criteria) should equal (expected)
+</pre></div>
+<p>Note how this <em>test assertion</em> reads like English? The result of &#8220;calling the <code>calculateStatistics</code> method should equal the <code>expected</code> value&#8221;.</p>
+</div>
+<div class="slide">
+<h1>Add New Functionality (cont)</h1>
+<ul>
+	<li>Okay, to start adding new functionality, run this <code>sbt</code> command:</li>
+</ul>
+<p><code>~test-only org.chicagoscala.awse.server.finance.InstrumentAnalysisServerTest</code></p>
+<ul>
+	<li>Note that it will wait (no prompt is returned) and every time you save code changes, this test will run.</li>
+	<li>Using the <code>~test-only</code> &#8220;action&#8221; saves time, running in a few seconds, while running all the tests takes longer.</li>
+</ul>
+</div>
+<div class="slide">
+<h1>Add New Functionality (cont)</h1>
+<ul>
+	<li>Now, in your editor of choice, open the file <code>main/scala/server/finance/InstrumentAnalysisServer.scala</code> (the file being tested&#8230;)</li>
+	<li>Find the <code>TODO</code> before the method named <code>fetchPrices</code>.</li>
+	<li>This method already has the &#8220;instruments&#8221; (i.e., stocks) and statistics information.</li>
+</ul>
+</div>
+<div class="slide">
+<h1>Add New Functionality (cont.)</h1>
+<ul>
+	<li>Find this line:</li>
+</ul>
+<div class="code-tiny">
+<pre name="code" id="code" class="brush: scala,;">
+
+formatPriceResults(filter(result), instruments, statistics, startMillis, endMillis)
+</pre></div>
+<ul>
+	<li>Then find the <code>filter</code> method below it. Note that it takes a <code>(json: JValue)</code> (i.e., a variable named <code>json</code> of type <code>JValue</code>) and it simply returns the passed-in value unaltered.</li>
+	<li>Your task is to add filtering by instruments.</li>
+</ul>
+</div>
+<div class="slide">
+<h1>Add New Functionality (cont.)</h1>
+<ul>
+	<li>Note the <code>instruments</code> argument passed to <code>fetchPrices</code>; add this argument to the <code>filter</code> method.</li>
+	<li>Modify the call to <code>filter</code> to pass the <code>instruments</code>.</li>
+	<li>Replace the body of <code>filter</code> (everything after the <code>=</code> sign) with this body:</li>
+</ul>
+<div class="code-tiny">
+<pre name="code" id="code" class="brush: scala,;">
+
+{  val names = Instrument.toSymbolNames(instruments)
+  // log.error ("json: "+json.toString)
+  // log.error ("json.values: "+json.values.toString)
+  // log.error ("symbol: "+(json \\ "symbol").toString)
+  json match {
+    case JArray(list) =&gt; list filter { element =&gt; 
+      (element \\ "symbol") match {
+        case JField("symbol", x) if (names.exists(x == JString(_))) =&gt; true
+        case _ =&gt; false
+      }
+    }
+    case _ =&gt; true
+  }
+}
+</pre></div>
+</div>
+<div class="slide">
+<h1>Add New Functionality (cont.)</h1>
+<ul>
+	<li>Now the test should be passing (showing <code>[success] Successful</code>).</li>
+	<li>Hit return to exit <code>~test-only</code> and run all the tests (<code>test</code>) and confirm that they all now pass.</li>
+</ul>
+</div>
+<div class="slide">
+<h1>Add New Functionality (cont.)</h1>
+<p>You may not understand what this method is doing. It&#8217;s actually quite sophisticated and relies on very specific knowledge about the underlying format of the <code>json: JValue</code>. In fact, the correct way to implement this feature is to support this filtering at the database level, which we will learn how to do with MongoDB. This approach is both more efficient (we don&#8217;t waste time returning stuff we&#8217;ll throw away), more flexible, and more robust.</p>
+<p>Note that I added some <code>log.error</code> statements in comments. Try running the <code>~test-only</code> command again and uncomment those lines. Try to find them in all the noisy output. Do they help you understand what&#8217;s going on? Look at the Lift <span class="caps">JSON</span> documentation to further understand this <span class="caps">API</span>. It is here: <a href="http://main.scala-tools.org/mvnsites/liftweb-2.0/framework/scaladocs/index.html">scala-tools.org/mvnsites/liftweb-2.0/framework/scaladocs/index.html</a> (Hint: click the <code>net.liftweb.json</code> link to focus in on the <span class="caps">JSON</span> part of the <span class="caps">API</span>.)</p>
+</div>
+<div class="slide">
+<h1>Turning in the Assignment</h1>
+<p>Before class next week, 6/14, commit your code changes to GitHub, using these commands.</p>
+<p>First make sure you don&#8217;t have any changes that aren&#8217;t checked in.</p>
+<ul>
+	<li><code>git status</code></li>
+</ul>
+<p>If you added any new files to the project (unlikely) and you see them listed in the section labeled <code># Untracked files:</code>, then <em>add</em> those files to git (<strong>Note: ignore the <code>logs</code> and <code>data</code> directories!</strong>):</p>
+<ul>
+	<li><code>git add files_to_be_added</code></li>
+</ul>
+<p>Where <code>files_to_be_added</code> is the list of new files to add.</p>
+</div>
+<div class="slide">
+<h1>Turning in the Assignment (cont.)</h1>
+<p>In the status output, you might see files in the section labeled <code># Changed but not updated:</code>. These are files where you&#8217;ve made local changes, but not yet checked them in. If so, checkin those files to your <em>local</em> repository now.</p>
+<ul>
+	<li><code>git checkin -m 'appropriate comment' files</code></li>
+</ul>
+<p>You can either list the <code>files</code> or omit the list, in which case <em>all</em> the files with changes will be checked in.</p>
+</div>
+<div class="slide">
+<h1>Turning in the Assignment (cont.)</h1>
+<p>Finally, <em>push</em> your local repository changes to the copy on GitHub.</p>
+<ul>
+	<li><code>git push</code></li>
+</ul>
+<p>You&#8217;ll see some output, but no error messages.</p>
+<p>When finished, send me email. Also, tell me your username on GitHub, so I&#8217;ll know who owns which <em>forks</em> of the project.</p>
+<p>Again, if you have any problems with these steps, let me know. We can go over them next week in class, too, if necessary.</div></p>
 
   <!-- Syntax Highlighter -->
   <script language="javascript" type="text/javascript" src="../lib/scripts/shCore.js"></script>

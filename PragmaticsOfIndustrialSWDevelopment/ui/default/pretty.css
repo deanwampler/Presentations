@@ -1,6 +1,6 @@
 /* Following are the presentation styles -- edit away! */
 
-body {background: #D2E7DB url(bodybg.gif) -16px 0 no-repeat; color: #000; font-size: 2em;}
+body {background: #D2E7DB url(bodybg.gif) -16px 0 no-repeat; color: #000; font-size: 1.6em;}
 :link, :visited {text-decoration: none; color: #00C;}
 #controls :active {color: #88A !important;}
 #controls :focus {outline: 1px dotted #227;}

@@ -4,7 +4,7 @@ code {
 
 div.slide code {
     font-weight: normal;
-    font-size: 85%;
+    font-size: 75%;
     color:  #228;
 }
     
@@ -122,7 +122,7 @@ div.slide h1.exercise {
 
 div#slide0,  div.title {
     height: 100%;
-    background-image: url(http://www.luc.edu/cs/supports/computer_science.jpg); /* scala_logo.png, ruby.png, ObjectMentorBallLogo.png, OMI_Logo.jpg, OMI_HeaderArea_Logo.png */
+    background-image: url(http://www.luc.edu/cs/supports/computer_science.jpg); /* scala_logo.png, ruby.png, ObjectMentorBallLogo.png */
     background-repeat: no-repeat;
     background-position: top right;
 }
