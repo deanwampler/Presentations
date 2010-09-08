@@ -346,6 +346,20 @@ h1. Get the Project Code (cont)
 
 * The @*@ shows the current branch.
 
+h1. (Update) These steps were added after Lecture 2
+
+* Add the following 3 lines to the end of the project's @.git/config@ file.
+
+:inlinecode lang=scala, class=code-tiny
+[branch "COMP-388-488"]
+        remote = origin
+        merge = refs/heads/COMP-388-488
+:endinlinecode 
+
+* Run this command
+
+@git checkout origin COMP-388-488@
+
 h1. (Get the Lecture Notes!)
 
 I'm also keeping the lecture notes on GitHub. Unless you want to contribute patches ;) there's no need to fork this project.

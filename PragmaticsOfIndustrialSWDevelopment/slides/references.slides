@@ -14,13 +14,14 @@ I don't expect you to read all these references! Some will be assigned as homewo
 * Harold Abelson and Gerald Jay Sussman, "Structure and Interpretation of Computer Programs", MIT Press, 1996. ISBN: 0262011530. "Online access":http://mitpress.mit.edu/sicp/. A one-volume survey of computer science. Master this book and you'll be well ahead of most software developers!
 * Andrew Hunt and David Thomas, "The Pragmatic Programmer: From Journeyman to Master", Addison-Wesley, 1999. ISBN: 020161622X. Very good advice for growing your professional career.
 
-h1. Recommended Reading: Scala and Akka
+h1. Recommended Reading: Scala, Akka, JavaScript
 
 * "Learning Scala":http://www.scala-lang.org/node/1305 on the "Scala Language Website":http://scala-lang.org, where you'll also find information about downloads, tutorials, _Scaladocs_, etc.
 * "Another Tour of Scala":http://www.naildrivin5.com/scalatour/wiki_pages/MainPage. Concise guide to Scala.
 * The "Akka Framework":http://akkasource.org and the "documentation":http://docs.akkasource.org for it. The course project and many examples in the lectures use Akka.
 * "Jonas Bon&#233;r's presentation on Akka at OSCON 2010":http://www.slideshare.net/jboner/akka-scala-summit-oscon-2010, which is also shown on the home page for the Akka Framework documentation: "doc.akkasource.org":http://doc.akkasource.org
 * "The Seductions of Scala":http://polyglotprogramming.com/papers/SeductionsOfScala.pdf a presentation I occasionally give at conferences and user groups.
+* Douglas Crockford, "JavaScript: The Good Parts", O'Reilly, 2008. ISBN: 9780596517748.
 
 h1. Recommended Reading: Lock-Based Concurrency
 
@@ -31,7 +32,7 @@ h1. Recommended Reading: Actor-Based Concurrency
 
 * "Actor Model":http://en.wikipedia.org/wiki/Actor_model (Wikipedia).
 * Akka's Actor "documentation":http://doc.akkasource.org/actors-scala.
-
+* "Resolve common concurrency problems with GPars":http://www.ibm.com/developerworks/java/library/j-gpars/index.html. Discusses a Groovy concurrency library that wraps several models, including Executors and Fork/Join from the Java Concurrency API, Actors, Agents and Dataflow Variables (the last two we won't cover in the course).--
 h1. Recommended Reading: STM
 
 (See also the next section on transactions.)
