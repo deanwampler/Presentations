@@ -267,7 +267,7 @@ h1. This Week's Assignment: Reading
 More on the underpinnings of STM,
 
 * "ACID":http://en.wikipedia.org/wiki/ACID (Wikipedia).
-* "Multiversion Concurrency Control":http://en.wikipedia.org/wiki/Multiversion_concurrency_control (Wikipedia).
+* "Multiversion Concurrency Control":http://en.wikipedia.org/wiki/Multiversion_concurrency_control (Wikipedia). Unfortunately, the text can be a little confusing.
 
 For a more detailed look at STM, see this "detailed paper":http://java.ociweb.com/mark/stm/article.html published by OCI. For information on Clojure's persistent data structures, see for example "Understanding Clojures PersistentVector Implementation":http://blog.higher-order.net/2009/02/01/understanding-clojures-persistentvector-implementation/
 

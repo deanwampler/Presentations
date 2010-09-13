@@ -49,7 +49,62 @@
 
 <div class="presentation">
 <div class="slide">
-<h1>Lecture 3: Scaling Systems, Part I</div></h1>
+<h1>Lecture 3: Scaling Systems, Part I</h1>
+</div>
+<div class="slide">
+<h1>Why do we scale systems?</h1>
+<ul>
+	<li><strong>High Availability</strong>  (HA)</li>
+</ul>
+</div>
+<div class="slide">
+<h1><em>single points of failure</em></h1>
+</div>
+<div class="slide">
+<h1>Topologies</h1>
+</div>
+<div class="slide">
+<h1>Replication vs. Sharding</h1>
+<ul>
+	<li><strong>Replication:</strong> Duplicate copies of the same data.</li>
+	<li><strong>Sharding:</strong> Splitting a large data set across multiple servers.</li>
+</ul>
+</div>
+<div class="slide">
+<h1>Sharding with Replication in MongoDB</h1>
+<p><img src="images/mongodb_sharding_replica_sets.png"><img></div>
+<div class="slide">
+<h1>This Week&#8217;s Assignment: Reading</h1>
+<p>Read the discussion on MongoDB Replication and Sharding. MongoDB&#8217;s implementations are representative examples of these general techniques and the reading will also help you get more familiar with MongoDB.</p>
+<p>Note that the syntax details of MongoDB commands and the details of which techniques to use with particular versions of MongoDB, etc. aren&#8217;t important. Focus instead on the concepts discussed.</p>
+</div>
+<div class="slide">
+<h1>This Week&#8217;s Assignment: Reading &#8211; Replication</h1>
+<p><a href="http://www.mongodb.org/display/DOCS/Replication">Replication</a></p>
+<p>Follow the link in the section <em>Verifying propagation of writes with getlasterror</em>.  What&#8217;s important here is why this is an issue &#8211; why would a client care if propagation happens immediately or not?</p>
+<p>View the video or read the slides describing MongoDB&#8217;s new approach to replication, called <em>replica sets</em>.</p>
+<ul>
+	<li><a href="http://lacantine.ubicast.eu/videos/21-06-2010-130932-partie-6/">Video</a></li>
+	<li><a href="http://www.slideshare.net/mongodb/mongodb-replica-sets">Slides</a></li>
+</ul>
+<p>(Yes, it appears that something is wrong with the last 5 or so slides, but the &#8220;good&#8221; slides have the content I care about&#8230;)</p>
+</div>
+<div class="slide">
+<h1>This Week&#8217;s Assignment: Reading &#8211; Sharding</h1>
+<p><a href="http://www.mongodb.org/display/DOCS/Sharding+Introduction">Sharding</a></p>
+<p>Make sure you understand the different goals of replication and sharding and how they also complement each other. Also, when combined, as discussed on the Sharding page, are there any <em>single points of failure</em>?</p>
+</div>
+<div class="slide">
+<h1>This Week&#8217;s Assignment: Reading (cont.)</h1>
+</div>
+<div class="slide">
+<h1>Add New Functionality</h1>
+<p>This week, we&#8217;ll add the <span class="caps">NYSE</span> data to the project.</p>
+<p>&#8230;</p>
+</div>
+<div class="slide">
+<h1>Add New Functionality</h1>
+<p>The <code>datatmp</code> directory holds the files with <span class="caps">JSON</span> expressions that we generated from the <span class="caps">YAML</span> files. (They are one-line <span class="caps">JSON</span> expressions that <code>mongoimport</code> wants to use).</div></p>
 
   <!-- Syntax Highlighter -->
   <script language="javascript" type="text/javascript" src="../lib/scripts/shCore.js"></script>

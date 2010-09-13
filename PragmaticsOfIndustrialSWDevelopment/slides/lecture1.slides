@@ -52,7 +52,7 @@ h1. Schedule (cont.)
 | 10/19 | Midterm, Scaling Systems, Part II (Map/Reduce and Their Kin) |
 | 10/26 | Recent Advances in Object-Oriented Programming |
 | 11/02 | Functional Programming: Into the Real World |
-| 11/09 |Object-Oriented Programming vs. Functional Programming: a Critique of Pure Programming |
+| 11/09 | Object-Oriented Programming vs. Functional Programming: a Critique of Pure Programming |
 
 h1. Schedule (cont.)
 
@@ -383,6 +383,10 @@ h1. Build the Project
 * Open the @README.md@ file.
 * Follow its instructions for installing MongoDB and running the project tests.
 * Browse the code base and try to recall our discussion of it in class.
+
+h1. Add New Functionality
+
+*The instructions after this point are repeated with modifications as the homework exercise for Lecture 2, since we deferred the assignment until then. So, please go to the Lecture 2 notes, "This Week's Assignment: Project" and proceed from there.*
 
 h1. Add New Functionality
 

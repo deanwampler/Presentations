@@ -1,1 +1,152 @@
 h1. Lecture 3: Scaling Systems, Part I
+
+h1. How Do Systems Fail?
+
+* _Single points of failure._
+* Poor resiliency.
+* Insufficient resources.
+* Insufficient load handling capability.
+* Poor security.
+* Complexity makes evolution difficult.
+
+h1. Single Points of Failure
+
+Points in a system where a failure of one of those points causes the whole system to fail.
+
+Examples:
+* CPU, RAM, Disk, Network Interface, ...
+* Database
+* Middle-tier server
+* Other network service
+
+h1. Poor Resiliency
+
+Even without single points of failure, can a failure trigger a cascade of failures?
+
+h1. Insufficient Load Handling Capability
+
+The system can't provide services to all clients within an acceptable window of opportunity.
+
+Examples:
+* Too many concurrent users.
+
+h1. Insufficient Resources
+
+There isn't enough of a resource to satisfy demand.
+
+Examples:
+* Disk or memory space.
+* Network bandwidth.
+* Database transaction throughput.
+* Computational speed.
+* Physical space!
+
+h1. Poor Security
+
+Systems connected to the Internet are more vulnerable than closed systems.
+
+... but security breaches "from the inside jobs" are also significant.
+
+h1. Complexity Makes Evolution Difficult
+
+A poorly structured system is difficult to extend to support new functionality.
+
+Potential Examples:
+* Source code.
+* Network topology.
+* Excessive coupling of components.
+* Too _little_ distribution (i.e., single elements with too many responsibilities leads to complexity).
+
+h1. Large-scale System Concepts
+
+* *High Availability:* (HA) The system is rarely unavailable to provide service.
+
+* *High Reliability:* The system is resilient against faults and errors, some of which may be caused by software bugs.
+
+* *Authentication:* Reliably identifying a client (user or external system) attempting to use system resources.
+
+* *Authorization:* Once a client is authenticated, controlling access to those resources for which the client is permitted to use.
+
+h1. Achieving High Availability
+
+* *Redundancy:* 
+
+
+h1. Topologies
+
+* *Client–server:* Smart client code contacts the server for data then formats and displays it to the user. Input at the client is committed back to the server when it represents a permanent change.
+* *3-tier architecture:* Three tier systems move the client intelligence to a middle tier so that stateless clients can be used. This simplifies application deployment. Most web applications are 3-Tier.
+* *n-tier architecture:* n-tier refers typically to web applications which further forward their requests to other enterprise services. This type of application is the one most responsible for the success of application servers.
+* *Tightly coupled (clustered):* refers typically to a cluster of machines that closely work together, running a shared process in parallel. The task is subdivided in parts that are made individually by each one and then put back together to make the final result.
+* *Peer-to-peer:* an architecture where there is no special machine or machines that provide a service or manage the network resources. Instead all responsibilities are uniformly divided among all machines, known as peers. Peers can serve both as clients and servers.
+* *Space based:* refers to an infrastructure that creates the illusion (virtualization) of one single address-space. Data are transparently replicated according to application needs. Decoupling in time, space and reference is achieved.
+
+h1. Replication vs. Sharding
+
+* *Replication:* Duplicate copies of the same data.
+* *Sharding:* Splitting a large data set across multiple servers.
+
+
+h1. Sharding with Replication in MongoDB
+
+<p><img src="images/mongodb_sharding_replica_sets.png"><img>
+
+h1.  Examples of Distributed Systems and Applications
+
+  Telecommunication networks:
+  Telephone networks and cellular networks.
+  Computer networks such as the Internet.
+  Wireless sensor networks.
+  Routing algorithms.
+  Network applications:
+  World wide web and peer-to-peer networks.
+  Massively multiplayer online games and virtual reality communities.
+  Distributed databases and distributed database management systems.
+  Network file systems.
+  Distributed information processing systems such as banking systems and airline reservation systems.
+  Real-time process control:
+  Aircraft control systems.
+  Industrial control systems.
+  Parallel computation:
+  Scientific computing, including cluster computing and grid computing and various volunteer computing projects; see the list of distributed computing projects.
+  Distributed rendering in computer graphics.
+
+h1. This Week's Assignment: Reading
+
+Read the discussion on MongoDB Replication and Sharding. MongoDB's implementations are representative examples of these general techniques and the reading will also help you get more familiar with MongoDB. 
+
+Note that the syntax details of MongoDB commands and the details of which techniques to use with particular versions of MongoDB, etc. aren't important. Focus instead on the concepts discussed.
+
+h1. This Week's Assignment: Reading - Replication
+
+"Replication":http://www.mongodb.org/display/DOCS/Replication
+
+Follow the link in the section _Verifying propagation of writes with getlasterror_.  What's important here is why this is an issue - why would a client care if propagation happens immediately or not?
+
+View the video or read the slides describing MongoDB's new approach to replication, called _replica sets_.
+
+* "Video":http://lacantine.ubicast.eu/videos/21-06-2010-130932-partie-6/
+* "Slides":http://www.slideshare.net/mongodb/mongodb-replica-sets
+ 
+(Yes, it appears that something is wrong with the last 5 or so slides, but the "good" slides have the content I care about...)
+
+h1. This Week's Assignment: Reading - Sharding
+
+"Sharding":http://www.mongodb.org/display/DOCS/Sharding+Introduction
+
+Make sure you understand the different goals of replication and sharding and how they also complement each other. Also, when combined, as discussed on the Sharding page, are there any _single points of failure_?
+
+h1. This Week's Assignment: Reading for Next Week
+
+* "NoSQL, Heroku, and You":http://blog.heroku.com/archives/2010/7/20/nosql/
+
+h1. Add New Functionality
+
+This week, we'll add the NYSE data to the project.
+
+...
+
+h1. Add New Functionality
+
+The @datatmp@ directory holds the files with JSON expressions that we generated from the YAML files. (They are one-line JSON expressions that @mongoimport@ wants to use).
+
