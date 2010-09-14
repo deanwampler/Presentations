@@ -93,21 +93,30 @@
 <div class="slide"></li>
 </ul>
 <h1>Recommended Reading: <span class="caps">STM</span></h1>
-<p>(See also the next section on transactions.)</p>
+<p>(See also the section on <em>Software Transactional Memory</em>.)</p>
+</div>
+<div class="slide">
+<h1>Recommended Reading: Software Transactional Memory</h1>
 <ul>
 	<li>Simon Peyton Jones, <em>Beautiful Concurrency</em>, in &#8220;Beautiful Code&#8221;, Chapter 24, pgs. 385-406. Online:  <a href="http://research.microsoft.com/en-us/um/people/simonpj/papers/stm/#beautiful">http://research.microsoft.com/en-us/um/people/simonpj/papers/stm/#beautiful</a>.</li>
 	<li>Simon Peyton Jones, QCon 2007 Keynote on <span class="caps">STM</span>, <a href="http://research.microsoft.com/~simonpj/papers/stm/STM-OSCON.pdf">slides</a>, <a href="http://blip.tv/file/get/OSCON-OSCON2007SimonPeytonJones914.mov">video</a>.</li>
 	<li><a href="http://en.wikipedia.org/wiki/Software_transactional_memory">Software Transactional Memory</a> (Wikipedia).</li>
 	<li>R. Mark Volkmann, <a href="http://java.ociweb.com/mark/stm/article.html">Software Transactional Memory</a> (<span class="caps">OCI</span> web site).</li>
+	<li>R. Mark Volkmann, <a href="http://java.ociweb.com/mark/stm/STM_1up.pdf">Tackling Concurrency with <span class="caps">STM</span></a></li>
 	<li>Michael L. Scott, et al. <a href="http://www.cs.rochester.edu/u/scott/papers/2006_TRANSACT_RSTM.pdf">Lowering the Overhead of Nonblocking Software Transactional Memory</a>.</li>
 	<li><a href="http://clojure.org/refs">Clojure <span class="caps">STM</span></a>.</li>
+	<li>Rich Hickey&#8217;s QCon presentation on <a href="http://www.google.com/url?sa=t&amp;source=web&amp;cd=3&amp;sqi=2&amp;ved=0CCsQFjAC&amp;url=http%3A%2F%2Fqconlondon.com%2Flondon-2009%2Ffile%3Fpath%3D%2Fqcon-london-2009%2Fslides%2FRichHickey_PersistentDataStructuresAndManagedReferences.pdf&amp;rct=j&amp;q=clojure%20persistent%20data%20structures&amp;ei=xkyNTO_iGYSjnQfY19j5Cg&amp;usg=AFQjCNFpIFm5FOItUjTne013vOEwAnYGZQ&amp;cad=rja">Persistent Data Structures and Managed References</a>. <a href="http://www.infoq.com/presentations/Value-Identity-State-Rich-Hickey">Video</a> of the same presentation.</li>
 	<li><a href="http://blog.higher-order.net/2009/02/01/understanding-clojures-persistentvector-implementation/">Understanding Clojures PersistentVector Implementation</a></li>
+	<li>Excellent blog post comparing <a href="http://eclipsesource.com/blogs/2009/12/13/persistent-trees-in-git-clojure-and-couchdb-data-structure-convergence/">Persistent Trees in Git, Clojure, and CouchDB</a><br />
+(See also the links on <em>Multiversion Concurrency Control</em> in the section on <em><span class="caps">SQL</span> and NoSQL Databases</em>.)</li>
 </ul>
 </div>
 <div class="slide">
 <h1>Recommended Reading: <span class="caps">SQL</span> and NoSQL Databases</h1>
 <ul>
 	<li><a href="http://en.wikipedia.org/wiki/ACID"><span class="caps">ACID</span></a> (Wikipedia).</li>
+	<li><a href="http://en.wikipedia.org/wiki/Multiversion_concurrency_control">Multiversion Concurrency Control</a> (Wikipedia). Unfortunately, the text can be a little confusing.</li>
+	<li><a href="http://blog.heroku.com/archives/2010/7/20/nosql/">NoSQL, Heroku, and You</a>. Good discussion of why NoSQL is important.</li>
 	<li><a href="http://nosqlsummer.org/paper/cap-theorem">The <span class="caps">CAP</span> Theorem</a>.</li>
 	<li><a href="http://nosqlsummer.org/papers">NoSQL Summer</a>.</li>
 	<li><a href="http://dbmsmusings.blogspot.com/2010/04/problems-with-cap-and-yahoos-little.html">My Problem with <span class="caps">CAP</span> and Yahoo&#8217;s Little Known NoSQL System</a>.</li>
@@ -118,23 +127,40 @@
 <h1>Recommended Reading: Distributed Systems</h1>
 <ul>
 	<li><a href="http://en.wikipedia.org/wiki/Distributed_computing">Distributed Computing</a> (Wikipedia).</li>
-	<li><a href="http://en.wikipedia.org/wiki/Tuple_space">Tuple Space</a> (Wikipedia).</li>
-	<li><a href="http://www.terracotta.org/">Terracotta</a>. A toolkit that &#8220;virtualizes&#8221; a single <span class="caps">JVM</span> instance across multiple systems.</li>
+	<li><a href="http://www.bacchae.co.uk/docs/dist.html">A Primer on Distributed Computing</a>. A basic discussion of the issues and techniques involved in building a distribute system, like <a href="http://setiathome.berkeley.edu/">SETI@home</a>.</li>
+	<li>George Reese, &#8220;Cloud Application Architectures&#8221;, O&#8217;Reilly, 2009. <span class="caps">ISBN</span>: 9780596156367.</li>
+	<li>Diomidis Spinellis and Georgios Gousios, &#8220;Beautiful Architecture&#8221;, O&#8217;Reilly, 2009. <span class="caps">ISBN</span>: 0596517984. Good essays on architecture.</li>
+	<li><a href="http://en.wikipedia.org/wiki/Consensus_(computer_science)">Consensus</a>.</li>
+	<li><a href="http://en.wikipedia.org/wiki/Self-stabilisation">Self Stabilization</a>.</li>
+	<li><a href="http://en.wikipedia.org/wiki/Byzantine_fault_tolerance">Byzantine fault tolerance</a>.</li>
+	<li>Martin Fowler, et al., &#8220;Patterns of Enterprise Application Architecture&#8221;, Addison-Wesley, 2003. <span class="caps">ISBN</span>: 0321127420. Conventional, object-oriented approach. Does not cover the latest thinking on highly-distributed architectures.</li>
 </ul>
 </div>
 <div class="slide">
-<h1>Recommended Reading: Distributed Systems (cont.)</h1>
+<h1>Recommended Reading: Distributed Systems &#8211; Examples</h1>
 <ul>
-	<li>Jeffrey Dean and Sanjay Ghemawat, <a href="http://nosqlsummer.org/paper/google-mapreduce">MapReduce: Simplified Data Processing on Large Clusters</a>.</li>
-	<li>Jeffrey Dean and Sanjay Ghemawat, <em>Distributed Programming with Mapreduce</em>, in &#8220;Beautiful Code&#8221;, Chapter 23, pgs. 371-382. * <a href="http://hadoop.apache.org/">Hadoop</a>. An open source map-reduce framework, originally developed at Yahoo!</li>
-	<li><a href="http://www.slideshare.net/xefyr/pig-making-hadoop-easy">Pig: Making Hadoop Easy</a>.</li>
+	<li><a href="http://setiathome.berkeley.edu/">SETI@home</a>.</li>
+	<li><a href="http://boinc.berkeley.edu/">Boinc</a>. The software used by many distributed projects, like <a href="http://setiathome.berkeley.edu/">SETI@home</a>, to use idle computer resources available in a wide network, for computing challenges that are too big for single, powerful computers, but are easily distributed to large numbers of more ordinary computers.</li>
+	<li><a href="http://en.wikipedia.org/wiki/Tuple_space">Tuple Space</a> (Wikipedia).</li>
+	<li><a href="http://www.terracotta.org/">Terracotta</a>. A toolkit that &#8220;virtualizes&#8221; a single <span class="caps">JVM</span> instance across multiple systems.</li>
 	<li><a href="http://github.com/mesos/spark">Spark</a>. A framework for iterative and interactive cluster computing.</li>
 	<li><a href="http://blog.locut.us/main/2008/10/6/swarm-a-true-distributed-programming-language.html">Swarm: a true distributed programming language</a></li>
 </ul>
 </div>
 <div class="slide">
+<h1>Recommended Reading: Distributed Systems &#8211; Map/Reduce Frameworks</h1>
+<ul>
+	<li>Jeffrey Dean and Sanjay Ghemawat, <a href="http://nosqlsummer.org/paper/google-mapreduce">MapReduce: Simplified Data Processing on Large Clusters</a>.</li>
+	<li>Jeffrey Dean and Sanjay Ghemawat, <em>Distributed Programming with Mapreduce</em>, in &#8220;Beautiful Code&#8221;, Chapter 23, pgs. 371-382.</li>
+	<li><a href="http://hadoop.apache.org/">Hadoop</a>. An open source map-reduce framework, originally developed at Yahoo!</li>
+	<li><a href="http://www.slideshare.net/xefyr/pig-making-hadoop-easy">Pig: Making Hadoop Easy</a>.</li>
+</ul>
+</div>
+<div class="slide">
 <h1>Recommended Reading: Data and Analytics</h1>
 <ul>
+	<li>Toby Segaran and Jeff Hammerbacher, &#8220;Beautiful Data&#8221;, O&#8217;Reilly, 2009. <span class="caps">ISBN</span>: 0596157118.</li>
+	<li>Julie Steele and Noah Ilinsky, &#8220;Beautiful Visualization&#8221;, O&#8217;Reilly, 2010. <span class="caps">ISBN</span>: 1449379869.</li>
 	<li>A <a href="http://www.quora.com/What-are-the-best-blogs-about-data">list of data blogs</a> posted on <a href="http://www.quora.com">Quora</a>.</li>
 </ul>
 </div>
@@ -158,12 +184,9 @@
 </ul>
 </div>
 <div class="slide">
-<h1>Additional References: Programming</h1>
+<h1>Additional References: General Programming</h1>
 <ul>
 	<li>Andy Oram and Greg Wilson, &#8220;Beautiful Code&#8221;, O&#8217;Reilly, 2009. <span class="caps">ISBN</span>: 0596510046.</li>
-	<li>Diomidis Spinellis and Georgios Gousios, &#8220;Beautiful Architecture&#8221;, O&#8217;Reilly, 2009. <span class="caps">ISBN</span>: 0596517984.</li>
-	<li>Toby Segaran and Jeff Hammerbacher, &#8220;Beautiful Data&#8221;, O&#8217;Reilly, 2009. <span class="caps">ISBN</span>: 0596157118.</li>
-	<li>Julie Steele and Noah Ilinsky, &#8220;Beautiful Visualization&#8221;, O&#8217;Reilly, 2010. <span class="caps">ISBN</span>: 1449379869.</li>
 	<li>Federico Biancuzzi and Chromatic, &#8220;Masterminds of Programming&#8221;, O&#8217;Reilly, 2009. <span class="caps">ISBN</span>: 9780596515171.</li>
 </ul>
 </div>
@@ -189,7 +212,7 @@
 <p>You might find useful&#8230;</p>
 <ul>
 	<li>Matt Might, <a href="http://matt.might.net/articles/books-papers-materials-for-graduate-students/">matt.might.net/articles/books-papers-materials-for-graduate-students/</a>.<br />
-  </div></li>
+__</div></li>
 </ul>
 
   <!-- Syntax Highlighter -->

@@ -55,7 +55,7 @@ h1. Recommended Reading: SQL and NoSQL Databases
 
 * "ACID":http://en.wikipedia.org/wiki/ACID (Wikipedia).
 * "Multiversion Concurrency Control":http://en.wikipedia.org/wiki/Multiversion_concurrency_control (Wikipedia). Unfortunately, the text can be a little confusing.
-* "NoSQL, Heroku, and You":http://blog.heroku.com/archives/2010/7/20/nosql/
+* "NoSQL, Heroku, and You":http://blog.heroku.com/archives/2010/7/20/nosql/. Good discussion of why NoSQL is important.
 * "The CAP Theorem":http://nosqlsummer.org/paper/cap-theorem.
 * "NoSQL Summer":http://nosqlsummer.org/papers.
 * "My Problem with CAP and Yahoo's Little Known NoSQL System":http://dbmsmusings.blogspot.com/2010/04/problems-with-cap-and-yahoos-little.html.
@@ -65,21 +65,33 @@ h1. Recommended Reading: Distributed Systems
 
 * "Distributed Computing":http://en.wikipedia.org/wiki/Distributed_computing (Wikipedia).
 * "A Primer on Distributed Computing":http://www.bacchae.co.uk/docs/dist.html. A basic discussion of the issues and techniques involved in building a distribute system, like "SETI@home":http://setiathome.berkeley.edu/.
+* George Reese, "Cloud Application Architectures", O'Reilly, 2009. ISBN: 9780596156367.
+* Diomidis Spinellis and Georgios Gousios, "Beautiful Architecture", O'Reilly, 2009. ISBN: 0596517984. Good essays on architecture.
+* "Consensus":http://en.wikipedia.org/wiki/Consensus_(computer_science).
+* "Self Stabilization":http://en.wikipedia.org/wiki/Self-stabilisation.
+* "Byzantine fault tolerance":http://en.wikipedia.org/wiki/Byzantine_fault_tolerance.
+* Martin Fowler, et al., "Patterns of Enterprise Application Architecture", Addison-Wesley, 2003. ISBN: 0321127420. Conventional, object-oriented approach. Does not cover the latest thinking on highly-distributed architectures.
+
+h1. Recommended Reading: Distributed Systems - Examples
+
 * "SETI@home":http://setiathome.berkeley.edu/.
 * "Boinc":http://boinc.berkeley.edu/. The software used by many distributed projects, like "SETI@home":http://setiathome.berkeley.edu/, to use idle computer resources available in a wide network, for computing challenges that are too big for single, powerful computers, but are easily distributed to large numbers of more ordinary computers.
 * "Tuple Space":http://en.wikipedia.org/wiki/Tuple_space (Wikipedia).
 * "Terracotta":http://www.terracotta.org/. A toolkit that "virtualizes" a single JVM instance across multiple systems.
-
-h1. Recommended Reading: Distributed Systems (cont.)
-
-* Jeffrey Dean and Sanjay Ghemawat, "MapReduce: Simplified Data Processing on Large Clusters":http://nosqlsummer.org/paper/google-mapreduce.
-* Jeffrey Dean and Sanjay Ghemawat, _Distributed Programming with Mapreduce_, in "Beautiful Code", Chapter 23, pgs. 371-382. * "Hadoop":http://hadoop.apache.org/. An open source map-reduce framework, originally developed at Yahoo!
-* "Pig: Making Hadoop Easy":http://www.slideshare.net/xefyr/pig-making-hadoop-easy.
 * "Spark":http://github.com/mesos/spark. A framework for iterative and interactive cluster computing.
 * "Swarm: a true distributed programming language":http://blog.locut.us/main/2008/10/6/swarm-a-true-distributed-programming-language.html
 
+h1. Recommended Reading: Distributed Systems - Map/Reduce Frameworks
+
+* Jeffrey Dean and Sanjay Ghemawat, "MapReduce: Simplified Data Processing on Large Clusters":http://nosqlsummer.org/paper/google-mapreduce.
+* Jeffrey Dean and Sanjay Ghemawat, _Distributed Programming with Mapreduce_, in "Beautiful Code", Chapter 23, pgs. 371-382. 
+* "Hadoop":http://hadoop.apache.org/. An open source map-reduce framework, originally developed at Yahoo!
+* "Pig: Making Hadoop Easy":http://www.slideshare.net/xefyr/pig-making-hadoop-easy.
+
 h1. Recommended Reading: Data and Analytics
 
+* Toby Segaran and Jeff Hammerbacher, "Beautiful Data", O'Reilly, 2009. ISBN: 0596157118.
+* Julie Steele and Noah Ilinsky, "Beautiful Visualization", O'Reilly, 2010. ISBN: 1449379869.
 * A "list of data blogs":http://www.quora.com/What-are-the-best-blogs-about-data posted on "Quora":http://www.quora.com.
 
 h1. Recommended Reading: Data Sources
@@ -97,12 +109,9 @@ h1. Recommended Reading: Git Resources
 * "github.com":http://github.com (where the project code will be hosted) also has helpful documentation. 
 * "Why aren't you using git-flow?":http://jeffkreeftmeijer.com/2010/why-arent-you-using-git-flow/.
 
-h1. Additional References: Programming
+h1. Additional References: General Programming
 
 * Andy Oram and Greg Wilson, "Beautiful Code", O'Reilly, 2009. ISBN: 0596510046.
-* Diomidis Spinellis and Georgios Gousios, "Beautiful Architecture", O'Reilly, 2009. ISBN: 0596517984.
-* Toby Segaran and Jeff Hammerbacher, "Beautiful Data", O'Reilly, 2009. ISBN: 0596157118.
-* Julie Steele and Noah Ilinsky, "Beautiful Visualization", O'Reilly, 2010. ISBN: 1449379869.
 * Federico Biancuzzi and Chromatic, "Masterminds of Programming", O'Reilly, 2009. ISBN: 9780596515171.
 
 h1. Additional References: Software Process

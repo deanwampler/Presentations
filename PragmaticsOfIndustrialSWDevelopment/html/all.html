@@ -361,7 +361,7 @@ public class UnsafeSequence {
   public int getNext() {
     return value++;
   }
-}</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/dwampler/Documents/presentations/git-hub/presentations/PragmaticsOfIndustrialSWDevelopment/code/UnsafeSequence.java">code/UnsafeSequence.java</a></div></p>
+}</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/dwampler/Documents/pres-git-hub/presentations/PragmaticsOfIndustrialSWDevelopment/code/UnsafeSequence.java">code/UnsafeSequence.java</a></div></p>
 <p>(credit: all Multithreading examples adapted from &#8220;Java Concurrency in Practice&#8221;)</p>
 </div>
 <div class="slide">
@@ -375,7 +375,7 @@ public class Sequence {
   public synchronized int getNext() {
     return value++;
   }
-}</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/dwampler/Documents/presentations/git-hub/presentations/PragmaticsOfIndustrialSWDevelopment/code/SafeSequence.java">code/SafeSequence.java</a></div></p>
+}</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/dwampler/Documents/pres-git-hub/presentations/PragmaticsOfIndustrialSWDevelopment/code/SafeSequence.java">code/SafeSequence.java</a></div></p>
 </div>
 <div class="slide">
 <h1>Things Can Go Wrong</h1>
@@ -407,7 +407,7 @@ public class LeftRightDeadlock {
     synchronized (right) {
       synchronized (left) { doSomethingElse(); }
   }
-}</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/dwampler/Documents/presentations/git-hub/presentations/PragmaticsOfIndustrialSWDevelopment/code/LeftRightDeadlock.java">code/LeftRightDeadlock.java</a></div></p>
+}</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/dwampler/Documents/pres-git-hub/presentations/PragmaticsOfIndustrialSWDevelopment/code/LeftRightDeadlock.java">code/LeftRightDeadlock.java</a></div></p>
 </div>
 <div class="slide">
 <h1>Other Deadlock Hazards</h1>
@@ -468,7 +468,7 @@ class Manager {
     case Start =&gt; managedActors foreach (_ ! Start)
   }
 }
-</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/dwampler/Documents/presentations/git-hub/presentations/PragmaticsOfIndustrialSWDevelopment/code/manager-actor.scala">code/manager-actor.scala</a></div></p>
+</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/dwampler/Documents/pres-git-hub/presentations/PragmaticsOfIndustrialSWDevelopment/code/manager-actor.scala">code/manager-actor.scala</a></div></p>
 </div>
 <div class="slide">
 <h1>Actors in Scala (Akka)</h1>
@@ -517,7 +517,7 @@ class Manager {
 import se.scalablesolutions.akka.actor.Actor_
 // Creating an actor (one way...) and starting
 val manager = Actor.actorOf[Manager]
-manager.start</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/dwampler/Documents/presentations/git-hub/presentations/PragmaticsOfIndustrialSWDevelopment/code/manager-actor2.scala">code/manager-actor2.scala</a></div></p>
+manager.start</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/dwampler/Documents/pres-git-hub/presentations/PragmaticsOfIndustrialSWDevelopment/code/manager-actor2.scala">code/manager-actor2.scala</a></div></p>
 </div>
 <div class="slide">
 <h1>Actor vs. ActorRef</h1>
@@ -537,7 +537,7 @@ case class  Register(actor: ActorRef)
 case class  Unregister(actor: ActorRef)
 case object Stop
 case object Start
-</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/dwampler/Documents/presentations/git-hub/presentations/PragmaticsOfIndustrialSWDevelopment/code/actor-messages.scala">code/actor-messages.scala</a></div></p>
+</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/dwampler/Documents/pres-git-hub/presentations/PragmaticsOfIndustrialSWDevelopment/code/actor-messages.scala">code/actor-messages.scala</a></div></p>
 </div>
 <div class="slide">
 <h1>An Asynchronous (Fire and Forget) Message</h1>
@@ -550,7 +550,7 @@ case object Start
     case Start =&gt; managedActors foreach (_ ! Start)
   }
 }
-</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/dwampler/Documents/presentations/git-hub/presentations/PragmaticsOfIndustrialSWDevelopment/code/actor-asynch-message.scala">code/actor-asynch-message.scala</a></div></p>
+</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/dwampler/Documents/pres-git-hub/presentations/PragmaticsOfIndustrialSWDevelopment/code/actor-asynch-message.scala">code/actor-asynch-message.scala</a></div></p>
 <p>If a response is required, the receiver can send a message to the sender.</p>
 </div>
 <div class="slide">
@@ -567,7 +567,7 @@ case object Start
     }
   }
 }
-</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/dwampler/Documents/presentations/git-hub/presentations/PragmaticsOfIndustrialSWDevelopment/code/actor-synch-message.scala">code/actor-synch-message.scala</a></div></p>
+</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/dwampler/Documents/pres-git-hub/presentations/PragmaticsOfIndustrialSWDevelopment/code/actor-synch-message.scala">code/actor-synch-message.scala</a></div></p>
 </div>
 <div class="slide">
 <h1>An Synchronous (Wait) Message (cont)</h1>
@@ -590,7 +590,7 @@ case object Start
       case None =&gt; "Error!"
     }
 }
-</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/dwampler/Documents/presentations/git-hub/presentations/PragmaticsOfIndustrialSWDevelopment/code/actor-future-message.scala">code/actor-future-message.scala</a></div></p>
+</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/dwampler/Documents/pres-git-hub/presentations/PragmaticsOfIndustrialSWDevelopment/code/actor-future-message.scala">code/actor-future-message.scala</a></div></p>
 </div>
 <div class="slide">
 <h1>An Asynchronous with a Future Message (cont)</h1>
@@ -614,7 +614,7 @@ case object Start
       case None =&gt; "Error!"
     }
 }
-</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/dwampler/Documents/presentations/git-hub/presentations/PragmaticsOfIndustrialSWDevelopment/code/actor-future-message2.scala">code/actor-future-message2.scala</a></div></p>
+</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/dwampler/Documents/pres-git-hub/presentations/PragmaticsOfIndustrialSWDevelopment/code/actor-future-message2.scala">code/actor-future-message2.scala</a></div></p>
 </div>
 <div class="slide">
 <h1>Achieving Immutability</h1>
@@ -1014,7 +1014,7 @@ def counter = atomic {  // demarcate "atomic" block
  
 counter  // -&gt; 1
 counter  // -&gt; 2
-ref.get  // -&gt; 2 (retrieve the value explicitly)</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/dwampler/Documents/presentations/git-hub/presentations/PragmaticsOfIndustrialSWDevelopment/code/akka-stm-example1.scala">code/akka-stm-example1.scala</a></div></p>
+ref.get  // -&gt; 2 (retrieve the value explicitly)</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/dwampler/Documents/pres-git-hub/presentations/PragmaticsOfIndustrialSWDevelopment/code/akka-stm-example1.scala">code/akka-stm-example1.scala</a></div></p>
 </div>
 <div class="slide">
 <h1>Symantics (cont.)</h1>
@@ -1029,7 +1029,7 @@ val ref = Ref(1) // initialize with 1
 atomic {  
   ref set 10     // set new value
 }                // (actually returns old value)
-ref.get          // -&gt; 10</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/dwampler/Documents/presentations/git-hub/presentations/PragmaticsOfIndustrialSWDevelopment/code/akka-stm-example2.scala">code/akka-stm-example2.scala</a></div></p>
+ref.get          // -&gt; 10</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/dwampler/Documents/pres-git-hub/presentations/PragmaticsOfIndustrialSWDevelopment/code/akka-stm-example2.scala">code/akka-stm-example2.scala</a></div></p>
 </div>
 <div class="slide">
 <h1>Symantics: Blocking (&#8220;Retry&#8221;)</h1>
@@ -1050,7 +1050,7 @@ def receive = {
       to alter (_ + amount)
     }
 }
-</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/dwampler/Documents/presentations/git-hub/presentations/PragmaticsOfIndustrialSWDevelopment/code/akka-stm-example3.scala">code/akka-stm-example3.scala</a></div></p>
+</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/dwampler/Documents/pres-git-hub/presentations/PragmaticsOfIndustrialSWDevelopment/code/akka-stm-example3.scala">code/akka-stm-example3.scala</a></div></p>
 <p>(See <strong>Blocking Transactions</strong> on the <a href="http://doc.akkasource.org/stm-scala">Akka <span class="caps">STM</span> page</a> for the full example.)</p>
 </div>
 <div class="slide">
@@ -1075,7 +1075,7 @@ def receive = {
       }
     }
 }
-</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/dwampler/Documents/presentations/git-hub/presentations/PragmaticsOfIndustrialSWDevelopment/code/akka-stm-example4.scala">code/akka-stm-example4.scala</a></div></p>
+</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/dwampler/Documents/pres-git-hub/presentations/PragmaticsOfIndustrialSWDevelopment/code/akka-stm-example4.scala">code/akka-stm-example4.scala</a></div></p>
 </div>
 <div class="slide">
 <h1>Composability and Modularity</h1>
@@ -1137,7 +1137,7 @@ def receive = {
 <p>More on the underpinnings of <span class="caps">STM</span>,</p>
 <ul>
 	<li><a href="http://en.wikipedia.org/wiki/ACID"><span class="caps">ACID</span></a> (Wikipedia).</li>
-	<li><a href="http://en.wikipedia.org/wiki/Multiversion_concurrency_control">Multiversion Concurrency Control</a> (Wikipedia).</li>
+	<li><a href="http://en.wikipedia.org/wiki/Multiversion_concurrency_control">Multiversion Concurrency Control</a> (Wikipedia). Unfortunately, the text can be a little confusing.</li>
 </ul>
 <p>For a more detailed look at <span class="caps">STM</span>, see this <a href="http://java.ociweb.com/mark/stm/article.html">detailed paper</a> published by <span class="caps">OCI</span>. For information on Clojure&#8217;s persistent data structures, see for example <a href="http://blog.higher-order.net/2009/02/01/understanding-clojures-persistentvector-implementation/">Understanding Clojures PersistentVector Implementation</a></p>
 </div>
@@ -1198,7 +1198,7 @@ def receive = {
 <div class="code-tiny">
 <pre name="code" id="code" class="brush: scala;">[error] Test Failed: calculateStatistics returns a JSON string containing all data that matches the instrument criteria
 org.scalatest.TestFailedException: JObject(List(JField(criteria,JObject(List(JField(instruments,JArray(List(JString(A)))), JField(statistics,JArray(List(JString(price[$])))), JField(start,JInt(0)), JField(end,JInt(1283824964864))))), JField(results,JArray(List(JObject(List(JField(timestamp,JInt(1283824954864)), JField(symbol,JString(A)), JField(price,JDouble(0.0)))), JObject(List(JField(timestamp,JInt(1283824955864)), JField(symbol,JString(C)), JField(price,JDouble(10.0)))), JObject(List(JField(timestamp,JInt(1283824956864)), JField(symbol,JString(A)), JField(price,JDouble(20.0)))), JObject(List(JField(timestamp,JInt(1283824957864)), JField(symbol,JString(B)), JField(price,JDouble(30.0)))), JObject(List(JField(timestamp,JInt(1283824958864)), JField(symbol,JString(A)), JField(price,JDouble(40.0))))))))) did not equal JObject(List(JField(criteria,JObject(List(JField(instruments,JArray(List(JString(A)))), JField(statistics,JArray(List(JString(price[$])))), JField(start,JInt(0)), JField(end,JInt(1283824964864))))), JField(results,JArray(List(JObject(List(JField(timestamp,JInt(1283824954864)), JField(symbol,JString(A)), JField(price,JDouble(0.0)))), JObject(List(JField(timestamp,JInt(1283824958864)), JField(symbol,JString(A)), JField(price,JDouble(40.0)))), JObject(List(JField(timestamp,JInt(1283824956864)), JField(symbol,JString(A)), JField(price,JDouble(20.0)))))))))
-</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/dwampler/Documents/presentations/git-hub/presentations/PragmaticsOfIndustrialSWDevelopment/code/exercise1-test-failure.scala">code/exercise1-test-failure.scala</a></div></p>
+</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/dwampler/Documents/pres-git-hub/presentations/PragmaticsOfIndustrialSWDevelopment/code/exercise1-test-failure.scala">code/exercise1-test-failure.scala</a></div></p>
 <p>(Yeah!)</p>
 </div>
 <div class="slide">
@@ -1327,59 +1327,656 @@ formatPriceResults(filter(result), instruments, statistics, startMillis, endMill
 <h1>Lecture 3: Scaling Systems, Part I</h1>
 </div>
 <div class="slide">
-<h1>Why do we scale systems?</h1>
+<h1>Some Terms &#8224;</h1>
+<div class='medium'>
 <ul>
-	<li><strong>High Availability</strong>  (HA)</li>
+	<li><strong>Client:</strong> A person or other <em>service</em> that uses a provided <em>service</em>.</li>
+	<li><strong>Process:</strong> An operating system process.</li>
+	<li><strong>Component:</strong> A &#8220;course grained&#8221; HW or SW entity. SW <em>components</em> are in the same <em>process</em>.</li>
+	<li><strong>Service:</strong> One or more <em>processes</em> and <em>components</em> that provide a subset of <em>system services</em>.</li>
+	<li><strong>Network Node:</strong> A discrete server that provides <em>services</em> to other <em>network nodes</em>.</li>
+	<li><strong>System:</strong> The well defined collection of <em>components</em>, <em>services</em>, and <em>network nodes</em>.</li>
+	<li><strong>System Point:</strong> Some logically-discrete part of an overall <em>system</em>. Depending on the context, it might be a <em>component</em>, <em>service</em>, or <em>network node</em>.</li>
+</ul>
+<p>&#8224; Warning, some of these terms are vague; they don&#8217;t have standard definitions!</p>
+</div>
+</div>
+<div class="slide">
+<h1>Some Ways that Systems Fail</h1>
+<ul>
+	<li><em>Single points of failure.</em></li>
+	<li>Poor fault tolerance (resiliency).</li>
+	<li>Insufficient resources.</li>
+	<li>Poor security.</li>
+</ul>
+<p>And affecting long-term business growth&#8230;</p>
+<ul>
+	<li>Complexity makes evolution difficult.</li>
 </ul>
 </div>
 <div class="slide">
-<h1><em>single points of failure</em></h1>
+<h1>Single Point of Failure (<span class="caps">SPOF</span>)</h1>
+<p><em>A point in a system where a failure would cause the whole system to fail.</em></p>
+<p>Examples:</p>
+<ul>
+	<li><span class="caps">CPU</span>, <span class="caps">RAM</span>, disk, network interface, power&#8230;</li>
+	<li>Logical &#8220;tiers&#8221; and components:
+	<ul>
+		<li>Database</li>
+		<li>Middle-tier server</li>
+		<li>Other network service</li>
+	</ul></li>
+</ul>
+</div>
+<div class="slide">
+<h1>Poor Fault Tolerance (Resiliency)</h1>
+<p><strong>Fault Tolerance:</strong> <em>How well a system continues to provide service if part of it fails or bad data is received.</em></p>
+<p>Systems can be vulnerable even if they don&#8217;t have any single points of failure.</p>
+<p>Examples:</p>
+<ul>
+	<li>A database or other service query returns &#8220;invalid&#8221; data.</li>
+	<li>A Browser with JavaScript disabled tries to display a page that relies on JavaScript.</li>
+	<li>Bad user input!</li>
+	<li>Software bugs!</li>
+</ul>
+</div>
+<div class="slide">
+<h1>Poor Fault Tolerance (Resiliency) cont.</h1>
+<p>The system should <em>degrade gracefully</em>.</p>
+<p>Note that performance might suffer, even if a fault is tolerated.</p>
+<p>You&#8217;ll hear <em>stability</em> and <em>reliability</em> also used for essentially the same concept.</p>
+</div>
+<div class="slide">
+<h1>Insufficient Resources</h1>
+<p><em>The system can&#8217;t meet the demands for service.</em></p>
+<p><strong>Symptom:</strong> The system can&#8217;t service all clients within an acceptable window of opportunity, usually because there are too many concurrent clients!</p>
+<p>Examples <em>Bottlenecks</em>:<br />
+<div class='small'></p>
+<ul>
+	<li>Disk or memory space.</li>
+	<li>Network bandwidth.</li>
+	<li>Database transaction throughput.</li>
+	<li>Computation speed.</li>
+	<li>Physical space! (i.e., enough room to add more &#8220;stuff&#8221;)<br />
+</div></li>
+</ul>
+</div>
+<div class="slide">
+<h1>Poor Security</h1>
+<p><em>Systems connected to the Internet are more vulnerable than closed systems.</em></p>
+<p>&#8230; but security breaches &#8220;from the inside&#8221; are also significant.</p>
+<ul>
+	<li>Malicious users.</li>
+	<li>Unwitting users.</li>
+</ul>
+</div>
+<div class="slide">
+<h1>Complexity Makes Evolution Difficult</h1>
+<p><em>A poorly structured system is difficult to extend to support new functionality.</em></p>
+<p>Example Sources of Complexity:</p>
+<ul>
+	<li>Source code.</li>
+	<li>System <em>topology</em>.
+	<ul>
+		<li>How logical work is divided amongst <em>components</em>, <em>services</em>, and <em>network nodes</em>.</li>
+	</ul></li>
+	<li>Excessive coupling between <em>service points</em>.</li>
+	<li>Too <em>little</em> distribution (i.e., single <em>service points</em> with too many responsibilities tend to be overly complex).</li>
+</ul>
+</div>
+<div class="slide">
+<h1>Large-scale System Design Concerns</h1>
+<ul>
+	<li>Scalability</li>
+	<li>Availability</li>
+	<li>Security:
+	<ul>
+		<li>Authentication</li>
+		<li>Authorization</li>
+	</ul></li>
+</ul>
+</div>
+<div class="slide">
+<h1>Scalability</h1>
+<p><em>Can the system&#8217;s capacity be increased at reasonable cost?</em></p>
+<p>Affects the ability to provide adequate resources to meet service expectations.</p>
+<p>Consider <em>latency</em> vs. <em>throughput</em>, using a pipe analogy:</p>
+<ul>
+	<li><strong>Latency:</strong> The time it takes for any one computation. Imagine the pipe is <em>long</em> or <em>short</em>.</li>
+	<li><strong>Throughput:</strong> The amount of computation per unit time. Imagine the pipe is <em>fat</em> or <em>thin</em>.</li>
+</ul>
+</div>
+<div class="slide">
+<h1>Scalability (cont.)</h1>
+<p>Two ways to Scale:</p>
+<ul>
+	<li>Scale <em>vertically</em>.</li>
+	<li>Scale <em>horizontally</em>.</li>
+</ul>
+</div>
+<div class="slide">
+<h1>Scaling Vertically</h1>
+<p>Adding more hardware to the <em>same</em> machine.</p>
+<ul>
+	<li><strong>Easy:</strong> Requires no software changes, no increase in &#8220;rack&#8221; space, etc.</li>
+	<li><strong>Expensive:</strong> Premium price for the top-of-the-line hardware.</li>
+	<li><strong><span class="caps">SPOF</span>:</strong> The server remains a single point of failure</li>
+</ul>
+</div>
+<div class="slide">
+<h1>Scaling Horizontally</h1>
+<p>Adding more hardware <em>in parallel</em>.</p>
+<ul>
+	<li><strong>Hard:</strong> May require significant software changes.</li>
+	<li><strong>Cheap:</strong> Can use lower-cost hardware (but more power and space?).</li>
+	<li><strong><span class="caps">SPOF</span> Elimination:</strong> <em>Redundancy</em> eliminates <span class="caps">SPOF</span> (in principle&#8230;)</li>
+</ul>
+</div>
+<div class="slide">
+<h1>Redundancy</h1>
+<ul>
+	<li>N &gt; 1 identical <em>components</em>, <em>services</em>, or <em>network nodes</em>.</li>
+	<li>Enables <em>failover</em> when one element fails.</li>
+</ul>
+</div>
+<div class="slide">
+<h1>&#8220;Let It Crash&#8221;</h1>
+<p>A core philosophy in Akka, Erlang, and many other Actor-based systems. Rather than create big processes that require complex error recovery (which is very hard to do well&#8230;), use lots of small &#8220;workers&#8221; that are expendable. If any one of them gets into trouble, let it crash and restart it.</p>
+<p>Requires careful partitioning and supervision of work, including tolerance for small failures.</p>
+</div>
+<div class="slide">
+<h1>Distribution of Computation and Data</h1>
+<ul>
+	<li>HW and SW can be tuned for specific services.
+	<ul>
+		<li>E.g., The database servers have different performance requirements than the servers that deliver static web content (images, videos, JavaScript, &#8230;).</li>
+	</ul></li>
+	<li>Data can be divided.
+	<ul>
+		<li>Disk <em>striping</em> (e.g., <span class="caps">RAID</span>-5 disk arrays). Gives both scalability (N disk drives) plus failure resiliency (data is effectively duplicated across the array). Disk array configurations can also parallelize writes, increasing <em>throughput</em>.</li>
+		<li>Database <em>sharding</em> (e.g., all East-coast customers in the New York data center). Data is separated, not duplicated (use <em>replication</em> for that&#8230;)</li>
+	</ul></li>
+</ul>
+</div>
+<div class="slide">
+<h1>Caching</h1>
+<p><em>Remembering the result of an expensive operation for subsequent use.</em></p>
+<ul>
+	<li><strong>Data Caching:</strong>
+	<ul>
+		<li><em>In-memory</em> cache speeds up <em>disk</em> I/O.</li>
+		<li><em><span class="caps">CPU</span></em> cache speeds up <em>memory</em> I/O.</li>
+	</ul></li>
+</ul>
+<ul>
+	<li><strong>Memoization:</strong>
+	<ul>
+		<li>Remembering the result of a previous <em>calculation</em>.</li>
+	</ul></li>
+</ul>
+</div>
+<div class="slide">
+<h1>Availability</h1>
+<p><em>Can the system provide service when clients expect it?</em></p>
+<p>Subject to the <em>service level agreements</em> (SLAs) with clients about when service is required: 24&#215;7? 8-5 week days? holidays? (Performance is usually part of SLAs, too.)</p>
+<p>Requires <em>fault tolerance</em>.</p>
+</div>
+<div class="slide">
+<h1>Availability Numbers</h1>
+<table class="tiny">
+	<tr>
+		<th>Availability&#160;% </th>
+		<th>Downtime/Year  </th>
+		<th>Downtime/Month </th>
+		<th>Downtime/Week </th>
+	</tr>
+	<tr>
+		<td> 90% (&#8220;one nine&#8221;)  </td>
+		<td> 36.5 days  </td>
+		<td> 72 hours  </td>
+		<td> 16.8 hours  </td>
+	</tr>
+	<tr>
+		<td> 95%  </td>
+		<td> 18.25 days  </td>
+		<td> 36 hours  </td>
+		<td> 8.4 hours  </td>
+	</tr>
+	<tr>
+		<td> 98%  </td>
+		<td> 7.30 days  </td>
+		<td> 14.4 hours  </td>
+		<td> 3.36 hours  </td>
+	</tr>
+	<tr>
+		<td> 99% (&#8220;two nines&#8221;)  </td>
+		<td> 3.65 days  </td>
+		<td> 7.20 hours  </td>
+		<td> 1.68 hours  </td>
+	</tr>
+	<tr>
+		<td> 99.5%  </td>
+		<td> 1.83 days  </td>
+		<td> 3.60 hours  </td>
+		<td> 50.4 minutes  </td>
+	</tr>
+	<tr>
+		<td> 99.8%  </td>
+		<td> 17.52 hours  </td>
+		<td> 86.23 minutes  </td>
+		<td> 20.16 minutes  </td>
+	</tr>
+	<tr>
+		<td> 99.9% (&#8220;three nines&#8221;)  </td>
+		<td> 8.76 hours  </td>
+		<td> 43.2 minutes  </td>
+		<td> 10.1 minutes  </td>
+	</tr>
+	<tr>
+		<td> 99.95%  </td>
+		<td> 4.38 hours  </td>
+		<td> 21.56 minutes  </td>
+		<td> 5.04 minutes  </td>
+	</tr>
+	<tr>
+		<td> 99.99% (&#8220;four nines&#8221;)  </td>
+		<td> 52.56 minutes  </td>
+		<td> 4.32 minutes  </td>
+		<td> 1.01 minutes  </td>
+	</tr>
+	<tr>
+		<td> 99.999% (&#8220;five nines&#8221;)  </td>
+		<td> 5.26 minutes  </td>
+		<td> 25.9 seconds  </td>
+		<td> 6.05 seconds  </td>
+	</tr>
+	<tr>
+		<td> 99.9999% (&#8220;six nines&#8221;)  </td>
+		<td> 31.5 seconds  </td>
+		<td> 2.59 seconds  </td>
+		<td> 0.605 seconds  </td>
+	</tr>
+	<tr>
+		<td> 99.999999% (&#8220;nine nines&#8221;)  </td>
+		<td> 31.5 microseconds  </td>
+		<td> 2.59 microseconds  </td>
+		<td> 0.605 microseconds  </td>
+	</tr>
+</table>
+<p>(adapted from http://en.wikipedia.org/wiki/High_availability)</p>
+</div>
+<div class="slide">
+<h1>Achieving High Availability</h1>
+<ul>
+	<li><strong>Redundancy:</strong> Improves fault tolerance (e.g., <span class="caps">SPOF</span> elimination).</li>
+	<li><strong>Resource Planning:</strong> Estimating <em>and measuring</em> resource utilization. Avoidance of high % utilization.</li>
+	<li><strong>Other Fault Tolerance Design Concerns:</strong>
+	<ul>
+		<li>Clock Synchronization</li>
+		<li>Consensus</li>
+		<li>Self Stabilization</li>
+	</ul></li>
+</ul>
+</div>
+<div class="slide">
+<h1>Clock Synchronization</h1>
+<p><em>When the <strong>timing of events</strong> matters across different systems, how do you ensure that those systems have synchronized clocks?</em></p>
+<p>Examples:</p>
+<ul>
+	<li>Message queues.</li>
+	<li>Log monitoring.</li>
+</ul>
+</div>
+<div class="slide">
+<h1>Consensus</h1>
+<p><em>How do you decide which systems are correct if answers that should be the same are different?</em></p>
+<p>There are four, redundant flight-control computers on the space shuttle:<br />
+<br/></p>
+<blockquote>
+<p>The four general-purpose computers operate essentially in lockstep, checking each other. If one computer fails, the three functioning computers &#8220;vote&#8221; it out of the system. This isolates it from vehicle control. If a second computer of the three remaining fails, the two functioning computers vote it out. In the rare case of two out of four computers simultaneously failing (a two-two split), one group is picked at random.<br />
+(from the <a href="http://en.wikipedia.org/wiki/Space_Shuttle">Space Shuttle Wikipedia page</a>)</p>
+</blockquote>
+</div>
+<div class="slide">
+<h1>Self Stabilization</h1>
+<p>Trying to &#8220;engineer-in&#8221; correctness in a distributed system is essentially impossible. Instead, design the system so it <em>constantly drives itself towards stability</em>.</p>
+<p>This may or may not involve actual detection of errors.</p>
+</div>
+<div class="slide">
+<h1>Security</h1>
+<ul>
+	<li><strong>Authentication:</strong> Reliably identifying a client (user or external system) attempting to use system resources.</li>
+	<li><strong>Authorization:</strong> Once a client is authenticated, controlling access to those resources for which the client is permitted to use.</li>
+</ul>
 </div>
 <div class="slide">
 <h1>Topologies</h1>
-</div>
-<div class="slide">
-<h1>Replication vs. Sharding</h1>
 <ul>
-	<li><strong>Replication:</strong> Duplicate copies of the same data.</li>
-	<li><strong>Sharding:</strong> Splitting a large data set across multiple servers.</li>
+	<li>Client–server (2-tier) architecture</li>
+	<li>3-tier architecture</li>
+	<li>N-tier architecture</li>
+	<li>Tightly coupled (clustered)</li>
+	<li>Peer-to-peer</li>
+	<li>Space based</li>
 </ul>
 </div>
 <div class="slide">
-<h1>Sharding with Replication in MongoDB</h1>
-<p><img src="images/mongodb_sharding_replica_sets.png"><img></div>
-<div class="slide">
-<h1>This Week&#8217;s Assignment: Reading</h1>
-<p>Read the discussion on MongoDB Replication and Sharding. MongoDB&#8217;s implementations are representative examples of these general techniques and the reading will also help you get more familiar with MongoDB.</p>
-<p>Note that the syntax details of MongoDB commands and the details of which techniques to use with particular versions of MongoDB, etc. aren&#8217;t important. Focus instead on the concepts discussed.</p>
-</div>
-<div class="slide">
-<h1>This Week&#8217;s Assignment: Reading &#8211; Replication</h1>
-<p><a href="http://www.mongodb.org/display/DOCS/Replication">Replication</a></p>
-<p>Follow the link in the section <em>Verifying propagation of writes with getlasterror</em>.  What&#8217;s important here is why this is an issue &#8211; why would a client care if propagation happens immediately or not?</p>
-<p>View the video or read the slides describing MongoDB&#8217;s new approach to replication, called <em>replica sets</em>.</p>
+<h1>Client–server (2-tier) Architecture</h1>
+<p>A client requests data or work from a server, or sends data updates to a server. The client then formats and presents the results to the user. Often, the server is a database and the client implements non-trivial &#8220;business domain logic&#8221; (business logic, for short).</p>
+<p>Note that <em>tier</em> often implies a vertical orientation; <em>client down to server and back up to client</em>.</p>
+<p>Examples:</p>
 <ul>
-	<li><a href="http://lacantine.ubicast.eu/videos/21-06-2010-130932-partie-6/">Video</a></li>
-	<li><a href="http://www.slideshare.net/mongodb/mongodb-replica-sets">Slides</a></li>
+	<li>Typical VisualBasic apps.</li>
+	<li>Simpler, low-volume web applications.</li>
 </ul>
-<p>(Yes, it appears that something is wrong with the last 5 or so slides, but the &#8220;good&#8221; slides have the content I care about&#8230;)</p>
 </div>
 <div class="slide">
-<h1>This Week&#8217;s Assignment: Reading &#8211; Sharding</h1>
-<p><a href="http://www.mongodb.org/display/DOCS/Sharding+Introduction">Sharding</a></p>
-<p>Make sure you understand the different goals of replication and sharding and how they also complement each other. Also, when combined, as discussed on the Sharding page, are there any <em>single points of failure</em>?</p>
+<h1>3-tier Architecture</h1>
+<p>A presentation tier, a middle tier handling &#8220;business logic&#8221;, and a database (persistence) tier. The middle tier implements most of the logic that would be in the client and some of the logic that would be in the &#8220;server&#8221; (database?) in a 2-tier system.</p>
+<ul>
+	<li>The &#8220;standard&#8221; architecture of mid-sized, mid-volume Internet and IT systems.</li>
+	<li>Having three tiers simplifies the responsibilities of each tier, compared to 2-tier systems.
+	<ul>
+		<li>Putting logic in the UI is bad because it&#8217;s hard to test and it doesn&#8217;t cleanly separation &#8220;concerns&#8221;.</li>
+	</ul></li>
+</ul>
 </div>
 <div class="slide">
-<h1>This Week&#8217;s Assignment: Reading (cont.)</h1>
+<h1>N-tier Architecture</h1>
+<p>Generalization of 3-tier architecture. There may be more than 3 vertical tiers, but often there are <em>horizontal</em> (peer) services that separate responsibilities, usually only at the mid tier and persistence &#8220;levels&#8221; (but the UI should be <em>componentized</em>).</p>
+<p>Typical of all high-volume, high-availability web sites and IT applications.</p>
+<p>Examples:</p>
+<ul>
+	<li>Cloud computing</li>
+	<li>Email?</li>
+</ul>
 </div>
 <div class="slide">
-<h1>Add New Functionality</h1>
-<p>This week, we&#8217;ll add the <span class="caps">NYSE</span> data to the project.</p>
-<p>&#8230;</p>
+<h1>Tightly Coupled (Clustered)</h1>
+<p>Usually refers to a cluster of servers or services that collaborate closely, perhaps to solve a problem with <em>divide and conquer</em> after which the individual contributions are combined to produce the final result.</p>
+<p>Tight coupling may imply that failure of one element causes the work of all elements to fail. An exception is typical <em>map-reduce</em> systems (which we&#8217;ll discuss in a subsequent lecture), like <em>Hadoop</em>, which handle single node failures.</p>
+<p>Example:</p>
+<ul>
+	<li>Multicore Processor</li>
+	<li>Map-Reduce</li>
+</ul>
 </div>
 <div class="slide">
-<h1>Add New Functionality</h1>
-<p>The <code>datatmp</code> directory holds the files with <span class="caps">JSON</span> expressions that we generated from the <span class="caps">YAML</span> files. (They are one-line <span class="caps">JSON</span> expressions that <code>mongoimport</code> wants to use).</p>
+<h1>Master-Slave</h1>
+<p>An arrangement where one system dictates the work performed by subordinate systems.</p>
+<p>Also used for arrangements of similar systems where one system is designated the primary source of data and/or computation (the &#8220;master&#8221;), but work may <em>fail over</em> to a backup (&#8220;slave&#8221;) system if the master fails. The slave(s) may have to do all the work the master does (e.g., store data records) in order to take over. <em>Primary-secondary</em> is sometimes used to describe this arrangement.</p>
+<p>The slave is now considered the master. After recovery, the old master may re-enter the system as a slave (or become the master again).</p>
+<p>Example:</p>
+<ul>
+	<li>Datebase master-slave server</li>
+</ul>
+</div>
+<div class="slide">
+<h1>Peer-to-peer</h1>
+<p>In contrast to <em>master-slave</em>, an architecture where no one system has a special role relative to the others in a group that provides a service. No one system directs the work of others, either. Rather, all systems divide the responsibilities equally, as <em>peers</em>, including the management of work.</p>
+<p>Example:</p>
+<ul>
+	<li><em>Mesh</em> network</li>
+</ul>
+</div>
+<div class="slide">
+<h1>Space Based</h1>
+<p>An infrastructure that creates the illusion of one single address-space. Data (and sometimes code!) are transparently replicated among &#8220;physical&#8221; elements. Sometimes called <em>virtualization</em> (but that has other meanings, too).</p>
+<p>Examples:</p>
+<ul>
+	<li>Terracotta &#8211; Virtualization of data across <span class="caps">JVM</span> instances.</li>
+	<li>Tuple spaces &#8211; e.g., Linda</li>
+</ul>
+</div>
+<div class="slide">
+<h1>Examples of Distributed Systems and Applications</h1>
+<p>For more examples, see the list on the <a href="http://en.wikipedia.org/wiki/Distributed_computing">Distributed Computing</a> Wikipedia page.</p>
+</div>
+<div class="slide">
+<h1>Scaling Systems, Part II</h1>
+<p>We&#8217;ll return to <em>Scaling Systems</em> next month after the Midterm. For the next few weeks, we&#8217;ll focus on <span class="caps">SQL</span> and <em>NoSQL</em> databases.</p>
+</div>
+<div class="slide">
+<h1>Reading Assignments:</h1>
+<ul>
+	<li><a href="http://www.slideshare.net/jboner/scalability-availability-stability-patterns">Scalability, Availability, Stability Patterns</a>. A (long) presentation that covers many essentials of building systems that satisfy requirements we&#8217;ve discussed. It also discusses <em>NoSQL</em> databases that we&#8217;ll explore in subsequent weeks. Some of the other concepts discussed (like immutability and referential transparency) will be discussed later in the course. Skim the sections on data flow concurrency and event processing approaches; we won&#8217;t cover them in the course. I also don&#8217;t expect you to remember the lists of products in each category!</li>
+	<li><a href="http://blog.heroku.com/archives/2010/7/20/nosql/">NoSQL, Heroku, and You</a>. One cloud service vendor&#8217;s take on the importance of NoSQL databases.</li>
+</ul>
+</div>
+<div class="slide">
+<h1>For Further Research</h1>
+<ul>
+	<li>Diomidis Spinellis and Georgios Gousios, &#8220;Beautiful Architecture&#8221;, O&#8217;Reilly, 2009. <span class="caps">ISBN</span>: 0596517984. Good essays on architecture.</li>
+	<li><a href="http://en.wikipedia.org/wiki/Consensus_(computer_science)">Consensus</a>.</li>
+	<li><a href="http://en.wikipedia.org/wiki/Self-stabilisation">Self Stabilization</a>.</li>
+	<li><a href="http://en.wikipedia.org/wiki/Byzantine_fault_tolerance">Byzantine fault tolerance</a>.</li>
+	<li>Martin Fowler, et al., &#8220;Patterns of Enterprise Application Architecture&#8221;, Addison-Wesley, 2003. <span class="caps">ISBN</span>: 0321127420. Conventional, object-oriented approach. Does not cover the latest thinking on highly-distributed architectures.</li>
+</ul>
+</div>
+<div class="slide">
+<h1>Add New Functionality (step 1)</h1>
+<p>This week, we&#8217;ll finally add the <span class="caps">NYSE</span> data to the project.</p>
+<p>Make sure you have pulled the latest changes from the project on the <code>COMP-388-488</code> branch.</p>
+<p>Open the <code>README.md</code> file (it&#8217;s nicely formatted on GitHub) and follow the directions in the newly-revised section called <strong>Import the Data</strong>. It explains the new scripts in the <code>bin</code> directory (which we&#8217;ll also discuss in class) that you use to import the data.</p>
+<p>After importing the data, read the next section on using the web app, which explains a few things you&#8217;ll need to know for the current state of the project.</p>
+</div>
+<div class="slide">
+<h1>Add New Functionality (step 2)</h1>
+<p>Note that the instructions mention a <code>datatmp</code> directory that holds temporary <span class="caps">JSON</span> files that were generated from the original <span class="caps">YAML</span> files and imported into MongoDB. They are one-line <span class="caps">JSON</span> expressions as required by <code>mongoimport</code>. Once the data import is done and the suggested <code>mongo</code> console commands</p>
+</div>
+<div class="slide">
+<h1>Add New Functionality (step 3)</h1>
+<p>For our next exercise (#2), we&#8217;ll answer the question, &#8220;What stocks are available?&#8221;. We&#8217;ll add a feature that returns the available stock symbols.</p>
+<p>There is a new branch on the GitHub project, based on <code>COMP-388-488</code>, called <code>exercise2</code>. run these commands, where the <code>#...</code> are comments:</p>
+<div class="code-tiny">
+<pre name="code" id="code" class="brush: bash,;">
+
+git fetch                        # grab the latest off GitHub, but don't merge changes
+git branch -a                    # Show all the local and remote branches
+git log origin/COMP-388-488 ^COMP-388-488  # show me what's changed!
+git checkout COMP-388-488        # move to this branch (if not already there)
+git merge origin/COMP-388-488    # merge to my local branch
+git branch --track exercise2 origin/exercise2   # create local copy of "exercise2"
+# start working...
+</pre></div>
+<p>Note that <code>git pull</code> is the combination of <code>git fetch</code> and <code>git merge</code>.</p>
+</div>
+<div class="slide">
+<h1>Add New Functionality (step 4)</h1>
+<p>Run jetty in <code>sbt</code> (i.e., <code>jetty-run</code>) and go to the web page. The <code>bogus</code> button is gone and there is now a <code>List Stocks</code> button. If you click it, you&#8217;ll get the same sort of error message that <code>bogus</code> triggered. Your mission is to make this work.</p>
+<p>The UI code is already prepared. You just need to modify the server code, starting with the <span class="caps">REST</span> interface.</p>
+</div>
+<div class="slide">
+<h1>Add New Functionality (step 5)</h1>
+<ul>
+	<li>Edit <code>RestfulDataPublisher.scala</code>. We need to do a little <em>refactoring</em> first.</li>
+	<li>Change <code>getStatsFromInstrumentAnalysisServerSupervisors</code> to take this argument: <code>message: InstrumentCalculationMessages</code>.</li>
+	<li>Change <code>supervisor !! CalculateStatistics(allCriteria)</code> to <code>supervisor !! message</code>.</li>
+	<li>Now this method is more general to meet our needs.</li>
+</ul>
+</div>
+<div class="slide">
+<h1>Add New Functionality (step 6)</h1>
+<ul>
+	<li>Also in <code>RestfulDataPublisher.scala</code>, in method <code>getAllDataFor</code>, change:</li>
+</ul>
+<div class="code-small">
+<pre name="code" id="code" class="brush: scala,;">
+
+val results = getStatsFromInstrumentAnalysisServerSupervisors(allCriteria)
+</pre></div>
+<p>to</p>
+<div class="code-small">
+<pre name="code" id="code" class="brush: scala,;">
+
+val results = getStatsFromInstrumentAnalysisServerSupervisors(CalculateStatistics(allCriteria))
+</pre></div>
+<ul>
+	<li>Run the tests; they should all pass!</li>
+	<li>In what follows use the sbt <code>~test</code> target to keep your tests passing as much as possible. There will be some intermediate steps when they won&#8217;t pass.</li>
+</ul>
+</div>
+<div class="slide">
+<h1>Add New Functionality (step 7)</h1>
+<ul>
+	<li>Edit <code>InstrumentAnalysisServer.scala</code>.</li>
+	<li>Add this new object definition after the definition of <code>CalculateStatistics</code>:</li>
+</ul>
+<div class="code-small">
+<pre name="code" id="code" class="brush: scala,;">
+
+case class GetInstrumentList(range: scala.collection.immutable.NumericRange[Char]) extends InstrumentCalculationMessages
+</pre></div>
+<ul>
+	<li>(You can import <code>NumericRange</code> if you don&#8217;t want to put this fully-qualified name in the declaration.)</li>
+</ul>
+</div>
+<div class="slide">
+<h1>Add New Functionality (step 8)</h1>
+<ul>
+	<li>Back in <code>RestfulDataPublisher.scala</code>, edit the <code>restRequest</code> method.</li>
+	<li>Add a case statment for the string &#8220;list_stocks&#8221;. (Follow the example for &#8220;stats&#8221;).</li>
+	<li>Have the case handler call a method similar to <code>getAllDataFor</code>. Call it <code>getAllInstruments</code>. It doesn&#8217;t need any arguments.</li>
+	<li>If you copied and pasted <code>getAllDataFor</code> ;), change the first four lines in the <code>try</code> block to the following three lines:</li>
+</ul>
+<div class="code-small">
+<pre name="code" id="code" class="brush: scala,;">
+
+val results = getStatsFromInstrumentAnalysisServerSupervisors(GetInstrumentList(`A` to `Z`))
+val result = compact(render(JSONMap.toJValue(Map("instrument-list" -&gt; results))))
+log.info("instrument list result = "+result.substring(0,100)+"...")
+</pre></div>
+
+<ul>
+	<li>Those backticks ` should forward ticks &#8217; (formatting error!)</li>
+</ul>
+</div>
+<div class="slide">
+<h1>Add New Functionality (step 9)</h1>
+<ul>
+	<li>Edit <code>InstrumentAnalysisServerSupervisors.scala</code>.</li>
+	<li>In the <code>defaultHandler</code>, add this case clause.</li>
+</ul>
+<div class="code-small">
+<pre name="code" id="code" class="brush: scala,;">
+
+case GetInstrumentList(range) =&gt; self.reply(getInstrumentList(range))
+</pre></div>
+</div>
+<div class="slide">
+<h1>Add New Functionality (step 10)</h1>
+<ul>
+	<li>Create the <code>getInstrumentList</code> method, which takes one argument: <code>range: scala.collection.immutable.NumericRange[Char]</code>. It should look similar to the <code>calculate</code> method. The main difference is the <code>for</code> &#8220;comprehension&#8221; (loop):</li>
+</ul>
+<div class="code-small">
+<pre name="code" id="code" class="brush: scala,;">
+
+val futures = for {
+  letter &lt;- range  // This would be equivalent, in our case to writing: 'A' to 'Z'
+  oneLetterRange = letter to letter
+  instrument = Instrument(letter.toString)
+  calculator &lt;- getOrMakeInstrumentAnalysisServerFor(instrument, Price(Dollars))
+} yield (calculator !!! GetInstrumentList(oneLetterRange))
+</pre></div>
+</div>
+<div class="slide">
+<h1>Add New Functionality (step 11)</h1>
+<ul>
+	<li>Edit <code>InstrumentAnalysisServer.scala</code>.</li>
+	<li>Add the same case clause to <code>defaultHandler</code> that you added in <code>InstrumentAnalysisServerSupervisors.scala</code>.</li>
+	<li>However, change the call to a <code>getInstrumentList</code> method to be call on the <code>helper</code> object.</li>
+	<li>Create this method in the helper class. It must take the same one-argument that <code>InstrumentAnalysisServerSupervisors.getInstrumentList</code> took.</li>
+	<li>Copy the body of <code>fetchPrices</code> to <code>getInstrumentList</code>. Make the new method public access!</li>
+</ul>
+</div>
+<div class="slide">
+<h1>Add New Functionality (step 12)</h1>
+<ul>
+	<li>In <code>getInstrumentList</code>, change the argument to the <code>Get</code> object that&#8217;s sent to <code>dataStorageServer</code> to <code>Pair("instrument_list", range.toList.head.toString)</code>. (We&#8217;ll just assume here that there is only one character in the range.)</li>
+	<li>Change the error message for the <code>None</code> case to something appropriate.</li>
+	<li>Change the <code>Some</code> case to simply return the <code>result</code>.</li>
+</ul>
+</div>
+<div class="slide">
+<h1>Add New Functionality (step 13)</h1>
+<ul>
+	<li>Implement <code>formatInstrumentListResults(result, range)</code>. Follow the example of <code>formatPriceResults</code>.</li>
+	<li>Instead of the <code>criteria</code> entry in the Map, return &#8220;range&#8221; as the key and <code>range.toString</code> as the value.</li>
+	<li>Keep the <code>results</code> part as is.</li>
+</ul>
+</div>
+<div class="slide">
+<h1>Add New Functionality (step 14)</h1>
+<ul>
+	<li>Edit <code>DataStorageServer</code>.</li>
+	<li>Rename <code>getData</code> to <code>getDataForRange</code></li>
+	<li><em>Copy</em> the function signature for <code>getDataForRange</code> and create a new <code>getData</code> with it. Use the following body:</li>
+</ul>
+<div class="code-small">
+<pre name="code" id="code" class="brush: scala,;">
+
+(criteria \ "instrument_list") match {
+  case JField(key, value) =&gt; getInstrumentList(value)
+  case _ =&gt; getDataForRange(criteria)
+} 
+</pre></div>
+</div>
+<div class="slide">
+<h1>Add New Functionality (step 15)</h1>
+<ul>
+	<li>Create method <code>getInstrumentList</code>. Here we will use a hack to reduce the amount of code we would have to write for the general case. (How could you eliminate this hack with a more general solution??)</li>
+</ul>
+<div class="code-small">
+<pre name="code" id="code" class="brush: scala,;">
+
+protected[persistence] def getInstrumentList(prefix: String): JValue = dataStore match {
+  case mongo: MongoDBDataStore =&gt; mongo.getInstrumentList(prefix)
+  case _ =&gt; throw new RuntimeException("Can't get the instrument list from datastore "+dataStore)
+}
+</pre></div>
+</div>
+<div class="slide">
+<h1>Add New Functionality (step 16)</h1>
+<ul>
+	<li>Add these imports to <code>MongoDBDataStore</code>.</li>
+</ul>
+<div class="code-small">
+<pre name="code" id="code" class="brush: scala,;">
+
+import net.liftweb.json.JsonAST._
+import net.liftweb.json.JsonDSL._
+</pre></div>
+</div>
+<div class="slide">
+<h1>Add New Functionality (step 17)</h1>
+<ul>
+	<li>Create method <code>getInstrumentList</code> in <code>MongoDBDataStore</code>. Here it is:</li>
+</ul>
+<div class="code-small">
+<pre name="code" id="code" class="brush: scala,;">
+
+// Hack!
+def getInstrumentList(prefix: String): Iterable[JSONRecord] = try {
+  val list = collection.distinct(prefix)
+  val buff = new scala.collection.mutable.ArrayBuffer[String]()
+  while (list.hasNext) {
+    buff += list.next
+  }
+  List(JSONRecord(("letter" -&gt; prefix) ~ ("symbols" -&gt; buff)))
+} catch {
+  case th =&gt; 
+    log.error("MongoDB Exception: ", th)
+    throw th
+}
+</pre></div>
+</div>
+<div class="slide">
+<h1>Add New Functionality (step 18)</h1>
+<p>We did all these changes without adding tests for them. Go back through the changes and create tests for (most of) them. Where we copied existing code, find tests for the original code and see if you copy and adapt those tests.</p>
+</div>
+<div class="slide">
+<h1>Add New Functionality (final)</h1>
+<p>Please commit your changes to GitHub by the start of class next week.</p>
 </div>
 <div class="title slide">
 <h1>Lecture 4: Scaling Data, Part I</h1>
@@ -1420,6 +2017,7 @@ formatPriceResults(filter(result), instruments, statistics, startMillis, endMill
 
   <!-- Syntax Highlighter -->
   <script language="javascript" type="text/javascript" src="../lib/scripts/shCore.js"></script>
+  <script language="javascript" type="text/javascript" src="../lib/scripts/shBrushBash.js"></script>
   <script language="javascript" type="text/javascript" src="../lib/scripts/shBrushCpp.js"></script>
   <script language="javascript" type="text/javascript" src="../lib/scripts/shBrushCSharp.js"></script>
   <script language="javascript" type="text/javascript" src="../lib/scripts/shBrushCss.js"></script>
@@ -1427,6 +2025,7 @@ formatPriceResults(filter(result), instruments, statistics, startMillis, endMill
   <script language="javascript" type="text/javascript" src="../lib/scripts/shBrushJava.js"></script>
   <script language="javascript" type="text/javascript" src="../lib/scripts/shBrushJScript.js"></script>
   <script language="javascript" type="text/javascript" src="../lib/scripts/shBrushPhp.js"></script>
+  <script language="javascript" type="text/javascript" src="../lib/scripts/shBrushPlain.js"></script>
   <script language="javascript" type="text/javascript" src="../lib/scripts/shBrushPython.js"></script>
   <script language="javascript" type="text/javascript" src="../lib/scripts/shBrushRuby.js"></script>
   <script language="javascript" type="text/javascript" src="../lib/scripts/shBrushScala.js"></script>

@@ -56,6 +56,7 @@ S5_HEAD = %{<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 S5_TAIL = %{
   <!-- Syntax Highlighter -->
   <script language="javascript" type="text/javascript" src="../lib/scripts/shCore.js"></script>
+  <script language="javascript" type="text/javascript" src="../lib/scripts/shBrushBash.js"></script>
   <script language="javascript" type="text/javascript" src="../lib/scripts/shBrushCpp.js"></script>
   <script language="javascript" type="text/javascript" src="../lib/scripts/shBrushCSharp.js"></script>
   <script language="javascript" type="text/javascript" src="../lib/scripts/shBrushCss.js"></script>
@@ -63,6 +64,7 @@ S5_TAIL = %{
   <script language="javascript" type="text/javascript" src="../lib/scripts/shBrushJava.js"></script>
   <script language="javascript" type="text/javascript" src="../lib/scripts/shBrushJScript.js"></script>
   <script language="javascript" type="text/javascript" src="../lib/scripts/shBrushPhp.js"></script>
+  <script language="javascript" type="text/javascript" src="../lib/scripts/shBrushPlain.js"></script>
   <script language="javascript" type="text/javascript" src="../lib/scripts/shBrushPython.js"></script>
   <script language="javascript" type="text/javascript" src="../lib/scripts/shBrushRuby.js"></script>
   <script language="javascript" type="text/javascript" src="../lib/scripts/shBrushScala.js"></script>

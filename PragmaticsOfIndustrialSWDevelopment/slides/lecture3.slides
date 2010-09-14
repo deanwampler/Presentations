@@ -1,152 +1,516 @@
 h1. Lecture 3: Scaling Systems, Part I
 
-h1. How Do Systems Fail?
+h1. Some Terms &#8224;
+
+<div class='medium'>
+* *Client:* A person or other _service_ that uses a provided _service_.
+* *Process:* An operating system process.
+* *Component:* A "course grained" HW or SW entity. SW _components_ are in the same _process_.
+* *Service:* One or more _processes_ and _components_ that provide a subset of _system services_.
+* *Network Node:* A discrete server that provides _services_ to other _network nodes_.
+* *System:* The well defined collection of _components_, _services_, and _network nodes_.
+* *System Point:* Some logically-discrete part of an overall _system_. Depending on the context, it might be a _component_, _service_, or _network node_.
+
+&#8224; Warning, some of these terms are vague; they don't have standard definitions!
+</div>
+
+h1. Some Ways that Systems Fail
 
 * _Single points of failure._
-* Poor resiliency.
+* Poor fault tolerance (resiliency).
 * Insufficient resources.
-* Insufficient load handling capability.
 * Poor security.
+
+And affecting long-term business growth...
+
 * Complexity makes evolution difficult.
 
-h1. Single Points of Failure
+h1. Single Point of Failure (SPOF)
 
-Points in a system where a failure of one of those points causes the whole system to fail.
-
-Examples:
-* CPU, RAM, Disk, Network Interface, ...
-* Database
-* Middle-tier server
-* Other network service
-
-h1. Poor Resiliency
-
-Even without single points of failure, can a failure trigger a cascade of failures?
-
-h1. Insufficient Load Handling Capability
-
-The system can't provide services to all clients within an acceptable window of opportunity.
+_A point in a system where a failure would cause the whole system to fail._
 
 Examples:
-* Too many concurrent users.
+* CPU, RAM, disk, network interface, power...
+* Logical "tiers" and components:
+** Database
+** Middle-tier server
+** Other network service
+
+h1. Poor Fault Tolerance (Resiliency) 
+
+*Fault Tolerance:* _How well a system continues to provide service if part of it fails or bad data is received._
+
+Systems can be vulnerable even if they don't have any single points of failure. 
+
+Examples:
+
+* A database or other service query returns "invalid" data.
+* A Browser with JavaScript disabled tries to display a page that relies on JavaScript.
+* Bad user input!
+* Software bugs!
+
+h1. Poor Fault Tolerance (Resiliency) cont. 
+
+The system should _degrade gracefully_.
+
+Note that performance might suffer, even if a fault is tolerated.
+
+You'll hear _stability_ and _reliability_ also used for essentially the same concept.
 
 h1. Insufficient Resources
 
-There isn't enough of a resource to satisfy demand.
+_The system can't meet the demands for service._
 
-Examples:
+*Symptom:* The system can't service all clients within an acceptable window of opportunity, usually because there are too many concurrent clients!
+
+Examples _Bottlenecks_:
+<div class='small'>
 * Disk or memory space.
 * Network bandwidth.
 * Database transaction throughput.
-* Computational speed.
-* Physical space!
+* Computation speed.
+* Physical space! (i.e., enough room to add more "stuff")
+</div>
 
 h1. Poor Security
 
-Systems connected to the Internet are more vulnerable than closed systems.
+_Systems connected to the Internet are more vulnerable than closed systems._
 
-... but security breaches "from the inside jobs" are also significant.
+... but security breaches "from the inside" are also significant.
+
+* Malicious users.
+* Unwitting users.
 
 h1. Complexity Makes Evolution Difficult
 
-A poorly structured system is difficult to extend to support new functionality.
+_A poorly structured system is difficult to extend to support new functionality._
 
-Potential Examples:
+Example Sources of Complexity:
 * Source code.
-* Network topology.
-* Excessive coupling of components.
-* Too _little_ distribution (i.e., single elements with too many responsibilities leads to complexity).
+* System _topology_.
+** How logical work is divided amongst _components_, _services_, and _network nodes_.
+* Excessive coupling between _service points_.
+* Too _little_ distribution (i.e., single _service points_ with too many responsibilities tend to be overly complex).
 
-h1. Large-scale System Concepts
+h1. Large-scale System Design Concerns
 
-* *High Availability:* (HA) The system is rarely unavailable to provide service.
+* Scalability
+* Availability
+* Security:
+** Authentication
+** Authorization
 
-* *High Reliability:* The system is resilient against faults and errors, some of which may be caused by software bugs.
+h1. Scalability
 
-* *Authentication:* Reliably identifying a client (user or external system) attempting to use system resources.
+_Can the system's capacity be increased at reasonable cost?_ 
 
-* *Authorization:* Once a client is authenticated, controlling access to those resources for which the client is permitted to use.
+Affects the ability to provide adequate resources to meet service expectations.
+
+Consider _latency_ vs. _throughput_, using a pipe analogy:
+* *Latency:* The time it takes for any one computation. Imagine the pipe is _long_ or _short_.
+* *Throughput:* The amount of computation per unit time. Imagine the pipe is _fat_ or _thin_.
+
+h1. Scalability (cont.)
+
+Two ways to Scale:
+
+* Scale _vertically_.
+* Scale _horizontally_.
+
+h1. Scaling Vertically
+
+Adding more hardware to the _same_ machine.
+
+* *Easy:* Requires no software changes, no increase in "rack" space, etc.
+* *Expensive:* Premium price for the top-of-the-line hardware.
+* *SPOF:* The server remains a single point of failure
+
+h1. Scaling Horizontally
+
+Adding more hardware _in parallel_.
+
+* *Hard:* May require significant software changes.
+* *Cheap:* Can use lower-cost hardware (but more power and space?).
+* *SPOF Elimination:* _Redundancy_ eliminates SPOF (in principle...)
+
+h1. Redundancy
+
+* N > 1 identical _components_, _services_, or _network nodes_.
+* Enables _failover_ when one element fails.
+
+
+h1. "Let It Crash"
+
+A core philosophy in Akka, Erlang, and many other Actor-based systems. Rather than create big processes that require complex error recovery (which is very hard to do well...), use lots of small "workers" that are expendable. If any one of them gets into trouble, let it crash and restart it.
+
+Requires careful partitioning and supervision of work, including tolerance for small failures.  
+
+h1. Distribution of Computation and Data
+
+* HW and SW can be tuned for specific services.
+** E.g., The database servers have different performance requirements than the servers that deliver static web content (images, videos, JavaScript, ...).
+* Data can be divided.
+** Disk _striping_ (e.g., RAID-5 disk arrays). Gives both scalability (N disk drives) plus failure resiliency (data is effectively duplicated across the array). Disk array configurations can also parallelize writes, increasing _throughput_.
+** Database _sharding_ (e.g., all East-coast customers in the New York data center). Data is separated, not duplicated (use _replication_ for that...)
+
+h1. Caching
+
+_Remembering the result of an expensive operation for subsequent use._
+
+* *Data Caching:* 
+** _In-memory_ cache speeds up _disk_ I/O. 
+** _CPU_ cache speeds up _memory_ I/O.
+
+* *Memoization:*
+** Remembering the result of a previous _calculation_.
+
+h1. Availability
+
+_Can the system provide service when clients expect it?_
+
+Subject to the _service level agreements_ (SLAs) with clients about when service is required: 24x7? 8-5 week days? holidays? (Performance is usually part of SLAs, too.)
+
+Requires _fault tolerance_.
+
+h1. Availability Numbers
+
+table(tiny).
+|_.Availability&#160;% |_.Downtime/Year  |_.Downtime/Month |_.Downtime/Week |
+| 90% ("one nine")  | 36.5 days  | 72 hours  | 16.8 hours  |
+| 95%  | 18.25 days  | 36 hours  | 8.4 hours  |
+| 98%  | 7.30 days  | 14.4 hours  | 3.36 hours  |
+| 99% ("two nines")  | 3.65 days  | 7.20 hours  | 1.68 hours  |
+| 99.5%  | 1.83 days  | 3.60 hours  | 50.4 minutes  |
+| 99.8%  | 17.52 hours  | 86.23 minutes  | 20.16 minutes  |
+| 99.9% ("three nines")  | 8.76 hours  | 43.2 minutes  | 10.1 minutes  |
+| 99.95%  | 4.38 hours  | 21.56 minutes  | 5.04 minutes  |
+| 99.99% ("four nines")  | 52.56 minutes  | 4.32 minutes  | 1.01 minutes  |
+| 99.999% ("five nines")  | 5.26 minutes  | 25.9 seconds  | 6.05 seconds  |
+| 99.9999% ("six nines")  | 31.5 seconds  | 2.59 seconds  | 0.605 seconds  |
+| 99.999999% ("nine nines")  | 31.5 microseconds  | 2.59 microseconds  | 0.605 microseconds  |
+
+(adapted from http://en.wikipedia.org/wiki/High_availability)
 
 h1. Achieving High Availability
 
-* *Redundancy:* 
+* *Redundancy:* Improves fault tolerance (e.g., SPOF elimination).
+* *Resource Planning:* Estimating _and measuring_ resource utilization. Avoidance of high % utilization.
+* *Other Fault Tolerance Design Concerns:*
+** Clock Synchronization
+** Consensus
+** Self Stabilization
+
+h1. Clock Synchronization
+
+_When the *timing of events* matters across different systems, how do you ensure that those systems have synchronized clocks?_
+
+Examples: 
+* Message queues.
+* Log monitoring.
+
+h1. Consensus
+
+_How do you decide which systems are correct if answers that should be the same are different?_
+
+There are four, redundant flight-control computers on the space shuttle:
+<br/>
+
+bq. The four general-purpose computers operate essentially in lockstep, checking each other. If one computer fails, the three functioning computers "vote" it out of the system. This isolates it from vehicle control. If a second computer of the three remaining fails, the two functioning computers vote it out. In the rare case of two out of four computers simultaneously failing (a two-two split), one group is picked at random.
+(from the "Space Shuttle Wikipedia page":http://en.wikipedia.org/wiki/Space_Shuttle)
+
+h1. Self Stabilization
+
+Trying to "engineer-in" correctness in a distributed system is essentially impossible. Instead, design the system so it _constantly drives itself towards stability_.
+
+This may or may not involve actual detection of errors.
+
+h1. Security
+
+* *Authentication:* Reliably identifying a client (user or external system) attempting to use system resources.
+* *Authorization:* Once a client is authenticated, controlling access to those resources for which the client is permitted to use.
 
 
 h1. Topologies
 
-* *Client–server:* Smart client code contacts the server for data then formats and displays it to the user. Input at the client is committed back to the server when it represents a permanent change.
-* *3-tier architecture:* Three tier systems move the client intelligence to a middle tier so that stateless clients can be used. This simplifies application deployment. Most web applications are 3-Tier.
-* *n-tier architecture:* n-tier refers typically to web applications which further forward their requests to other enterprise services. This type of application is the one most responsible for the success of application servers.
-* *Tightly coupled (clustered):* refers typically to a cluster of machines that closely work together, running a shared process in parallel. The task is subdivided in parts that are made individually by each one and then put back together to make the final result.
-* *Peer-to-peer:* an architecture where there is no special machine or machines that provide a service or manage the network resources. Instead all responsibilities are uniformly divided among all machines, known as peers. Peers can serve both as clients and servers.
-* *Space based:* refers to an infrastructure that creates the illusion (virtualization) of one single address-space. Data are transparently replicated according to application needs. Decoupling in time, space and reference is achieved.
+* Client–server (2-tier) architecture
+* 3-tier architecture
+* N-tier architecture
+* Tightly coupled (clustered)
+* Peer-to-peer
+* Space based
 
-h1. Replication vs. Sharding
+h1. Client–server (2-tier) Architecture
 
-* *Replication:* Duplicate copies of the same data.
-* *Sharding:* Splitting a large data set across multiple servers.
+A client requests data or work from a server, or sends data updates to a server. The client then formats and presents the results to the user. Often, the server is a database and the client implements non-trivial "business domain logic" (business logic, for short).
 
+Note that _tier_ often implies a vertical orientation; _client down to server and back up to client_.
 
-h1. Sharding with Replication in MongoDB
+Examples:
+* Typical VisualBasic apps.
+* Simpler, low-volume web applications.
 
-<p><img src="images/mongodb_sharding_replica_sets.png"><img>
+h1. 3-tier Architecture
+
+A presentation tier, a middle tier handling "business logic", and a database (persistence) tier. The middle tier implements most of the logic that would be in the client and some of the logic that would be in the "server" (database?) in a 2-tier system.
+
+* The "standard" architecture of mid-sized, mid-volume Internet and IT systems.
+* Having three tiers simplifies the responsibilities of each tier, compared to 2-tier systems.
+** Putting logic in the UI is bad because it's hard to test and it doesn't cleanly separation "concerns".
+
+h1. N-tier Architecture
+
+Generalization of 3-tier architecture. There may be more than 3 vertical tiers, but often there are _horizontal_ (peer) services that separate responsibilities, usually only at the mid tier and persistence "levels" (but the UI should be _componentized_).
+
+Typical of all high-volume, high-availability web sites and IT applications.
+
+Examples:
+* Cloud computing
+* Email?
+
+h1. Tightly Coupled (Clustered)
+
+Usually refers to a cluster of servers or services that collaborate closely, perhaps to solve a problem with _divide and conquer_ after which the individual contributions are combined to produce the final result.
+
+Tight coupling may imply that failure of one element causes the work of all elements to fail. An exception is typical _map-reduce_ systems (which we'll discuss in a subsequent lecture), like _Hadoop_, which handle single node failures.
+ 
+Example:
+* Multicore Processor
+* Map-Reduce
+
+h1. Master-Slave
+
+An arrangement where one system dictates the work performed by subordinate systems.
+
+Also used for arrangements of similar systems where one system is designated the primary source of data and/or computation (the "master"), but work may _fail over_ to a backup ("slave") system if the master fails. The slave(s) may have to do all the work the master does (e.g., store data records) in order to take over. _Primary-secondary_ is sometimes used to describe this arrangement.
+
+The slave is now considered the master. After recovery, the old master may re-enter the system as a slave (or become the master again).
+
+Example:
+* Datebase master-slave server
+
+h1. Peer-to-peer
+
+In contrast to _master-slave_, an architecture where no one system has a special role relative to the others in a group that provides a service. No one system directs the work of others, either. Rather, all systems divide the responsibilities equally, as _peers_, including the management of work. 
+
+Example:
+* _Mesh_ network
+
+h1. Space Based
+
+An infrastructure that creates the illusion of one single address-space. Data (and sometimes code!) are transparently replicated among "physical" elements. Sometimes called _virtualization_ (but that has other meanings, too).
+
+Examples:
+* Terracotta - Virtualization of data across JVM instances.
+* Tuple spaces - e.g., Linda
 
 h1.  Examples of Distributed Systems and Applications
 
-  Telecommunication networks:
-  Telephone networks and cellular networks.
-  Computer networks such as the Internet.
-  Wireless sensor networks.
-  Routing algorithms.
-  Network applications:
-  World wide web and peer-to-peer networks.
-  Massively multiplayer online games and virtual reality communities.
-  Distributed databases and distributed database management systems.
-  Network file systems.
-  Distributed information processing systems such as banking systems and airline reservation systems.
-  Real-time process control:
-  Aircraft control systems.
-  Industrial control systems.
-  Parallel computation:
-  Scientific computing, including cluster computing and grid computing and various volunteer computing projects; see the list of distributed computing projects.
-  Distributed rendering in computer graphics.
+For more examples, see the list on the "Distributed Computing":http://en.wikipedia.org/wiki/Distributed_computing Wikipedia page.
 
-h1. This Week's Assignment: Reading
+h1. Scaling Systems, Part II 
 
-Read the discussion on MongoDB Replication and Sharding. MongoDB's implementations are representative examples of these general techniques and the reading will also help you get more familiar with MongoDB. 
+We'll return to _Scaling Systems_ next month after the Midterm. For the next few weeks, we'll focus on SQL and _NoSQL_ databases.
 
-Note that the syntax details of MongoDB commands and the details of which techniques to use with particular versions of MongoDB, etc. aren't important. Focus instead on the concepts discussed.
+h1. Reading Assignments: 
 
-h1. This Week's Assignment: Reading - Replication
+* "Scalability, Availability, Stability Patterns":http://www.slideshare.net/jboner/scalability-availability-stability-patterns. A (long) presentation that covers many essentials of building systems that satisfy requirements we've discussed. It also discusses _NoSQL_ databases that we'll explore in subsequent weeks. Some of the other concepts discussed (like immutability and referential transparency) will be discussed later in the course. Skim the sections on data flow concurrency and event processing approaches; we won't cover them in the course. I also don't expect you to remember the lists of products in each category!
+* "NoSQL, Heroku, and You":http://blog.heroku.com/archives/2010/7/20/nosql/. One cloud service vendor's take on the importance of NoSQL databases.
 
-"Replication":http://www.mongodb.org/display/DOCS/Replication
+h1. For Further Research
 
-Follow the link in the section _Verifying propagation of writes with getlasterror_.  What's important here is why this is an issue - why would a client care if propagation happens immediately or not?
+* Diomidis Spinellis and Georgios Gousios, "Beautiful Architecture", O'Reilly, 2009. ISBN: 0596517984. Good essays on architecture.
+* "Consensus":http://en.wikipedia.org/wiki/Consensus_(computer_science).
+* "Self Stabilization":http://en.wikipedia.org/wiki/Self-stabilisation.
+* "Byzantine fault tolerance":http://en.wikipedia.org/wiki/Byzantine_fault_tolerance.
+* Martin Fowler, et al., "Patterns of Enterprise Application Architecture", Addison-Wesley, 2003. ISBN: 0321127420. Conventional, object-oriented approach. Does not cover the latest thinking on highly-distributed architectures.
 
-View the video or read the slides describing MongoDB's new approach to replication, called _replica sets_.
+h1. Add New Functionality (step 1)
 
-* "Video":http://lacantine.ubicast.eu/videos/21-06-2010-130932-partie-6/
-* "Slides":http://www.slideshare.net/mongodb/mongodb-replica-sets
+This week, we'll finally add the NYSE data to the project.
+
+Make sure you have pulled the latest changes from the project on the @COMP-388-488@ branch.
+
+Open the @README.md@ file (it's nicely formatted on GitHub) and follow the directions in the newly-revised section called *Import the Data*. It explains the new scripts in the @bin@ directory (which we'll also discuss in class) that you use to import the data.
+
+After importing the data, read the next section on using the web app, which explains a few things you'll need to know for the current state of the project.
+
+h1. Add New Functionality (step 2)
+
+Note that the instructions mention a @datatmp@ directory that holds temporary JSON files that were generated from the original YAML files and imported into MongoDB. They are one-line JSON expressions as required by @mongoimport@. Once the data import is done and the suggested @mongo@ console commands 
+
+h1. Add New Functionality (step 3)
+
+For our next exercise (#2), we'll answer the question, "What stocks are available?". We'll add a feature that returns the available stock symbols.
+
+There is a new branch on the GitHub project, based on @COMP-388-488@, called @exercise2@. run these commands, where the @#...@ are comments:
+
+:inlinecode lang=bash, class=code-tiny
+git fetch                        # grab the latest off GitHub, but don't merge changes
+git branch -a                    # Show all the local and remote branches
+git log origin/COMP-388-488 ^COMP-388-488  # show me what's changed!
+git checkout COMP-388-488        # move to this branch (if not already there)
+git merge origin/COMP-388-488    # merge to my local branch
+git branch --track exercise2 origin/exercise2   # create local copy of "exercise2"
+# start working...
+:endinlinecode 
+
+Note that @git pull@ is the combination of @git fetch@ and @git merge@.
+
+h1. Add New Functionality (step 4)
+
+Run jetty in @sbt@ (i.e., @jetty-run@) and go to the web page. The @bogus@ button is gone and there is now a @List Stocks@ button. If you click it, you'll get the same sort of error message that @bogus@ triggered. Your mission is to make this work.
+
+The UI code is already prepared. You just need to modify the server code, starting with the REST interface.
+
+h1. Add New Functionality (step 5)
+
+* Edit @RestfulDataPublisher.scala@. We need to do a little _refactoring_ first.
+* Change @getStatsFromInstrumentAnalysisServerSupervisors@ to take this argument: @message: InstrumentCalculationMessages@.
+* Change @supervisor !! CalculateStatistics(allCriteria)@ to @supervisor !! message@.
+* Now this method is more general to meet our needs.
  
-(Yes, it appears that something is wrong with the last 5 or so slides, but the "good" slides have the content I care about...)
+h1. Add New Functionality (step 6)
 
-h1. This Week's Assignment: Reading - Sharding
+* Also in @RestfulDataPublisher.scala@, in method @getAllDataFor@, change:
 
-"Sharding":http://www.mongodb.org/display/DOCS/Sharding+Introduction
+:inlinecode lang=scala, class=code-small
+val results = getStatsFromInstrumentAnalysisServerSupervisors(allCriteria)
+:endinlinecode 
 
-Make sure you understand the different goals of replication and sharding and how they also complement each other. Also, when combined, as discussed on the Sharding page, are there any _single points of failure_?
+to
 
-h1. This Week's Assignment: Reading for Next Week
+:inlinecode lang=scala, class=code-small
+val results = getStatsFromInstrumentAnalysisServerSupervisors(CalculateStatistics(allCriteria))
+:endinlinecode 
 
-* "NoSQL, Heroku, and You":http://blog.heroku.com/archives/2010/7/20/nosql/
+* Run the tests; they should all pass!
+* In what follows use the sbt @~test@ target to keep your tests passing as much as possible. There will be some intermediate steps when they won't pass.
 
-h1. Add New Functionality
+h1. Add New Functionality (step 7)
 
-This week, we'll add the NYSE data to the project.
+* Edit @InstrumentAnalysisServer.scala@.
+* Add this new object definition after the definition of @CalculateStatistics@:
 
-...
+:inlinecode lang=scala, class=code-small
+case class GetInstrumentList(range: scala.collection.immutable.NumericRange[Char]) extends InstrumentCalculationMessages
+:endinlinecode 
 
-h1. Add New Functionality
+* (You can import @NumericRange@ if you don't want to put this fully-qualified name in the declaration.)
 
-The @datatmp@ directory holds the files with JSON expressions that we generated from the YAML files. (They are one-line JSON expressions that @mongoimport@ wants to use).
+h1. Add New Functionality (step 8)
 
+* Back in @RestfulDataPublisher.scala@, edit the @restRequest@ method.
+* Add a case statment for the string "list_stocks". (Follow the example for "stats").
+* Have the case handler call a method similar to @getAllDataFor@. Call it @getAllInstruments@. It doesn't need any arguments.
+* If you copied and pasted @getAllDataFor@ ;), change the first four lines in the @try@ block to the following three lines:
+
+:inlinecode lang=scala, class=code-small
+val results = getStatsFromInstrumentAnalysisServerSupervisors(GetInstrumentList(`A` to `Z`))
+val result = compact(render(JSONMap.toJValue(Map("instrument-list" -> results))))
+log.info("instrument list result = "+result.substring(0,100)+"...")
+:endinlinecode 
+ 
+* Those backticks ` should forward ticks ' (formatting error!)
+
+h1. Add New Functionality (step 9)
+
+* Edit @InstrumentAnalysisServerSupervisors.scala@.
+* In the @defaultHandler@, add this case clause.
+
+:inlinecode lang=scala, class=code-small
+case GetInstrumentList(range) => self.reply(getInstrumentList(range))
+:endinlinecode 
+
+h1. Add New Functionality (step 10)
+
+* Create the @getInstrumentList@ method, which takes one argument: @range: scala.collection.immutable.NumericRange[Char]@. It should look similar to the @calculate@ method. The main difference is the @for@ "comprehension" (loop):
+
+:inlinecode lang=scala, class=code-small
+val futures = for {
+  letter <- range  // This would be equivalent, in our case to writing: 'A' to 'Z'
+  oneLetterRange = letter to letter
+  instrument = Instrument(letter.toString)
+  calculator <- getOrMakeInstrumentAnalysisServerFor(instrument, Price(Dollars))
+} yield (calculator !!! GetInstrumentList(oneLetterRange))
+:endinlinecode 
+
+h1. Add New Functionality (step 11)
+
+* Edit @InstrumentAnalysisServer.scala@.
+* Add the same case clause to @defaultHandler@ that you added in @InstrumentAnalysisServerSupervisors.scala@.
+* However, change the call to a @getInstrumentList@ method to be call on the @helper@ object.
+* Create this method in the helper class. It must take the same one-argument that @InstrumentAnalysisServerSupervisors.getInstrumentList@ took.
+* Copy the body of @fetchPrices@ to @getInstrumentList@. Make the new method public access!
+
+h1. Add New Functionality (step 12)
+
+* In @getInstrumentList@, change the argument to the @Get@ object that's sent to @dataStorageServer@ to @Pair("instrument_list", range.toList.head.toString)@. (We'll just assume here that there is only one character in the range.)
+* Change the error message for the @None@ case to something appropriate.
+* Change the @Some@ case to simply return the @result@.
+
+h1. Add New Functionality (step 13)
+
+* Implement @formatInstrumentListResults(result, range)@. Follow the example of @formatPriceResults@. 
+* Instead of the @criteria@ entry in the Map, return "range" as the key and @range.toString@ as the value.
+* Keep the @results@ part as is.
+
+h1. Add New Functionality (step 14)
+
+* Edit @DataStorageServer@.
+* Rename @getData@ to @getDataForRange@ 
+* _Copy_ the function signature for @getDataForRange@ and create a new @getData@ with it. Use the following body:
+
+:inlinecode lang=scala, class=code-small
+(criteria \ "instrument_list") match {
+  case JField(key, value) => getInstrumentList(value)
+  case _ => getDataForRange(criteria)
+} 
+:endinlinecode 
+
+h1. Add New Functionality (step 15)
+
+* Create method @getInstrumentList@. Here we will use a hack to reduce the amount of code we would have to write for the general case. (How could you eliminate this hack with a more general solution??)
+
+:inlinecode lang=scala, class=code-small
+protected[persistence] def getInstrumentList(prefix: String): JValue = dataStore match {
+  case mongo: MongoDBDataStore => mongo.getInstrumentList(prefix)
+  case _ => throw new RuntimeException("Can't get the instrument list from datastore "+dataStore)
+}
+:endinlinecode 
+
+h1. Add New Functionality (step 16)
+
+* Add these imports to @MongoDBDataStore@.
+
+:inlinecode lang=scala, class=code-small
+import net.liftweb.json.JsonAST._
+import net.liftweb.json.JsonDSL._
+:endinlinecode 
+
+h1. Add New Functionality (step 17)
+
+* Create method @getInstrumentList@ in @MongoDBDataStore@. Here it is:
+
+:inlinecode lang=scala, class=code-small
+// Hack!
+def getInstrumentList(prefix: String): Iterable[JSONRecord] = try {
+  val list = collection.distinct(prefix)
+  val buff = new scala.collection.mutable.ArrayBuffer[String]()
+  while (list.hasNext) {
+    buff += list.next
+  }
+  List(JSONRecord(("letter" -> prefix) ~ ("symbols" -> buff)))
+} catch {
+  case th => 
+    log.error("MongoDB Exception: ", th)
+    throw th
+}
+:endinlinecode 
+
+h1. Add New Functionality (step 18)
+
+We did all these changes without adding tests for them. Go back through the changes and create tests for (most of) them. Where we copied existing code, find tests for the original code and see if you copy and adapt those tests.
+
+h1. Add New Functionality (final)
+
+Please commit your changes to GitHub by the start of class next week.
