@@ -487,7 +487,7 @@
 </div>
 <div class="slide">
 <h1>Add New Functionality (step 2)</h1>
-<p>Note that the instructions mention a <code>datatmp</code> directory that holds temporary <span class="caps">JSON</span> files that were generated from the original <span class="caps">YAML</span> files and imported into MongoDB. They are one-line <span class="caps">JSON</span> expressions as required by <code>mongoimport</code>. Once the data import is done and the suggested <code>mongo</code> console commands</p>
+<p>Note that the instructions mention a <code>datatmp</code> directory that holds temporary <span class="caps">JSON</span> files that were generated from the original <span class="caps">YAML</span> files and imported into MongoDB. These <span class="caps">JSON</span> files contain one-line <span class="caps">JSON</span> expressions as required by <code>mongoimport</code>. Once the data import is done and the <code>mongo</code> console commands suggested in the <span class="caps">README</span> work correctly, you can delete <code>datatmp</code>.</p>
 </div>
 <div class="slide">
 <h1>Add New Functionality (step 3)</h1>
@@ -526,20 +526,20 @@ git checkout exercise2           # change to the "exercise2" branch
 <ul>
 	<li>Also in <code>RestfulDataPublisher.scala</code>, in method <code>getAllDataFor</code>, change:</li>
 </ul>
-<div class="code-small">
+<div class="code-tiny">
 <pre name="code" id="code" class="brush: scala,;">
 
 val results = getStatsFromInstrumentAnalysisServerSupervisors(allCriteria)
 </pre></div>
 <p>to</p>
-<div class="code-small">
+<div class="code-tiny">
 <pre name="code" id="code" class="brush: scala,;">
 
 val results = getStatsFromInstrumentAnalysisServerSupervisors(CalculateStatistics(allCriteria))
 </pre></div>
 <ul>
 	<li>Run the tests; they should all pass!</li>
-	<li>In what follows use the sbt <code>~test</code> target to keep your tests passing as much as possible. There will be some intermediate steps when they won&#8217;t pass.</li>
+	<li>In what follows, use the sbt <code>~test</code> target to keep your tests passing as much as possible. There will be some intermediate steps when they won&#8217;t pass.</li>
 </ul>
 </div>
 <div class="slide">
@@ -561,36 +561,49 @@ case class GetInstrumentList(range: scala.collection.immutable.NumericRange[Char
 <h1>Add New Functionality (step 8)</h1>
 <ul>
 	<li>Back in <code>RestfulDataPublisher.scala</code>, edit the <code>restRequest</code> method.</li>
-	<li>Add a case statment for the string &#8220;list_stocks&#8221;. (Follow the example for &#8220;stats&#8221;).</li>
-	<li>Have the case handler call a method similar to <code>getAllDataFor</code>. Call it <code>getAllInstruments</code>. It doesn&#8217;t need any arguments.</li>
-	<li>If you copied and pasted <code>getAllDataFor</code> ;), change the first four lines in the <code>try</code> block to the following three lines:</li>
-</ul>
-<div class="code-small">
-<pre name="code" id="code" class="brush: scala,;">
-
-val results = getStatsFromInstrumentAnalysisServerSupervisors(GetInstrumentList(`A` to `Z`))
-val result = compact(render(JSONMap.toJValue(Map("instrument-list" -&gt; results))))
-log.info("instrument list result = "+result.substring(0,100)+"...")
-</pre></div>
-
-<ul>
-	<li>Those backticks ` should forward ticks &#8217; (formatting error!)</li>
+	<li>Add a case statement for the string &#8220;list_stocks&#8221;. (Follow the example for &#8220;stats&#8221;).</li>
+	<li>Have the case handler call a method similar to <code>getAllDataFor</code>. Call it <code>getAllInstruments</code>. Pass one argument; the <code>instruments</code> variable, of type <code>String</code>.</li>
 </ul>
 </div>
 <div class="slide">
 <h1>Add New Functionality (step 9)</h1>
 <ul>
+	<li>If you copied and pasted <code>getAllDataFor</code> ;), change the first several lines in the <code>try</code> block to the following lines:</li>
+</ul>
+<div class="code-tiny">
+<pre name="code" id="code" class="brush: scala,;">
+
+// Hack! Just grab the first and last letters in the "instruments" string
+// and use them as the range, but handle the case of 0 or 1 characters.
+val symbolRange = instruments.trim match {
+  case "" =&gt; `A` to `Z`  // default
+  case s  =&gt; s.length match {
+    case 1 =&gt; `A` to s.charAt(0).toUpper  // 1 character; use as end
+    case n =&gt; s.charAt(0).toUpper to s.charAt(n-1).toUpper
+  }
+}
+val results = getStatsFromInstrumentAnalysisServerSupervisors(GetInstrumentList(symbolRange))
+val result = compact(render(JSONMap.toJValue(Map("instrument-list" -&gt; results))))
+</pre></div>
+
+<ul>
+	<li><strong>Warning:</strong> those backticks ` should be forward ticks &#8217; (formatting problem!).</li>
+</ul>
+</div>
+<div class="slide">
+<h1>Add New Functionality (step 10)</h1>
+<ul>
 	<li>Edit <code>InstrumentAnalysisServerSupervisors.scala</code>.</li>
 	<li>In the <code>defaultHandler</code>, add this case clause.</li>
 </ul>
-<div class="code-small">
+<div class="code-tiny">
 <pre name="code" id="code" class="brush: scala,;">
 
 case GetInstrumentList(range) =&gt; self.reply(getInstrumentList(range))
 </pre></div>
 </div>
 <div class="slide">
-<h1>Add New Functionality (step 10)</h1>
+<h1>Add New Functionality (step 11)</h1>
 <ul>
 	<li>Create the <code>getInstrumentList</code> method, which takes one argument: <code>range: scala.collection.immutable.NumericRange[Char]</code>. It should look similar to the <code>calculate</code> method. The main difference is the <code>for</code> &#8220;comprehension&#8221; (loop):</li>
 </ul>
@@ -598,7 +611,7 @@ case GetInstrumentList(range) =&gt; self.reply(getInstrumentList(range))
 <pre name="code" id="code" class="brush: scala,;">
 
 val futures = for {
-  letter &lt;- range  // This would be equivalent, in our case to writing: 'A' to 'Z'
+  letter &lt;- range  // Recall that range is something like 'A' to 'D'
   oneLetterRange = letter to letter
   instrument = Instrument(letter.toString)
   calculator &lt;- getOrMakeInstrumentAnalysisServerFor(instrument, Price(Dollars))
@@ -606,25 +619,26 @@ val futures = for {
 </pre></div>
 </div>
 <div class="slide">
-<h1>Add New Functionality (step 11)</h1>
+<h1>Add New Functionality (step 12)</h1>
 <ul>
 	<li>Edit <code>InstrumentAnalysisServer.scala</code>.</li>
 	<li>Add the same case clause to <code>defaultHandler</code> that you added in <code>InstrumentAnalysisServerSupervisors.scala</code>.</li>
-	<li>However, change the call to a <code>getInstrumentList</code> method to be call on the <code>helper</code> object.</li>
+	<li>However, change the call to a <code>getInstrumentList</code> method to be a call on the <code>helper</code> object in the file.</li>
 	<li>Create this method in the helper class. It must take the same one-argument that <code>InstrumentAnalysisServerSupervisors.getInstrumentList</code> took.</li>
-	<li>Copy the body of <code>fetchPrices</code> to <code>getInstrumentList</code>. Make the new method public access!</li>
+	<li>Copy the body of <code>fetchPrices</code> to <code>getInstrumentList</code>.</li>
+	<li>Make this new method public, not <code>protected</code>! (In Scala, the default is public)</li>
 </ul>
 </div>
 <div class="slide">
-<h1>Add New Functionality (step 12)</h1>
+<h1>Add New Functionality (step 13)</h1>
 <ul>
-	<li>In <code>getInstrumentList</code>, change the argument to the <code>Get</code> object that&#8217;s sent to <code>dataStorageServer</code> to <code>Pair("instrument_list", range.toList.head.toString)</code>. (We&#8217;ll just assume here that there is only one character in the range.)</li>
+	<li>In <code>getInstrumentList</code>, change the argument to the <code>Get</code> object that&#8217;s sent to <code>dataStorageServer</code> to <code>Pair("instrument_list", range.toList.head.toString)</code>. (We&#8217;ll just assume here that there is only one character in the range; we&#8217;re using one instance of this class per letter.)</li>
 	<li>Change the error message for the <code>None</code> case to something appropriate.</li>
 	<li>Change the <code>Some</code> case to simply return the <code>result</code>.</li>
 </ul>
 </div>
 <div class="slide">
-<h1>Add New Functionality (step 13)</h1>
+<h1>Add New Functionality (step 14)</h1>
 <ul>
 	<li>Implement <code>formatInstrumentListResults(result, range)</code>. Follow the example of <code>formatPriceResults</code>.</li>
 	<li>Instead of the <code>criteria</code> entry in the Map, return &#8220;range&#8221; as the key and <code>range.toString</code> as the value.</li>
@@ -632,7 +646,7 @@ val futures = for {
 </ul>
 </div>
 <div class="slide">
-<h1>Add New Functionality (step 14)</h1>
+<h1>Add New Functionality (step 15)</h1>
 <ul>
 	<li>Edit <code>DataStorageServer</code>.</li>
 	<li>Rename <code>getData</code> to <code>getDataForRange</code></li>
@@ -648,21 +662,26 @@ val futures = for {
 </pre></div>
 </div>
 <div class="slide">
-<h1>Add New Functionality (step 15)</h1>
+<h1>Add New Functionality (step 16)</h1>
 <ul>
-	<li>Create method <code>getInstrumentList</code>. Here we will use a hack to reduce the amount of code we would have to write for the general case. (How could you eliminate this hack with a more general solution??)</li>
+	<li>Create method <code>getInstrumentList</code>.</li>
+	<li>Here we will use a hack to reduce the amount of code we would have to write for the general case. We&#8217;ll only worry about getting the list from MongoDB, not all data stores. (How could you eliminate this hack with a more general solution??)</li>
 </ul>
-<div class="code-small">
+<div class="code-tiny">
 <pre name="code" id="code" class="brush: scala,;">
 
 protected[persistence] def getInstrumentList(prefix: String): JValue = dataStore match {
-  case mongo: MongoDBDataStore =&gt; mongo.getInstrumentList(prefix)
+  case mongo: MongoDBDataStore =&gt; 
+    val data = for {
+      json &lt;- mongo.getInstrumentList(prefix)
+    } yield json
+    toJSON(data toList)
   case _ =&gt; throw new RuntimeException("Can't get the instrument list from datastore "+dataStore)
 }
 </pre></div>
 </div>
 <div class="slide">
-<h1>Add New Functionality (step 16)</h1>
+<h1>Add New Functionality (step 17)</h1>
 <ul>
 	<li>Add these imports to <code>MongoDBDataStore</code>.</li>
 </ul>
@@ -671,10 +690,11 @@ protected[persistence] def getInstrumentList(prefix: String): JValue = dataStore
 
 import net.liftweb.json.JsonAST._
 import net.liftweb.json.JsonDSL._
+import org.joda.time.format._
 </pre></div>
 </div>
 <div class="slide">
-<h1>Add New Functionality (step 17)</h1>
+<h1>Add New Functionality (step 18)</h1>
 <ul>
 	<li>Create method <code>getInstrumentList</code> in <code>MongoDBDataStore</code>. Here it is:</li>
 </ul>
@@ -683,12 +703,15 @@ import net.liftweb.json.JsonDSL._
 
 // Hack!
 def getInstrumentList(prefix: String): Iterable[JSONRecord] = try {
-  val list = collection.distinct(prefix)
+  // TODO: We hard-code the name of the thing we want, the "stock_symbol". Should be abstracted...
+  val list = collection.distinct("stock_symbol")
   val buff = new scala.collection.mutable.ArrayBuffer[String]()
   while (list.hasNext) {
     buff += list.next
   }
-  List(JSONRecord(("letter" -&gt; prefix) ~ ("symbols" -&gt; buff)))
+  // Must put in a timestamp to make JSONRecord happy:
+  val format = DateTimeFormat.forPattern("yyyy-MM-dd")
+  List(JSONRecord(("date" -&gt; format.print(new DateTime)) ~ ("letter" -&gt; prefix) ~ ("symbols" -&gt; buff.toList)))
 } catch {
   case th =&gt; 
     log.error("MongoDB Exception: ", th)
@@ -697,8 +720,14 @@ def getInstrumentList(prefix: String): Iterable[JSONRecord] = try {
 </pre></div>
 </div>
 <div class="slide">
-<h1>Add New Functionality (step 18)</h1>
-<p>We did all these changes without adding tests for them. Go back through the changes and create tests for (most of) them. Where we copied existing code, find tests for the original code and see if you copy and adapt those tests.</p>
+<h1>Add New Functionality (step 19)</h1>
+<p>Try it out! use <code>jetty-run</code> in <code>sbt</code>, enter two letters for the <code>Symbols</code> in the UI and click <code>List Stocks</code>. You should get a table with one row for all the symbols that start with the letter <code>A</code>, one row for <code>B</code>, etc.</p>
+<p><strong>Warning:</strong> If might run out of memory if you ask for <code>A-Z</code> symbols! Try small ranges first.</p>
+<p>Make sure the price queries still work.</p>
+</div>
+<div class="slide">
+<h1>Add New Functionality (step 20)</h1>
+<p>We did all these changes without adding tests for them. That&#8217;s not really the best way to work (as we&#8217;ll see later in the course). Go back through the changes and create tests for as many of them as you can. Where we copied existing code, find tests for the original code and see if you can copy and adapt those tests.</p>
 </div>
 <div class="slide">
 <h1>Add New Functionality (final)</h1>

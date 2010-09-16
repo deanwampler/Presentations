@@ -336,7 +336,7 @@ After importing the data, read the next section on using the web app, which expl
 
 h1. Add New Functionality (step 2)
 
-Note that the instructions mention a @datatmp@ directory that holds temporary JSON files that were generated from the original YAML files and imported into MongoDB. They are one-line JSON expressions as required by @mongoimport@. Once the data import is done and the suggested @mongo@ console commands 
+Note that the instructions mention a @datatmp@ directory that holds temporary JSON files that were generated from the original YAML files and imported into MongoDB. These JSON files contain one-line JSON expressions as required by @mongoimport@. Once the data import is done and the @mongo@ console commands suggested in the README work correctly, you can delete @datatmp@.
 
 h1. Add New Functionality (step 3)
 
@@ -374,18 +374,18 @@ h1. Add New Functionality (step 6)
 
 * Also in @RestfulDataPublisher.scala@, in method @getAllDataFor@, change:
 
-:inlinecode lang=scala, class=code-small
+:inlinecode lang=scala, class=code-tiny
 val results = getStatsFromInstrumentAnalysisServerSupervisors(allCriteria)
 :endinlinecode 
 
 to
 
-:inlinecode lang=scala, class=code-small
+:inlinecode lang=scala, class=code-tiny
 val results = getStatsFromInstrumentAnalysisServerSupervisors(CalculateStatistics(allCriteria))
 :endinlinecode 
 
 * Run the tests; they should all pass!
-* In what follows use the sbt @~test@ target to keep your tests passing as much as possible. There will be some intermediate steps when they won't pass.
+* In what follows, use the sbt @~test@ target to keep your tests passing as much as possible. There will be some intermediate steps when they won't pass.
 
 h1. Add New Functionality (step 7)
 
@@ -401,61 +401,73 @@ case class GetInstrumentList(range: scala.collection.immutable.NumericRange[Char
 h1. Add New Functionality (step 8)
 
 * Back in @RestfulDataPublisher.scala@, edit the @restRequest@ method.
-* Add a case statment for the string "list_stocks". (Follow the example for "stats").
-* Have the case handler call a method similar to @getAllDataFor@. Call it @getAllInstruments@. It doesn't need any arguments.
-* If you copied and pasted @getAllDataFor@ ;), change the first four lines in the @try@ block to the following three lines:
-
-:inlinecode lang=scala, class=code-small
-val results = getStatsFromInstrumentAnalysisServerSupervisors(GetInstrumentList(`A` to `Z`))
-val result = compact(render(JSONMap.toJValue(Map("instrument-list" -> results))))
-log.info("instrument list result = "+result.substring(0,100)+"...")
-:endinlinecode 
- 
-* Those backticks ` should forward ticks ' (formatting error!)
+* Add a case statement for the string "list_stocks". (Follow the example for "stats").
+* Have the case handler call a method similar to @getAllDataFor@. Call it @getAllInstruments@. Pass one argument; the @instruments@ variable, of type @String@.
 
 h1. Add New Functionality (step 9)
+
+* If you copied and pasted @getAllDataFor@ ;), change the first several lines in the @try@ block to the following lines:
+
+:inlinecode lang=scala, class=code-tiny
+// Hack! Just grab the first and last letters in the "instruments" string
+// and use them as the range, but handle the case of 0 or 1 characters.
+val symbolRange = instruments.trim match {
+  case "" => `A` to `Z`  // default
+  case s  => s.length match {
+    case 1 => `A` to s.charAt(0).toUpper  // 1 character; use as end
+    case n => s.charAt(0).toUpper to s.charAt(n-1).toUpper
+  }
+}
+val results = getStatsFromInstrumentAnalysisServerSupervisors(GetInstrumentList(symbolRange))
+val result = compact(render(JSONMap.toJValue(Map("instrument-list" -> results))))
+:endinlinecode 
+ 
+* *Warning:* those backticks ` should be forward ticks ' (formatting problem!).
+
+h1. Add New Functionality (step 10)
 
 * Edit @InstrumentAnalysisServerSupervisors.scala@.
 * In the @defaultHandler@, add this case clause.
 
-:inlinecode lang=scala, class=code-small
+:inlinecode lang=scala, class=code-tiny
 case GetInstrumentList(range) => self.reply(getInstrumentList(range))
 :endinlinecode 
 
-h1. Add New Functionality (step 10)
+h1. Add New Functionality (step 11)
 
 * Create the @getInstrumentList@ method, which takes one argument: @range: scala.collection.immutable.NumericRange[Char]@. It should look similar to the @calculate@ method. The main difference is the @for@ "comprehension" (loop):
 
 :inlinecode lang=scala, class=code-small
 val futures = for {
-  letter <- range  // This would be equivalent, in our case to writing: 'A' to 'Z'
+  letter <- range  // Recall that range is something like 'A' to 'D'
   oneLetterRange = letter to letter
   instrument = Instrument(letter.toString)
   calculator <- getOrMakeInstrumentAnalysisServerFor(instrument, Price(Dollars))
 } yield (calculator !!! GetInstrumentList(oneLetterRange))
 :endinlinecode 
 
-h1. Add New Functionality (step 11)
+h1. Add New Functionality (step 12)
 
 * Edit @InstrumentAnalysisServer.scala@.
 * Add the same case clause to @defaultHandler@ that you added in @InstrumentAnalysisServerSupervisors.scala@.
-* However, change the call to a @getInstrumentList@ method to be call on the @helper@ object.
+* However, change the call to a @getInstrumentList@ method to be a call on the @helper@ object in the file.
 * Create this method in the helper class. It must take the same one-argument that @InstrumentAnalysisServerSupervisors.getInstrumentList@ took.
-* Copy the body of @fetchPrices@ to @getInstrumentList@. Make the new method public access!
+* Copy the body of @fetchPrices@ to @getInstrumentList@. 
+* Make this new method public, not @protected@! (In Scala, the default is public)
 
-h1. Add New Functionality (step 12)
+h1. Add New Functionality (step 13)
 
-* In @getInstrumentList@, change the argument to the @Get@ object that's sent to @dataStorageServer@ to @Pair("instrument_list", range.toList.head.toString)@. (We'll just assume here that there is only one character in the range.)
+* In @getInstrumentList@, change the argument to the @Get@ object that's sent to @dataStorageServer@ to @Pair("instrument_list", range.toList.head.toString)@. (We'll just assume here that there is only one character in the range; we're using one instance of this class per letter.)
 * Change the error message for the @None@ case to something appropriate.
 * Change the @Some@ case to simply return the @result@.
 
-h1. Add New Functionality (step 13)
+h1. Add New Functionality (step 14)
 
 * Implement @formatInstrumentListResults(result, range)@. Follow the example of @formatPriceResults@. 
 * Instead of the @criteria@ entry in the Map, return "range" as the key and @range.toString@ as the value.
 * Keep the @results@ part as is.
 
-h1. Add New Functionality (step 14)
+h1. Add New Functionality (step 15)
 
 * Edit @DataStorageServer@.
 * Rename @getData@ to @getDataForRange@ 
@@ -468,18 +480,23 @@ h1. Add New Functionality (step 14)
 } 
 :endinlinecode 
 
-h1. Add New Functionality (step 15)
+h1. Add New Functionality (step 16)
 
-* Create method @getInstrumentList@. Here we will use a hack to reduce the amount of code we would have to write for the general case. (How could you eliminate this hack with a more general solution??)
+* Create method @getInstrumentList@. 
+* Here we will use a hack to reduce the amount of code we would have to write for the general case. We'll only worry about getting the list from MongoDB, not all data stores. (How could you eliminate this hack with a more general solution??)
 
-:inlinecode lang=scala, class=code-small
+:inlinecode lang=scala, class=code-tiny
 protected[persistence] def getInstrumentList(prefix: String): JValue = dataStore match {
-  case mongo: MongoDBDataStore => mongo.getInstrumentList(prefix)
+  case mongo: MongoDBDataStore => 
+    val data = for {
+      json <- mongo.getInstrumentList(prefix)
+    } yield json
+    toJSON(data toList)
   case _ => throw new RuntimeException("Can't get the instrument list from datastore "+dataStore)
 }
 :endinlinecode 
 
-h1. Add New Functionality (step 16)
+h1. Add New Functionality (step 17)
 
 * Add these imports to @MongoDBDataStore@.
 
@@ -489,21 +506,22 @@ import net.liftweb.json.JsonDSL._
 import org.joda.time.format._
 :endinlinecode 
 
-h1. Add New Functionality (step 17)
+h1. Add New Functionality (step 18)
 
 * Create method @getInstrumentList@ in @MongoDBDataStore@. Here it is:
 
 :inlinecode lang=scala, class=code-small
 // Hack!
 def getInstrumentList(prefix: String): Iterable[JSONRecord] = try {
-  val list = collection.distinct(prefix)
+  // TODO: We hard-code the name of the thing we want, the "stock_symbol". Should be abstracted...
+  val list = collection.distinct("stock_symbol")
   val buff = new scala.collection.mutable.ArrayBuffer[String]()
   while (list.hasNext) {
     buff += list.next
   }
   // Must put in a timestamp to make JSONRecord happy:
   val format = DateTimeFormat.forPattern("yyyy-MM-dd")
-  List(JSONRecord(("date" -> format.print(new DateTime)) ~ ("letter" -> prefix) ~ ("symbols" -> buff)))
+  List(JSONRecord(("date" -> format.print(new DateTime)) ~ ("letter" -> prefix) ~ ("symbols" -> buff.toList)))
 } catch {
   case th => 
     log.error("MongoDB Exception: ", th)
@@ -511,9 +529,17 @@ def getInstrumentList(prefix: String): Iterable[JSONRecord] = try {
 }
 :endinlinecode 
 
-h1. Add New Functionality (step 18)
+h1. Add New Functionality (step 19)
 
-We did all these changes without adding tests for them. Go back through the changes and create tests for (most of) them. Where we copied existing code, find tests for the original code and see if you copy and adapt those tests.
+Try it out! use @jetty-run@ in @sbt@, enter two letters for the @Symbols@ in the UI and click @List Stocks@. You should get a table with one row for all the symbols that start with the letter @A@, one row for @B@, etc.
+
+*Warning:* If might run out of memory if you ask for @A-Z@ symbols! Try small ranges first.
+
+Make sure the price queries still work.
+
+h1. Add New Functionality (step 20)
+
+We did all these changes without adding tests for them. That's not really the best way to work (as we'll see later in the course). Go back through the changes and create tests for as many of them as you can. Where we copied existing code, find tests for the original code and see if you can copy and adapt those tests.
 
 h1. Add New Functionality (final)
 
