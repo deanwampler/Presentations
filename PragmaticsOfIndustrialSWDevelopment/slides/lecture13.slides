@@ -1,1 +1,5 @@
 h1. Lecture 13: Complexity vs. Simplicity Part II: Scrum, XP, and Lean
+
+h1. Reading for Next Week's Lecture
+
+* Eric Brewer, "Toward Robust, Distributed Systems":http://www.cs.berkeley.edu/~brewer/cs262b-2004/PODC-keynote.pdf. The keynote at the "ACM Symposium on Principles of Distributed Computing":http://www.podc.org/podc2000/ that introduced Brewer's CAP theorem. Focus on the first 2/3^rd^s of the presentation (up to _The DQ Principle_.)

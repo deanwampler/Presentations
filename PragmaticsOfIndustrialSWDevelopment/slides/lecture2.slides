@@ -307,7 +307,7 @@ h1. Add New Functionality
 * Find the two @TODO@ comments, one each before a @test@.
 * In the _first_ of those tests, comment out the line @pending@ (like Java, you can put a @//@ before the word @pending@).
 
-h1. Add New Functionality (cont)
+h1. Add New Functionality (cont.)
 
 * Run the @test@ action in sbt. The two tests should now fail. You should see the following near the end of the output.
 
@@ -318,7 +318,7 @@ Try to understand the error messages:
 * Look for the stack trace.
 * Ignore the verbose server messages (hint: most of those contain the words @akka@ and @thread@), but notice the @org.scalatest.TestFailedException@ messages.
 
-h1. Add New Functionality (cont)
+h1. Add New Functionality (cont.)
 
 When you find the stack trace, _above_ it is this output:
 
@@ -326,13 +326,13 @@ When you find the stack trace, _above_ it is this output:
 
 (Yeah!)
 
-h1. Add New Functionality (cont)
+h1. Add New Functionality (cont.)
 
 This is JSON represented using the Scala JSON library that is part of the "Lift Web framework":http://liftweb.net (which the project uses). I find it easiest to copy and paste messy output like this to an editor where I can manipulate it...
 
 But we don't really need to do that now. Look for the words @did not equal@. The "JSON" before these words is much longer than the "JSON" after them. The before case is what was actually returned, while the after case is what we expected. Recall the purpose of the test, to confirm that the results are filtered for just the @A@ stocks. Look for these strings: @JField(instruments,JArray(List(JString(A)))@. The @A@ is the instrument (stock symbol). The expected string only has @A@ "fields", while the actual also has @B@ and @C@ fields, too.
 
-h1. Add New Functionality (cont)
+h1. Add New Functionality (cont.)
 
 Now look again at the stack trace:
 
@@ -346,7 +346,7 @@ analysisServer.calculateStatistics(criteria) should equal (expected)
 
 Note how this _test assertion_ reads like English? The result of "calling the @calculateStatistics@ method should equal the @expected@ value".
 
-h1. Add New Functionality (cont)
+h1. Add New Functionality (cont.)
 
 * Okay, to start adding new functionality, run this @sbt@ command:
 
@@ -355,7 +355,7 @@ h1. Add New Functionality (cont)
 * Note that it will wait (no prompt is returned) and every time you save code changes, this test will run. 
 * Using the @~test-only@ "action" saves time, running in a few seconds, while running all the tests takes longer.
  
-h1. Add New Functionality (cont)
+h1. Add New Functionality (cont.)
 
 * Now, in your editor of choice, open the file @main/scala/server/finance/InstrumentAnalysisServer.scala@ (the file being tested...)
 * Find the @TODO@ before the method named @fetchPrices@.

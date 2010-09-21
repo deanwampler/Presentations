@@ -269,7 +269,7 @@ h1. An Synchronous (Wait) Message
 
 :code code/actor-synch-message.scala
 
-h1. An Synchronous (Wait) Message (cont)
+h1. An Synchronous (Wait) Message (cont.)
 
 Has the disadvantage of blocking!
 
@@ -277,7 +277,7 @@ h1. An Asynchronous with a Future Message
 
 :code code/actor-future-message.scala
 
-h1. An Asynchronous with a Future Message (cont)
+h1. An Asynchronous with a Future Message (cont.)
 
 Actor can keep doing work (like firing off simultaneous pings).
 
@@ -306,7 +306,7 @@ h1. This Week's Assignment: Reading
 * Browse the Scala resources listed in the "References":references.html to learn more about Scala.
 * Browse the Akka framework documentation at "docs.akkasource.org":http://docs.akkasource.org, to learn more about Akka, which is the foundation for the project code.
 
-h1. This Week's Assignment: Reading (cont)
+h1. This Week's Assignment: Reading (cont.)
 
 For Next Week's Lecture:
 
@@ -327,7 +327,7 @@ h1. Get the Project Code
 
 <p><code>git clone git@github.com:myAwesomeUserName/AkkaWebSampleExercise.git</code></p>
 
-h1. Get the Project Code (cont)
+h1. Get the Project Code (cont.)
 
 * We will actually do our work on "branch" called @COMP-388-488@, not the @master@ branch:
 
@@ -394,7 +394,7 @@ h1. Add New Functionality
 * Find the two @TODO@ comments, one each before a @test@.
 * In the _first_ of those tests, comment out the line @pending@ (like Java, you can put a @//@ before the word @pending@).
 
-h1. Add New Functionality (cont)
+h1. Add New Functionality (cont.)
 
 * Run the @test@ action in sbt. The two tests should now fail. You should see the following near the end of the output.
 
@@ -405,14 +405,14 @@ Try to understand the error messages:
 * Look for the stack trace.
 * Ignore the verbose server messages (hint: most of those contain the words @akka@ and @thread@), but notice the @org.scalatest.TestFailedException@ messages.
 
-h1. Add New Functionality (cont)
+h1. Add New Functionality (cont.)
 
 Looking at the stack trace:
 
 * On what line _in the test file_ did the failure occur? (That is, not a line in the _ScalaTest_ API.)
 * What did the server return and what was the expected value in those two cases? (hint: it's a JSON string...)
 
-h1. Add New Functionality (cont)
+h1. Add New Functionality (cont.)
 
 * In your editor, open the file @main/scala/server/finance/InstrumentAnalysisServer.scala@ (the file being tested...)
 * Find the @TODO@ before the method named @fetchPrices@.

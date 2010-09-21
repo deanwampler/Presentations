@@ -274,19 +274,19 @@ Department of Computer Science,<br/>Loyola University Chicago</p>
 <div class="slide">
 <h1>Course Components: Project Exercises</h1>
 <ul>
-	<li>Start with a &#8220;running&#8221; 3-tier Scala application</li>
-	<li>Hosted on <a href="http://github.com">GitHub.com</a> at <a href="http://github.com/deanwampler/AkkaWebSampleExercise">github.com/deanwampler/AkkaWebSampleExercise</a>.</li>
-	<li>Uses <em>actors</em> to scale computation over a <span class="caps">NYSE</span> data set.</li>
-	<li>Add features during the semester.</li>
-	<li><em>Refactor</em> the code to improve it and accommodate new features.</li>
+	<li>Start with a &#8220;running&#8221; 3-tier Scala application<br />
+ * Hosted on <a href="http://github.com">GitHub.com</a> at <a href="http://github.com/deanwampler/AkkaWebSampleExercise">github.com/deanwampler/AkkaWebSampleExercise</a>. <br />
+ * Uses <em>actors</em> to scale computation over a <span class="caps">NYSE</span> data set.<br />
+ * Add features during the semester.<br />
+ * <em>Refactor</em> the code to improve it and accommodate new features.</li>
 </ul>
 </div>
 <div class="slide">
 <h1>Course Components: Project Exercises (cont.)</h1>
 <ul>
-	<li><em>You are encouraged to work together.</em></li>
-	<li>Like you would in an industrial setting&#8230;</li>
-	<li>I expect the solutions to look &#8220;similar&#8221;.</li>
+	<li><em>You are encouraged to work together.</em><br />
+ * Like you would in an industrial setting&#8230;<br />
+ * I expect the solutions to look &#8220;similar&#8221;.</li>
 </ul>
 </div>
 <div class="slide">
@@ -300,16 +300,17 @@ h1. Course Components: Project Exercises (cont.)
 <ul>
 	<li>5% will be based on an <strong>oral presentation</strong> on 12/7.</li>
 	<li>15 minutes or so, with time for questions and discussion.</li>
-	<li>Topics to be worked out with me.</li>
+	<li>Topics to be worked out with me.<br />
+  <br />
+</div><br />
+<div class="slide"></li>
 </ul>
-</div>
-<div class="slide">
 <h1>Midterm and Final Exam</h1>
 <ul>
 	<li>Will cover the reading, lecture material, and concepts learned in the exercises.</li>
-	<li>Final exam content weighted:</li>
-	<li>2/3 of the material since the midterm</li>
-	<li>1/3 material before the midterm.</li>
+	<li>Final exam content weighted:<br />
+ * 2/3 of the material since the midterm <br />
+ * 1/3 material before the midterm.</li>
 	<li>Midterm: 10/19 (first half of that evening&#8217;s session).</li>
 	<li>Final exam: 12/14 (usual class time).</li>
 </ul>
@@ -327,9 +328,9 @@ h1. Course Components: Project Exercises (cont.)
 <div class="slide">
 <h1>Scaling Computation, Part I</h1>
 <ul>
-	<li>Two models of concurrency compared:</li>
-	<li>Multithreaded Programming.</li>
-	<li>The Actor Model of concurrency.</li>
+	<li>Two models of concurrency compared: <br />
+  * Multithreaded Programming.<br />
+  * The Actor Model of concurrency.</li>
 </ul>
 </div>
 <div class="slide">
@@ -361,7 +362,7 @@ public class UnsafeSequence {
   public int getNext() {
     return value++;
   }
-}</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/deanwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/UnsafeSequence.java">code/UnsafeSequence.java</a></div></p>
+}</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/dwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/UnsafeSequence.java">code/UnsafeSequence.java</a></div></p>
 <p>(credit: all Multithreading examples adapted from &#8220;Java Concurrency in Practice&#8221;)</p>
 </div>
 <div class="slide">
@@ -375,7 +376,7 @@ public class Sequence {
   public synchronized int getNext() {
     return value++;
   }
-}</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/deanwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/SafeSequence.java">code/SafeSequence.java</a></div></p>
+}</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/dwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/SafeSequence.java">code/SafeSequence.java</a></div></p>
 </div>
 <div class="slide">
 <h1>Things Can Go Wrong</h1>
@@ -407,7 +408,7 @@ public class LeftRightDeadlock {
     synchronized (right) {
       synchronized (left) { doSomethingElse(); }
   }
-}</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/deanwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/LeftRightDeadlock.java">code/LeftRightDeadlock.java</a></div></p>
+}</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/dwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/LeftRightDeadlock.java">code/LeftRightDeadlock.java</a></div></p>
 </div>
 <div class="slide">
 <h1>Other Deadlock Hazards</h1>
@@ -429,10 +430,11 @@ public class LeftRightDeadlock {
 <p>A thread is not blocked, but it can&#8217;t complete work because of trying operations always fails.</p>
 <ul>
 	<li>A common example is repeated execution of a transaction that never succeeds.</li>
-	<li>One scenario is two contenders with identical strategies for trying again, often colliding in the same way. If one is <em>greedy</em>, both may succeed.</li>
+	<li>One scenario is two contenders with identical strategies for trying again, often colliding in the same way. If one is <em>greedy</em>, both may succeed.<br />
+ <br />
+</div><br />
+<div class="slide"></li>
 </ul>
-</div>
-<div class="slide">
 <h1>The Importance of Immutability</h1>
 <p>What about access to <em>immutable</em> state? All the synchronization issues go away. Immutable objects have these virtues:</p>
 <ul>
@@ -468,7 +470,7 @@ class Manager {
     case Start =&gt; managedActors foreach (_ ! Start)
   }
 }
-</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/deanwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/manager-actor.scala">code/manager-actor.scala</a></div></p>
+</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/dwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/manager-actor.scala">code/manager-actor.scala</a></div></p>
 </div>
 <div class="slide">
 <h1>Actors in Scala (Akka)</h1>
@@ -517,7 +519,7 @@ class Manager {
 import se.scalablesolutions.akka.actor.Actor_
 // Creating an actor (one way...) and starting
 val manager = Actor.actorOf[Manager]
-manager.start</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/deanwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/manager-actor2.scala">code/manager-actor2.scala</a></div></p>
+manager.start</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/dwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/manager-actor2.scala">code/manager-actor2.scala</a></div></p>
 </div>
 <div class="slide">
 <h1>Actor vs. ActorRef</h1>
@@ -537,7 +539,7 @@ case class  Register(actor: ActorRef)
 case class  Unregister(actor: ActorRef)
 case object Stop
 case object Start
-</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/deanwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/actor-messages.scala">code/actor-messages.scala</a></div></p>
+</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/dwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/actor-messages.scala">code/actor-messages.scala</a></div></p>
 </div>
 <div class="slide">
 <h1>An Asynchronous (Fire and Forget) Message</h1>
@@ -550,7 +552,7 @@ case object Start
     case Start =&gt; managedActors foreach (_ ! Start)
   }
 }
-</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/deanwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/actor-asynch-message.scala">code/actor-asynch-message.scala</a></div></p>
+</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/dwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/actor-asynch-message.scala">code/actor-asynch-message.scala</a></div></p>
 <p>If a response is required, the receiver can send a message to the sender.</p>
 </div>
 <div class="slide">
@@ -567,10 +569,10 @@ case object Start
     }
   }
 }
-</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/deanwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/actor-synch-message.scala">code/actor-synch-message.scala</a></div></p>
+</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/dwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/actor-synch-message.scala">code/actor-synch-message.scala</a></div></p>
 </div>
 <div class="slide">
-<h1>An Synchronous (Wait) Message (cont)</h1>
+<h1>An Synchronous (Wait) Message (cont.)</h1>
 <p>Has the disadvantage of blocking!</p>
 </div>
 <div class="slide">
@@ -590,10 +592,10 @@ case object Start
       case None =&gt; "Error!"
     }
 }
-</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/deanwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/actor-future-message.scala">code/actor-future-message.scala</a></div></p>
+</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/dwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/actor-future-message.scala">code/actor-future-message.scala</a></div></p>
 </div>
 <div class="slide">
-<h1>An Asynchronous with a Future Message (cont)</h1>
+<h1>An Asynchronous with a Future Message (cont.)</h1>
 <p>Actor can keep doing work (like firing off simultaneous pings).</p>
 <p>Eventually, it waits for the <code>Futures</code> to complete and then proceeds. (It could also do work as each one finishes.)</p>
 </div>
@@ -614,7 +616,7 @@ case object Start
       case None =&gt; "Error!"
     }
 }
-</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/deanwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/actor-future-message2.scala">code/actor-future-message2.scala</a></div></p>
+</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/dwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/actor-future-message2.scala">code/actor-future-message2.scala</a></div></p>
 </div>
 <div class="slide">
 <h1>Achieving Immutability</h1>
@@ -641,7 +643,7 @@ case object Start
 </ul>
 </div>
 <div class="slide">
-<h1>This Week&#8217;s Assignment: Reading (cont)</h1>
+<h1>This Week&#8217;s Assignment: Reading (cont.)</h1>
 <p>For Next Week&#8217;s Lecture:</p>
 <ul>
 	<li>Simon Peyton Jones, &#8220;Beautiful Concurrency&#8221;, Chapter 24 in <em>Beautiful Code</em>, pgs. 385-406. Online:  <a href="http://research.microsoft.com/en-us/um/people/simonpj/papers/stm/#beautiful">http://research.microsoft.com/en-us/um/people/simonpj/papers/stm/#beautiful</a></li>
@@ -663,7 +665,7 @@ case object Start
 <p><code>git clone git@github.com:myAwesomeUserName/AkkaWebSampleExercise.git</code></p>
 </div>
 <div class="slide">
-<h1>Get the Project Code (cont)</h1>
+<h1>Get the Project Code (cont.)</h1>
 <ul>
 	<li>We will actually do our work on &#8220;branch&#8221; called <code>COMP-388-488</code>, not the <code>master</code> branch:</li>
 </ul>
@@ -742,7 +744,7 @@ case object Start
 </ul>
 </div>
 <div class="slide">
-<h1>Add New Functionality (cont)</h1>
+<h1>Add New Functionality (cont.)</h1>
 <ul>
 	<li>Run the <code>test</code> action in sbt. The two tests should now fail. You should see the following near the end of the output.</li>
 </ul>
@@ -754,7 +756,7 @@ case object Start
 </ul>
 </div>
 <div class="slide">
-<h1>Add New Functionality (cont)</h1>
+<h1>Add New Functionality (cont.)</h1>
 <p>Looking at the stack trace:</p>
 <ul>
 	<li>On what line <em>in the test file</em> did the failure occur? (That is, not a line in the <em>ScalaTest</em> <span class="caps">API</span>.)</li>
@@ -762,7 +764,7 @@ case object Start
 </ul>
 </div>
 <div class="slide">
-<h1>Add New Functionality (cont)</h1>
+<h1>Add New Functionality (cont.)</h1>
 <ul>
 	<li>In your editor, open the file <code>main/scala/server/finance/InstrumentAnalysisServer.scala</code> (the file being tested&#8230;)</li>
 	<li>Find the <code>TODO</code> before the method named <code>fetchPrices</code>.</li>
@@ -774,8 +776,9 @@ case object Start
 <h1>Add New Functionality (cont &#8211; sort of&#8230;)</h1>
 <p>How could we modify <code>filter</code> to filter by instruments? (To make it easier, assume there is only one instrument in the list, as in the test.)</p>
 <p>This is not easy, as we really need to parse the <span class="caps">JSON</span> into some representation, filter out the records (which are of the form <code>{"timestamp": 1283233404995, "symbol": "A", "price", "40.0"}</code>) using the <code>symbol</code>, then convert back to a string.</p>
-<p>Can you figure out how to do this with the Lift <span class="caps">JSON</span> APIs used in the application and <span class="caps">JSON</span> helper types provided, or using other 3rd-party <span class="caps">JSON</span> libraries?</p>
-<p>Actually, the right way to implement this feature is to support this filtering at the database level, which we will learn how to do with MongoDB.</p>
+<p>Can you figure out how to do this with the Lift <span class="caps">JSON</span> APIs used in the application and <span class="caps">JSON</span> helper types provided, or using other 3rd-party <span class="caps">JSON</span> libraries?<br />
+ <br />
+Actually, the right way to implement this feature is to support this filtering at the database level, which we will learn how to do with MongoDB.</p>
 </div>
 <div class="title slide">
 <h1>Lecture 2: Scaling Computation, Part II, and Course Project Rebooted</h1>
@@ -1014,7 +1017,7 @@ def counter = atomic {  // demarcate "atomic" block
  
 counter  // -&gt; 1
 counter  // -&gt; 2
-ref.get  // -&gt; 2 (retrieve the value explicitly)</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/deanwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/akka-stm-example1.scala">code/akka-stm-example1.scala</a></div></p>
+ref.get  // -&gt; 2 (retrieve the value explicitly)</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/dwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/akka-stm-example1.scala">code/akka-stm-example1.scala</a></div></p>
 </div>
 <div class="slide">
 <h1>Symantics (cont.)</h1>
@@ -1029,7 +1032,7 @@ val ref = Ref(1) // initialize with 1
 atomic {  
   ref set 10     // set new value
 }                // (actually returns old value)
-ref.get          // -&gt; 10</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/deanwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/akka-stm-example2.scala">code/akka-stm-example2.scala</a></div></p>
+ref.get          // -&gt; 10</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/dwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/akka-stm-example2.scala">code/akka-stm-example2.scala</a></div></p>
 </div>
 <div class="slide">
 <h1>Symantics: Blocking (&#8220;Retry&#8221;)</h1>
@@ -1050,7 +1053,7 @@ def receive = {
       to alter (_ + amount)
     }
 }
-</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/deanwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/akka-stm-example3.scala">code/akka-stm-example3.scala</a></div></p>
+</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/dwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/akka-stm-example3.scala">code/akka-stm-example3.scala</a></div></p>
 <p>(See <strong>Blocking Transactions</strong> on the <a href="http://doc.akkasource.org/stm-scala">Akka <span class="caps">STM</span> page</a> for the full example.)</p>
 </div>
 <div class="slide">
@@ -1075,7 +1078,7 @@ def receive = {
       }
     }
 }
-</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/deanwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/akka-stm-example4.scala">code/akka-stm-example4.scala</a></div></p>
+</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/dwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/akka-stm-example4.scala">code/akka-stm-example4.scala</a></div></p>
 </div>
 <div class="slide">
 <h1>Composability and Modularity</h1>
@@ -1181,7 +1184,7 @@ def receive = {
 </ul>
 </div>
 <div class="slide">
-<h1>Add New Functionality (cont)</h1>
+<h1>Add New Functionality (cont.)</h1>
 <ul>
 	<li>Run the <code>test</code> action in sbt. The two tests should now fail. You should see the following near the end of the output.</li>
 </ul>
@@ -1193,21 +1196,21 @@ def receive = {
 </ul>
 </div>
 <div class="slide">
-<h1>Add New Functionality (cont)</h1>
+<h1>Add New Functionality (cont.)</h1>
 <p>When you find the stack trace, <em>above</em> it is this output:</p>
 <div class="code-tiny">
 <pre name="code" id="code" class="brush: scala;">[error] Test Failed: calculateStatistics returns a JSON string containing all data that matches the instrument criteria
 org.scalatest.TestFailedException: JObject(List(JField(criteria,JObject(List(JField(instruments,JArray(List(JString(A)))), JField(statistics,JArray(List(JString(price[$])))), JField(start,JInt(0)), JField(end,JInt(1283824964864))))), JField(results,JArray(List(JObject(List(JField(timestamp,JInt(1283824954864)), JField(symbol,JString(A)), JField(price,JDouble(0.0)))), JObject(List(JField(timestamp,JInt(1283824955864)), JField(symbol,JString(C)), JField(price,JDouble(10.0)))), JObject(List(JField(timestamp,JInt(1283824956864)), JField(symbol,JString(A)), JField(price,JDouble(20.0)))), JObject(List(JField(timestamp,JInt(1283824957864)), JField(symbol,JString(B)), JField(price,JDouble(30.0)))), JObject(List(JField(timestamp,JInt(1283824958864)), JField(symbol,JString(A)), JField(price,JDouble(40.0))))))))) did not equal JObject(List(JField(criteria,JObject(List(JField(instruments,JArray(List(JString(A)))), JField(statistics,JArray(List(JString(price[$])))), JField(start,JInt(0)), JField(end,JInt(1283824964864))))), JField(results,JArray(List(JObject(List(JField(timestamp,JInt(1283824954864)), JField(symbol,JString(A)), JField(price,JDouble(0.0)))), JObject(List(JField(timestamp,JInt(1283824958864)), JField(symbol,JString(A)), JField(price,JDouble(40.0)))), JObject(List(JField(timestamp,JInt(1283824956864)), JField(symbol,JString(A)), JField(price,JDouble(20.0)))))))))
-</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/deanwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/exercise1-test-failure.scala">code/exercise1-test-failure.scala</a></div></p>
+</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/dwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/exercise1-test-failure.scala">code/exercise1-test-failure.scala</a></div></p>
 <p>(Yeah!)</p>
 </div>
 <div class="slide">
-<h1>Add New Functionality (cont)</h1>
+<h1>Add New Functionality (cont.)</h1>
 <p>This is <span class="caps">JSON</span> represented using the Scala <span class="caps">JSON</span> library that is part of the <a href="http://liftweb.net">Lift Web framework</a> (which the project uses). I find it easiest to copy and paste messy output like this to an editor where I can manipulate it&#8230;</p>
 <p>But we don&#8217;t really need to do that now. Look for the words <code>did not equal</code>. The &#8220;<span class="caps">JSON</span>&#8221; before these words is much longer than the &#8220;<span class="caps">JSON</span>&#8221; after them. The before case is what was actually returned, while the after case is what we expected. Recall the purpose of the test, to confirm that the results are filtered for just the <code>A</code> stocks. Look for these strings: <code>JField(instruments,JArray(List(JString(A)))</code>. The <code>A</code> is the instrument (stock symbol). The expected string only has <code>A</code> &#8220;fields&#8221;, while the actual also has <code>B</code> and <code>C</code> fields, too.</p>
 </div>
 <div class="slide">
-<h1>Add New Functionality (cont)</h1>
+<h1>Add New Functionality (cont.)</h1>
 <p>Now look again at the stack trace:</p>
 <ul>
 	<li>On what line <em>in the test file</em> did the failure occur? (That is, not a top line, which occurred in the <em>ScalaTest</em> <span class="caps">API</span>.)</li>
@@ -1221,18 +1224,19 @@ analysisServer.calculateStatistics(criteria) should equal (expected)
 <p>Note how this <em>test assertion</em> reads like English? The result of &#8220;calling the <code>calculateStatistics</code> method should equal the <code>expected</code> value&#8221;.</p>
 </div>
 <div class="slide">
-<h1>Add New Functionality (cont)</h1>
+<h1>Add New Functionality (cont.)</h1>
 <ul>
 	<li>Okay, to start adding new functionality, run this <code>sbt</code> command:</li>
 </ul>
 <p><code>~test-only org.chicagoscala.awse.server.finance.InstrumentAnalysisServerTest</code></p>
 <ul>
 	<li>Note that it will wait (no prompt is returned) and every time you save code changes, this test will run.</li>
-	<li>Using the <code>~test-only</code> &#8220;action&#8221; saves time, running in a few seconds, while running all the tests takes longer.</li>
+	<li>Using the <code>~test-only</code> &#8220;action&#8221; saves time, running in a few seconds, while running all the tests takes longer.<br />
+ <br />
+</div><br />
+<div class="slide"></li>
 </ul>
-</div>
-<div class="slide">
-<h1>Add New Functionality (cont)</h1>
+<h1>Add New Functionality (cont.)</h1>
 <ul>
 	<li>Now, in your editor of choice, open the file <code>main/scala/server/finance/InstrumentAnalysisServer.scala</code> (the file being tested&#8230;)</li>
 	<li>Find the <code>TODO</code> before the method named <code>fetchPrices</code>.</li>
@@ -1288,8 +1292,9 @@ formatPriceResults(filter(result), instruments, statistics, startMillis, endMill
 </ul>
 </div>
 <div class="slide">
-<h1>Add New Functionality (cont.)</h1>
-<p>You may not understand what this method is doing. It&#8217;s actually quite sophisticated and relies on very specific knowledge about the underlying format of the <code>json: JValue</code>. In fact, the correct way to implement this feature is to support this filtering at the database level, which we will learn how to do with MongoDB. This approach is both more efficient (we don&#8217;t waste time returning stuff we&#8217;ll throw away), more flexible, and more robust.</p>
+<h1>Add New Functionality (cont.)<br />
+ <br />
+You may not understand what this method is doing. It&#8217;s actually quite sophisticated and relies on very specific knowledge about the underlying format of the <code>json: JValue</code>. In fact, the correct way to implement this feature is to support this filtering at the database level, which we will learn how to do with MongoDB. This approach is both more efficient (we don&#8217;t waste time returning stuff we&#8217;ll throw away), more flexible, and more robust.</h1>
 <p>Note that I added some <code>log.error</code> statements in comments. Try running the <code>~test-only</code> command again and uncomment those lines. Try to find them in all the noisy output. Do they help you understand what&#8217;s going on? Look at the Lift <span class="caps">JSON</span> documentation to further understand this <span class="caps">API</span>. It is here: <a href="http://main.scala-tools.org/mvnsites/liftweb-2.0/framework/scaladocs/index.html">scala-tools.org/mvnsites/liftweb-2.0/framework/scaladocs/index.html</a> (Hint: click the <code>net.liftweb.json</code> link to focus in on the <span class="caps">JSON</span> part of the <span class="caps">API</span>.)</p>
 </div>
 <div class="slide">
@@ -1694,8 +1699,9 @@ formatPriceResults(filter(result), instruments, statistics, startMillis, endMill
 <div class="slide">
 <h1>Tightly Coupled (Clustered)</h1>
 <p>Usually refers to a cluster of servers or services that collaborate closely, perhaps to solve a problem with <em>divide and conquer</em> after which the individual contributions are combined to produce the final result.</p>
-<p>Tight coupling may imply that failure of one element causes the work of all elements to fail. An exception is typical <em>map-reduce</em> systems (which we&#8217;ll discuss in a subsequent lecture), like <em>Hadoop</em>, which handle single node failures.</p>
-<p>Example:</p>
+<p>Tight coupling may imply that failure of one element causes the work of all elements to fail. An exception is typical <em>map-reduce</em> systems (which we&#8217;ll discuss in a subsequent lecture), like <em>Hadoop</em>, which handle single node failures.<br />
+ <br />
+Example:</p>
 <ul>
 	<li>Multicore Processor</li>
 	<li>Map-Reduce</li>
@@ -1747,7 +1753,7 @@ formatPriceResults(filter(result), instruments, statistics, startMillis, endMill
 <h1>For Further Research</h1>
 <ul>
 	<li>Diomidis Spinellis and Georgios Gousios, &#8220;Beautiful Architecture&#8221;, O&#8217;Reilly, 2009. <span class="caps">ISBN</span>: 0596517984. Good essays on architecture.</li>
-	<li><a href="http://en.wikipedia.org/wiki/Consensus_(computer_science)">Consensus</a>.</li>
+	<li><a href="http://en.wikipedia.org/wiki/Consensus_(computer_science">Consensus</a>).</li>
 	<li><a href="http://en.wikipedia.org/wiki/Self-stabilisation">Self Stabilization</a>.</li>
 	<li><a href="http://en.wikipedia.org/wiki/Byzantine_fault_tolerance">Byzantine fault tolerance</a>.</li>
 	<li>Martin Fowler, et al., &#8220;Patterns of Enterprise Application Architecture&#8221;, Addison-Wesley, 2003. <span class="caps">ISBN</span>: 0321127420. Conventional, object-oriented approach. Does not cover the latest thinking on highly-distributed architectures.</li>
@@ -1793,10 +1799,11 @@ git checkout exercise2           # change to the "exercise2" branch
 	<li>Edit <code>RestfulDataPublisher.scala</code>. We need to do a little <em>refactoring</em> first.</li>
 	<li>Change <code>getStatsFromInstrumentAnalysisServerSupervisors</code> to take this argument: <code>message: InstrumentCalculationMessages</code>.</li>
 	<li>Change <code>supervisor !! CalculateStatistics(allCriteria)</code> to <code>supervisor !! message</code>.</li>
-	<li>Now this method is more general to meet our needs.</li>
+	<li>Now this method is more general to meet our needs.<br />
+ <br />
+</div><br />
+<div class="slide"></li>
 </ul>
-</div>
-<div class="slide">
 <h1>Add New Functionality (step 6)</h1>
 <ul>
 	<li>Also in <code>RestfulDataPublisher.scala</code>, in method <code>getAllDataFor</code>, change:</li>
@@ -2010,6 +2017,440 @@ def getInstrumentList(prefix: String): Iterable[JSONRecord] = try {
 </div>
 <div class="title slide">
 <h1>Lecture 4: Scaling Data, Part I</h1>
+<p>For decades, Relational Databases have been the dominate tool for data persistence. There are other models that are also decades old.</p>
+<p>You can find a short summary of many of them <a href="http://www.unixspace.com/context/databases.html">here</a>. We&#8217;ll discuss a few of them now.</p>
+</div>
+<div class="slide">
+<h1>Hierarchical and Network Model</h1>
+<ul>
+	<li>Hierarchical:
+	<ul>
+		<li>Tree-based, parent-child relationships.</li>
+		<li>1:N (one parent, N children).</li>
+		<li>Popular in the late 1960&#8217;s through the 1970&#8217;s.</li>
+	</ul></li>
+	<li>Network:
+	<ul>
+		<li>M:N (many to many).</li>
+		<li>Formally defined in 1971 at the Conference on Data Systems Languages (<span class="caps">CODASYL</span>).</li>
+		<li>Based on set theory.</li>
+		<li>Can have cycles in the network.</li>
+	</ul></li>
+</ul>
+</div>
+<div class="slide">
+<h1>Relational Model</h1>
+<ul>
+	<li><span class="caps">RDBMS</span> &#8211; Relational Database Management System.</li>
+	<li>Devised by Edgar F. Codd at <span class="caps">IBM</span> in 1970.</li>
+	<li>A <strong>relation</strong>: a set of tuples (i.e., rows a table) that have the same &#8220;attributes&#8221; (i.e., columns).</li>
+	<li>Rows are unique.</li>
+	<li>Columns have types and unique names.</li>
+	<li>Each row has the same set of columns.</li>
+	<li>The sequence of rows and columns are not significant.</li>
+	<li>1 or more columns may be indexed to speed up queries.</li>
+</ul>
+</div>
+<div class="slide">
+<h1>Object-Oriented Model</h1>
+<ul>
+	<li>Attempts to unify the programming and persistence models for languages like C++, Java, Smalltalk, etc.</li>
+	<li>Supports inheritance.</li>
+	<li>Eliminates the <em>impedence mismatch</em> required to persist objects to relational tables (inheritance is particularly tricky).</li>
+	<li>Emerged in the 90&#8217;s.</li>
+</ul>
+</div>
+<div class="slide">
+<h1>Object-Oriented Model (cont.)</h1>
+<ul>
+	<li>Never really displaced <span class="caps">RDBMS</span>, even though most IT development is done using OO languages!
+	<ul>
+		<li>Performance was a serious problem in early OODBMSs.</li>
+		<li>Database architects and developers tend to be conservative.</li>
+		<li>Using <span class="caps">RDBMS</span> continued to be &#8220;good enough&#8221;.</li>
+	</ul></li>
+</ul>
+</div>
+<div class="slide">
+<h1>Object/Relational Model</h1>
+<ul>
+	<li>Adds to the relational model the ability to define new types and specify the unique operations on those types.</li>
+	<li>Examples include geospatial data, time-series data (e.g., stock prices), and binary media like images, audio, and video.</li>
+	<li>Doesn&#8217;t support inheritance in the usual <span class="caps">OOP</span> sense.</li>
+	<li>Most of the big <span class="caps">RDBMS</span> vendors offer some O/R capabilities.</li>
+	<li>Compromise solution that also emerged in the 90&#8217;s.</li>
+</ul>
+</div>
+<div class="slide">
+<h1>Requirements for Data Persistence</h1>
+<ul>
+	<li><span class="caps">ACID</span>
+	<ul>
+		<li><strong>A</strong>: Atomicity</li>
+		<li><strong>C</strong>: Consistency</li>
+		<li><strong>I</strong>: Isolation</li>
+		<li><strong>D</strong>: Durability</li>
+	</ul></li>
+</ul>
+<p>When we discussed <span class="caps">ACID</span> two weeks ago, we mostly talked about <span class="caps">ACI</span> in the context of <em>software transactional memory</em>. Let&#8217;s talk a bit more about durability.</p>
+</div>
+<div class="slide">
+<h1>Durability</h1>
+<p><em>Committed transactions are permanent.</em></p>
+<p>&#8230;meaning they will survive system failure.</p>
+<p>Often implemented with a transaction log that can be &#8220;replayed&#8221; if recovery is required.</p>
+<p>But what if the log was on the system that failed? What if we can&#8217;t wait for the time it takes to replay the log (after we fix the broken system)?</p>
+</div>
+<div class="slide">
+<h1>Requirements for &#8220;Web Scale&#8221; Data Persistence</h1>
+<ul>
+	<li><strong>High Availability:</strong> If there&#8217;s one server, we can&#8217;t tolerate it crashing.</li>
+	<li><strong>Horizontal Scaling:</strong> No one server can &#8220;implement&#8221; Google.</li>
+	<li><strong>Flexibility, Extensibility:</strong> So we can grow our business with minimal cost.</li>
+</ul>
+</div>
+<div class="slide">
+<h1>Some Techniques We&#8217;ll Discuss</h1>
+<ul>
+	<li>Replication</li>
+	<li>Schema-less Design</li>
+	<li>Map/Reduce</li>
+</ul>
+</div>
+<div class="slide">
+<h1>Some Techniques We&#8217;ll Discuss</h1>
+<ul>
+	<li><strong>Replication</strong></li>
+	<li>Schema-less Design</li>
+	<li>Map/Reduce</li>
+</ul>
+</div>
+<div class="slide">
+<h1>Replication and Sharding</h1>
+<p><strong>Replication:</strong> Duplicate copies of the same data.</p>
+<ul>
+	<li>Replication Enables Failover</li>
+	<li>If you have duplicate data and duplicate software, then if one system goes down, the other(s) can take over the load.</li>
+	<li>Three of the possible configurations:
+	<ul>
+		<li><strong>Master-Slave:</strong> One dominate server; if it fails, the slave takes over.</li>
+		<li><strong>Mated Pair:</strong> Computation distributed between pairs. If one fails, the other takes the full load.</li>
+		<li><strong>N Peers:</strong> Scaled up version of <em>mated pair</em> to N servers.</li>
+	</ul></li>
+</ul>
+</div>
+<div class="slide">
+<h1>Replication and Sharding</h1>
+<p><strong>Sharding:</strong> Splitting a large data set across multiple servers.</p>
+<ul>
+	<li>Customer orders on the East coast are stored in New Jersey.</li>
+	<li>Customer orders on the West coast are stored in Oregon.</li>
+	<li>&#8230;<br />
+or split <em>functionality</em> across servers:</li>
+	<li>Customer orders on one server.</li>
+	<li>Inventory on another server.</li>
+	<li>&#8230;</li>
+</ul>
+</div>
+<div class="slide">
+<h1>Sharding with Replication</h1>
+<p>Get horizontal scalability and replication by combining both sharding with replication. Here&#8217;s an example using MongoDB.</p>
+<p><img src="images/mongodb_sharding_replica_sets.png"><img></div>
+<div class="slide">
+<h1>Distributed Data and Latency</h1>
+<p>When you scale by sharding (or <em>partitioning</em>) your data. You would like to maintain <span class="caps">ACID</span> compliant transactions across the data shards. The traditional approach is to rely upon distributed transactions and two-phase commit.</p>
+</div>
+<div class="slide">
+<h1>Distributed Transactions &amp; Two-Phase Commit</h1>
+<ul>
+	<li><strong>Distributed Transactions:</strong> Join transactions on individual systems into a larger transaction that spans the systems.</li>
+	<li><strong>Two-Phase Commit:</strong> A <em>consensus</em> protocol for whether to complete or abort the distributed transaction:<br />
+1. <em>Commit Request Phase:</em> Ask all participants to prepare to commit and <em>vote</em> whether or not to proceed.<br />
+2. <em>Commit Phase:</em> Complete the commit <em>if all</em> participants vote yes, otherwise abort.</li>
+</ul>
+</div>
+<div class="slide">
+<h1>What Happens at Enormous Scales?</h1>
+<p>Imagine you&#8217;re Amazon. You have thousands (millions?) of customers shopping at your site every day. You are saving information about searches, products viewed, products put in wish lists, orders placed, credit cards charged, etc.</p>
+<p>Massive sharding and replication don&#8217;t eliminate new phenomena that happen at large scales&#8230;</p>
+</div>
+<div class="slide">
+<h1><span class="caps">CAP</span></h1>
+<p>Eric Brewer (Professor at the University of California, Berkeley and the cofounder and chief scientist at Inktomi) conjectured in 2000 that you can&#8217;t satisfy all three of the following properties at once in World-scale systems.</p>
+<ul>
+	<li><strong>C</strong> &#8211; Consistency: To a client, an operation occurs all at once (Note: this is really <em>Atomicity</em> in <span class="caps">ACID</span>).</li>
+	<li><strong>A</strong> &#8211; Availability: Every operation completes to an expected result.</li>
+	<li><strong>P</strong> &#8211; Partition Tolerance: Operations will complete, even if some system components are unavailable (&#8220;partitioned&#8221; from the others).</li>
+</ul>
+</div>
+<div class="slide">
+<h1><span class="caps">CAP</span> (cont.)</h1>
+<p>In <a href="http://nosqlsummer.org/paper/cap-theorem">The <span class="caps">CAP</span> Theorem</a>, Seth Gilbert and Nancy Lynch elaborate on <span class="caps">CAP</span>, providing a proof of it, and offering real-world solutions.</p>
+<p>They point out:</p>
+<ul>
+	<li>Consistency: Distributed operations in a transaction appear as if they are on one node.</li>
+	<li>Availability: A weak form of availability is implied; there is no explicit limit on how long a transaction will take to complete and return a result!</li>
+	<li>Partition Tolerance: No set of failures less than total network failure is allowed to cause the system to respond incorrectly.</li>
+</ul>
+</div>
+<div class="slide">
+<h1><span class="caps">CAP</span>: Pick Two</h1>
+<p>Brewer observed that you can pick two of the three: CA, AP, or CP.</p>
+<p>(Section 3.2 of Gilbert and Lynch discuss these combinations.)</p>
+</div>
+<div class="slide">
+<h1>Consistency (Atomicity) and Availability</h1>
+<p>&#8230; but not Partition Tolerance.</p>
+<p>E.g., distributed systems in a &#8220;reliable&#8221; <span class="caps">LAN</span>.</p>
+<ul>
+	<li>Atomicity is provided by distributed transactions and 2-phase commit.</li>
+	<li>Availability is ensured by system reliability.</li>
+	<li>But if a partition forms (e.g., a node goes down), atomicity and availability are not guaranteed.
+	<ul>
+		<li>I.e., these systems are usually designed with the assumption of no partitions and guaranteed atomicity, so they will appear unavailable when a partition forms.</li>
+	</ul></li>
+</ul>
+</div>
+<div class="slide">
+<h1>Availability and Partition Tolerance</h1>
+<p>&#8230; but not Consistency (Atomicity)</p>
+<p>E.g., Google, Amazon, &#8230;</p>
+<ul>
+	<li>Systems remain available, even when someone cuts a trans-ocean data cable&#8230;</li>
+	<li>However, the data seen on either side of the cut might be different.</li>
+	<li>Data caches can exhibit this property. You&#8217;re local cache of search results might be slightly stale, but returning a result quickly is more important than taking longer to return a more accurate result.</li>
+</ul>
+</div>
+<div class="slide">
+<h1>Consistency (Atomicity) and Partition Tolerance</h1>
+<p>&#8230; but not Availability. Useful when it&#8217;s better to never allow stale data, even if it means that no service is available at all.</p>
+<p>E.g., a distributed <span class="caps">DBMS</span> in a <span class="caps">LAN</span>, using distributed locking.</p>
+<ul>
+	<li>There are rarely partitions, so it&#8217;s usually &#8220;tolerant&#8221;.</li>
+	<li>Atomicity is provided by the <span class="caps">DBMS</span> and distributed transaction framework.</li>
+	<li>But if a partition occurs (e.g., node crash), it might become unavailability, but it never returns inconsistent data.</li>
+</ul>
+</div>
+<div class="slide">
+<h1>Distributed Data and Latency</h1>
+<p>Users expect fast responses (low latency), but the speed of light can&#8217;t be increased. (It takes about 19ms for light to travel from New York to London) Also, to be globally available requires distribution of services for fault tolerance.</p>
+</div>
+<div class="slide">
+<h1>Distributed Data and Latency (cont.)</h1>
+<p>To meet these goals, your architecture has to tolerate high latency (<a href="http://www.infoq.com/articles/pritchett-latency">Dan Pritchett</a>). A couple of techniques help.</p>
+<ul>
+	<li>Moving data and computing resources close to customers.
+	<ul>
+		<li>Lowers the round-trip time</li>
+	</ul></li>
+	<li>Doing as much calculation asynchronously as possible.
+	<ul>
+		<li>E.g., google indexes the web asynchronously, so searches use precomputed data and are &#8220;instantaneous&#8221;.</li>
+	</ul></li>
+</ul>
+<p><img src="images/google-search.png"><img></p>
+</div>
+<div class="slide">
+<h1>Distributed Data and Latency (cont.)</h1>
+<p>Suppose you scale by partitioning your data. You would like to maintain <span class="caps">ACID</span> compliant transactions across the data partitions. The traditional approach is to rely upon distributed transactions and two-phase commit.</p>
+</div>
+<div class="slide">
+<h1>The Problem with Distributed Transactions</h1>
+<p>But distributed transactions create <em>synchronous</em> couplings across the databases, which can increase latency substantially</p>
+<p>When partitions are present, the transaction may never complete successfully!</p>
+</div>
+<div class="slide">
+<h1>The alternative to <span class="caps">ACID</span> is <span class="caps">BASE</span>:</h1>
+<ul>
+	<li><b>B</b>asically <b>A</b>vailable</li>
+	<li><b>S</b>oft state</li>
+	<li><b>E</b>ventually consistent</li>
+</ul>
+<p>(A contrived acronym, like <span class="caps">ACID</span>.)</p>
+<p>When availability is the top priority, then try to always provide some level of service, don&#8217;t insist on absolutely consistent state (i.e., tolerate some stale data), and expect the system to become consistent, <em>eventually</em>.</p>
+<p>There&#8217;s a spectrum between <span class="caps">ACID</span> and <span class="caps">BASE</span> for <em>each part</em> of the system.</p>
+</div>
+<div class="slide">
+<h1><span class="caps">ACID</span> vs <span class="caps">BASE</span></h1>
+<p>To be clear, <span class="caps">BASE</span> is a <strong>compromise</strong>.</p>
+<p>Everyone would prefer to always have <span class="caps">ACID</span> compliance, but they are willing to accept <span class="caps">BASE</span> when <span class="caps">ACID</span> can&#8217;t be met.</p>
+</div>
+<div class="slide">
+<h1>Some Techniques We&#8217;ll Discuss</h1>
+<ul>
+	<li>Replication</li>
+	<li><strong>Schema-less Design</strong></li>
+	<li>Map/Reduce</li>
+</ul>
+</div>
+<div class="slide">
+<h1>Do We Need an <span class="caps">RDBMS</span>?</h1>
+<p>The issues of scaling, <span class="caps">CAP</span> and <span class="caps">BASE</span> vs. <span class="caps">ACID</span> that we have just discussed apply equally to traditional <span class="caps">RDBMS</span>, as well as to newer persistence technologies.</p>
+</div>
+<div class="slide">
+<h1>Do We Need an <span class="caps">RDBMS</span>?</h1>
+<ul>
+	<li>Amazon, Google, eBay, Yahoo!, and other large-scale Internet companies have found that the cost of scaling traditional <span class="caps">RDBMS</span> is high and not always &#8220;worth it&#8221;.</li>
+	<li>Social networking sites like Twitter and Facebook have enormous <em>graphs</em> of social relationships to manage.</li>
+	<li>If data is easily sharded, because the shards have no references spanning them, then is the relational model essential?</li>
+	<li>If <span class="caps">ACID</span> isn&#8217;t essential for all operations, are there lighter-weight persistence alternatives?</li>
+</ul>
+</div>
+<div class="slide">
+<h1>&#8220;NoSQL&#8221;</h1>
+<p><em>Not <span class="caps">SQL</span></em> or <em>Not Only <span class="caps">SQL</span></em></p>
+<ul>
+	<li>If you have a graph of data, use a <em>graph</em> database.</li>
+	<li>If you need great flexibility in the data format, use an &#8220;informal&#8221;, easily-changed schema, use a <em>document-oriented</em> or <em>column oriented</em> database.</li>
+	<li>If an eventually-consistent, highly-scalable database is needed, consider &#8230; several options</li>
+</ul>
+</div>
+<div class="slide">
+<h1>Categories of &#8220;NoSQL&#8221; Databases</h1>
+<ul>
+	<li>Column Oriented (vs. the row orientation of <span class="caps">RDBMS</span>)</li>
+	<li>Document Oriented</li>
+	<li>Key-Value/Tuple Stores</li>
+	<li>Eventually Consistent Key-Value Stores</li>
+	<li>Graph Databases</li>
+	<li>Grid Databases</li>
+</ul>
+<p>(Compare with <a href="http://nosql-database.org/">NoSQL-Database.org</a>)</p>
+</div>
+<div class="slide">
+<h1>Column Oriented</h1>
+<p>E.g., <em>Cassandra, Hadoop/HBase, Hypertable</em></p>
+<p><strong>Column-oriented</strong> storage is often better for <span class="caps">OLAP</span> (OnLine Analytical Processing), e.g., Data analytics using Data Warehouses.</p>
+<p><strong>Row-oriented</strong> storage if often better for <span class="caps">OLTP</span> (OnLine Transaction Processing), e.g., typical &#8220;live&#8221; transactions.</p>
+</div>
+<div class="slide">
+<h1>Column Oriented (cont.)</h1>
+<p><strong>Column-oriented</strong> storage is often better for&#8230;</p>
+<ul>
+	<li>optimizing space (compression) for very different-sized values in the same column (e.g., binary data).</li>
+	<li>optimizing disk access for small subsets of all columns.</li>
+	<li>Adding and removing columns frequently.</li>
+</ul>
+<p>Many of the largest NoSQL database instances are column databases.</p>
+</div>
+<div class="slide">
+<h1>Document Oriented</h1>
+<p>E.g., <em>MongoDB, CouchDB, Terrastore</em></p>
+<p>Stores <em>documents</em>, usually in the form of <span class="caps">JSON</span> (JavaScript Object Notation), <span class="caps">YAML</span> (Yet Another Markup Language), or <span class="caps">XML</span> (eXtensible Markup Language).</p>
+<ul>
+	<li><strong>Schemaless:</strong> No fixed schema, <em>semistructured</em> data.
+	<ul>
+		<li>Contrast with <span class="caps">RDBMS</span>.</li>
+		<li>But the document must be &#8220;well formed&#8221; (valid <span class="caps">JSON</span>, <span class="caps">YAML</span>, or <span class="caps">XML</span>).</li>
+	</ul></li>
+	<li>Often lightweight, so performance is often very good.
+	<ul>
+		<li>(We&#8217;ll explore this topic more next week.)</li>
+	</ul></li>
+</ul>
+</div>
+<div class="slide">
+<h1>Document Oriented (cont.)</h1>
+<ul>
+	<li>Often support a query capability or language (even tough they&#8217;re <em>schemaless</em>).</li>
+	<li>Often support a <em>map/reduce</em> capability.</li>
+	<li>Excellent for medium-sized datasets with rapidly-evolving &#8220;schema&#8221;.</li>
+</ul>
+</div>
+<div class="slide">
+<h1>Digression: Why the Term &#8220;Document&#8221;?</h1>
+<ul>
+	<li><span class="caps">XML</span> (and <span class="caps">HTML</span>) are simplified derivatives of <span class="caps">SGML</span> (Standard Generalized Markup Language).
+	<ul>
+		<li>Long-time standard in the publishing industry.</li>
+		<li><strong>Markup</strong> is the term for editing and arranging content for publication.</li>
+	</ul></li>
+</ul>
+<p>Hence, we store <span class="caps">JSON</span> <em>documents</em> in MongoDB and CouchDB, etc.</p>
+<p>Similarly, we store <span class="caps">YAML</span> or <span class="caps">XML</span> in documents tailored to them.</p>
+</div>
+<div class="slide">
+<h1>Key-Value Stores</h1>
+<p>E.g., <em>Amazon SimpleDB, Riak, Redis, Tokyo Cabinet, Scalaris, MemcacheDB, BerkeleyDB, MNesia.</em><br />
+ <br />
+Think of hash maps on <em>steroids</em>.</p>
+<ul>
+	<li>May be purely in-memory (with optional flushing to disk) and resident on one machine.</li>
+	<li>Excellent for &#8220;persisting&#8221; semi-structured data with shorter lifespans (e.g., web sessions).</li>
+	<li>Used when durability and consistency are lower priorities compared to speed.</li>
+</ul>
+</div>
+<div class="slide">
+<h1>Eventually Consistent Key-Value Stores</h1>
+<p>E.g., <em>Amazon Dynamo, Dynomite, Voldemort</em></p>
+<p>More emphasis on longer-lived objects that need to be persisted, but for which rapid retrieval is still important.</p>
+<ul>
+	<li>Transparent replication of data.</li>
+	<li>Transparent clustering of nodes.</li>
+	<li>Great for fault tolerance, especially for &#8220;active sessions&#8221;.</li>
+</ul>
+</div>
+<div class="slide">
+<h1>Graph Databases</h1>
+<p>E.g., <em>Neo4J, Flock</em></p>
+<p>Built in semantics for representing graphs, including cycles.</p>
+<ul>
+	<li>First-class support for nodes, edges, and properties to associate information with nodes and edges.</li>
+	<li>Good when lots of expensive joins would be required in a <span class="caps">RDBMS</span>.</li>
+	<li>Handle evolving schema easily.</li>
+</ul>
+</div>
+<div class="slide">
+<h1>Grid Databases</h1>
+<p>E.g., <em>GridGain, HazelCast, Coherence</em></p>
+<p>Less like a database in the usual sense and more of a virtualized space where data is transparently resident on more than one server/service.</p>
+</div>
+<div class="slide">
+<h1>&#8220;Polyglot Persistence&#8221;</h1>
+<p>A big trend today is that non-trivial systems mix different programming languages, libraries and tools. Do we use just one language to write all parts of a standard web application? No. <sup>1</sup></p>
+<p>The same phenomenon is now happening at the persistence level. Often, one persistence strategy doesn&#8217;t fit all needs in complex, distributed systems. You might use a fast, key-value store for user sessions, then persist key &#8220;events&#8221; to an <span class="caps">RDBMS</span>, for example.</p>
+<p><sup class="footnote"><a href="#fn1">1</a></sup> Well, maybe we could with JavaScript&#8230;</p>
+</div>
+<div class="slide">
+<h1>Some Techniques We&#8217;ll Discuss</h1>
+<ul>
+	<li>Replication</li>
+	<li>Schema-less Design</li>
+	<li><strong>Map/Reduce</strong></li>
+</ul>
+<p>We&#8217;ll discuss map/reduce in a few weeks&#8230;</p>
+</div>
+<div class="slide">
+<h1>Reading Assignment: <span class="caps">CAP</span> and <span class="caps">BASE</span></h1>
+<ul>
+	<li>Julian Brown, <a href="http://www.julianbrowne.com/article/viewer/brewers-cap-theorem">Brewer&#8217;s <span class="caps">CAP</span> Theorem: The Kool Aid Amazon and eBay Have Been Drinking</a>. Sometimes amusing discussion of Brewer&#8217;s theorem. (We&#8217;ll read Brewer&#8217;s original presentation &#8211; a conference keynote &#8211; in a later assignment.)</li>
+	<li>Dan Pritchett, <a href="http://queue.acm.org/detail.cfm?id=1394128"><span class="caps">BASE</span>: An Acid Alternative</a>. Excellent discussion of the limitations of <span class="caps">ACID</span> for large-scale, distributed systems, and the alternative, <span class="caps">BASE</span>. Provides specific examples of techniques for relaxing consistency.</li>
+</ul>
+</div>
+<div class="slide">
+<h1>Reading Assignment:</h1>
+<p>Read the discussion on MongoDB <em>Replication</em> and <em>Sharding</em> (links on subsequent slides). MongoDB&#8217;s implementations are representative examples of these general techniques and the reading will also help you get more familiar with MongoDB, which we&#8217;ll discuss in depth next week.</p>
+<p>Focus instead on the concepts discussed. The particular syntax details of MongoDB commands and the details of which techniques to use with particular versions of MongoDB, etc. aren&#8217;t important.</p>
+</div>
+<div class="slide">
+<h1>Reading Assignment: Replication</h1>
+<p><a href="http://www.mongodb.org/display/DOCS/Replication">mongodb.org/display/<span class="caps">DOCS</span>/Replication</a></p>
+<p>Follow the link in the section <em>Verifying propagation of writes with getlasterror</em>.  What&#8217;s important here is why this is an issue &#8211; why would a client care if propagation happens immediately or not?</p>
+<p>View the video or read the slides describing MongoDB&#8217;s new approach to replication, called <em>replica sets</em>.</p>
+<ul>
+	<li><a href="http://lacantine.ubicast.eu/videos/21-06-2010-130932-partie-6/">Video</a></li>
+	<li><a href="http://www.slideshare.net/mongodb/mongodb-replica-sets">Slides</a></li>
+</ul>
+<p>(Yes, it appears that something is wrong with the last 5 or so slides, but the &#8220;good&#8221; slides have the content I care about&#8230;)</p>
+</div>
+<div class="slide">
+<h1>Reading Assignment: Sharding</h1>
+<p><a href="http://www.mongodb.org/display/DOCS/Sharding+Introduction">mongodb.org/display/<span class="caps">DOCS</span>/Sharding+Introduction</a></p>
+<p>Make sure you understand the different goals of replication and sharding and how they also complement each other. Also, when combined, as discussed on the Sharding page, are there any <em>single points of failure</em>?</p>
+</div>
+<div class="slide">
+<h1>Exercise</h1>
+<p>Complete exercise2, which was assigned last week. It is due by the start of the next class, September 28.</p>
 </div>
 <div class="title slide">
 <h1>Lecture 5: Scaling Data, Part II</h1>
@@ -2024,8 +2465,14 @@ def getInstrumentList(prefix: String): Iterable[JSONRecord] = try {
 <div class="title slide">
 <h1>Lecture 8: Midterm and Scaling Systems, Part II</h1>
 </div>
-<div class="title slide">
-<h1>Lecture 9: Recent Advances in Object-Oriented Programming (<span class="caps">OOP</span>)</h1>
+<div class="slide">
+<h1>Reading</h1>
+<ul>
+	<li>Arnon Rotem-Gal-Ozhttp, <a href="//www.rgoarchitects.com/Files/fallacies.pdf">Fallacies of Distributed Computing Explained</a><br />
+</div><br />
+<div class="slide"></li>
+</ul>
+<h1 class="slide0">Lecture 9: Recent Advances in Object-Oriented Programming (<span class="caps">OOP</span>)</h1>
 </div>
 <div class="title slide">
 <h1>Lecture 10: Functional Programming (FP): Into the Real World</h1>
@@ -2039,8 +2486,14 @@ def getInstrumentList(prefix: String): Iterable[JSONRecord] = try {
 <div class="title slide">
 <h1>Lecture 13: Complexity vs. Simplicity Part II: Scrum, XP, and Lean</h1>
 </div>
-<div class="title slide">
-<h1>Lecture 14: Complexity vs. Simplicity Part <span class="caps">III</span>: Simple Systems</h1>
+<div class="slide">
+<h1>Reading for Next Week&#8217;s Lecture</h1>
+<ul>
+	<li>Eric Brewer, <a href="http://www.cs.berkeley.edu/~brewer/cs262b-2004/PODC-keynote.pdf">Toward Robust, Distributed Systems</a>. The keynote at the <a href="http://www.podc.org/podc2000/"><span class="caps">ACM</span> Symposium on Principles of Distributed Computing</a> that introduced Brewer&#8217;s <span class="caps">CAP</span> theorem. Focus on the first 2/3^rd^s of the presentation (up to <em>The DQ Principle</em>.)<br />
+</div><br />
+<div class="slide"></li>
+</ul>
+<h1 class="slide0">Lecture 14: Complexity vs. Simplicity Part <span class="caps">III</span>: Simple Systems</h1>
 </div>
 <div class="title slide">
 <h1>Lecture 15: Student Presentations on the Code Project and Course Review</div></h1>

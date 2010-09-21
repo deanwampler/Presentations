@@ -452,7 +452,7 @@ def receive = {
 </ul>
 </div>
 <div class="slide">
-<h1>Add New Functionality (cont)</h1>
+<h1>Add New Functionality (cont.)</h1>
 <ul>
 	<li>Run the <code>test</code> action in sbt. The two tests should now fail. You should see the following near the end of the output.</li>
 </ul>
@@ -464,7 +464,7 @@ def receive = {
 </ul>
 </div>
 <div class="slide">
-<h1>Add New Functionality (cont)</h1>
+<h1>Add New Functionality (cont.)</h1>
 <p>When you find the stack trace, <em>above</em> it is this output:</p>
 <div class="code-tiny">
 <pre name="code" id="code" class="brush: scala;">[error] Test Failed: calculateStatistics returns a JSON string containing all data that matches the instrument criteria
@@ -473,12 +473,12 @@ org.scalatest.TestFailedException: JObject(List(JField(criteria,JObject(List(JFi
 <p>(Yeah!)</p>
 </div>
 <div class="slide">
-<h1>Add New Functionality (cont)</h1>
+<h1>Add New Functionality (cont.)</h1>
 <p>This is <span class="caps">JSON</span> represented using the Scala <span class="caps">JSON</span> library that is part of the <a href="http://liftweb.net">Lift Web framework</a> (which the project uses). I find it easiest to copy and paste messy output like this to an editor where I can manipulate it&#8230;</p>
 <p>But we don&#8217;t really need to do that now. Look for the words <code>did not equal</code>. The &#8220;<span class="caps">JSON</span>&#8221; before these words is much longer than the &#8220;<span class="caps">JSON</span>&#8221; after them. The before case is what was actually returned, while the after case is what we expected. Recall the purpose of the test, to confirm that the results are filtered for just the <code>A</code> stocks. Look for these strings: <code>JField(instruments,JArray(List(JString(A)))</code>. The <code>A</code> is the instrument (stock symbol). The expected string only has <code>A</code> &#8220;fields&#8221;, while the actual also has <code>B</code> and <code>C</code> fields, too.</p>
 </div>
 <div class="slide">
-<h1>Add New Functionality (cont)</h1>
+<h1>Add New Functionality (cont.)</h1>
 <p>Now look again at the stack trace:</p>
 <ul>
 	<li>On what line <em>in the test file</em> did the failure occur? (That is, not a top line, which occurred in the <em>ScalaTest</em> <span class="caps">API</span>.)</li>
@@ -492,7 +492,7 @@ analysisServer.calculateStatistics(criteria) should equal (expected)
 <p>Note how this <em>test assertion</em> reads like English? The result of &#8220;calling the <code>calculateStatistics</code> method should equal the <code>expected</code> value&#8221;.</p>
 </div>
 <div class="slide">
-<h1>Add New Functionality (cont)</h1>
+<h1>Add New Functionality (cont.)</h1>
 <ul>
 	<li>Okay, to start adding new functionality, run this <code>sbt</code> command:</li>
 </ul>
@@ -503,7 +503,7 @@ analysisServer.calculateStatistics(criteria) should equal (expected)
 </ul>
 </div>
 <div class="slide">
-<h1>Add New Functionality (cont)</h1>
+<h1>Add New Functionality (cont.)</h1>
 <ul>
 	<li>Now, in your editor of choice, open the file <code>main/scala/server/finance/InstrumentAnalysisServer.scala</code> (the file being tested&#8230;)</li>
 	<li>Find the <code>TODO</code> before the method named <code>fetchPrices</code>.</li>

@@ -1,20 +1,38 @@
 h1. References
 
+<div class='small'>
+
 Some of the books listed below are available through "Loyola's account on Safari Books Online":http://proquestcombo.safaribooksonline.com.flagship.luc.edu/.
+</div>
 
 h1. Required Texts
 
+<div class='small'>
+
 Various papers, blog posts, etc. will be assigned for each lecture.
+</div>
 
 h1. Recommended Reading
+
+<div class='small'>
 
 I don't expect you to read all these references! Some will be assigned as homework reading. All are listed here for further investigation, as you see fit.
 
 * Dean Wampler and Alex Payne, "Programming Scala", O'Reilly, 2009. ISBN: 0596155957. My comprehensive introduction to Scala. You can read it for free by following the links on "http://programmingscala.com":http://programmingscala.com or on "Loyola's Safari Books Online":http://proquestcombo.safaribooksonline.com.flagship.luc.edu/.
 * Harold Abelson and Gerald Jay Sussman, "Structure and Interpretation of Computer Programs", MIT Press, 1996. ISBN: 0262011530. "Online access":http://mitpress.mit.edu/sicp/. A one-volume survey of computer science. Master this book and you'll be well ahead of most software developers!
 * Andrew Hunt and David Thomas, "The Pragmatic Programmer: From Journeyman to Master", Addison-Wesley, 1999. ISBN: 020161622X. Very good advice for growing your professional career.
+</div>
 
-h1. Recommended Reading: Scala, Akka, JavaScript
+h1. References
+
+<div class='small'>
+
+The rest of theses resources are for your further research. Some will be assigned as readings for particular lectures.
+</div>
+
+h1. Scala, Akka, JavaScript
+
+<div class='small'>
 
 * "Learning Scala":http://www.scala-lang.org/node/1305 on the "Scala Language Website":http://scala-lang.org, where you'll also find information about downloads, tutorials, _Scaladocs_, etc.
 * "Another Tour of Scala":http://www.naildrivin5.com/scalatour/wiki_pages/MainPage. Concise guide to Scala.
@@ -22,22 +40,28 @@ h1. Recommended Reading: Scala, Akka, JavaScript
 * "Jonas Bon&#233;r's presentation on Akka at OSCON 2010":http://www.slideshare.net/jboner/akka-scala-summit-oscon-2010, which is also shown on the home page for the Akka Framework documentation: "doc.akkasource.org":http://doc.akkasource.org
 * "The Seductions of Scala":http://polyglotprogramming.com/papers/SeductionsOfScala.pdf a presentation I occasionally give at conferences and user groups.
 * Douglas Crockford, "JavaScript: The Good Parts", O'Reilly, 2008. ISBN: 9780596517748.
+</div>
 
-h1. Recommended Reading: Lock-Based Concurrency
+h1. Lock-Based Concurrency
+
+<div class='small'>
 
 * Brian Goetz, Tim Peierls, Joshua Bloch, Joseph Bowbeer, David Holmes, Doug Lea, "Java Concurrency in Practice", Addison-Wesley, 2006. ISBN: 0321349601. The _definitive_ guide to lock-based concurrency on the JVM and related important topics like how Java's memory model affects program behavior and correctness. Most of the concepts apply to any programming language.
 * Edward A. Lee. _The problem with threads_. IEEE Computer, 39(5):33–42, May 2006. An essay on why threads aren't as beneficial as once thought.
+</div>
 
-h1. Recommended Reading: Actor-Based Concurrency
+h1. Actor-Based Concurrency
+
+<div class='small'>
 
 * "Actor Model":http://en.wikipedia.org/wiki/Actor_model (Wikipedia).
 * Akka's Actor "documentation":http://doc.akkasource.org/actors-scala.
 * "Resolve common concurrency problems with GPars":http://www.ibm.com/developerworks/java/library/j-gpars/index.html. Discusses a Groovy concurrency library that wraps several models, including Executors and Fork/Join from the Java Concurrency API, Actors, Agents and Dataflow Variables (the last two we won't cover in the course).--
-h1. Recommended Reading: STM
+</div>
 
-(See also the section on _Software Transactional Memory_.)
+h1. Software Transactional Memory
 
-h1. Recommended Reading: Software Transactional Memory
+<div class='small'>
 
 * Simon Peyton Jones, _Beautiful Concurrency_, in "Beautiful Code", Chapter 24, pgs. 385-406. Online:  "http://research.microsoft.com/en-us/um/people/simonpj/papers/stm/#beautiful":http://research.microsoft.com/en-us/um/people/simonpj/papers/stm/#beautiful.
 * Simon Peyton Jones, QCon 2007 Keynote on STM, "slides":http://research.microsoft.com/~simonpj/papers/stm/STM-OSCON.pdf, "video":http://blip.tv/file/get/OSCON-OSCON2007SimonPeytonJones914.mov.
@@ -50,29 +74,71 @@ h1. Recommended Reading: Software Transactional Memory
 * "Understanding Clojures PersistentVector Implementation":http://blog.higher-order.net/2009/02/01/understanding-clojures-persistentvector-implementation/
 * Excellent blog post comparing "Persistent Trees in Git, Clojure, and CouchDB":http://eclipsesource.com/blogs/2009/12/13/persistent-trees-in-git-clojure-and-couchdb-data-structure-convergence/
 (See also the links on _Multiversion Concurrency Control_ in the section on _SQL and NoSQL Databases_.)
+</div>
 
-h1. Recommended Reading: SQL and NoSQL Databases
+h1. ACID, CAP, and BASE
+
+<div class='small'>
 
 * "ACID":http://en.wikipedia.org/wiki/ACID (Wikipedia).
+* Eric Brewer, "Toward Robust, Distributed Systems":http://www.cs.berkeley.edu/~brewer/cs262b-2004/PODC-keynote.pdf. The keynote at the "ACM Symposium on Principles of Distributed Computing":http://www.podc.org/podc2000/ that introduced Brewer's CAP theorem.
+* Julian Brown, "Brewer's CAP Theorem: The kool aid Amazon and Ebay have been drinking":http://www.julianbrowne.com/article/viewer/brewers-cap-theorem. A sometimes humorous summary of Brewer's CAP theorem. Also has a good list of references for more information.
+* Seth Gilbert and Nancy Lynch, "The CAP Theorem":http://nosqlsummer.org/paper/cap-theorem. Proves Brewer's conjecture (hence, it's now called Brewer's Theorem) and elaborated on solutions, etc.
+* Dan Pritchett, "BASE: An Acid Alternative":http://queue.acm.org/detail.cfm?id=1394128. Excellent discussion of the limitations of ACID for large-scale, distributed systems, and the alternative, BASE. Provides specific examples of techniques for relaxing consistency. (The PDF version - click the PDF icon under the title - has a nicer format than the online article.)
+* Dan Pritchett, "The Challenges of Latency":http://www.infoq.com/articles/pritchett-latency.
+* "My Problem with CAP and Yahoo's Little Known NoSQL System":http://dbmsmusings.blogspot.com/2010/04/problems-with-cap-and-yahoos-little.html.
+* Werner Vogels, "Eventually Consistent":http://portal.acm.org/ft_gateway.cfm?id=1466448&type=pdf. (Also "here":http://www.allthingsdistributed.com/2008/12/eventually_consistent.html) A specific look at different kinds of eventual consistency and how they informed the design of several Amazon technologies.
+* Haifeng Yu and Amin Vahdat, "Design and Evaluation of a Continuous Consistency Model for Replicated Services":http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.34.7743&rep=rep1&type=pdf
+* Guy Pardon, "A CAP Solution (Proving Brewer Wrong)":http://guysblogspot.blogspot.com/2008/09/cap-solution-proving-brewer-wrong.html. An argument that if you don't require all three properties at the same time, you can work around the CAP theorem.
+</div>
+
+h1. SQL and NoSQL Databases
+
+<div class='small'>
+
+* "NoSQL-Database.org":http://nosql-database.org/
 * "Multiversion Concurrency Control":http://en.wikipedia.org/wiki/Multiversion_concurrency_control (Wikipedia). Unfortunately, the text can be a little confusing.
 * "NoSQL, Heroku, and You":http://blog.heroku.com/archives/2010/7/20/nosql/. Good discussion of why NoSQL is important.
-* "The CAP Theorem":http://nosqlsummer.org/paper/cap-theorem.
 * "NoSQL Summer":http://nosqlsummer.org/papers.
-* "My Problem with CAP and Yahoo's Little Known NoSQL System":http://dbmsmusings.blogspot.com/2010/04/problems-with-cap-and-yahoos-little.html.
+* E.F. Codd, "A Relational Model of Data for Large Shared Data Banks":http://nosqlsummer.org/paper/codd-relational-model
+* "Column-oriented DBMS":http://en.wikipedia.org/wiki/Column-oriented_DBMS
+</div>
+
+h1. MongoDB
+
+<div class='small'>
+
+"MongoDB Performance and Durability":http://www.mikealrogers.com/2010/07/mongodb-performance-durability/
+"MongoDB Single Server Data Durability Guide":http://www.thebuzzmedia.com/mongodb-single-server-data-durability-guide/
+</div>
+
+h1. Other NoSQL Databases
+
+<div class='small'>
+
+* "Apache Cassandra":http://en.wikipedia.org/wiki/Apache_Cassandra
 * "Gremlin: a graph based programming language":http://www.nosqldatabases.com/main/2010/8/23/gremlin-a-graph-based-programming-language.html.
+</div>
 
-h1. Recommended Reading: Distributed Systems
+h1. Distributed Systems
 
+<div class='small'>
+
+* Arnon Rotem-Gal-Ozhttp, "Fallacies of Distributed Computing Explained"://www.rgoarchitects.com/Files/fallacies.pdf
 * "Distributed Computing":http://en.wikipedia.org/wiki/Distributed_computing (Wikipedia).
-* "A Primer on Distributed Computing":http://www.bacchae.co.uk/docs/dist.html. A basic discussion of the issues and techniques involved in building a distribute system, like "SETI@home":http://setiathome.berkeley.edu/.
+* "A Primer on Distributed Computing":http://www.bacchae.co.uk/docs/dist.html. A basic discussion of the issues and techniques involved in building a distributed system, like "SETI@home":http://setiathome.berkeley.edu/.
 * George Reese, "Cloud Application Architectures", O'Reilly, 2009. ISBN: 9780596156367.
 * Diomidis Spinellis and Georgios Gousios, "Beautiful Architecture", O'Reilly, 2009. ISBN: 0596517984. Good essays on architecture.
 * "Consensus":http://en.wikipedia.org/wiki/Consensus_(computer_science).
 * "Self Stabilization":http://en.wikipedia.org/wiki/Self-stabilisation.
 * "Byzantine fault tolerance":http://en.wikipedia.org/wiki/Byzantine_fault_tolerance.
 * Martin Fowler, et al., "Patterns of Enterprise Application Architecture", Addison-Wesley, 2003. ISBN: 0321127420. Conventional, object-oriented approach. Does not cover the latest thinking on highly-distributed architectures.
+* "highscalability.com":http://highscalability.com/. A web site devoted to general topics related to scalability.
+</div>
 
-h1. Recommended Reading: Distributed Systems - Examples
+h1. Distributed Systems - Examples
+
+<div class='small'>
 
 * "SETI@home":http://setiathome.berkeley.edu/.
 * "Boinc":http://boinc.berkeley.edu/. The software used by many distributed projects, like "SETI@home":http://setiathome.berkeley.edu/, to use idle computer resources available in a wide network, for computing challenges that are too big for single, powerful computers, but are easily distributed to large numbers of more ordinary computers.
@@ -80,56 +146,81 @@ h1. Recommended Reading: Distributed Systems - Examples
 * "Terracotta":http://www.terracotta.org/. A toolkit that "virtualizes" a single JVM instance across multiple systems.
 * "Spark":http://github.com/mesos/spark. A framework for iterative and interactive cluster computing.
 * "Swarm: a true distributed programming language":http://blog.locut.us/main/2008/10/6/swarm-a-true-distributed-programming-language.html
+</div>
 
-h1. Recommended Reading: Distributed Systems - Map/Reduce Frameworks
+h1. Distributed Systems - Map/Reduce Frameworks
+
+<div class='small'>
 
 * Jeffrey Dean and Sanjay Ghemawat, "MapReduce: Simplified Data Processing on Large Clusters":http://nosqlsummer.org/paper/google-mapreduce.
 * Jeffrey Dean and Sanjay Ghemawat, _Distributed Programming with Mapreduce_, in "Beautiful Code", Chapter 23, pgs. 371-382. 
 * "Hadoop":http://hadoop.apache.org/. An open source map-reduce framework, originally developed at Yahoo!
 * "Pig: Making Hadoop Easy":http://www.slideshare.net/xefyr/pig-making-hadoop-easy.
+</div>
 
-h1. Recommended Reading: Data and Analytics
+h1. Data and Analytics
+
+<div class='small'>
 
 * Toby Segaran and Jeff Hammerbacher, "Beautiful Data", O'Reilly, 2009. ISBN: 0596157118.
 * Julie Steele and Noah Ilinsky, "Beautiful Visualization", O'Reilly, 2010. ISBN: 1449379869.
 * A "list of data blogs":http://www.quora.com/What-are-the-best-blogs-about-data posted on "Quora":http://www.quora.com.
+</div>
 
-h1. Recommended Reading: Data Sources
+h1. Data Sources
+
+<div class='small'>
 
 * "infochimps.org":http://infochimps.org/
 * "freebase.com":http://www.freebase.com/
 * "trendingtopics.org":http://www.trendingtopics.org/
 * "Free Data Sets":http://developer.amazonwebservices.com/connect/kbcategory.jspa?categoryID=243 on Amazon Web Services.
+</div>
 
-h1. Recommended Reading: Git Resources
+h1. Git Resources
+
+<div class='small'>
 
 * "gitref.org":http://gitref.org. Very good quick reference on git commands and concepts.
 * "Pro Git":http://progit.org/. A well regarded book, available free online.
 * "git-scm.com":http://git-scm.com for downloads and documentation.   
 * "github.com":http://github.com (where the project code will be hosted) also has helpful documentation. 
 * "Why aren't you using git-flow?":http://jeffkreeftmeijer.com/2010/why-arent-you-using-git-flow/.
+</div>
 
-h1. Additional References: General Programming
+h1. General Programming
+
+<div class='small'>
 
 * Andy Oram and Greg Wilson, "Beautiful Code", O'Reilly, 2009. ISBN: 0596510046.
 * Federico Biancuzzi and Chromatic, "Masterminds of Programming", O'Reilly, 2009. ISBN: 9780596515171.
+</div>
 
-h1. Additional References: Software Process
+h1. Software Process
+
+<div class='small'>
 
 * Kent Beck, "Extreme Programming Explained: Embrace Change", 2nd Edition, Addison-Wesley, 2005. ISBN: 0321278658.
 * Mary and Tom Poppendieck, "Implementing Lean Software Development", Addison-Wesley, 2007. ISBN: 0321437381.
 * Mike Cohn, "User Stories Applied", Addison-Wesley, 2004. ISBN: 0321205685.
 * Mike Cohn, "Agile Estimating and Planning", Addison-Wesley, 2006. ISBN: 0131479415.
 * Scott Berkun, "The Art of Project Management", O'Reilly, 2005. ISBN: 0596007868.
+</div>
 
-h1. Additional References: Business
+h1. Business
+
+<div class='small'>
 
 * Carliss Y. Baldwin and Kim B. Clark, "Design Rules: Volume 1: The Power of Modularity", MIT Press, 2000. ISBN: 0262024667.
 * Clayton M. Christensen and Michael E. Raynor, "The Innovators Solution", Harvard Business School Press, 2003, ISBN: 1578518520.
+</div>
 
-h1.  Additional References: Misc.
+h1. Miscellaneous
+
+<div class='small'>
 
 You might find useful...
 
 * Matt Might, "matt.might.net/articles/books-papers-materials-for-graduate-students/":http://matt.might.net/articles/books-papers-materials-for-graduate-students/.
-__
+
+</div>

@@ -507,7 +507,7 @@ case object Start
 </pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/dwampler/Documents/presentations/git-hub/presentations/PragmaticsOfIndustrialSWDevelopment/code/actor-synch-message.scala">code/actor-synch-message.scala</a></div></p>
 </div>
 <div class="slide">
-<h1>An Synchronous (Wait) Message (cont)</h1>
+<h1>An Synchronous (Wait) Message (cont.)</h1>
 <p>Has the disadvantage of blocking!</p>
 </div>
 <div class="slide">
@@ -530,7 +530,7 @@ case object Start
 </pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/dwampler/Documents/presentations/git-hub/presentations/PragmaticsOfIndustrialSWDevelopment/code/actor-future-message.scala">code/actor-future-message.scala</a></div></p>
 </div>
 <div class="slide">
-<h1>An Asynchronous with a Future Message (cont)</h1>
+<h1>An Asynchronous with a Future Message (cont.)</h1>
 <p>Actor can keep doing work (like firing off simultaneous pings).</p>
 <p>Eventually, it waits for the <code>Futures</code> to complete and then proceeds. (It could also do work as each one finishes.)</p>
 </div>
@@ -578,7 +578,7 @@ case object Start
 </ul>
 </div>
 <div class="slide">
-<h1>This Week&#8217;s Assignment: Reading (cont)</h1>
+<h1>This Week&#8217;s Assignment: Reading (cont.)</h1>
 <p>For Next Week&#8217;s Lecture:</p>
 <ul>
 	<li>Simon Peyton Jones, &#8220;Beautiful Concurrency&#8221;, Chapter 24 in <em>Beautiful Code</em>, pgs. 385-406. Online:  <a href="http://research.microsoft.com/en-us/um/people/simonpj/papers/stm/#beautiful">http://research.microsoft.com/en-us/um/people/simonpj/papers/stm/#beautiful</a></li>
@@ -600,7 +600,7 @@ case object Start
 <p><code>git clone git@github.com:myAwesomeUserName/AkkaWebSampleExercise.git</code></p>
 </div>
 <div class="slide">
-<h1>Get the Project Code (cont)</h1>
+<h1>Get the Project Code (cont.)</h1>
 <ul>
 	<li>We will actually do our work on &#8220;branch&#8221; called <code>COMP-388-488</code>, not the <code>master</code> branch:</li>
 </ul>
@@ -679,7 +679,7 @@ case object Start
 </ul>
 </div>
 <div class="slide">
-<h1>Add New Functionality (cont)</h1>
+<h1>Add New Functionality (cont.)</h1>
 <ul>
 	<li>Run the <code>test</code> action in sbt. The two tests should now fail. You should see the following near the end of the output.</li>
 </ul>
@@ -691,7 +691,7 @@ case object Start
 </ul>
 </div>
 <div class="slide">
-<h1>Add New Functionality (cont)</h1>
+<h1>Add New Functionality (cont.)</h1>
 <p>Looking at the stack trace:</p>
 <ul>
 	<li>On what line <em>in the test file</em> did the failure occur? (That is, not a line in the <em>ScalaTest</em> <span class="caps">API</span>.)</li>
@@ -699,7 +699,7 @@ case object Start
 </ul>
 </div>
 <div class="slide">
-<h1>Add New Functionality (cont)</h1>
+<h1>Add New Functionality (cont.)</h1>
 <ul>
 	<li>In your editor, open the file <code>main/scala/server/finance/InstrumentAnalysisServer.scala</code> (the file being tested&#8230;)</li>
 	<li>Find the <code>TODO</code> before the method named <code>fetchPrices</code>.</li>
