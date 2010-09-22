@@ -48,10 +48,10 @@ file "html/" do
 end
 
 task :remove_tmp do
-  FileUtils.rm_rf("tmp") 
+  FileUtils.rm_rf "tmp"
 end
                        
 desc "Remove all work products—slides and temporary files"
 task :clean => :remove_tmp do 
-  FileUtils.rm_rf HTML_DIR
+  FileUtils.rm Dir.glob("#{HTML_DIR}/*.html") 
 end
