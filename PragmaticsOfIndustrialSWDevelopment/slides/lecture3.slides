@@ -424,6 +424,14 @@ val result = compact(render(JSONMap.toJValue(Map("instrument-list" -> results)))
  
 * *Warning:* those backticks ` should be forward ticks ' (formatting problem!).
 
+h1. Add New Functionality (step 9b)
+
+(Added after the original lecture...)
+
+In the exception handling code for @getAllInstruments@, note that the calls to @makeErrorString@ won't work, because the arguments to @getAllInstruments@ are different than the arguments to @getAllDataFor@. 
+* Instead, call a new function named @makeAllInstrumentsErrorString@.
+* Create the @makeAllInstrumentsErrorString@ method, taking an appropriate argument list. 
+
 h1. Add New Functionality (step 10)
 
 * Edit @InstrumentAnalysisServerSupervisors.scala@.
@@ -438,12 +446,16 @@ h1. Add New Functionality (step 11)
 * Create the @getInstrumentList@ method, which takes one argument: @range: scala.collection.immutable.NumericRange[Char]@. It should look similar to the @calculate@ method. The main difference is the @for@ "comprehension" (loop):
 
 :inlinecode lang=scala, class=code-small
-val futures = for {
-  letter <- range  // Recall that range is something like 'A' to 'D'
-  oneLetterRange = letter to letter
-  instrument = Instrument(letter.toString)
-  calculator <- getOrMakeInstrumentAnalysisServerFor(instrument, Price(Dollars))
-} yield (calculator !!! GetInstrumentList(oneLetterRange))
+{
+  val futures = for {
+    letter <- range  // Recall that range is something like 'A' to 'D'
+    oneLetterRange = letter to letter
+    instrument = Instrument(letter.toString)
+    calculator <- getOrMakeInstrumentAnalysisServerFor(instrument, Price(Dollars))
+  } yield (calculator !!! GetInstrumentList(oneLetterRange))
+  Futures.awaitAll(futures.toList)
+  futuresToJSON(futures.toList, "None!")
+}
 :endinlinecode 
 
 h1. Add New Functionality (step 12)
@@ -475,7 +487,7 @@ h1. Add New Functionality (step 15)
 
 :inlinecode lang=scala, class=code-small
 (criteria \ "instrument_list") match {
-  case JField(key, value) => getInstrumentList(value)
+	case JField(key, JString(value)) => getInstrumentList(value)
   case _ => getDataForRange(criteria)
 } 
 :endinlinecode 
@@ -510,14 +522,15 @@ h1. Add New Functionality (step 18)
 
 * Create method @getInstrumentList@ in @MongoDBDataStore@. Here it is:
 
-:inlinecode lang=scala, class=code-small
+:inlinecode lang=scala, class=code-tiny
 // Hack!
 def getInstrumentList(prefix: String): Iterable[JSONRecord] = try {
   // TODO: We hard-code the name of the thing we want, the "stock_symbol". Should be abstracted...
   val list = collection.distinct("stock_symbol")
   val buff = new scala.collection.mutable.ArrayBuffer[String]()
-  while (list.hasNext) {
-    buff += list.next
+  val iter = list.iterator
+  while (iter.hasNext) {
+    buff += iter.next
   }
   // Must put in a timestamp to make JSONRecord happy:
   val format = DateTimeFormat.forPattern("yyyy-MM-dd")

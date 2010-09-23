@@ -1873,6 +1873,15 @@ val result = compact(render(JSONMap.toJValue(Map("instrument-list" -&gt; results
 </ul>
 </div>
 <div class="slide">
+<h1>Add New Functionality (step 9b)</h1>
+<p>(Added after the original lecture&#8230;)</p>
+<p>In the exception handling code for <code>getAllInstruments</code>, note that the calls to <code>makeErrorString</code> won&#8217;t work, because the arguments to <code>getAllInstruments</code> are different than the arguments to <code>getAllDataFor</code>.</p>
+<ul>
+	<li>Instead, call a new function named <code>makeAllInstrumentsErrorString</code>.</li>
+	<li>Create the <code>makeAllInstrumentsErrorString</code> method, taking an appropriate argument list.</li>
+</ul>
+</div>
+<div class="slide">
 <h1>Add New Functionality (step 10)</h1>
 <ul>
 	<li>Edit <code>InstrumentAnalysisServerSupervisors.scala</code>.</li>
@@ -1892,12 +1901,16 @@ case GetInstrumentList(range) =&gt; self.reply(getInstrumentList(range))
 <div class="code-small">
 <pre name="code" id="code" class="brush: scala,;">
 
-val futures = for {
-  letter &lt;- range  // Recall that range is something like 'A' to 'D'
-  oneLetterRange = letter to letter
-  instrument = Instrument(letter.toString)
-  calculator &lt;- getOrMakeInstrumentAnalysisServerFor(instrument, Price(Dollars))
-} yield (calculator !!! GetInstrumentList(oneLetterRange))
+{
+  val futures = for {
+    letter &lt;- range  // Recall that range is something like 'A' to 'D'
+    oneLetterRange = letter to letter
+    instrument = Instrument(letter.toString)
+    calculator &lt;- getOrMakeInstrumentAnalysisServerFor(instrument, Price(Dollars))
+  } yield (calculator !!! GetInstrumentList(oneLetterRange))
+  Futures.awaitAll(futures.toList)
+  futuresToJSON(futures.toList, "None!")
+}
 </pre></div>
 </div>
 <div class="slide">
@@ -1938,7 +1951,7 @@ val futures = for {
 <pre name="code" id="code" class="brush: scala,;">
 
 (criteria \ "instrument_list") match {
-  case JField(key, value) =&gt; getInstrumentList(value)
+	case JField(key, JString(value)) =&gt; getInstrumentList(value)
   case _ =&gt; getDataForRange(criteria)
 } 
 </pre></div>
@@ -1980,7 +1993,7 @@ import org.joda.time.format._
 <ul>
 	<li>Create method <code>getInstrumentList</code> in <code>MongoDBDataStore</code>. Here it is:</li>
 </ul>
-<div class="code-small">
+<div class="code-tiny">
 <pre name="code" id="code" class="brush: scala,;">
 
 // Hack!
@@ -1988,8 +2001,9 @@ def getInstrumentList(prefix: String): Iterable[JSONRecord] = try {
   // TODO: We hard-code the name of the thing we want, the "stock_symbol". Should be abstracted...
   val list = collection.distinct("stock_symbol")
   val buff = new scala.collection.mutable.ArrayBuffer[String]()
-  while (list.hasNext) {
-    buff += list.next
+  val iter = list.iterator
+  while (iter.hasNext) {
+    buff += iter.next
   }
   // Must put in a timestamp to make JSONRecord happy:
   val format = DateTimeFormat.forPattern("yyyy-MM-dd")
