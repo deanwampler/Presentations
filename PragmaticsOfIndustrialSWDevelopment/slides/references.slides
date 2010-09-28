@@ -96,7 +96,8 @@ h1. SQL and NoSQL Databases
 
 <div class='small'>
 
-* "NoSQL-Database.org":http://nosql-database.org/
+* "NoSQL-Database.org":http://nosql-database.org/. Lists of NoSQL categories and implementations.
+* "MyNoSQL":http://nosql.mypopescu.com/. Good running blog on all things NoSQL.
 * "Multiversion Concurrency Control":http://en.wikipedia.org/wiki/Multiversion_concurrency_control (Wikipedia). Unfortunately, the text can be a little confusing.
 * "NoSQL, Heroku, and You":http://blog.heroku.com/archives/2010/7/20/nosql/. Good discussion of why NoSQL is important.
 * "NoSQL Summer":http://nosqlsummer.org/papers.
@@ -104,18 +105,35 @@ h1. SQL and NoSQL Databases
 * "Column-oriented DBMS":http://en.wikipedia.org/wiki/Column-oriented_DBMS
 </div>
 
-h1. MongoDB
+h1. MongoDB and CouchDB
 
 <div class='small'>
 
-"MongoDB Performance and Durability":http://www.mikealrogers.com/2010/07/mongodb-performance-durability/
-"MongoDB Single Server Data Durability Guide":http://www.thebuzzmedia.com/mongodb-single-server-data-durability-guide/
+* "MongoDB":http://mongodb.org
+* "CouchDB":http://couchdb.org
+* J. Chris Anderson, Jan Lehnardt, and Noah Slater, "CouchDB, The Definitive Guide", O'Reilly, 2010. ISBN: 9780596155896. Also available to read "online":http://guide.couchdb.org/.
+* "Comparing Mongo DB and Couch DB":http://www.mongodb.org/display/DOCS/Comparing+Mongo+DB+and+Couch+DB. The differences from MongoDB's perspective.
+* Mikeal Rogers, "MongoDB Performance and Durability":http://www.mikealrogers.com/2010/07/mongodb-performance-durability/. A controversial, but generally objective analysis of the tradeoffs of using CouchDB vs. MongoDB from the perspective of one of CouchDB's developers. See also this discussion of the blog post on "Hacker News":http://news.ycombinator.com/item?id=1495620.
+* "MongoDB Performance and Durability":http://www.mikealrogers.com/2010/07/mongodb-performance-durability/
+* Ethan Gunderson, "Two Reasons to not Use MongoDB":http://ethangunderson.com/blog/two-reasons-to-not-use-mongodb/. Not the flame bait that it may appear, Gunderson, who is a Chicago-based developer at Obtiva, describes a few of the tradeoffs about MongoDB that you should understand before choosing it. He covers some of the same territory as Mikeal Rogers' blog post.
+* "MongoDB Single Server Data Durability Guide":http://www.thebuzzmedia.com/mongodb-single-server-data-durability-guide/. A guide to setting up MongoDB for durability (might be slightly dated).
 </div>
+
+h1. Key-Value Stores
+
+* "MemcacheDB":http://memcachedb.org/, based on "Memcached":http://memcached.org/.
+* "BerkeleyDB":http://www.oracle.com/technetwork/database/berkeleydb/index.html.
+* "SimpleDB":http://aws.amazon.com/simpledb/.
+* "Redis":http://code.google.com/p/redis/.
+* "Riak":http://wiki.basho.com/display/RIAK/Riak.
+* "Tokyo Cabinet":http://fallabs.com/tokyocabinet/.
+* "Mnesia":http://www.erlang.org/doc/apps/mnesia/.
 
 h1. Other NoSQL Databases
 
 <div class='small'>
 
+* Giuseppe DeCandia, Deniz Hastorun, Madan Jampani, Gunavardhan Kakulapati, Avinash Lakshman, Alex Pilchin, Swami Sivasubramanian, Peter Vosshall and Werner Vogels, "Dynamo: Amazon's Highly Available Key-Value Store", in the Proceedings of the 21st ACM Symposium on Operating Systems Principles, Stevenson, WA, October 2007. Available online: "PDF":http://www.allthingsdistributed.com/files/amazon-dynamo-sosp2007.pdf and "online":http://www.allthingsdistributed.com/2007/10/amazons_dynamo.html.
 * "Apache Cassandra":http://en.wikipedia.org/wiki/Apache_Cassandra
 * "Gremlin: a graph based programming language":http://www.nosqldatabases.com/main/2010/8/23/gremlin-a-graph-based-programming-language.html.
 </div>
@@ -134,6 +152,7 @@ h1. Distributed Systems
 * "Byzantine fault tolerance":http://en.wikipedia.org/wiki/Byzantine_fault_tolerance.
 * Martin Fowler, et al., "Patterns of Enterprise Application Architecture", Addison-Wesley, 2003. ISBN: 0321127420. Conventional, object-oriented approach. Does not cover the latest thinking on highly-distributed architectures.
 * "highscalability.com":http://highscalability.com/. A web site devoted to general topics related to scalability.
+* "Werner Vogels' blog":http://www.allthingsdistributed.com/. Werner is the CTO of Amazon.
 </div>
 
 h1. Distributed Systems - Examples
@@ -148,14 +167,16 @@ h1. Distributed Systems - Examples
 * "Swarm: a true distributed programming language":http://blog.locut.us/main/2008/10/6/swarm-a-true-distributed-programming-language.html
 </div>
 
-h1. Distributed Systems - Map/Reduce Frameworks
+h1. Distributed Systems - MapReduce Frameworks
 
 <div class='small'>
 
+* Edd Dumbill, "The SMAQ stack for big data":http://radar.oreilly.com/2010/09/the-smaq-stack-for-big-data.html. Nice summary of some of the leading open-source technologies used for data processing.
 * Jeffrey Dean and Sanjay Ghemawat, "MapReduce: Simplified Data Processing on Large Clusters":http://nosqlsummer.org/paper/google-mapreduce.
 * Jeffrey Dean and Sanjay Ghemawat, _Distributed Programming with Mapreduce_, in "Beautiful Code", Chapter 23, pgs. 371-382. 
 * "Hadoop":http://hadoop.apache.org/. An open source map-reduce framework, originally developed at Yahoo!
 * "Pig: Making Hadoop Easy":http://www.slideshare.net/xefyr/pig-making-hadoop-easy.
+* "Google Percolator – global search jolt sans MapReduce comedown":http://www.theregister.co.uk/2010/09/24/google_percolator/. Google's just-announced replacement for their MapReduce-based search indexing infrastructure.
 </div>
 
 h1. Data and Analytics

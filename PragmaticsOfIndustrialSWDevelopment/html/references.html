@@ -148,7 +148,8 @@
 <h1><span class="caps">SQL</span> and NoSQL Databases</h1>
 <div class='small'>
 <ul>
-	<li><a href="http://nosql-database.org/">NoSQL-Database.org</a></li>
+	<li><a href="http://nosql-database.org/">NoSQL-Database.org</a>. Lists of NoSQL categories and implementations.</li>
+	<li><a href="http://nosql.mypopescu.com/">MyNoSQL</a>. Good running blog on all things NoSQL.</li>
 	<li><a href="http://en.wikipedia.org/wiki/Multiversion_concurrency_control">Multiversion Concurrency Control</a> (Wikipedia). Unfortunately, the text can be a little confusing.</li>
 	<li><a href="http://blog.heroku.com/archives/2010/7/20/nosql/">NoSQL, Heroku, and You</a>. Good discussion of why NoSQL is important.</li>
 	<li><a href="http://nosqlsummer.org/papers">NoSQL Summer</a>.</li>
@@ -158,16 +159,37 @@
 </ul>
 </div>
 <div class="slide">
-<h1>MongoDB</h1>
+<h1>MongoDB and CouchDB</h1>
 <div class='small'>
-<p><a href="http://www.mikealrogers.com/2010/07/mongodb-performance-durability/">MongoDB Performance and Durability</a><br />
-<a href="http://www.thebuzzmedia.com/mongodb-single-server-data-durability-guide/">MongoDB Single Server Data Durability Guide</a></p>
+<ul>
+	<li><a href="http://mongodb.org">MongoDB</a></li>
+	<li><a href="http://couchdb.org">CouchDB</a></li>
+	<li>J. Chris Anderson, Jan Lehnardt, and Noah Slater, &#8220;CouchDB, The Definitive Guide&#8221;, O&#8217;Reilly, 2010. <span class="caps">ISBN</span>: 9780596155896. Also available to read <a href="http://guide.couchdb.org/">online</a>.</li>
+	<li><a href="http://www.mongodb.org/display/DOCS/Comparing+Mongo+DB+and+Couch+DB">Comparing Mongo DB and Couch DB</a>. The differences from MongoDB&#8217;s perspective.</li>
+	<li>Mikeal Rogers, <a href="http://www.mikealrogers.com/2010/07/mongodb-performance-durability/">MongoDB Performance and Durability</a>. A controversial, but generally objective analysis of the tradeoffs of using CouchDB vs. MongoDB from the perspective of one of CouchDB&#8217;s developers. See also this discussion of the blog post on <a href="http://news.ycombinator.com/item?id=1495620">Hacker News</a>.</li>
+	<li><a href="http://www.mikealrogers.com/2010/07/mongodb-performance-durability/">MongoDB Performance and Durability</a></li>
+	<li>Ethan Gunderson, <a href="http://ethangunderson.com/blog/two-reasons-to-not-use-mongodb/">Two Reasons to not Use MongoDB</a>. Not the flame bait that it may appear, Gunderson, who is a Chicago-based developer at Obtiva, describes a few of the tradeoffs about MongoDB that you should understand before choosing it. He covers some of the same territory as Mikeal Rogers&#8217; blog post.</li>
+	<li><a href="http://www.thebuzzmedia.com/mongodb-single-server-data-durability-guide/">MongoDB Single Server Data Durability Guide</a>. A guide to setting up MongoDB for durability (might be slightly dated).<br />
+</div></li>
+</ul>
 </div>
+<div class="slide">
+<h1>Key-Value Stores</h1>
+<ul>
+	<li><a href="http://memcachedb.org/">MemcacheDB</a>, based on <a href="http://memcached.org/">Memcached</a>.</li>
+	<li><a href="http://www.oracle.com/technetwork/database/berkeleydb/index.html">BerkeleyDB</a>.</li>
+	<li><a href="http://aws.amazon.com/simpledb/">SimpleDB</a>.</li>
+	<li><a href="http://code.google.com/p/redis/">Redis</a>.</li>
+	<li><a href="http://wiki.basho.com/display/RIAK/Riak">Riak</a>.</li>
+	<li><a href="http://fallabs.com/tokyocabinet/">Tokyo Cabinet</a>.</li>
+	<li><a href="http://www.erlang.org/doc/apps/mnesia/">Mnesia</a>.</li>
+</ul>
 </div>
 <div class="slide">
 <h1>Other NoSQL Databases</h1>
 <div class='small'>
 <ul>
+	<li>Giuseppe DeCandia, Deniz Hastorun, Madan Jampani, Gunavardhan Kakulapati, Avinash Lakshman, Alex Pilchin, Swami Sivasubramanian, Peter Vosshall and Werner Vogels, &#8220;Dynamo: Amazon&#8217;s Highly Available Key-Value Store&#8221;, in the Proceedings of the 21st <span class="caps">ACM</span> Symposium on Operating Systems Principles, Stevenson, WA, October 2007. Available online: <a href="http://www.allthingsdistributed.com/files/amazon-dynamo-sosp2007.pdf"><span class="caps">PDF</span></a> and <a href="http://www.allthingsdistributed.com/2007/10/amazons_dynamo.html">online</a>.</li>
 	<li><a href="http://en.wikipedia.org/wiki/Apache_Cassandra">Apache Cassandra</a></li>
 	<li><a href="http://www.nosqldatabases.com/main/2010/8/23/gremlin-a-graph-based-programming-language.html">Gremlin: a graph based programming language</a>.<br />
 </div></li>
@@ -186,7 +208,8 @@
 	<li><a href="http://en.wikipedia.org/wiki/Self-stabilisation">Self Stabilization</a>.</li>
 	<li><a href="http://en.wikipedia.org/wiki/Byzantine_fault_tolerance">Byzantine fault tolerance</a>.</li>
 	<li>Martin Fowler, et al., &#8220;Patterns of Enterprise Application Architecture&#8221;, Addison-Wesley, 2003. <span class="caps">ISBN</span>: 0321127420. Conventional, object-oriented approach. Does not cover the latest thinking on highly-distributed architectures.</li>
-	<li><a href="http://highscalability.com/">highscalability.com</a>. A web site devoted to general topics related to scalability.<br />
+	<li><a href="http://highscalability.com/">highscalability.com</a>. A web site devoted to general topics related to scalability.</li>
+	<li><a href="http://www.allthingsdistributed.com/">Werner Vogels&#8217; blog</a>. Werner is the <span class="caps">CTO</span> of Amazon.<br />
 </div></li>
 </ul>
 </div>
@@ -204,13 +227,15 @@
 </ul>
 </div>
 <div class="slide">
-<h1>Distributed Systems &#8211; Map/Reduce Frameworks</h1>
+<h1>Distributed Systems &#8211; MapReduce Frameworks</h1>
 <div class='small'>
 <ul>
+	<li>Edd Dumbill, <a href="http://radar.oreilly.com/2010/09/the-smaq-stack-for-big-data.html">The <span class="caps">SMAQ</span> stack for big data</a>. Nice summary of some of the leading open-source technologies used for data processing.</li>
 	<li>Jeffrey Dean and Sanjay Ghemawat, <a href="http://nosqlsummer.org/paper/google-mapreduce">MapReduce: Simplified Data Processing on Large Clusters</a>.</li>
 	<li>Jeffrey Dean and Sanjay Ghemawat, <em>Distributed Programming with Mapreduce</em>, in &#8220;Beautiful Code&#8221;, Chapter 23, pgs. 371-382.</li>
 	<li><a href="http://hadoop.apache.org/">Hadoop</a>. An open source map-reduce framework, originally developed at Yahoo!</li>
-	<li><a href="http://www.slideshare.net/xefyr/pig-making-hadoop-easy">Pig: Making Hadoop Easy</a>.<br />
+	<li><a href="http://www.slideshare.net/xefyr/pig-making-hadoop-easy">Pig: Making Hadoop Easy</a>.</li>
+	<li><a href="http://www.theregister.co.uk/2010/09/24/google_percolator/">Google Percolator – global search jolt sans MapReduce comedown</a>. Google&#8217;s just-announced replacement for their MapReduce-based search indexing infrastructure.<br />
 </div></li>
 </ul>
 </div>

@@ -79,13 +79,13 @@ h1. Some Techniques We'll Discuss
 
 * Replication
 * Schema-less Design
-* Map/Reduce
+* MapReduce
 
 h1. Some Techniques We'll Discuss
 
 * *Replication*
 * Schema-less Design
-* Map/Reduce
+* MapReduce
 
 h1. Replication and Sharding
 
@@ -234,7 +234,7 @@ h1. Some Techniques We'll Discuss
 
 * Replication
 * *Schema-less Design*
-* Map/Reduce
+* MapReduce
 
 h1. Do We Need an RDBMS?
 
@@ -297,7 +297,7 @@ Stores _documents_, usually in the form of JSON (JavaScript Object Notation), YA
 h1. Document Oriented (cont.)
 
 * Often support a query capability or language (even tough they're _schemaless_).
-* Often support a _map/reduce_ capability.
+* Often support a _MapReduce_ capability.
 * Excellent for medium-sized datasets with rapidly-evolving "schema".
 
 h1. Digression: Why the Term "Document"?
@@ -356,9 +356,9 @@ h1. Some Techniques We'll Discuss
 
 * Replication
 * Schema-less Design
-* *Map/Reduce*
+* *MapReduce*
 
-We'll discuss map/reduce in a few weeks...
+We'll discuss MapReduce in a few weeks...
 
 h1. Reading Assignment: CAP and BASE
 

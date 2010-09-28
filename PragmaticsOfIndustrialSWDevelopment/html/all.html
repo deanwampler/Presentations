@@ -206,7 +206,7 @@ Department of Computer Science,<br/>Loyola University Chicago</p>
 	</tr>
 	<tr>
 		<td> 10/19 </td>
-		<td> Midterm, Scaling Systems, Part II (Map/Reduce and Their Kin) </td>
+		<td> Midterm, Scaling Systems, Part II (MapReduce and Their Kin) </td>
 	</tr>
 	<tr>
 		<td> 10/26 </td>
@@ -2128,7 +2128,7 @@ def getInstrumentList(prefix: String): Iterable[JSONRecord] = try {
 <ul>
 	<li>Replication</li>
 	<li>Schema-less Design</li>
-	<li>Map/Reduce</li>
+	<li>MapReduce</li>
 </ul>
 </div>
 <div class="slide">
@@ -2136,7 +2136,7 @@ def getInstrumentList(prefix: String): Iterable[JSONRecord] = try {
 <ul>
 	<li><strong>Replication</strong></li>
 	<li>Schema-less Design</li>
-	<li>Map/Reduce</li>
+	<li>MapReduce</li>
 </ul>
 </div>
 <div class="slide">
@@ -2294,7 +2294,7 @@ or split <em>functionality</em> across servers:</li>
 <ul>
 	<li>Replication</li>
 	<li><strong>Schema-less Design</strong></li>
-	<li>Map/Reduce</li>
+	<li>MapReduce</li>
 </ul>
 </div>
 <div class="slide">
@@ -2367,7 +2367,7 @@ or split <em>functionality</em> across servers:</li>
 <h1>Document Oriented (cont.)</h1>
 <ul>
 	<li>Often support a query capability or language (even tough they&#8217;re <em>schemaless</em>).</li>
-	<li>Often support a <em>map/reduce</em> capability.</li>
+	<li>Often support a <em>MapReduce</em> capability.</li>
 	<li>Excellent for medium-sized datasets with rapidly-evolving &#8220;schema&#8221;.</li>
 </ul>
 </div>
@@ -2430,9 +2430,9 @@ Think of hash maps on <em>steroids</em>.</p>
 <ul>
 	<li>Replication</li>
 	<li>Schema-less Design</li>
-	<li><strong>Map/Reduce</strong></li>
+	<li><strong>MapReduce</strong></li>
 </ul>
-<p>We&#8217;ll discuss map/reduce in a few weeks&#8230;</p>
+<p>We&#8217;ll discuss MapReduce in a few weeks&#8230;</p>
 </div>
 <div class="slide">
 <h1>Reading Assignment: <span class="caps">CAP</span> and <span class="caps">BASE</span></h1>
@@ -2468,9 +2468,483 @@ Think of hash maps on <em>steroids</em>.</p>
 </div>
 <div class="title slide">
 <h1>Lecture 5: Scaling Data, Part II</h1>
+<p>Today and next week we&#8217;ll discuss some NoSQL databases in depth.</p>
 </div>
-<div class="title slide">
-<h1>Lecture 6: Scaling Data, Part <span class="caps">III</span></h1>
+<div class="slide">
+<h1>MongoDB and CouchDB</h1>
+<ul>
+	<li>MongoDB: <a href="http://mongodb.org">mongodb.org</a></li>
+	<li>CouchDB: <a href="http://couchdb.apache.org">couchdb.apache.org</a></li>
+</ul>
+<p>Both are document oriented, use <span class="caps">JSON</span>, are schemaless, and support JavaScript for programming many database operations. But they are very different in other ways, a reflection of their different goals.</p>
+</div>
+<div class="slide">
+<h1>CouchDB Architecture</h1>
+<p>Internal architecture.</p>
+<p><img src="images/CouchDB-architecture-sketch.png"><img><br />
+<br />
+(source: <a href="http://couchdb.apache.org/">couchdb.apache.org</a>)</div>
+<div class="slide">
+<h1>MongoDB Architecture</h1>
+<p>Simpler internal architecture. Lots of small services, as shown here:</p>
+<p><img src="images/mongodb_sharding_replica_sets.png"><img><br />
+<br />
+(source: <a href="http://mongodb.org/">mongodb.org</a>)</div>
+<div class="slide">
+<h1>Differences Between MongoDB and CouchDB</h1>
+<ul>
+	<li>Persistence Strategy</li>
+	<li>Scalability</li>
+	<li>Queries</li>
+	<li>MapReduce</li>
+	<li>Transactions</li>
+	<li>&#8220;Driver&#8221; APIs</li>
+	<li>Ideal Applications</li>
+</ul>
+<p>(Some of these points adapted from <a href="http://www.mongodb.org/display/DOCS/Comparing+Mongo+DB+and+Couch+DB">Comparing Mongo DB and Couch DB</a>)</p>
+</div>
+<div class="slide">
+<h1>Persistence Strategy</h1>
+<p><em>CouchDB uses <strong><span class="caps">MVCC</span></strong>, while MongoDB uses <strong>update in place</strong>.</em></p>
+<p>Recall that <span class="caps">MVCC</span> is <em>multiversion concurrency control</em>. We discussed it when talking about <em>software transactional memory</em> (<span class="caps">STM</span>). In <span class="caps">MVCC</span> a new version of the document is created with the desired changes. The previous versions are still available, until they are specifically deleted (or <em>compacted</em> into fewer versions).</p>
+<p>Update in place just means that we insert changes directly into the existing document&#8217;s record, so previous values are overwritten.</p>
+</div>
+<div class="slide">
+<h1>Advantages of <span class="caps">MVCC</span></h1>
+<p>Better for <strong>durability</strong>. <em>Append-only log files</em> are a database industry standard for durable transactions. CouchDB uses an append-only BTree on disk, so updates are durable (if the files survive&#8230;). If CouchDB crashes, you just restart and go. (BTrees are N-ary sorted trees that are optimal for relatively slow read operations, like disk and file access.)</p>
+<p>If conflicting updates happen, <em>both</em> of them are saved.</p>
+<p><span class="caps">MVCC</span> is very good for syncing master-master database configurations. For example, you can create a copy of the database, take it offline and work on it, then sync it to the other copies when back online again. CouchDB has bi-directional replication.</p>
+<p><strong>Note:</strong> distributed version control systems like <em>git</em> work the same way.</p>
+</div>
+<div class="slide">
+<h1>Disadvantages of <span class="caps">MVCC</span></h1>
+<p>Making copies of documents is slower, consumes more space over time. Compaction is required occasionally.</p>
+<p>Update conflicts must be resolved manually (although now update is &#8220;lost&#8221; and CouchDB deterministically picks a default &#8220;winner&#8221;).</p>
+</div>
+<div class="slide">
+<h1>Advantages of Update in Place</h1>
+<p>Faster write performance, especially for updates. Since the document isn&#8217;t copied, updates are faster. However, this statement ignores disk seek time for finding those records. An append-only file on a disk with no other read/write operations will have minimal seek time, thereby boosting performance. (This is  a case where real-world performance will have to be determined by measurement.)</p>
+<p>Compaction isn&#8217;t needed to remove unneeded copies of documents, since multiple versions aren&#8217;t created.</p>
+<p>Better for Master-Slave configurations with failover.</p>
+</div>
+<div class="slide">
+<h1>Disadvantages of Update in Place</h1>
+<p>If conflicting updates occur, only the last one survives. Transactions are more important to avoid collisions with out the recovery option that <span class="caps">MVCC</span> provides (e.g., picking a previous version or merging results some how).</p>
+<p>If MongoDB crashes, you will probably need to repair the database, prolonging the recovery and restoration of normal service. This is one reason why MongoDB recommends replicated database instances, so service is not interrupted. However, once the crashed instances are running again, you&#8217;ll need to resync them, to get the most recent transactions pushed to the newly-recovered instance.</p>
+</div>
+<div class="slide">
+<h1>Disadvantages of Update in Place (cont.)</h1>
+<p><em>CouchDB is much more durable for single database instances, but most production systems should have replication anyway.</em></p>
+</div>
+<div class="slide">
+<h1>Other Notes on Durability</h1>
+<p>To maximize write performance, MongoDB uses memory-mapped files that are persisted to disk every 60 seconds, by default (using <em>fsync</em>). This also means that concurrent reads can see stale data, even after an <span class="caps">API</span> call for writing returns. Synchronous disk writes are possible, but they impede performance.</p>
+<p>CouchDB can also do &#8220;delayed commits&#8221;, i.e., write operations return immediately, but the actual fsync occurs every second, by default. However, they recommend not doing delayed commits, trading some some performance for better durability.</p>
+<p>(see also <a href="http://www.mikealrogers.com/2010/07/mongodb-performance-durability/">MongoDB Performance and Durability</a>)</p>
+</div>
+<div class="slide">
+<h1>Other Notes on Durability (cont.)</h1>
+<p><strong>Note:</strong> High end servers often have battery-backed <span class="caps">RAID</span> controllers, where the fsync appears to complete faster, but the <span class="caps">RAID</span> delays commits (often using sophisticated algorithms to sequence reads and writes in order to minimize disk head seeks). You get the best of both worlds, fast fsync plus durability ensured by battery backup.</p>
+<p><strong>Moral:</strong> You have to understand your full system and measure what you want to optimize.</p>
+</div>
+<div class="slide">
+<h1>Scalability</h1>
+<p>CouchDB uses replication to scale, where different instances can work on different parts of the data. However, that approach is limited when the database becomes huge. There are some third party sharding/partitioning approaches, the leader of which is <a href="http://github.com/cloudant/bigcouch">BigCouch</a>, which provides transparent clustering, fault-tolerance, and high availability. (Cloudant provides professional services for CouchDB installations.)</p>
+<p>MongoDB uses replication for durability and availability and sharding for scalability. (Discussed in last week&#8217;s reading assignment.)</p>
+</div>
+<div class="slide">
+<h1>Durability, Replication, and Consistency</h1>
+<p>When replicating CouchDB instances, you get <em>eventual consistency</em>. Note that if one replica is offline, consistency can&#8217;t happen until it comes online again.</p>
+<p>Some NoSQL systems, like Cassandra, let you define that a write operation is complete when M of N replicas have received the write.</p>
+</div>
+<div class="slide">
+<h1>Queries</h1>
+<p>MongoDB provides a full-featured, <em>ad hoc</em> query capability using JavaScript as the query language. You can do almost any kind of query that you can do with <span class="caps">SQL</span> in a <span class="caps">SQL</span> database. For some cases, the built-in MapReduce framework has to be used. (We&#8217;ll cover that in a few weeks.)</p>
+<p>CouchDB does not provide an <em>ad hoc</em> query mechanism. Instead, it emphasizes creating views onto the data. You design your database with specific indexing and MapReduce operations that execute incremental when updates are made. These views efficiently expose the data you want, formatted the way you want it.</p>
+</div>
+<div class="slide">
+<h1>MapReduce</h1>
+<p>Both systems support <em>MapReduce</em>. CouchDB requires writing MapReduce functions to construct the views. MongoDB provides MapReduce for optimizing some computations, but the query language doesn&#8217;t require MapReduce functions.</p>
+</div>
+<div class="slide">
+<h1>Transactions</h1>
+<p>Neither database supports the full transaction capabilities typically found in RDBMSs. They do this to keep the systems lighter and faster.</p>
+<p>Instead, MongoDB offers several <a href="http://www.mongodb.org/display/DOCS/Atomic+Operations">atomic operations</a> for <em>single</em> documents (i.e., rows, in <span class="caps">RDBMS</span> terminology).</p>
+<p>Similarly, CouchDB also supports document-level transactions through <span class="caps">MVCC</span>, providing optimistic updates, but records when a collision occurs, recording <em>both</em> updates, and using a deterministic algorithm to pick the &#8220;winner&#8221;. Normally, though, the application should decide how to resolve the collision.</p>
+</div>
+<div class="slide">
+<h1>&#8220;Driver&#8221; APIs: CouchDB</h1>
+<p>While there are language drivers for CouchDB, the primary way to interact with a CouchDB database is through a <span class="caps">REST</span> <span class="caps">API</span>. This is particularly useful for building two-tier applications, with a web (presentation) tier that communicates with the persistence tier over <span class="caps">REST</span>. All business logic is implemented as part of the database view design described above.</p>
+<p>This model is very convenient for smaller applications. Larger applications typically use 3 or more tiers.</p>
+</div>
+<div class="slide">
+<h1>&#8220;Driver&#8221; APIs: MongoDB</h1>
+<p>For performance reasons, MongoDB is accessed primarily through language drivers for C++, Java, Ruby, etc. These drivers talk a proprietary binary protocol. There is also a limited <span class="caps">REST</span> <span class="caps">API</span> available. The driver approach is more traditional for n-tier applications, but it is less convenient for applications where web pages want to access a MongoDB database directly (over <span class="caps">HTTP</span>).</p>
+</div>
+<div class="slide">
+<h1>Ideal Applications</h1>
+<p>So, while superficially similar, they are very different in important ways, which affects the kinds of applications for which each is ideal.</p>
+</div>
+<div class="slide">
+<h1>Ideal Applications: CouchDB</h1>
+<p>CouchDB is ideal for:</p>
+<ul>
+	<li>Productivity applications with built in databases, where offline work is common, with subsequent synching to the &#8220;master&#8221;. Think email, calendaring, &#8220;<span class="caps">TODO</span>&#8221; and similar apps.</li>
+	<li>Persistence with easy replication is more important that update throughput.</li>
+	<li>Easy integration with web front ends, through <span class="caps">REST</span>.</li>
+	<li>Many apps that Ruby on Rails is currently used to implement.</li>
+</ul>
+</div>
+<div class="slide">
+<h1>Ideal Applications: MongoDB</h1>
+<p>MongoDB is ideal for:</p>
+<ul>
+	<li>Applications with high-volume writes/updates, especially if some write losses are tolerable (e.g., sensor networks).</li>
+	<li>System &#8220;logs&#8221; (especially with <a href="http://www.mongodb.org/display/DOCS/Capped+Collections">capped collections</a>).</li>
+	<li>Applications requiring ad hoc query support.</li>
+	<li>Applications requiring fast language-specific drivers.</li>
+</ul>
+</div>
+<div class="slide">
+<h1>Conclusions: MongoDB vs. CouchDB</h1>
+<p>MongoDB is philosophically more like a traditional <span class="caps">RDBMS</span>, and you use it in much the same way.</p>
+<p>CouchDB is more like an application platform for two-tier applications that require persistence, with solid, easy replication.</p>
+<p><em>JavaScript from the database to the browser is becoming a compelling application development approach.</em></p>
+</div>
+<div class="slide">
+<h1>Key-Value Stores</h1>
+<p>E.g., <em>Amazon SimpleDB, Riak, Redis, Tokyo Cabinet, Scalaris, MemcacheDB, BerkeleyDB, Mnesia.</em><br />
+ <br />
+Think of hash maps on <em>steroids</em>.</p>
+<ul>
+	<li>May be purely in-memory (with optional flushing to disk) and resident on one machine.</li>
+	<li>Excellent for &#8220;persisting&#8221; semi-structured data with shorter lifespans (e.g., web sessions).</li>
+	<li>Used when durability and consistency are lower priorities compared to speed.</li>
+</ul>
+</div>
+<div class="slide">
+<h1>Eventually Consistent Key-Value Stores</h1>
+<p>E.g., <em>Amazon Dynamo, Dynomite, Voldemort</em></p>
+<p>More emphasis on longer-lived objects that need to be persisted, but for which rapid retrieval is still important.</p>
+<ul>
+	<li>Transparent replication of data.</li>
+	<li>Transparent clustering of nodes.</li>
+	<li>Great for fault tolerance, especially for &#8220;active sessions&#8221;.</li>
+</ul>
+<p>Your homework reading will include a paper on Dynamo.</p>
+</div>
+<div class="slide">
+<h1>Are Key-Value Stores Really Databases?</h1>
+<p><a href="http://memcached.org/">Memcached</a> has been around a while. It&#8217;s a popular in-memory, distributed cache. It&#8217;s great for caching database queries in memory, for faster repeat retrieval, storing user sessions between page views in a web application, etc.</p>
+<p>The definition of &#8220;database&#8221; has expanded in recent years, so now we think of a key-value store, like memcached, as a datastore, <em>if</em> it is backed by some sort of durability.</p>
+<p><a href="http://memcachedb.org/">MemcacheDB</a> is built on top of Memcached to provide this durability. It uses another, fairly old, open-source NoSQL store, <a href="http://www.oracle.com/technetwork/database/berkeleydb/index.html">BerkeleyDB</a> to provide persistence.</p>
+</div>
+<div class="slide">
+<h1>MemcacheDB</h1>
+<p>It&#8217;s <span class="caps">API</span> is compliant with the Memcache protocol:</p>
+<ul>
+	<li>get(also multiple get)</li>
+	<li>set, add, replace</li>
+	<li>append/prepend</li>
+	<li>incr, decr</li>
+	<li>delete</li>
+	<li>stats</li>
+</ul>
+<p>Very simple! If all you need is key-based storage and retrieval of &#8220;blobs&#8221;, then a key-value store like this can be ideal.</p>
+</div>
+<div class="slide">
+<h1>Redis</h1>
+<p><a href="http://code.google.com/p/redis/">Redis</a> provides data-structure aware storage. Not just key-values (e.g., a map or hash), where values are &#8220;blobs&#8221;, but also <span class="caps">API</span> calls specifically for working with strings, lists, sets, and sorted sets.</p>
+</div>
+<div class="slide">
+<h1>Redis</h1>
+<p>Other features:</p>
+<ul>
+	<li>Many language bindings.</li>
+	<li>Very high speed.</li>
+	<li>Integrated into Akka (for durable persistent data structures).</li>
+	<li>Limited support for fault tolerance and clustering.</li>
+</ul>
+<p>So, useful for the same sorts of tasks MemcacheDB would be used for, plus cases where awareness of the additional data structures is useful.</p>
+</div>
+<div class="slide">
+<h1>Key-Value Store: General Considerations</h1>
+<ul>
+	<li>How often is data synced to disk?</li>
+	<li>How is data replicated to other nodes (for distributed stores)?</li>
+	<li>How is fault tolerance supported?</li>
+</ul>
+</div>
+<div class="slide">
+<h1>Reading Assignment: CouchDB</h1>
+<p>Read <a href="http://guide.couchdb.org/editions/1/en/why.html">Chapter 1</a> of <em>CouchDB, The Definitive Guide</em>, which describes the philosophy behind CouchDB, the kinds of applications it is suitable for, etc.</p>
+</div>
+<div class="slide">
+<h1>Reading Assignment: MongoDB</h1>
+<p>Read the MongoDB pages on <a href="http://www.mongodb.org/display/DOCS/Querying">queries</a> and <a href="http://www.mongodb.org/display/DOCS/Advanced+Queries">advanced queries</a>. We&#8217;ll use them in today&#8217;s exercise (discussed below).</p>
+</div>
+<div class="slide">
+<h1>Reading Assignment: Amazon Dynamo</h1>
+<p>Giuseppe DeCandia, Deniz Hastorun, Madan Jampani, Gunavardhan Kakulapati, Avinash Lakshman, Alex Pilchin, Swaminathan Sivasubramanian, Peter Vosshall and Werner Vogels, <a href="http://www.allthingsdistributed.com/2007/10/amazons_dynamo.html">Dynamo: Amazon’s Highly Available Key-value Store</a></p>
+</div>
+<div class="slide">
+<h1>Reading Assignment: Cassandra</h1>
+<p>Avinash Lakshman and Prashant Malik, <a href="http://www.cs.cornell.edu/projects/ladis2009/papers/lakshman-ladis2009.pdf">Cassandra — A Decentralized Structured Storage System</a></p>
+</div>
+<div class="slide">
+<h1>Exercise: Mongo Queries</h1>
+<p>This week, since I&#8217;ve given you longer reading assignments, I&#8217;ll give you a shorter exercise ;) We&#8217;ll use the mongo console to query the stock data. We&#8217;ll return to the web application next week, when we&#8217;ll incorporate some of this work in the application.</p>
+<p>Start <code>mongodb</code> and <code>mongo</code> in separate command windows, as you&#8217;ve done before. On the next page is an example <code>mongo</code> session. They show the <code>&gt;</code> mongo prompt and the resulting output on my database instance. (Some of your results may be slightly different.)</p>
+</div>
+<div class="slide">
+<h1>Exercise: Mongo Queries (cont.)</h1>
+<p>Getting general help and help on database-level commands.</p>
+<div class="code-small">
+<pre name="code" id="code" class="brush: plain,;">
+
+&gt; help()
+	  db.help()                    help on db methods
+	  db.mycoll.help()             help on collection methods
+	  rs.help()                    help on replica set methods
+		...
+&gt; db.help()
+DB methods:
+	  db.addUser(username, password[, readOnly=false])
+	  db.auth(username, password)
+	  db.cloneDatabase(fromhost)
+	  db.commandHelp(name) returns the help for the command
+	  db.copyDatabase(fromdb, todb, fromhost)
+	  db.createCollection(name, { size : ..., capped : ..., max : ... } )
+		...
+</pre></div>
+<p></p>
+</div>
+<div class="slide">
+<h1>Exercise: Mongo Queries (cont.)</h1>
+<p>Getting collection-level commands.</p>
+<div class="code-small">
+<pre name="code" id="code" class="brush: plain,;">
+
+&gt; db.foo.help()
+DBCollection help
+	  db.foo.find().help() - show DBCursor help
+	  db.foo.count()
+	  db.foo.dataSize()
+	  db.foo.distinct( key ) - eg. db.foo.distinct( 'x' )
+	  db.foo.drop() drop the collection
+	  db.foo.dropIndex(name)
+	  ...
+</pre></div>
+<p><strong>Note:</strong> <code>foo</code> is just a placeholder. You can use any real collection name instead.</p>
+</div>
+<div class="slide">
+<h1>Exercise: Mongo Queries (cont.)</h1>
+<div class="code-small">
+<pre name="code" id="code" class="brush: plain,;">
+
+&gt; show dbs
+admin
+local
+stocks_yahoo_NYSE
+&gt; use stocks_yahoo_NYSE
+switched to db stocks_yahoo_NYSE
+&gt; show collections
+A_dividends
+A_prices
+B_dividends
+B_prices
+C_dividends
+C_prices
+...
+</pre></div>
+</div>
+<div class="slide">
+<h1>Exercise: Mongo Queries (cont.)</h1>
+<p>How many documents in a collection? Show me one item:</p>
+<div class="code-small">
+<pre name="code" id="code" class="brush: plain,;">
+
+&gt; db.A_dividends.count()
+8322
+&gt; db.A_prices.count()
+693733
+&gt; db.A_dividends.findOne()
+{
+    "_id" : ObjectId("4c9f75bbf0c81d093e48b0cc"),
+    "date" : "2007-09-26",
+    "dividends" : 0.04,
+    "stock_symbol" : "ATU",
+    "exchange" : "NYSE"
+}
+...
+</pre></div>
+</div>
+<div class="slide">
+<h1>Exercise: Mongo Queries (cont.)</h1>
+<div class="code-small">
+<pre name="code" id="code" class="brush: plain,;">
+
+&gt; db.A_prices.findOne()
+{
+    "_id" : ObjectId("4c9f7586f0c81d093e3e1ae7"),
+    "close" : 27.13,
+    "high" : 27.4,
+    "date" : "2008-03-07",
+    "stock_symbol" : "ATU",
+    "exchange" : "NYSE",
+    "volume" : 591000,
+    "adj close" : 27.13,
+    "low" : 26.18,
+    "open" : 26.18
+}
+...
+</pre></div>
+</div>
+<div class="slide">
+<h1>Exercise: Mongo Queries (cont.)</h1>
+<p>Find all unique values for a particular field in the collection.</p>
+<div class="code-small">
+<pre name="code" id="code" class="brush: plain,;">
+
+&gt; db.A_prices.distinct("stock_symbol")          
+[
+    "AA",
+    "AAI",
+    "AAP",
+    "AAR",
+    "AAV",
+    "AB",
+    "ABA",
+    "ABB",
+    "ABC",
+...
+</pre></div>
+</div>
+<div class="slide">
+<h1>Exercise: Mongo Queries (cont.)</h1>
+<p>Find all documents matching a specific field value, limited to 5 items.</p>
+<div class="code-tiny">
+<pre name="code" id="code" class="brush: plain,;">
+
+&gt; db.A_prices.find({stock_symbol: "AA"}).limit(5)
+{ "_id" : ObjectId("4c9f75a2f0c81d093e445ce3"), "close" : 36.6, "high" : 37.9, "date" : "2008-03-07", "stock_symbol" : "AA", "exchange" : "NYSE", "volume" : 17752400, "adj close" : 36.6, "low" : 36.13, "open" : 37.01 }
+{ "_id" : ObjectId("4c9f75a2f0c81d093e445ce4"), "close" : 38.37, "high" : 39.28, "date" : "2008-03-06", "stock_symbol" : "AA", "exchange" : "NYSE", "volume" : 11279900, "adj close" : 38.37, "low" : 38.26, "open" : 38.85 }
+{ "_id" : ObjectId("4c9f75a2f0c81d093e445ce5"), "close" : 38.71, "high" : 39.15, "date" : "2008-03-05", "stock_symbol" : "AA", "exchange" : "NYSE", "volume" : 11754600, "adj close" : 38.71, "low" : 38.1, "open" : 38.25 }
+{ "_id" : ObjectId("4c9f75a2f0c81d093e445ce6"), "close" : 38, "high" : 38.94, "date" : "2008-03-04", "stock_symbol" : "AA", "exchange" : "NYSE", "volume" : 15715600, "adj close" : 38, "low" : 37.1, "open" : 37.9 }
+{ "_id" : ObjectId("4c9f75a2f0c81d093e445ce7"), "close" : 38.32, "high" : 38.46, "date" : "2008-03-03", "stock_symbol" : "AA", "exchange" : "NYSE", "volume" : 13964700, "adj close" : 38.32, "low" : 37.13, "open" : 37.17 }
+...
+</pre></div>
+</div>
+<div class="slide">
+<h1>Exercise: Mongo Queries (cont.)</h1>
+<p>Find all documents matching a specific field value, sorted by date (both ways), limited to 3 items.</p>
+<div class="code-tiny">
+<pre name="code" id="code" class="brush: plain,;">
+
+&gt; db.A_prices.find({stock_symbol: "AA"}).sort({date: 1}).limit(3)
+{ "_id" : ObjectId("4c9f75a3f0c81d093e448a4b"), "close" : 65.37, "high" : 65.75, "date" : "1962-01-02", "stock_symbol" : "AA", "exchange" : "NYSE", "volume" : 134400, "adj close" : 0.74, "low" : 65.37, "open" : 65.37 }
+{ "_id" : ObjectId("4c9f75a3f0c81d093e448a4a"), "close" : 66.37, "high" : 66.37, "date" : "1962-01-03", "stock_symbol" : "AA", "exchange" : "NYSE", "volume" : 179200, "adj close" : 0.75, "low" : 65.25, "open" : 65.37 }
+{ "_id" : ObjectId("4c9f75a3f0c81d093e448a49"), "close" : 66.37, "high" : 66.87, "date" : "1962-01-04", "stock_symbol" : "AA", "exchange" : "NYSE", "volume" : 193600, "adj close" : 0.75, "low" : 66.37, "open" : 66.37 }
+&gt; db.A_prices.find({stock_symbol: "AA"}).sort({date: 1}).limit(3)
+{ "_id" : ObjectId("4c9f75a2f0c81d093e445ce3"), "close" : 36.6, "high" : 37.9, "date" : "2008-03-07", "stock_symbol" : "AA", "exchange" : "NYSE", "volume" : 17752400, "adj close" : 36.6, "low" : 36.13, "open" : 37.01 }
+{ "_id" : ObjectId("4c9f75a2f0c81d093e445ce4"), "close" : 38.37, "high" : 39.28, "date" : "2008-03-06", "stock_symbol" : "AA", "exchange" : "NYSE", "volume" : 11279900, "adj close" : 38.37, "low" : 38.26, "open" : 38.85 }
+{ "_id" : ObjectId("4c9f75a2f0c81d093e445ce5"), "close" : 38.71, "high" : 39.15, "date" : "2008-03-05", "stock_symbol" : "AA", "exchange" : "NYSE", "volume" : 11754600, "adj close" : 38.71, "low" : 38.1, "open" : 38.25 }
+...
+</pre></div>
+</div>
+<div class="slide">
+<h1>Exercise: Mongo Queries (cont.)</h1>
+<p>Find the historical high and low closing values for AA.</p>
+<div class="code-tiny">
+<pre name="code" id="code" class="brush: plain,;">
+
+&gt; db.A_prices.find({stock_symbol: "AA"}).sort({close: 1}).limit(1)
+{ "_id" : ObjectId("4c9f75a2f0c81d093e446234"), "close" : 18.03, "high" : 18.4, "date" : "2002-10-09", "stock_symbol" : "AA", "exchange" : "NYSE", "volume" : 4345100, "adj close" : 16.04, "low" : 17.81, "open" : 18 }
+&gt; db.A_prices.find({stock_symbol: "AA"}).sort({close: -1}).limit(1)
+{ "_id" : ObjectId("4c9f75a3f0c81d093e44860f"), "close" : 94.5, "high" : 94.5, "date" : "1966-04-21", "stock_symbol" : "AA", "exchange" : "NYSE", "volume" : 235200, "adj close" : 1.15, "low" : 92.75, "open" : 93.12 }
+...
+</pre></div>
+</div>
+<div class="slide">
+<h1>Exercise: Mongo Queries (cont.)</h1>
+<p>Using logical comparison operations. (There are others&#8230;)</p>
+<div class="code-tiny">
+<pre name="code" id="code" class="brush: plain,;">
+
+&gt; db.A_prices.find({close: { $lte: 25.0}}).limit(3)
+{ "_id" : ObjectId("4c9f7586f0c81d093e3e2126"), "close" : 24.75, "high" : 25.57, "date" : "2001-10-25", "stock_symbol" : "ATU", "exchange" : "NYSE", "volume" : 116400, "adj close" : 6.16, "low" : 24.5, "open" : 25.55 }
+{ "_id" : ObjectId("4c9f7586f0c81d093e3e212a"), "close" : 24.8, "high" : 25, "date" : "2001-10-19", "stock_symbol" : "ATU", "exchange" : "NYSE", "volume" : 101200, "adj close" : 6.17, "low" : 24.1, "open" : 24.4 }
+{ "_id" : ObjectId("4c9f7586f0c81d093e3e212b"), "close" : 24.15, "high" : 24.99, "date" : "2001-10-18", "stock_symbol" : "ATU", "exchange" : "NYSE", "volume" : 36000, "adj close" : 6.01, "low" : 24.15, "open" : 24.8 }
+&gt; db.A_prices.find({close: { $gte: 25.0}}).limit(3)
+{ "_id" : ObjectId("4c9f7586f0c81d093e3e1ae7"), "close" : 27.13, "high" : 27.4, "date" : "2008-03-07", "stock_symbol" : "ATU", "exchange" : "NYSE", "volume" : 591000, "adj close" : 27.13, "low" : 26.18, "open" : 26.18 }
+{ "_id" : ObjectId("4c9f7586f0c81d093e3e1ae8"), "close" : 27.07, "high" : 27.72, "date" : "2008-03-06", "stock_symbol" : "ATU", "exchange" : "NYSE", "volume" : 679200, "adj close" : 27.07, "low" : 27, "open" : 27.35 }
+{ "_id" : ObjectId("4c9f7586f0c81d093e3e1ae9"), "close" : 27.56, "high" : 27.89, "date" : "2008-03-05", "stock_symbol" : "ATU", "exchange" : "NYSE", "volume" : 478500, "adj close" : 27.56, "low" : 27.14, "open" : 27.48 }
+...
+</pre></div>
+</div>
+<div class="slide">
+<h1>Exercise: Mongo Queries (cont.)</h1>
+<p>Using JavaScript expressions in queries.</p>
+<div class="code-tiny">
+<pre name="code" id="code" class="brush: plain,;">
+
+&gt; db.B_prices.find("this.stock_symbol.length == 2").limit(1)
+{ "_id" : ObjectId("4c9f75bcf0c81d093e48ed60"), "close" : 15.39, "high" : 15.92, "date" : "2008-03-07", "stock_symbol" : "BC", "exchange" : "NYSE", "volume" : 1542700, "adj close" : 15.39, "low" : 15.2, "open" : 15.61 }
+...
+</pre></div>
+</div>
+<div class="slide">
+<h1>Exercise: Mongo Queries (cont.)</h1>
+<p>Using regular expressions in queries. Limiting the fields returned.</p>
+<div class="code-tiny">
+<pre name="code" id="code" class="brush: plain,;">
+
+&gt; db.D_prices.find({stock_symbol: /D.*G$/}).limit(1)
+{ "_id" : ObjectId("4c9f7611f0c81d093e5d78ed"), "close" : 12.68, "high" : 12.88, "date" : "2008-03-07", "stock_symbol" : "DHG", "exchange" : "NYSE", "volume" : 194900, "adj close" : 12.68, "low" : 12.55, "open" : 12.69 }
+&gt; db.D_prices.find({stock_symbol: /D.*G$/}, {stock_symbol:1, _id:0}).limit(1)
+{ "stock_symbol" : "DHG" }
+...
+</pre></div>
+</div>
+<div class="slide">
+<h1>Exercise: Mongo Queries (cont.)</h1>
+<p>Finally, some more involved JavaScript.</p>
+<div class="code-tiny">
+<pre name="code" id="code" class="brush: plain,;">
+
+&gt; var ds = db.D_prices.distinct("stock_symbol") 
+&gt; for (i in ds) { var d = ds[i]; if (d.charAt(d.length-1) == "T") print(d); }
+DCT
+DDT
+DFT
+DHT
+DKT
+DST
+DT
+DTT
+...
+</pre></div>
+</div>
+<div class="slide">
+<h1>Exercise: Mongo Queries (cont.)</h1>
+<p>Now for the exercises: Email your answers to the following questions by the start of class next week. You can capture the output of your terminal session, if you want. Whatever you do, show me the answer for each question, as well as the query (or queries) you used to get it.</p>
+<ul>
+	<li>What were the earliest and latest trading dates for the stock with the symbol <code>BAM</code>?</li>
+	<li>What were the highest and lowest closing prices for <code>CSC</code> and on what dates did they occur?</li>
+	<li>Write a query that returns the first 100 trading days from the A table where the price closed above $100. Limit the fields returned to show just the data, the stock symbol, and the closing price (also suppress the id). Show the results of the query.</li>
+</ul>
+</div>
+<div class="slide">
+<h1>Exercise: Mongo Queries (cont.)</h1>
+<ul>
+	<li>The &#8220;volume&#8221; is the number of shares traded that day. What &#8220;A&#8221; stock had the lowest number of shares traded in a day, <em>other than zero</em>, and what was the date (or dates).</li>
+	<li>How many times did &#8220;AA&#8221; pay a dividend?</li>
+	<li>How many times did &#8220;AA&#8221; pay a dividend in 2007? What were the dates when those dividends were paid?</li>
+	<li>What stock symbols start with &#8220;C&#8221; and end with &#8220;M&#8221;?<br />
+</div><br />
+<div class="slide"></li>
+</ul>
+<h1 class="slide0">Lecture 6: Scaling Data, Part <span class="caps">III</span></h1>
 </div>
 <div class="title slide">
 <h1>Lecture 7: Midterm Break (No Class)</h1>
