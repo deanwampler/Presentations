@@ -109,7 +109,7 @@ h1. Document-Oriented Databases: MongoDB and CouchDB
 
 <div class='small'>
 
-* "MongoDB":http://mongodb.org
+* "MongoDB":http://mongodb.org. "Language APIs":http://http://api.mongodb.org/.
 * "CouchDB":http://couchdb.org
 * J. Chris Anderson, Jan Lehnardt, and Noah Slater, "CouchDB, The Definitive Guide", O'Reilly, 2010. ISBN: 9780596155896. Also available to read "online":http://guide.couchdb.org/.
 * "Comparing Mongo DB and Couch DB":http://www.mongodb.org/display/DOCS/Comparing+Mongo+DB+and+Couch+DB. The differences from MongoDB's perspective.
