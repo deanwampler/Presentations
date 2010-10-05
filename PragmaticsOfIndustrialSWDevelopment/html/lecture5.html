@@ -427,7 +427,7 @@ C_prices
 { "_id" : ObjectId("4c9f75a3f0c81d093e448a4b"), "close" : 65.37, "high" : 65.75, "date" : "1962-01-02", "stock_symbol" : "AA", "exchange" : "NYSE", "volume" : 134400, "adj close" : 0.74, "low" : 65.37, "open" : 65.37 }
 { "_id" : ObjectId("4c9f75a3f0c81d093e448a4a"), "close" : 66.37, "high" : 66.37, "date" : "1962-01-03", "stock_symbol" : "AA", "exchange" : "NYSE", "volume" : 179200, "adj close" : 0.75, "low" : 65.25, "open" : 65.37 }
 { "_id" : ObjectId("4c9f75a3f0c81d093e448a49"), "close" : 66.37, "high" : 66.87, "date" : "1962-01-04", "stock_symbol" : "AA", "exchange" : "NYSE", "volume" : 193600, "adj close" : 0.75, "low" : 66.37, "open" : 66.37 }
-&gt; db.A_prices.find({stock_symbol: "AA"}).sort({date: 1}).limit(3)
+&gt; db.A_prices.find({stock_symbol: "AA"}).sort({date: -1}).limit(3)
 { "_id" : ObjectId("4c9f75a2f0c81d093e445ce3"), "close" : 36.6, "high" : 37.9, "date" : "2008-03-07", "stock_symbol" : "AA", "exchange" : "NYSE", "volume" : 17752400, "adj close" : 36.6, "low" : 36.13, "open" : 37.01 }
 { "_id" : ObjectId("4c9f75a2f0c81d093e445ce4"), "close" : 38.37, "high" : 39.28, "date" : "2008-03-06", "stock_symbol" : "AA", "exchange" : "NYSE", "volume" : 11279900, "adj close" : 38.37, "low" : 38.26, "open" : 38.85 }
 { "_id" : ObjectId("4c9f75a2f0c81d093e445ce5"), "close" : 38.71, "high" : 39.15, "date" : "2008-03-05", "stock_symbol" : "AA", "exchange" : "NYSE", "volume" : 11754600, "adj close" : 38.71, "low" : 38.1, "open" : 38.25 }
@@ -513,7 +513,7 @@ DTT
 <ul>
 	<li>What were the earliest and latest trading dates for the stock with the symbol <code>BAM</code>?</li>
 	<li>What were the highest and lowest closing prices for <code>CSC</code> and on what dates did they occur?</li>
-	<li>Write a query that returns the first 100 trading days from the A table where the price closed above $100. Limit the fields returned to show just the data, the stock symbol, and the closing price (also suppress the id). Show the results of the query.</li>
+	<li>Write a query that returns the first 100 trading days from the A table where the price closed above $100. Limit the fields returned to show just the date, the stock symbol, and the closing price (also suppress the id). Show the results of the query.</li>
 </ul>
 </div>
 <div class="slide">

@@ -105,7 +105,7 @@ h1. SQL and NoSQL Databases
 * "Column-oriented DBMS":http://en.wikipedia.org/wiki/Column-oriented_DBMS
 </div>
 
-h1. MongoDB and CouchDB
+h1. Document-Oriented Databases: MongoDB and CouchDB
 
 <div class='small'>
 
@@ -121,6 +121,8 @@ h1. MongoDB and CouchDB
 
 h1. Key-Value Stores
 
+<div class='small'>
+* Giuseppe DeCandia, Deniz Hastorun, Madan Jampani, Gunavardhan Kakulapati, Avinash Lakshman, Alex Pilchin, Swami Sivasubramanian, Peter Vosshall and Werner Vogels, "Dynamo: Amazon's Highly Available Key-Value Store", in the Proceedings of the 21st ACM Symposium on Operating Systems Principles, Stevenson, WA, October 2007. Available online: "PDF":http://www.allthingsdistributed.com/files/amazon-dynamo-sosp2007.pdf and "online":http://www.allthingsdistributed.com/2007/10/amazons_dynamo.html.
 * "MemcacheDB":http://memcachedb.org/, based on "Memcached":http://memcached.org/.
 * "BerkeleyDB":http://www.oracle.com/technetwork/database/berkeleydb/index.html.
 * "SimpleDB":http://aws.amazon.com/simpledb/.
@@ -128,15 +130,28 @@ h1. Key-Value Stores
 * "Riak":http://wiki.basho.com/display/RIAK/Riak.
 * "Tokyo Cabinet":http://fallabs.com/tokyocabinet/.
 * "Mnesia":http://www.erlang.org/doc/apps/mnesia/.
-
-h1. Other NoSQL Databases
-
-<div class='small'>
-
-* Giuseppe DeCandia, Deniz Hastorun, Madan Jampani, Gunavardhan Kakulapati, Avinash Lakshman, Alex Pilchin, Swami Sivasubramanian, Peter Vosshall and Werner Vogels, "Dynamo: Amazon's Highly Available Key-Value Store", in the Proceedings of the 21st ACM Symposium on Operating Systems Principles, Stevenson, WA, October 2007. Available online: "PDF":http://www.allthingsdistributed.com/files/amazon-dynamo-sosp2007.pdf and "online":http://www.allthingsdistributed.com/2007/10/amazons_dynamo.html.
-* "Apache Cassandra":http://en.wikipedia.org/wiki/Apache_Cassandra
-* "Gremlin: a graph based programming language":http://www.nosqldatabases.com/main/2010/8/23/gremlin-a-graph-based-programming-language.html.
 </div>
+
+h1. Column-Oriented Databases
+
+* "Apache Cassandra":http://en.wikipedia.org/wiki/Apache_Cassandra.
+* Avinash Lakshman and Prashant Malik, "Cassandra - A Decentralized, Structured Storage System":http://www.cs.cornell.edu/projects/ladis2009/papers/lakshman-ladis2009.pdf.
+
+h1. Graph Databases
+
+* "Graph (data structure)":http://en.wikipedia.org/wiki/Graph_(data_structure) (Wikipedia).
+* "Gephi":http://gephi.org. A graph visualization tool kit. The download page has a link to the "gephi wiki":http://wiki.gephi.org/ with "sample datasets":http://wiki.gephi.org/index.php?title=Datasets. (WARNING: requires a lot of memory!)
+* "Graph Database":http://en.wikipedia.org/wiki/Graph_database (Wikipedia).
+* "Neo4J":http://neo4j.org and on "Wikipedia":http://en.wikipedia.org/wiki/Neo4j.
+* "FlockDB":http://en.wikipedia.org/wiki/FlockDB (Wikipedia) and on "GitHub":http://github.com/twitter/flockdb.
+* "InfoGrid":http://infogrid.org/ and a "tutorial":http://infogrid.org/blog/2010/02/operations-on-a-graph-database-part-1/.
+* "Gremlin: a graph based programming language":http://www.nosqldatabases.com/main/2010/8/23/gremlin-a-graph-based-programming-language.html.
+* Marko A. Rodriguez and Peter Neubauer, "The Graph Traversal Pattern":http://nosqlsummer.org/paper/graph-traversal-pattern.
+* Renzo Angles, Claudio Gutierrez, "Survey of Graph Database Models":http://portal.acm.org/citation.cfm?id=1322433 (requires ACM online access).
+
+h1. Miscellaneous Database References
+
+* "Gizzard":http://en.wikipedia.org/wiki/Gizzard_(scala_framework). Gizzard is a database-neutral sharding framework that supports different backends.
 
 h1. Distributed Systems
 
@@ -171,18 +186,20 @@ h1. Distributed Systems - MapReduce Frameworks
 
 <div class='small'>
 
-* Edd Dumbill, "The SMAQ stack for big data":http://radar.oreilly.com/2010/09/the-smaq-stack-for-big-data.html. Nice summary of some of the leading open-source technologies used for data processing.
-* Jeffrey Dean and Sanjay Ghemawat, "MapReduce: Simplified Data Processing on Large Clusters":http://nosqlsummer.org/paper/google-mapreduce.
+* "MapReduce":http://en.wikipedia.org/wiki/MapReduce (Wikipedia).
+* Jeffrey Dean and Sanjay Ghemawat, "MapReduce: Simplified Data Processing on Large Clusters":http://labs.google.com/papers/mapreduce.html. Also linked to "here":http://nosqlsummer.org/paper/google-mapreduce.
 * Jeffrey Dean and Sanjay Ghemawat, _Distributed Programming with Mapreduce_, in "Beautiful Code", Chapter 23, pgs. 371-382. 
 * "Hadoop":http://hadoop.apache.org/. An open source map-reduce framework, originally developed at Yahoo!
 * "Pig: Making Hadoop Easy":http://www.slideshare.net/xefyr/pig-making-hadoop-easy.
 * "Google Percolator – global search jolt sans MapReduce comedown":http://www.theregister.co.uk/2010/09/24/google_percolator/. Google's just-announced replacement for their MapReduce-based search indexing infrastructure.
+* "Twitter Analytics Lead, Kevin Weil, and a Presenter at Hadoop World Interviewed":http://www.cloudera.com/blog/2010/09/twitter-analytics-lead-kevin-weil-and-a-presenter-at-hadoop-world-interviewed/. How Hadoop and related tools are used by Twitter.
 </div>
 
 h1. Data and Analytics
 
 <div class='small'>
 
+* Edd Dumbill, "The SMAQ stack for big data":http://radar.oreilly.com/2010/09/the-smaq-stack-for-big-data.html. Nice summary of some of the leading open-source technologies used for data processing.
 * Toby Segaran and Jeff Hammerbacher, "Beautiful Data", O'Reilly, 2009. ISBN: 0596157118.
 * Julie Steele and Noah Ilinsky, "Beautiful Visualization", O'Reilly, 2010. ISBN: 1449379869.
 * A "list of data blogs":http://www.quora.com/What-are-the-best-blogs-about-data posted on "Quora":http://www.quora.com.

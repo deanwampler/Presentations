@@ -159,7 +159,7 @@
 </ul>
 </div>
 <div class="slide">
-<h1>MongoDB and CouchDB</h1>
+<h1>Document-Oriented Databases: MongoDB and CouchDB</h1>
 <div class='small'>
 <ul>
 	<li><a href="http://mongodb.org">MongoDB</a></li>
@@ -175,24 +175,44 @@
 </div>
 <div class="slide">
 <h1>Key-Value Stores</h1>
+<div class='small'>
 <ul>
+	<li>Giuseppe DeCandia, Deniz Hastorun, Madan Jampani, Gunavardhan Kakulapati, Avinash Lakshman, Alex Pilchin, Swami Sivasubramanian, Peter Vosshall and Werner Vogels, &#8220;Dynamo: Amazon&#8217;s Highly Available Key-Value Store&#8221;, in the Proceedings of the 21st <span class="caps">ACM</span> Symposium on Operating Systems Principles, Stevenson, WA, October 2007. Available online: <a href="http://www.allthingsdistributed.com/files/amazon-dynamo-sosp2007.pdf"><span class="caps">PDF</span></a> and <a href="http://www.allthingsdistributed.com/2007/10/amazons_dynamo.html">online</a>.</li>
 	<li><a href="http://memcachedb.org/">MemcacheDB</a>, based on <a href="http://memcached.org/">Memcached</a>.</li>
 	<li><a href="http://www.oracle.com/technetwork/database/berkeleydb/index.html">BerkeleyDB</a>.</li>
 	<li><a href="http://aws.amazon.com/simpledb/">SimpleDB</a>.</li>
 	<li><a href="http://code.google.com/p/redis/">Redis</a>.</li>
 	<li><a href="http://wiki.basho.com/display/RIAK/Riak">Riak</a>.</li>
 	<li><a href="http://fallabs.com/tokyocabinet/">Tokyo Cabinet</a>.</li>
-	<li><a href="http://www.erlang.org/doc/apps/mnesia/">Mnesia</a>.</li>
+	<li><a href="http://www.erlang.org/doc/apps/mnesia/">Mnesia</a>.<br />
+</div></li>
 </ul>
 </div>
 <div class="slide">
-<h1>Other NoSQL Databases</h1>
-<div class='small'>
+<h1>Column-Oriented Databases</h1>
 <ul>
-	<li>Giuseppe DeCandia, Deniz Hastorun, Madan Jampani, Gunavardhan Kakulapati, Avinash Lakshman, Alex Pilchin, Swami Sivasubramanian, Peter Vosshall and Werner Vogels, &#8220;Dynamo: Amazon&#8217;s Highly Available Key-Value Store&#8221;, in the Proceedings of the 21st <span class="caps">ACM</span> Symposium on Operating Systems Principles, Stevenson, WA, October 2007. Available online: <a href="http://www.allthingsdistributed.com/files/amazon-dynamo-sosp2007.pdf"><span class="caps">PDF</span></a> and <a href="http://www.allthingsdistributed.com/2007/10/amazons_dynamo.html">online</a>.</li>
-	<li><a href="http://en.wikipedia.org/wiki/Apache_Cassandra">Apache Cassandra</a></li>
-	<li><a href="http://www.nosqldatabases.com/main/2010/8/23/gremlin-a-graph-based-programming-language.html">Gremlin: a graph based programming language</a>.<br />
-</div></li>
+	<li><a href="http://en.wikipedia.org/wiki/Apache_Cassandra">Apache Cassandra</a>.</li>
+	<li>Avinash Lakshman and Prashant Malik, <a href="http://www.cs.cornell.edu/projects/ladis2009/papers/lakshman-ladis2009.pdf">Cassandra &#8211; A Decentralized, Structured Storage System</a>.</li>
+</ul>
+</div>
+<div class="slide">
+<h1>Graph Databases</h1>
+<ul>
+	<li><a href="http://en.wikipedia.org/wiki/Graph_(data_structure" title="data structure">Graph</a>) (Wikipedia).</li>
+	<li><a href="http://gephi.org">Gephi</a>. A graph visualization tool kit. The download page has a link to the <a href="http://wiki.gephi.org/">gephi wiki</a> with <a href="http://wiki.gephi.org/index.php?title=Datasets">sample datasets</a>. (<span class="caps">WARNING</span>: requires a lot of memory!)</li>
+	<li><a href="http://en.wikipedia.org/wiki/Graph_database">Graph Database</a> (Wikipedia).</li>
+	<li><a href="http://neo4j.org">Neo4J</a> and on <a href="http://en.wikipedia.org/wiki/Neo4j">Wikipedia</a>.</li>
+	<li><a href="http://en.wikipedia.org/wiki/FlockDB">FlockDB</a> (Wikipedia) and on <a href="http://github.com/twitter/flockdb">GitHub</a>.</li>
+	<li><a href="http://infogrid.org/">InfoGrid</a> and a <a href="http://infogrid.org/blog/2010/02/operations-on-a-graph-database-part-1/">tutorial</a>.</li>
+	<li><a href="http://www.nosqldatabases.com/main/2010/8/23/gremlin-a-graph-based-programming-language.html">Gremlin: a graph based programming language</a>.</li>
+	<li>Marko A. Rodriguez and Peter Neubauer, <a href="http://nosqlsummer.org/paper/graph-traversal-pattern">The Graph Traversal Pattern</a>.</li>
+	<li>Renzo Angles, Claudio Gutierrez, <a href="http://portal.acm.org/citation.cfm?id=1322433">Survey of Graph Database Models</a> (requires <span class="caps">ACM</span> online access).</li>
+</ul>
+</div>
+<div class="slide">
+<h1>Miscellaneous Database References</h1>
+<ul>
+	<li><a href="http://en.wikipedia.org/wiki/Gizzard_(scala_framework">Gizzard</a>). Gizzard is a database-neutral sharding framework that supports different backends.</li>
 </ul>
 </div>
 <div class="slide">
@@ -230,12 +250,13 @@
 <h1>Distributed Systems &#8211; MapReduce Frameworks</h1>
 <div class='small'>
 <ul>
-	<li>Edd Dumbill, <a href="http://radar.oreilly.com/2010/09/the-smaq-stack-for-big-data.html">The <span class="caps">SMAQ</span> stack for big data</a>. Nice summary of some of the leading open-source technologies used for data processing.</li>
-	<li>Jeffrey Dean and Sanjay Ghemawat, <a href="http://nosqlsummer.org/paper/google-mapreduce">MapReduce: Simplified Data Processing on Large Clusters</a>.</li>
+	<li><a href="http://en.wikipedia.org/wiki/MapReduce">MapReduce</a> (Wikipedia).</li>
+	<li>Jeffrey Dean and Sanjay Ghemawat, <a href="http://labs.google.com/papers/mapreduce.html">MapReduce: Simplified Data Processing on Large Clusters</a>. Also linked to <a href="http://nosqlsummer.org/paper/google-mapreduce">here</a>.</li>
 	<li>Jeffrey Dean and Sanjay Ghemawat, <em>Distributed Programming with Mapreduce</em>, in &#8220;Beautiful Code&#8221;, Chapter 23, pgs. 371-382.</li>
 	<li><a href="http://hadoop.apache.org/">Hadoop</a>. An open source map-reduce framework, originally developed at Yahoo!</li>
 	<li><a href="http://www.slideshare.net/xefyr/pig-making-hadoop-easy">Pig: Making Hadoop Easy</a>.</li>
-	<li><a href="http://www.theregister.co.uk/2010/09/24/google_percolator/">Google Percolator – global search jolt sans MapReduce comedown</a>. Google&#8217;s just-announced replacement for their MapReduce-based search indexing infrastructure.<br />
+	<li><a href="http://www.theregister.co.uk/2010/09/24/google_percolator/">Google Percolator – global search jolt sans MapReduce comedown</a>. Google&#8217;s just-announced replacement for their MapReduce-based search indexing infrastructure.</li>
+	<li><a href="http://www.cloudera.com/blog/2010/09/twitter-analytics-lead-kevin-weil-and-a-presenter-at-hadoop-world-interviewed/">Twitter Analytics Lead, Kevin Weil, and a Presenter at Hadoop World Interviewed</a>. How Hadoop and related tools are used by Twitter.<br />
 </div></li>
 </ul>
 </div>
@@ -243,6 +264,7 @@
 <h1>Data and Analytics</h1>
 <div class='small'>
 <ul>
+	<li>Edd Dumbill, <a href="http://radar.oreilly.com/2010/09/the-smaq-stack-for-big-data.html">The <span class="caps">SMAQ</span> stack for big data</a>. Nice summary of some of the leading open-source technologies used for data processing.</li>
 	<li>Toby Segaran and Jeff Hammerbacher, &#8220;Beautiful Data&#8221;, O&#8217;Reilly, 2009. <span class="caps">ISBN</span>: 0596157118.</li>
 	<li>Julie Steele and Noah Ilinsky, &#8220;Beautiful Visualization&#8221;, O&#8217;Reilly, 2010. <span class="caps">ISBN</span>: 1449379869.</li>
 	<li>A <a href="http://www.quora.com/What-are-the-best-blogs-about-data">list of data blogs</a> posted on <a href="http://www.quora.com">Quora</a>.<br />

@@ -1,1 +1,308 @@
 h1. Lecture 6: Scaling Data, Part III
+
+We end our tour of new database technologies with a discussion of column-oriented databases and graph databases.
+
+h1. Cassandra: A Column-Oriented Database
+
+Design goals:
+* Reliability through distributed processing, no single point of failure.
+* High write throughput.
+* Trade RDBMS features for a simple data model with easy, dynamic control over data layout and format.
+
+h1. Cassandra: Developed at Facebook
+
+Originally designed for Facebook's Inbox Search feature.
+* Very high write throughput required.
+* Replication to geographically-distributed data centers.
+** Minimizes search latencies.
+
+h1. Cassandra: Inspirations
+
+* Inspired by Amazon's Dynamo and Google's BigTable.
+** But provides better write performance.
+* Open-source Apache Project.
+** But Facebook has maintained its own fork.
+
+h1. Cassandra: Columns
+
+_Column Oriented_ means that columns are easy to query for, as well as to add and remove in the "schema". This supports evolution of features.
+
+However, operations are keyed by rows and each row operation is atomic, independent of the number of columns involved.
+
+h1. Cassandra: Columns
+
+* *Column Families:* a group of columns.
+** *Super Column Family*: a column family within a column family.
+
+h1. API
+
+Just 3 methods:
+* insert(table, key, rowMutation)
+* get(table, key, columnName)
+* delete(table, key, columnName)
+
+_columnName_ can refer to a single column, or a column family.
+
+h1. Distributed System Techniques
+
+Cassandra uses many distributed system techniques for scaling and availability. We'll discuss these:
+* Partitioning
+* Replication
+* Membership
+* Failure Handling
+* Scaling
+
+h1. Partitioning
+
+Dynamically partition the data over the cluster.
+* To hard to do this manually.
+* Keys are hashed, using consistent hashing.
+* The range of possible hash values is treated as a "ring" that wraps.
+* Each node is assigned a random position on the ring.
+ 
+When a row's key is hashed, the node with the closest key _greater than_ the row's key is assigned the responsibility for coordinating reads and writes. 
+
+h1. Reads and Writes
+
+The responsible node decides what replicas should also handle the request.
+* Reads can be configured to use the value of the nearest replica or a _quorum_ of replica responses.
+* Writes are routed to all the designated replicas and the write is only considered complete when a _quorum_ of replicas respond that the write was successful.
+
+h1. Failures and Balancing
+
+If a node fails or a new one is added, only its immediate neighbor nodes in the ring are affected.
+
+The initial distribution of nodes doesn't account for the actual distribution of keys in the data nor the performance of particular nodes. Hence, it can be imbalanced. Cassandra will move nodes on the ring to adjust performance.
+
+h1. Replication
+
+Each Cassandra "instance" is configured with a _replication factor_ of N, the number of nodes to which each data item is replicated. 
+
+When a node is responsible for a row, it stores the row locally and replicates it to N-1 other nodes.
+
+Cassandra can be configured to ensure that each row is replicated across multiple data centers, so every row remains available even in the event of a total failure of a data center.
+
+h1. Membership
+
+Membership and health of the nodes is managed through a _Gossip_ protocol called _Scuttlebutt_. The _Phi Accrual Failure Detector_ module is used by each node to publish its "suspicions" about the health of every other node, rather than publishing an "up" or "down" report that may not be accurate. The suspicion level rises, as concerns about a node rise. At the same time, the probability of error decreases.
+
+This turns out to be a much faster way to detect node failure than other detection schemes.
+
+h1. Bootstrapping 
+
+When a node starts for the first time, it chooses a random position on the ring, then "Gossips" its position to the cluster. This is how all the other nodes know the members of the cluster, for replication, etc.
+
+h1. Scaling
+
+A new node can be assigned a key that allows it to offload an overloaded node. The overloaded node then uses kernel-to-kernel copying techniques to move the data it is no longer responsible for to the new node.
+
+h1. Local Persistence: Writes
+
+For local storage, Cassandra relies on the local file system. (By contrast, Google's BigTable is designed for GFS, a distributed file system.)
+
+Writes are appended to a commit log. Only _after_ this succeeds is the same change written to an in-memory data structure.
+
+Facebook uses a dedicated disk on each system for the commit log, to minimize seeks and thereby optimize writes.
+
+When the in-memory storage reaches a certain size threshold, it is written to another disk and the rows are indexed for fast retrieval.
+
+h1. Local Persistence: Writes
+
+Over time, many such files written from the in-memory data structure will exist. A background process merges them into one file. Also, old commit logs are eventually deleted, once the in-memory structures they represent are persisted. 
+
+Hence, durability is ensured through a combination of the commit log and the row files, replicated across the cluster.
+
+Since no files are ever modified for updates, no locks are required. Cassandra also groups writes to be synchronous, maximizing disk write speeds.
+
+h1. Local Persistence: Reads
+
+First, the in-memory data structure is searched for the row. If not found, the _newest_ to _oldest_ files are searched, in order. 
+
+To avoid searching a file that is unlikely to contain the row, a _bloom filter_ that summarizes the keys in the file is also stored in the file and and memory. It is examined to determine if the file has the row.
+
+Column locations are also indexed, so getting to the correct disk block is optimized.
+
+h1. Cassandra and Column Databases: Conclusion
+
+* Great for schema that need to evolve by adding columns.
+* Great for fast queries by column(s), without reading entire rows.
+* Optimized for write performance, while maintaining fast reads.
+* Trade full RDBMS features for flexibility and performance.
+
+h1. Graph Databases
+
+Graph databases model relationships as first class features. 
+
+Contrast with relational databases, where relationships are managed through joins over keys from one set of records to another set of records, either in the same table or different tables. For M:N relationships, you have to manually create a separate _join table_. For data best modeled as a _network_ of _nodes_, this isn't very convenient, nor does it perform well, in most cases.
+
+h1. Graph Examples
+
+* The Internet!
+* Physical maps: streets, public transit, geography, etc.
+* Complex business rules.
+* Manifests for shipping.
+* Parts lists and their relationships for assembly lines and finished products (e.g., airplanes!).
+
+h1. Graph Databases and OO Middleware
+
+An _object_ is actually a graph of smaller objects:
+* Smaller graphs (collections).
+* "Leaf" nodes, like integers, floats, etc. 
+
+(It's sometimes useful to treat other small objects, like strings as leaf nodes, too.)
+
+Hence, for applications with complex object graphs, a graph database might be a better fit than a relational database.
+
+h1. Elements of a Graph Database
+
+At its core a graph database supports the following concepts from standard graph theory.
+
+* Nodes
+* Arcs
+* Properties
+
+h1. Nodes
+
+A node is analogous to a row in a relational database. In a graph for a particular application, it is an "entity" whose relationships to other entities are of primary interest. 
+
+Examples:
+* Twitter, Facebook, LinkedIn, etc. users.
+* Airports served by an airline.
+* Addresses to which mail and packages are delivered.
+
+h1. Arcs
+
+The connections (relationships) between nodes. Can be unidirectional or bidirectional. 
+
+Examples:
+* Your followers and who you follow on Twitter.
+* Your friends and their friends, ad infinitum, on Facebook, LinkedIn, etc.
+* Flight "legs" between two airports.
+* Delivery route between two addresses for mail and/or package deliveries.
+
+Which of these are always bidirectional? Sometimes?
+
+h1. Arcs (cont.)
+
+Traversals (paths) are formed from multiple, contiguous arcs.
+* They may be circular.
+** The may go from one node to another and back again.
+* There will be dead ends.
+* There will be clumps with relatively few arcs between the clumps.
+
+For a real-world example, see this video of a "LinkedIn employee's own social graph":http://www.youtube.com/watch?v=se2u5RyGaNE.
+
+h1. Properties
+
+Key-value pairs associated with nodes and arcs. Most of the interesting data is in these properties!
+
+Example Properties for Nodes:
+* Where you live, your profession, interests, age, marital status, etc., etc.
+* Airport capacity, number of gates, hours of operation, etc.
+* Business or personal address? Apartment building or free standing house? Hostile dogs?
+
+h1. Properties (cont.)
+
+Example Properties for Arcs:
+* Is this a professional or personal relationship.
+* How often is this relationship used?
+** Twitter direct messages.
+** Emails sent.
+* Daily flight schedule (including number of flights, passengers carried per flight, etc.).
+* Distance between two addresses.
+* Hazards or barriers between two addresses.
+
+h1. Graph Databases vs. Others
+
+Recall that most of the database _kinds_ we've discussed can scale through _sharding_. That *assumes* there are relatively few relationships between the shards. Graph databases _emphasize_ connections, so sharding requires careful understanding of the actual clumps in the data. 
+
+Where _joins_ can be expensive in an RDBMS, graphs optimize traversals.
+
+h1. Neo4J
+
+"Neo4J":http://neo4j.org and its Wikipedia "page":http://en.wikipedia.org/wiki/Neo4j.
+
+Neo4j is a graph database. It is an embedded, disk-based, fully-transactional Java persistence engine that stores data structured in graphs rather than in tables.
+
+h1. Neo4J: Features
+
+* Object-oriented Java API.
+* massive scalability; handles graphs of several billion nodes/relationships/properties on a single machine and can be sharded to scale out across multiple machines.
+* Support for common RDBMS database features: 
+** ACID transactions.
+** Durable persistence.
+** Concurrency control.
+
+h1. FlockDB
+
+"Wikipedia":http://en.wikipedia.org/wiki/FlockDB and on "GitHub":http://github.com/twitter/flockdb.
+
+Goals:
+
+* High throughput for add/update/remove operations.
+* Support complex arithmetic queries.
+* Paging through query result sets with millions of entries.
+* Archiving of edges with later retrieval.
+* Horizontal scaling, including replication.
+* Online data migration
+
+h1. FlockDB
+
+Non-goals include:
+
+* Multi-hop queries (or graph-walking queries)
+* Automatic shard migrations
+
+FlockDB tries to solve fewer problems, such as Neo4J, so it is much simpler than other graph databases.
+
+h1. Developed at Twitter
+
+Twitter uses FlockDB to store social graphs (who follows whom, who blocks whom) and secondary indices. As of April 2010, the Twitter FlockDB cluster stores 13+ billion edges and sustains peak traffic of 20k writes/second and 100k reads/second.
+
+Written in Scala.
+
+h1. Gephi: An Open-Source Tool for Graph Analysis.
+
+"gephi.org":http://gephi.org.
+
+An open-source tool for visualizing and analyzzing large networks graphs. 
+* Uses a 3D render engine to display graphs in real-time.
+* Supports data exploration, analysis, filtering, manipulation, and graphing of graph data.
+
+h1. Gephi: Gotchas
+
+It's a Java app that uses a lot of RAM. 
+
+The included example graph, of the relationships between characters in the Phantom of the Opera, runs fine with the default configuration.
+
+For larger graphs, follow the instructions for increasing the heap size. Only run it on a reasonably powerful machine.
+
+h1. Graph Databases: Conclusion
+
+"Survey of Graph Database Models":http://portal.acm.org/citation.cfm?id=1322433 provides a detailed survey (requires ACM online access).
+
+"The Graph Traversal Pattern":http://nosqlsummer.org/paper/graph-traversal-pattern is a technical paper on graph databases.
+
+h1. Reading Assignment: Cassandra
+
+* "Apache Cassandra":http://en.wikipedia.org/wiki/Apache_Cassandra (Wikipedia).
+* Avinash Lakshman and Prashant Malik, "Cassandra - A Decentralized, Structured Storage System":http://www.cs.cornell.edu/projects/ladis2009/papers/lakshman-ladis2009.pdf.
+
+h1. Reading Assignment: Graph Databases
+
+Rather than a reading on graph databases, read this Wikipedia page on graphs in computer science, which describes the fundamental terminology used in graph databases, too.
+
+* "Graph (data structure)":http://en.wikipedia.org/wiki/Graph_(data_structure) (Wikipedia).
+
+h1. Reading Assignment: MapReduce
+
+In preparation for our next class, when we'll finally discuss MapReduce, read the classic paper that introduced the first MapReduce framework, used at Google.
+
+* "MapReduce":http://en.wikipedia.org/wiki/MapReduce (Wikipedia).
+
+h1. Exercise: 
+
+h1. Reminder
+
+*No class* next week (10/12).
+*Midterm*, the first 1/2 of our session on (10/19)
