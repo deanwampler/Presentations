@@ -330,14 +330,24 @@ Map("start" -> "2010-10-01", "end" -> "2010-10-05")
 
 h1. Exercise: Filter Stock Queries (cont.)
 
-Step 1: Start @sbt@ 
+Step 1: Pull the "exercise4_start" branch from GitHub. 
+
+I pushed a new branch to GitHub called "exercise4_start". You'll want to start from there!
+
+* Follow the instructions in early notes for pulling new branches from my GitHub repo. Pull my "exercise4_start".
+* Create a local work branch called "exercise4".
+* Merge my "exercise4_start" to your "exercise4".
+
+h1. Exercise: Filter Stock Queries (cont.)
+
+Step 2: Pull the "exercise4_start" branch from GitHub. Start @sbt@ 
 
 * Start @sbt@.
 * Run the @~test@ action to continuously check for broken code.
 
 h1. Exercise: Filter Stock Queries (cont.)
 
-Step 2: Add the instruments
+Step 3: Add the instruments
 
 * Add another @Pair@ to the @Map@ inside the @Get@ message object sent to the @dataStoreServer@. Use @stock_symbol@ as the key and a new list, named @symbols@ as the value. Note that the @instruments@ parameter to the method is of type @List[Instrument]@. All we want is a @List[String]@, where each @String@ is the @symbol@ field in the corresponding @Instrument@.
 
@@ -350,7 +360,7 @@ Note that @InstrumentAnalysisServer@ has many details about how domain concepts,
 
 h1. Exercise: Filter Stock Queries (cont.)
 
-Step 3: Extend @DataStorageServer@ to use other query parameters.
+Step 4: Extend @DataStorageServer@ to use other query parameters.
 
 In @DataStorageServer.getDataForRange@, the @critieria@ object is passed in as an argument.
 
@@ -358,7 +368,7 @@ In @DataStorageServer.getDataForRange@, the @critieria@ object is passed in as a
 
 h1. Exercise: Filter Stock Queries (cont.)
 
-Step 4: Extend the @DataStore@ types to use this query object.
+Step 5: Extend the @DataStore@ types to use this query object.
 
 * Modify the declaration of @DataStore.range@ to accept this argument *before* the @maxNum@ argument.
 ** Give it the name @otherCriteria@.
@@ -368,7 +378,7 @@ Step 4: Extend the @DataStore@ types to use this query object.
 
 h1. Exercise: Filter Stock Queries (cont.)
 
-Step 5: Fix the tests.
+Step 6: Fix the tests.
 
 At this point, there should be a few test failures, all caused by changes that need to be made in @DataStoreTestBase@. Specifically, we are still calling the @range@ method on a @DataStore@ object without the new, third argument. Note that this is only a problem for the cases where we explicitly pass the @maxNum@ argument. (Do you understand why that's true?)
 
@@ -379,7 +389,7 @@ Now the tests should pass!
 
 h1. Exercise: Filter Stock Queries (cont.)
 
-Step 6: Continue implementing the new query support.
+Step 7: Continue implementing the new query support.
 
 Go back to @MongoDBDataStore@ and look at the @range@ method. Now we'll use the new @otherCriteria@ object. I recently refactored the code to use a MongoDB @QueryBuilder@. We need to append additional information to the query. To keep the exercise simpler, we'll hard code the fact that @otherCriteria@ may now have a key-value pair @("stock_symbol", List[String])@. (I say "may have", because clients won't always pass a @otherCriteria@ map with this key-value pair, like some of the tests in @DataStoreTestBase@!)
 
@@ -388,7 +398,7 @@ Go back to @MongoDBDataStore@ and look at the @range@ method. Now we'll use the 
 
 h1. Exercise: Filter Stock Queries (cont.)
 
-Step 6 (cont.): Continue implementing the new query support.
+Step 7 (cont.): Continue implementing the new query support.
 
 * If the key is found, add the key-value pair to the query:
 ** Use the @QueryBuilder@ code already in the method as an example. 
@@ -398,7 +408,7 @@ Step 6 (cont.): Continue implementing the new query support.
 
 h1. Exercise: Filter Stock Queries (cont.)
 
-Step 7: Try it out!!
+Step 8: Try it out!!
 
 Run the application and open the web page in a browser. Enter a few stock symbols and date ranges. You should now see results only for the stocks you specified, not for all stocks in the same collection!
 

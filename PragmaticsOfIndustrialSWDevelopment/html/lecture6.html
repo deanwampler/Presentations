@@ -407,7 +407,17 @@ Map("start" -&gt; "2010-10-01", "end" -&gt; "2010-10-05")
 </div>
 <div class="slide">
 <h1>Exercise: Filter Stock Queries (cont.)</h1>
-<p>Step 1: Start <code>sbt</code></p>
+<p>Step 1: Pull the &#8220;exercise4_start&#8221; branch from GitHub.</p>
+<p>I pushed a new branch to GitHub called &#8220;exercise4_start&#8221;. You&#8217;ll want to start from there!</p>
+<ul>
+	<li>Follow the instructions in early notes for pulling new branches from my GitHub repo. Pull my &#8220;exercise4_start&#8221;.</li>
+	<li>Create a local work branch called &#8220;exercise4&#8221;.</li>
+	<li>Merge my &#8220;exercise4_start&#8221; to your &#8220;exercise4&#8221;.</li>
+</ul>
+</div>
+<div class="slide">
+<h1>Exercise: Filter Stock Queries (cont.)</h1>
+<p>Step 2: Pull the &#8220;exercise4_start&#8221; branch from GitHub. Start <code>sbt</code></p>
 <ul>
 	<li>Start <code>sbt</code>.</li>
 	<li>Run the <code>~test</code> action to continuously check for broken code.</li>
@@ -415,7 +425,7 @@ Map("start" -&gt; "2010-10-01", "end" -&gt; "2010-10-05")
 </div>
 <div class="slide">
 <h1>Exercise: Filter Stock Queries (cont.)</h1>
-<p>Step 2: Add the instruments</p>
+<p>Step 3: Add the instruments</p>
 <ul>
 	<li>Add another <code>Pair</code> to the <code>Map</code> inside the <code>Get</code> message object sent to the <code>dataStoreServer</code>. Use <code>stock_symbol</code> as the key and a new list, named <code>symbols</code> as the value. Note that the <code>instruments</code> parameter to the method is of type <code>List[Instrument]</code>. All we want is a <code>List[String]</code>, where each <code>String</code> is the <code>symbol</code> field in the corresponding <code>Instrument</code>.</li>
 </ul>
@@ -430,7 +440,7 @@ Map("start" -&gt; "2010-10-01", "end" -&gt; "2010-10-05")
 </div>
 <div class="slide">
 <h1>Exercise: Filter Stock Queries (cont.)</h1>
-<p>Step 3: Extend <code>DataStorageServer</code> to use other query parameters.</p>
+<p>Step 4: Extend <code>DataStorageServer</code> to use other query parameters.</p>
 <p>In <code>DataStorageServer.getDataForRange</code>, the <code>critieria</code> object is passed in as an argument.</p>
 <ul>
 	<li>Add this <code>critieria</code> object as the <em>third</em> argument in the call to <code>DataStore.range</code>. (At this point, the compilation will fail in <code>sbt</code>.)</li>
@@ -438,7 +448,7 @@ Map("start" -&gt; "2010-10-01", "end" -&gt; "2010-10-05")
 </div>
 <div class="slide">
 <h1>Exercise: Filter Stock Queries (cont.)</h1>
-<p>Step 4: Extend the <code>DataStore</code> types to use this query object.</p>
+<p>Step 5: Extend the <code>DataStore</code> types to use this query object.</p>
 <ul>
 	<li>Modify the declaration of <code>DataStore.range</code> to accept this argument <strong>before</strong> the <code>maxNum</code> argument.
 	<ul>
@@ -452,7 +462,7 @@ Map("start" -&gt; "2010-10-01", "end" -&gt; "2010-10-05")
 </div>
 <div class="slide">
 <h1>Exercise: Filter Stock Queries (cont.)</h1>
-<p>Step 5: Fix the tests.</p>
+<p>Step 6: Fix the tests.</p>
 <p>At this point, there should be a few test failures, all caused by changes that need to be made in <code>DataStoreTestBase</code>. Specifically, we are still calling the <code>range</code> method on a <code>DataStore</code> object without the new, third argument. Note that this is only a problem for the cases where we explicitly pass the <code>maxNum</code> argument. (Do you understand why that&#8217;s true?)</p>
 <ul>
 	<li>Look at the test error messages and find the lines in <code>DataStoreTestBase</code> where the changes are required.</li>
@@ -462,7 +472,7 @@ Map("start" -&gt; "2010-10-01", "end" -&gt; "2010-10-05")
 </div>
 <div class="slide">
 <h1>Exercise: Filter Stock Queries (cont.)</h1>
-<p>Step 6: Continue implementing the new query support.</p>
+<p>Step 7: Continue implementing the new query support.</p>
 <p>Go back to <code>MongoDBDataStore</code> and look at the <code>range</code> method. Now we&#8217;ll use the new <code>otherCriteria</code> object. I recently refactored the code to use a MongoDB <code>QueryBuilder</code>. We need to append additional information to the query. To keep the exercise simpler, we&#8217;ll hard code the fact that <code>otherCriteria</code> may now have a key-value pair <code>("stock_symbol", List[String])</code>. (I say &#8220;may have&#8221;, because clients won&#8217;t always pass a <code>otherCriteria</code> map with this key-value pair, like some of the tests in <code>DataStoreTestBase</code>!)</p>
 <ul>
 	<li>Using the Scala <code>Map</code> <span class="caps">API</span>, add a conditional that tests for the presence of this key in <code>otherCriteria</code>.</li>
@@ -471,7 +481,7 @@ Map("start" -&gt; "2010-10-01", "end" -&gt; "2010-10-05")
 </div>
 <div class="slide">
 <h1>Exercise: Filter Stock Queries (cont.)</h1>
-<p>Step 6 (cont.): Continue implementing the new query support.</p>
+<p>Step 7 (cont.): Continue implementing the new query support.</p>
 <ul>
 	<li>If the key is found, add the key-value pair to the query:
 	<ul>
@@ -484,7 +494,7 @@ Map("start" -&gt; "2010-10-01", "end" -&gt; "2010-10-05")
 </div>
 <div class="slide">
 <h1>Exercise: Filter Stock Queries (cont.)</h1>
-<p>Step 7: Try it out!!</p>
+<p>Step 8: Try it out!!</p>
 <p>Run the application and open the web page in a browser. Enter a few stock symbols and date ranges. You should now see results only for the stocks you specified, not for all stocks in the same collection!</p>
 <p>Note that we have left out some work; besides hard-coding a particular enhancement, rather than handling the general case, we haven&#8217;t supported this change in <code>InMemoryDataStore</code> and we haven&#8217;t updated our tests! We&#8217;ll fix this later.</p>
 <p>Please push your work to GitHub by the start of class on October 19th.</p>
