@@ -3262,7 +3262,7 @@ When a row&#8217;s key is hashed, the node with the closest key <em>greater than
 <h1>Reading Assignment: Graph Databases</h1>
 <p>Rather than a reading on graph databases, read this Wikipedia page on graphs in computer science, which describes the fundamental terminology used in graph databases, too.</p>
 <ul>
-	<li><a href="http://en.wikipedia.org/wiki/Graph_(data_structure" title="data structure">Graph</a>) (Wikipedia).</li>
+	<li><a href="http://en.wikipedia.org/wiki/Graph_(data_structure)">Graph data structure</a> (Wikipedia).</li>
 </ul>
 </div>
 <div class="slide">
@@ -3273,7 +3273,116 @@ When a row&#8217;s key is hashed, the node with the closest key <em>greater than
 </ul>
 </div>
 <div class="slide">
-<h1>Exercise:</h1>
+<h1>Exercise: Filter Stock Queries</h1>
+<p>Since we started, the project has had one major flaw; if you query for closing prices for a list of stocks, you get the results for <em>all</em> stocks in the same tables. We did one fix in an earlier exercise, where we filtered the results after the database query was made. Now let&#8217;s do it in a more appropriate way, as part of the query itself.</p>
+</div>
+<div class="slide">
+<h1>Exercise: Filter Stock Queries (cont.)</h1>
+<p>Several pieces are already in place. <code>RestfulDataPublisher</code> already sends the &#8220;instrument&#8221; information to the <code>InstrumentAnalysisServerSupervisor</code> in a <code>CriteriaMap</code> object. (<code>CriteriaMap</code> wraps a normal <code>Map</code> with some convenience methods.)</p>
+<p><code>InstrumentAnalysisServerSupervisor</code> sends the instrument information to the <code>InstrumentAnalysisServers</code>, in a modified <code>CriteriaMap</code>. However, <code>InstrumentAnalysisServer</code> does not pass this information any further down the stack.</p>
+</div>
+<div class="slide">
+<h1>Exercise: Filter Stock Queries (cont.)</h1>
+<p>Look at <code>InstrumentAnalysisServerHelper.fetchPrices</code> (in <code>InstrumentAnalysisServer.scala</code>). Note the <code>Map</code> it passes to <code>DataStoreServer</code>. It passes a <code>Map</code> object, rather than a <code>CriteriaMap</code>, to provide a clean separation between the &#8220;domain-specific&#8221; <code>CriteriaMap</code> and <code>InstrumentAnalysisServer</code> higher in the &#8220;stack&#8221;, and the more generic <code>DataStoreServer</code> and <code>DataStore</code> types lower down:</p>
+<div class="code-tiny">
+<pre name="code" id="code" class="brush: scala,;">
+
+dataStorageServer !! Get(Map("start" -&gt; start, "end" -&gt; end))
+</pre></div>
+<p>(Note, I recently refactored the project to use a <code>Map</code>, rather than a Lift <span class="caps">JSON</span> <code>JValue</code>, due to problems with the latter&#8230;)</p>
+</div>
+<div class="slide">
+<h1>Exercise: Filter Stock Queries (cont.)</h1>
+<p><code>("start" -&gt; start)</code> is converted to a <code>Pair[String, org.joda.time.DateTime]</code> before they are passed to the <code>Map</code> &#8220;factory&#8221; method. For example, if the <code>start</code> value is &#8220;2010-10-01&#8221; and <code>end</code> is &#8220;2010-10-05&#8221;, the map would be.</p>
+<div class="code-small">
+<pre name="code" id="code" class="brush: javascript,;">
+
+Map("start" -&gt; "2010-10-01", "end" -&gt; "2010-10-05")
+</pre></div>
+</div>
+<div class="slide">
+<h1>Exercise: Filter Stock Queries (cont.)</h1>
+<p>Step 1: Start <code>sbt</code></p>
+<ul>
+	<li>Start <code>sbt</code>.</li>
+	<li>Run the <code>~test</code> action to continuously check for broken code.</li>
+</ul>
+</div>
+<div class="slide">
+<h1>Exercise: Filter Stock Queries (cont.)</h1>
+<p>Step 2: Add the instruments</p>
+<ul>
+	<li>Add another <code>Pair</code> to the <code>Map</code> inside the <code>Get</code> message object sent to the <code>dataStoreServer</code>. Use <code>stock_symbol</code> as the key and a new list, named <code>symbols</code> as the value. Note that the <code>instruments</code> parameter to the method is of type <code>List[Instrument]</code>. All we want is a <code>List[String]</code>, where each <code>String</code> is the <code>symbol</code> field in the corresponding <code>Instrument</code>.</li>
+</ul>
+<ul>
+	<li>Create a local <code>val</code> named <code>symbols</code>. Initialize it with the list of symbols (<code>Strings</code>) created by calling the <code>map</code> method on <code>instruments</code> and passing a block that extracts the <code>symbol</code> field from each instrument. (Hint: there is already a method to do this, in <code>object Instrument</code>.)</li>
+	<li>In the <code>Get(Map(...))</code> sent to the <code>dataStorageServer</code>, add the key-value pair with &#8220;stock_symbol&#8221; as the key and the new <code>symbols</code> list as the value.</li>
+</ul>
+</div>
+<div class="slide">
+<h1>Exercise: Filter Stock Queries (cont.)</h1>
+<p>Note that <code>InstrumentAnalysisServer</code> has many details about how domain concepts, like &#8220;instruments&#8221; are mapped to the actual storage details, like &#8220;stock_symbol&#8221;, so that <code>DataStorageServer</code> and the <code>DataStore</code> types can remain relatively agnostic about domain concepts. This makes them more reusable for other applications.</p>
+</div>
+<div class="slide">
+<h1>Exercise: Filter Stock Queries (cont.)</h1>
+<p>Step 3: Extend <code>DataStorageServer</code> to use other query parameters.</p>
+<p>In <code>DataStorageServer.getDataForRange</code>, the <code>critieria</code> object is passed in as an argument.</p>
+<ul>
+	<li>Add this <code>critieria</code> object as the <em>third</em> argument in the call to <code>DataStore.range</code>. (At this point, the compilation will fail in <code>sbt</code>.)</li>
+</ul>
+</div>
+<div class="slide">
+<h1>Exercise: Filter Stock Queries (cont.)</h1>
+<p>Step 4: Extend the <code>DataStore</code> types to use this query object.</p>
+<ul>
+	<li>Modify the declaration of <code>DataStore.range</code> to accept this argument <strong>before</strong> the <code>maxNum</code> argument.
+	<ul>
+		<li>Give it the name <code>otherCriteria</code>.</li>
+		<li>Give it a default value of <code>Map.empty</code> (one way of specifying an empty map). In other words, the <code>otherCriteria</code> argument will have this signature: <code>otherCriteria: Map[String,Any] = Map.empty</code>. (Note that the type parameters aren&#8217;t required on the right-hand side of the equals sign. Do you understand why?)</li>
+	</ul></li>
+</ul>
+<ul>
+	<li>Add the same argument to the definitions of <code>InMemoryDataStore.range</code> and <code>MongoDBDataStore.range</code>.</li>
+</ul>
+</div>
+<div class="slide">
+<h1>Exercise: Filter Stock Queries (cont.)</h1>
+<p>Step 5: Fix the tests.</p>
+<p>At this point, there should be a few test failures, all caused by changes that need to be made in <code>DataStoreTestBase</code>. Specifically, we are still calling the <code>range</code> method on a <code>DataStore</code> object without the new, third argument. Note that this is only a problem for the cases where we explicitly pass the <code>maxNum</code> argument. (Do you understand why that&#8217;s true?)</p>
+<ul>
+	<li>Look at the test error messages and find the lines in <code>DataStoreTestBase</code> where the changes are required.</li>
+	<li>Insert <code>Map.empty</code> as the <em>third</em> argument to the <code>range</code> call, before the current third argument, the <code>maxNum</code> value.</li>
+</ul>
+<p>Now the tests should pass!</p>
+</div>
+<div class="slide">
+<h1>Exercise: Filter Stock Queries (cont.)</h1>
+<p>Step 6: Continue implementing the new query support.</p>
+<p>Go back to <code>MongoDBDataStore</code> and look at the <code>range</code> method. Now we&#8217;ll use the new <code>otherCriteria</code> object. I recently refactored the code to use a MongoDB <code>QueryBuilder</code>. We need to append additional information to the query. To keep the exercise simpler, we&#8217;ll hard code the fact that <code>otherCriteria</code> may now have a key-value pair <code>("stock_symbol", List[String])</code>. (I say &#8220;may have&#8221;, because clients won&#8217;t always pass a <code>otherCriteria</code> map with this key-value pair, like some of the tests in <code>DataStoreTestBase</code>!)</p>
+<ul>
+	<li>Using the Scala <code>Map</code> <span class="caps">API</span>, add a conditional that tests for the presence of this key in <code>otherCriteria</code>.</li>
+	<li>&#8230;</li>
+</ul>
+</div>
+<div class="slide">
+<h1>Exercise: Filter Stock Queries (cont.)</h1>
+<p>Step 6 (cont.): Continue implementing the new query support.</p>
+<ul>
+	<li>If the key is found, add the key-value pair to the query:
+	<ul>
+		<li>Use the <code>QueryBuilder</code> code already in the method as an example.</li>
+		<li>Find the JavaDocs for <code>QueryBuilder</code> and <code>BasicDBList</code> <a href="http://api.mongodb.org/java/2.2/index.html">here</a>.</li>
+		<li>Write code that creates a <code>BasicDBList</code> and adds each element from the <code>symbols:List[String]</code> to it. (That is, we have to convert the Scala <code>List</code> to something MongoDB understands: <code>BasicDBList</code>.)</li>
+		<li>Use the <code>and(key)</code> method and the <code>in(myBasicDBList)</code> methods on the <code>QueryBuilder</code> object (i.e., add these changes <strong>before</strong> the line that calls <code>qb.get</code>!).</li>
+	</ul></li>
+</ul>
+</div>
+<div class="slide">
+<h1>Exercise: Filter Stock Queries (cont.)</h1>
+<p>Step 7: Try it out!!</p>
+<p>Run the application and open the web page in a browser. Enter a few stock symbols and date ranges. You should now see results only for the stocks you specified, not for all stocks in the same collection!</p>
+<p>Note that we have left out some work; besides hard-coding a particular enhancement, rather than handling the general case, we haven&#8217;t supported this change in <code>InMemoryDataStore</code> and we haven&#8217;t updated our tests! We&#8217;ll fix this later.</p>
+<p>Please push your work to GitHub by the start of class on October 19th.</p>
 </div>
 <div class="slide">
 <h1>Reminder</h1>

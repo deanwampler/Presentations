@@ -292,7 +292,7 @@ h1. Reading Assignment: Graph Databases
 
 Rather than a reading on graph databases, read this Wikipedia page on graphs in computer science, which describes the fundamental terminology used in graph databases, too.
 
-* "Graph (data structure)":http://en.wikipedia.org/wiki/Graph_(data_structure) (Wikipedia).
+* <a href="http://en.wikipedia.org/wiki/Graph_(data_structure)">Graph data structure</a> (Wikipedia).
 
 h1. Reading Assignment: MapReduce
 
@@ -300,9 +300,111 @@ In preparation for our next class, when we'll finally discuss MapReduce, read th
 
 * "MapReduce":http://en.wikipedia.org/wiki/MapReduce (Wikipedia).
 
-h1. Exercise: 
+h1. Exercise: Filter Stock Queries
 
-TODO: I'll finish the exercise description this evening and let you know when I've posted the update.
+Since we started, the project has had one major flaw; if you query for closing prices for a list of stocks, you get the results for _all_ stocks in the same tables. We did one fix in an earlier exercise, where we filtered the results after the database query was made. Now let's do it in a more appropriate way, as part of the query itself.
+
+h1. Exercise: Filter Stock Queries (cont.)
+
+Several pieces are already in place. @RestfulDataPublisher@ already sends the "instrument" information to the @InstrumentAnalysisServerSupervisor@ in a @CriteriaMap@ object. (@CriteriaMap@ wraps a normal @Map@ with some convenience methods.)
+
+@InstrumentAnalysisServerSupervisor@ sends the instrument information to the @InstrumentAnalysisServers@, in a modified @CriteriaMap@. However, @InstrumentAnalysisServer@ does not pass this information any further down the stack.
+
+h1. Exercise: Filter Stock Queries (cont.)
+
+Look at @InstrumentAnalysisServerHelper.fetchPrices@ (in @InstrumentAnalysisServer.scala@). Note the @Map@ it passes to @DataStoreServer@. It passes a @Map@ object, rather than a @CriteriaMap@, to provide a clean separation between the "domain-specific" @CriteriaMap@ and @InstrumentAnalysisServer@ higher in the "stack", and the more generic @DataStoreServer@ and @DataStore@ types lower down:
+
+:inlinecode lang=scala, class=code-tiny
+dataStorageServer !! Get(Map("start" -> start, "end" -> end))
+:endinlinecode 
+
+(Note, I recently refactored the project to use a @Map@, rather than a Lift JSON @JValue@, due to problems with the latter...)
+
+h1. Exercise: Filter Stock Queries (cont.)
+
+@("start" -> start)@ is converted to a @Pair[String, org.joda.time.DateTime]@ before they are passed to the @Map@ "factory" method. For example, if the @start@ value is "2010-10-01" and @end@ is "2010-10-05", the map would be.
+
+:inlinecode lang=javascript, class=code-small
+Map("start" -> "2010-10-01", "end" -> "2010-10-05")
+:endinlinecode 
+
+h1. Exercise: Filter Stock Queries (cont.)
+
+Step 1: Start @sbt@ 
+
+* Start @sbt@.
+* Run the @~test@ action to continuously check for broken code.
+
+h1. Exercise: Filter Stock Queries (cont.)
+
+Step 2: Add the instruments
+
+* Add another @Pair@ to the @Map@ inside the @Get@ message object sent to the @dataStoreServer@. Use @stock_symbol@ as the key and a new list, named @symbols@ as the value. Note that the @instruments@ parameter to the method is of type @List[Instrument]@. All we want is a @List[String]@, where each @String@ is the @symbol@ field in the corresponding @Instrument@.
+
+* Create a local @val@ named @symbols@. Initialize it with the list of symbols (@Strings@) created by calling the @map@ method on @instruments@ and passing a block that extracts the @symbol@ field from each instrument. (Hint: there is already a method to do this, in @object Instrument@.)
+* In the @Get(Map(...))@ sent to the @dataStorageServer@, add the key-value pair with "stock_symbol" as the key and the new @symbols@ list as the value.
+
+h1. Exercise: Filter Stock Queries (cont.)
+
+Note that @InstrumentAnalysisServer@ has many details about how domain concepts, like "instruments" are mapped to the actual storage details, like "stock_symbol", so that @DataStorageServer@ and the @DataStore@ types can remain relatively agnostic about domain concepts. This makes them more reusable for other applications.
+
+h1. Exercise: Filter Stock Queries (cont.)
+
+Step 3: Extend @DataStorageServer@ to use other query parameters.
+
+In @DataStorageServer.getDataForRange@, the @critieria@ object is passed in as an argument.
+
+* Add this @critieria@ object as the _third_ argument in the call to @DataStore.range@. (At this point, the compilation will fail in @sbt@.)
+
+h1. Exercise: Filter Stock Queries (cont.)
+
+Step 4: Extend the @DataStore@ types to use this query object.
+
+* Modify the declaration of @DataStore.range@ to accept this argument *before* the @maxNum@ argument.
+** Give it the name @otherCriteria@.
+** Give it a default value of @Map.empty@ (one way of specifying an empty map). In other words, the @otherCriteria@ argument will have this signature: @otherCriteria: Map[String,Any] = Map.empty@. (Note that the type parameters aren't required on the right-hand side of the equals sign. Do you understand why?)
+
+* Add the same argument to the definitions of @InMemoryDataStore.range@ and @MongoDBDataStore.range@.
+
+h1. Exercise: Filter Stock Queries (cont.)
+
+Step 5: Fix the tests.
+
+At this point, there should be a few test failures, all caused by changes that need to be made in @DataStoreTestBase@. Specifically, we are still calling the @range@ method on a @DataStore@ object without the new, third argument. Note that this is only a problem for the cases where we explicitly pass the @maxNum@ argument. (Do you understand why that's true?)
+
+* Look at the test error messages and find the lines in @DataStoreTestBase@ where the changes are required.
+* Insert @Map.empty@ as the _third_ argument to the @range@ call, before the current third argument, the @maxNum@ value.
+
+Now the tests should pass!
+
+h1. Exercise: Filter Stock Queries (cont.)
+
+Step 6: Continue implementing the new query support.
+
+Go back to @MongoDBDataStore@ and look at the @range@ method. Now we'll use the new @otherCriteria@ object. I recently refactored the code to use a MongoDB @QueryBuilder@. We need to append additional information to the query. To keep the exercise simpler, we'll hard code the fact that @otherCriteria@ may now have a key-value pair @("stock_symbol", List[String])@. (I say "may have", because clients won't always pass a @otherCriteria@ map with this key-value pair, like some of the tests in @DataStoreTestBase@!)
+
+* Using the Scala @Map@ API, add a conditional that tests for the presence of this key in @otherCriteria@.
+* ...
+
+h1. Exercise: Filter Stock Queries (cont.)
+
+Step 6 (cont.): Continue implementing the new query support.
+
+* If the key is found, add the key-value pair to the query:
+** Use the @QueryBuilder@ code already in the method as an example. 
+** Find the JavaDocs for @QueryBuilder@ and @BasicDBList@ "here":http://api.mongodb.org/java/2.2/index.html. 
+** Write code that creates a @BasicDBList@ and adds each element from the @symbols:List[String]@ to it. (That is, we have to convert the Scala @List@ to something MongoDB understands: @BasicDBList@.)
+** Use the @and(key)@ method and the @in(myBasicDBList)@ methods on the @QueryBuilder@ object (i.e., add these changes *before* the line that calls @qb.get@!).
+
+h1. Exercise: Filter Stock Queries (cont.)
+
+Step 7: Try it out!!
+
+Run the application and open the web page in a browser. Enter a few stock symbols and date ranges. You should now see results only for the stocks you specified, not for all stocks in the same collection!
+
+Note that we have left out some work; besides hard-coding a particular enhancement, rather than handling the general case, we haven't supported this change in @InMemoryDataStore@ and we haven't updated our tests! We'll fix this later.
+
+Please push your work to GitHub by the start of class on October 19th.
 
 h1. Reminder
 
