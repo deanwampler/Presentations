@@ -365,6 +365,10 @@ h1. Reading Assignment: CAP and BASE
 * Julian Brown, "Brewer's CAP Theorem: The Kool Aid Amazon and eBay Have Been Drinking":http://www.julianbrowne.com/article/viewer/brewers-cap-theorem. Sometimes amusing discussion of Brewer's theorem. (We'll read Brewer's original presentation - a conference keynote - in a later assignment.)
 * Dan Pritchett, "BASE: An Acid Alternative":http://queue.acm.org/detail.cfm?id=1394128. Excellent discussion of the limitations of ACID for large-scale, distributed systems, and the alternative, BASE. Provides specific examples of techniques for relaxing consistency. 
 
+Also useful, but not required:
+
+* Coda Hale, "You Can't Sacrifice Partition Tolerance":http://codahale.com/you-cant-sacrifice-partition-tolerance/. A good discussion of CAP that clears up some common misunderstandings. Also mentions Brewer's other work on the concepts of _yield_ and _harvest_.
+
 h1. Reading Assignment: 
 
 Read the discussion on MongoDB _Replication_ and _Sharding_ (links on subsequent slides). MongoDB's implementations are representative examples of these general techniques and the reading will also help you get more familiar with MongoDB, which we'll discuss in depth next week. 

@@ -83,6 +83,7 @@ h1. ACID, CAP, and BASE
 * "ACID":http://en.wikipedia.org/wiki/ACID (Wikipedia).
 * Eric Brewer, "Toward Robust, Distributed Systems":http://www.cs.berkeley.edu/~brewer/cs262b-2004/PODC-keynote.pdf. The keynote at the "ACM Symposium on Principles of Distributed Computing":http://www.podc.org/podc2000/ that introduced Brewer's CAP theorem.
 * Julian Brown, "Brewer's CAP Theorem: The kool aid Amazon and Ebay have been drinking":http://www.julianbrowne.com/article/viewer/brewers-cap-theorem. A sometimes humorous summary of Brewer's CAP theorem. Also has a good list of references for more information.
+* Coda Hale, "You Can't Sacrifice Partition Tolerance":http://codahale.com/you-cant-sacrifice-partition-tolerance/. A good discussion of CAP that clears up some common misunderstandings. Also mentions Brewer's other work on the concepts of _yield_ and _harvest_.
 * Seth Gilbert and Nancy Lynch, "The CAP Theorem":http://nosqlsummer.org/paper/cap-theorem. Proves Brewer's conjecture (hence, it's now called Brewer's Theorem) and elaborated on solutions, etc.
 * Dan Pritchett, "BASE: An Acid Alternative":http://queue.acm.org/detail.cfm?id=1394128. Excellent discussion of the limitations of ACID for large-scale, distributed systems, and the alternative, BASE. Provides specific examples of techniques for relaxing consistency. (The PDF version - click the PDF icon under the title - has a nicer format than the online article.)
 * Dan Pritchett, "The Challenges of Latency":http://www.infoq.com/articles/pritchett-latency.
