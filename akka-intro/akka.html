@@ -57,7 +57,7 @@
 <div id="currentSlide"><!-- DO NOT EDIT --></div>
 <div id="header"></div>
 <div id="footer">
-<h1>The Akka Framework: Chicago-Area Scala Enthusiasts: 03/18/2010</h1>
+<h1>The Akka Framework: Strange-Loop: 10/15/2010</h1>
 </div>
 
 </div>
@@ -70,13 +70,12 @@
 <p class="subtitle">Simpler Scalability, Fault-Tolerance, <br/>Concurrency and Remoting through Actors</p>
 <p class="subtitle">Dean Wampler</p>
 <p class="subsubtitle">
-dean@deanwampler.com<br/>
-@deanwampler</p>
+dean@deanwampler.com, @deanwampler</p>
 </div>
 
 
 <div class="slide">
-<h1 id="what_is_akka">What Is Akka</h1>
+<h1 id="what_is_akka">What Is Akka?</h1>
 
 <ul>
 <li><a href="http://akkasource.org Akka">http://akkasource.org</a>
@@ -91,115 +90,126 @@ dean@deanwampler.com<br/>
 <li>Co-creator of AspectWerkz. </li>
 <li>Worked on JRocket and Terracotta.</li>
 </ul></li>
-<li>At V0.6. V0.7 released next week?</li>
 </ul>
 <div class="handout">
 </div>
 </div>
 
 <div class="slide">
-  <h1 id="highlights">Highlights (1/2)</h1>
+  <h1 id="highlights">Highlights</h1>
 
   <p>(Adapted from the <a href="akkasource.org">http://akkasource.org</a> web site.)</p>
 
-  <ul>
-    <li><b>Simpler Concurrency</b>: Write simpler concurrent (yet correct) applications using Actors, STM &amp; Transactors (transactional actors).</li>
 
-    <li><b>Event-driven Architecture</b>: The perfect platform for asynchronous, event-driven architectures. Never block.</li>
-
-    <li><b>True Scalability</b>: Scale out on multi-core or multiple nodes using asynchronous message passing.</li>
-  </ul>
-
-<div class="handout">
-</div>
-</div>
-
-<div class="slide">
-  <h1 id="highlights">Highlights (2/2)</h1>
-
-  <ul>
-    <li><b>Fault-tolerance</b>: Embrace failure. Write applications that self-heal using Erlang-style Actor supervisor hierarchies.</li>
-
-    <li><b>Transparent Remoting</b>: Remote Actors give you a high-performance, transparent-distributed programming model.</li>
-
-    <li><b>Scala and Java APIs</b>: Scala and Java APIs, as well as Spring and Guice integration. Deploy in your application server or run it stand-alone.</li>
-  </ul>
+	<table class="table">
+	  <tr><th><strong>Highlight</strong></th><th>Description</th></tr>
+	  <tr><td><strong>Simpler Concurrency</strong></td><td>Write simpler concurrent (yet correct) applications using Actors, STM &amp; Transactors (transactional actors).</td></tr>
+	  <tr><td><strong>Event-driven Architecture</strong></td><td>The perfect platform for asynchronous, event-driven architectures. Never block.</td></tr>
+	  <tr><td><strong>True Scalability</strong></td><td>Scale out on multi-core or multiple nodes using asynchronous message passing.</td></tr>
+	</table>
 
 <div class="handout">
 </div>
 </div>
 
 <div class="slide">
-  <h1 id="organization">Organization: Core Modules</h1>
+  <h1 id="highlights">Highlights</h1>
 
-  <p>The &#8220;core&#8221; modules at the heart of Akka.</p>
-
-  <table class="table">
-    <tr><th>Module</th><th>Description</th></tr>
-    <tr><td><strong>Core</strong></td><td>Actors, remote actors, transactors and STM modules.</td></tr>
-    <tr><td><strong>Util</strong></td><td>Configuration, logging, UUID and other utilities.</td></tr>
-    <tr><td><strong>Java Util</strong></td><td>Java utilities.</td></tr>
-  </table>
+	<table class="table">
+	  <tr><th><strong>Highlight</strong></th><th>Description</th></tr>
+	  <tr><td><strong>Fault Tolerance</strong></td><td><em>Embrace failure</em>. Write applications that self-heal using Erlang-style Actor supervisor hierarchies.</td></tr>
+	  <tr><td><strong>Transparent Remoting</strong></td><td>Remote Actors give you a high-performance, transparent-distributed programming model.</td></tr>
+	  <tr><td><strong>Scala <em>and</em> Java APIs</strong></td><td>Use Scala if you can, but if you can't, get the benefits in your existing Java apps.</td></tr>
+	</table>
 
 <div class="handout">
 </div>
 </div>
 
 <div class="slide">
-<h1>Organization: Add-on Modules (1/2):</h1>
-
-<p>Optional modules for other features.</p>
+  <h1 id="organization">Actors</h1>
 
 <table class="table">
-  <tr><th>Module</th><th>Description</th></tr>
-  <tr><td><strong>Microkernel</strong></td><td>A standalone kernel for running Akka-based applications.</td></tr>
+  <tr><th><strong>Feature</strong></th><th>Description</th></tr>
+  <tr><td><strong>Actors</strong></td><td>Core concurrency abstraction.</td></tr>
+  <tr><td><strong>Transactors</strong></td><td>Actors with <em>transactional</em> behavior.</td></tr>
+  <tr><td><strong>Remote&nbsp;Actors</strong></td><td>Horizontally distributed behavior.</td></tr>
+</table>
+
+<div class="handout">
+</div>
+</div>
+
+<div class="slide">
+<h1>But Wait, There's More!</h1>
+
+<table class="table">
+  <tr><th><strong>Feature</strong></th><th>Description</th></tr>
+  <tr><td><strong>STM</strong></td><td><em>Software Transactional Memory</em>: the hotness made popular by Clojure.</td></tr>
+  <tr><td><strong>Microkernel</strong></td><td>A standalone kernel for running Akka-based applications, or deploy your app in an application server.</td></tr>
   <tr><td><strong>Security</strong></td><td>Adapted from Lift&#8217;s authentication module.</td></tr>
-  <tr><td><strong>Persistence</strong></td><td>Redis, Mongo, Cassandra, and common (shared) modules.</td></tr>
-  <tr><td><strong>REST</strong></td><td>Module for REST-ful web services.</td></tr>
-  <tr><td><strong>Comet</strong></td><td>Module for Comet &#8220;persistent&#8221; connections.</td></tr>
+  <tr><td><strong>Persistence</strong></td><td>Redis, Mongo, Cassandra, and more added regularly.</td></tr>
 </table>
 <div class="handout">
 </div>
 </div>
 
 <div class="slide">
-<h1>Organization: Add-on Modules (2/2):</h1>
+<h1>But Wait, There's More!</h1>
+
 <table class="table">
-  <tr><th>Module</th><th>Description</th></tr>
+  <tr><th><strong>Feature</strong></th><th>Description</th></tr>
+  <tr><td><strong>REST</strong></td><td>Module for REST-ful web services.</td></tr>
+  <tr><td><strong>Comet</strong></td><td>Module for Comet &#8220;persistent&#8221; connections.</td></tr>
   <tr><td><strong>Camel</strong></td><td>Module for the Apache Camel library, a DSL for routing definitions, Spring configuration definitions, <em>etc.</em></td></tr>
+</table>
+<div class="handout">
+</div>
+</div>
+
+<div class="slide">
+<h1>But Wait, There's More!</h1>
+
+<table class="table">
+  <tr><th><strong>Feature</strong></th><th>Description</th></tr>
   <tr><td><strong>AMQP</strong></td><td>Module for AMQP messaging.</td></tr>
   <tr><td><strong>Scheduler</strong></td><td>For scheduling tasks in the future.</td></tr>
   <tr><td><strong>Spring, Guice, and Lift</strong></td><td>Integration modules for these frameworks.</td></tr>
   <tr><td><strong>Samples</strong></td><td>For Security, REST, Chat, and Lift.</td></tr>
 </table>
 
-<p>(The list is organized slightly differently on the <a href="http://doc.akkasource.org Documentation">http://doc.akkasource.org</a> site.)</p>
+<div class="slide">
+  <h1 id="akka_core">Actors</h1>
+
+	<p><em>"Autonomous agents" coordinate work through message passing.</em></p>
+	<ul>
+  	<li>Actors can work in parallel.</li>
+		<li>Provides an intuitive model for concurrency</li>
+	</ul>
+	
+  <p>Originally developed by Hewitt in 1973. Made famous by Erlang. (Scala actor syntax is patterned after Erlang's)</p>
 
 <div class="handout">
 </div>
 </div>
 
 <div class="slide">
-  <h1 id="akka_core">Akka Core: Actors</h1>
+  <h1 id="akka_core">Akka's Actor Library</h1>
 
-  <p>Most of the Scala&#8217;s standard actor API is supported.</p>
-  <ul>
-  <li>Message-passing abstraction for concurrency. </li>
-  <li>Originally developed by Hewitt in 1973.</li>
-  <li>A clean-room implementation of Scala actors.
-  <ul>
-  <li>Improvements and simplifications.</li>
-  <li>(Scala actor syntax patterned after Erlang actors)</li>
-  </ul></li>
+  <p>Akka's actor library is independent of Scala&#8217;s standard actor API.</p>
+	<ul>
+  	<li>Simpler syntax.</li>
+  	<li>Adds actor <em>supervision</em>, transactional behavior.</li>
+  	<li>Significant performance improvements.</li>
+  	<li>Can be "untyped" or "typed".</li>
   </ul>
-  <p>Most of the Scala&#8217;s standard actor API is supported. Here are some examples that use Akka-specific syntax.</p>
 
 <div class="handout">
 </div>
 </div>
 
 <div class="slide">
-  <h1>An Akka Actor with an Initialization Body and Message Handler</h1>
+  <h1>An Actor with an Init. Body and Message Handler</h1>
 
   <p>This example uses the <code>Actor</code> object&#8217;s <code>init</code> method to create an actor.</p>
 
@@ -270,14 +280,14 @@ dean@deanwampler.com<br/>
 </div>
 
 <div class="slide">
-  <h1>Send a Message to an Actor (1/2)</h1>
+  <h1>Send an Asynchronous Message</h1>
 
   <pre class="brush: scala;">
   // Import Self when the current sender isn't an actor.
   import Actor.Sender.Self   
   ...
-  actor ! "Hello"             // Fire and forget
-
+  actor ! "Hello"    // Fire and forget
+  // Go about your business...
   </pre>
 
 <div class="handout">
@@ -285,7 +295,7 @@ dean@deanwampler.com<br/>
 </div>
 
 <div class="slide">
-  <h1>Send a Message to an Actor (2/2)</h1>
+  <h1>Send a Synchronous Message</h1>
 
   <pre class="brush: scala;">
     ...
@@ -293,8 +303,26 @@ dean@deanwampler.com<br/>
       case Some(reply) => ...   // handle reply
       case None =>        ...   // got a timeout, handle that
     }
+  </pre>
 
-    val future = actor !!! "Hello"   // fire and return "future"
+<div class="handout">
+</div>
+</div>
+
+<div class="slide">
+  <h1>Send Messages with Future Replies</h1>
+
+  <pre class="brush: scala;">
+    ...
+    try {
+      val futures = actors map { 
+	      actor => actor !!! Ping(message) 
+      }
+      Futures.awaitAll(futures)
+      handlePingRepliesIn(futures)
+    } catch {
+      case fte: FutureTimeoutException => ...
+    }
   </pre>
 
 <div class="handout">
