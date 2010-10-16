@@ -238,7 +238,7 @@ dean@deanwampler.com, @deanwampler</p>
 </div>
 
 <div class="slide">
-  <h1 id="akka_core">Restart Strategy an Actor Dies?</h1>
+  <h1 id="akka_core">Restart Strategy if an Actor Dies?</h1>
 
 	<table class="table">
 	  <tr><th><strong>Strategy</strong></th><th>Description</th></tr>
@@ -344,13 +344,13 @@ dean@deanwampler.com, @deanwampler</p>
   <pre class="brush: scala;">
 	  import ...akka.actor.Actor._
 
-		val actor2Ref = actorOf[Actor2]
-		actor2Ref.start
+		val actorRef = actorOf[MyActor]
+		actorRef.start
   </pre>
 
 or
 	<pre class="brush: scala;">
-		val actor2Ref = actorOf[Actor2].start
+		val actorRef = actorOf[MyActor].start
 	</pre>
 
 <div class="handout">
@@ -377,13 +377,11 @@ or
 <div class="slide">
   <h1>Send an Asynchronous Message</h1>
 
+	<p>Fire and forget.</p>
+	
   <pre class="brush: scala;">
-  // Import Self when the current 
-  // sender isn't an actor.
-  import Actor.Sender.Self   
-  
-  actor ! "Hello"    // Fire and forget
-  // Go about your business...
+  actor ! "Start!" 
+  // Do other work...
   </pre>
 
 <div class="handout">
@@ -393,8 +391,9 @@ or
 <div class="slide">
   <h1>Send a Synchronous Message</h1>
 
+  <p>Fire and wait for a reply.</p>
+
   <pre class="brush: scala;">
-	  // fire and wait for a reply...
     (actor !! "Hello") match {  
       case Some(reply) => ... // handle reply
       case None =>        ... // handle timeout
@@ -436,7 +435,12 @@ or
   actor.forward(message)
   </pre>
   
+  <p>Or, using Scala's <em>infix operator notation</em>.</p>
 
+  <pre class="brush: scala;">
+  actor forward message
+  </pre>
+  
 <div class="handout">
 </div>
 </div>
@@ -447,9 +451,11 @@ or
   <p>Send a message <code>HotSwap</code> with the new <code>PartialFunction</code> defining the new message loop for the Actor.</p>
 
   <pre class="brush: scala;">
-  actor ! HotSwap(Some({
-    case message =&gt; println("Hotswapped body...")
-  }))
+  actor ! HotSwap(Some(
+    {
+      case message =&gt; newHandler(message)
+    }
+  ))
   </pre>
 
 
@@ -465,7 +471,12 @@ or
   <pre class="brush: scala;">actor ! HotSwap(None)
   </pre>
 
-  <p>The original actor theory included this idea!</p>
+  <p>Uses:
+<ul>
+	<li>"Upgrade" running app.</li>
+	<li>State transitions</li>
+</ul>
+	The original actor theory included this idea!</p>
 
 <div class="handout">
 </div>
@@ -495,27 +506,27 @@ or
   <h1>Managed References</h1>
 
   <p>Memory cells hold an immutable value. CAS (Compare-And-Swap) semantics are enforced by the STM to coordinate changes across many References.</p>
-
+<center>
 	<img src="images/Refs.svg"></img>
-
+</center>
 <div class="handout">
 </div>
 </div>
 
 <div class="slide">
   <h1>Persistent Data Structures</h1>
-
+	<center>
 	<img src="images/Tree1.svg"></img>
-	
+	</center>
 <div class="handout">
 </div>
 </div>
 
 <div class="slide">
   <h1>Persistent Data Structures</h1>
-
+	<center>
 	<img src="images/Tree2.svg"></img>
-	
+	</center>	
 <div class="handout">
 </div>
 </div>
@@ -528,6 +539,8 @@ or
 		<li><strong>Persistent</strong>, because no modification affects the original structure.</li>
 	</ul>
 	
+  <p><em>Persistent</em> doesn't mean <em>written to a database</em>. It means that older versions are not lost when newer instances are created (until garbage collected).</p>
+
 <div class="handout">
 </div>
 </div>
@@ -535,12 +548,10 @@ or
 <div class="slide">
   <h1>Akka's Persistent Collections</h1>
 
-  <p>Remember that <em>persistent</em> doesn't mean <em>written to a database</em>. It means that older versions are not lost when newer instances are created (until garbage collected).</p>
-
   <table class="table">
     <tr><th>Data Structure</th><th>Description</th></tr>
-    <tr><td><code>PersistentMap</code></td><td>Implements <code>scala.collection.mutable.Map</code></td></tr>
-    <tr><td><code>PersistentVector</code></td><td>Implements <code>scala.RandomAccessSeq</code></td></tr>
+    <tr><td><code>PersistentMap</code></td><td>Implements <code>...immutable.Map</code></td></tr>
+    <tr><td><code>PersistentVector</code></td><td>Implements <code>RandomAccessSeq</code></td></tr>
     <tr><td><code>PersistentRef</code></td><td>Compare and Set (CAS) cell</td></tr>
   </table>
 
@@ -551,9 +562,9 @@ or
 <div class="slide">
   <h1>Akka's STM: Implementation</h1>
 
-  <p>Akka&#8217;s persistent Map and Vector are ports of Clojure&#8217;s Map and Vector.</p>
+  <p>Akka&#8217;s <code>PersistentMap</code> and <code>PersistentVector</code> are ports of Clojure&#8217;s <code>Map</code> and <code>Vector</code>, respectively.</p>
 
-	<p>The Managed References are implemented using the <a href="http://code.google.com/p/multiverse/ Multiverse STM">Java Multiverse STM</a>.</p>
+	<p>The Managed References are implemented using <a href="http://code.google.com/p/multiverse/ Multiverse STM"> Multiverse STM</a>, a Java library.</p>
 	
 	<p>(Scala's standard library will have its own STM API eventually.)
 
@@ -566,7 +577,7 @@ or
 
   <p>Akka provides backend durability, if desired, using <strong>MongoDB</strong>, <strong>Cassandra</strong>, <strong>Redis</strong>, and more.</p>
 
-	<p>(These Akka APIs are not intended for general persistence needs.)</p>
+	<p>The Akka APIs are not intended as general-purpose persistence APIs.</p>
 	
 <div class="handout">
 </div>
@@ -575,9 +586,9 @@ or
 <div class="slide">
   <h1>Transactors: Transactions + Actors</h1>
 
-  <p><strong>Transactors</strong> combine <strong>Actors</strong>, which provide concurrency and asynchronous event-based programming, and <strong>STM</strong>, which provides compositional, transactional, state management. Hence, transactors provide transactional, compositional, asynchronous, event-based message flows.</p>
+  <p><strong>Transactors</strong> combine <strong>Actors</strong>, which provide concurrency and asynchronous event-based programming, and <strong>STM</strong>, which provides transactional (and hence compositional) state management. Hence, Transactors provide transactional, asynchronous, event-based message flows.</p>
 
-  <p>There are several ways to impose &#8220;transaction required&#8221; semantics:</p>
+  <p>There are several ways to impose &#8220;transaction required&#8221; semantics for actors:</p>
 
 <div class="handout">
 </div>
@@ -856,9 +867,9 @@ or
 
 <div class="slide book-logo">
   <h1>Buy My Book!</h1>
-
+	<center>
 	<img src="images/ProgrammingScalaCoverSmall.jpg"></img>
-			
+	</center>
 <div class="handout">
 </div>
 </div>
