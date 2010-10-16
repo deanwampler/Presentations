@@ -239,7 +239,7 @@ h1. A Value After an Insert
 
 h1. STM Recap
 
-+ A very power mechanism for _principled_ mutation of state.
++ A very powerful mechanism for _principled_ mutation of state.
 + Cleanly separates _values_ from _references_ to them.
 + Composable, modular transactional semantics.
 - Imposes some unavoidable overhead.
@@ -401,7 +401,7 @@ h1. Add New Functionality (cont.)
 * Hit return to exit @~test-only@ and run all the tests (@test@) and confirm that they all now pass.
 
 h1. Add New Functionality (cont.)
- 
+
 You may not understand what this method is doing. It's actually quite sophisticated and relies on very specific knowledge about the underlying format of the @json: JValue@. In fact, the correct way to implement this feature is to support this filtering at the database level, which we will learn how to do with MongoDB. This approach is both more efficient (we don't waste time returning stuff we'll throw away), more flexible, and more robust.
 
 Note that I added some @log.error@ statements in comments. Try running the @~test-only@ command again and uncomment those lines. Try to find them in all the noisy output. Do they help you understand what's going on? Look at the Lift JSON documentation to further understand this API. It is here: "scala-tools.org/mvnsites/liftweb-2.0/framework/scaladocs/index.html":http://main.scala-tools.org/mvnsites/liftweb-2.0/framework/scaladocs/index.html (Hint: click the @net.liftweb.json@ link to focus in on the JSON part of the API.)

@@ -1115,7 +1115,7 @@ def receive = {
 (credit: <a href="http://blog.higher-order.net/2009/02/01/understanding-clojures-persistentvector-implementation/">Understanding Clojures PersistentVector Implementation</a>)</div>
 <div class="slide">
 <h1><span class="caps">STM</span> Recap</h1>
-<p>+ A very power mechanism for <em>principled</em> mutation of state.<br />
+<p>+ A very powerful mechanism for <em>principled</em> mutation of state.<br />
 + Cleanly separates <em>values</em> from <em>references</em> to them.<br />
 + Composable, modular transactional semantics.<br />
 - Imposes some unavoidable overhead.</p>
@@ -1292,9 +1292,8 @@ formatPriceResults(filter(result), instruments, statistics, startMillis, endMill
 </ul>
 </div>
 <div class="slide">
-<h1>Add New Functionality (cont.)<br />
- <br />
-You may not understand what this method is doing. It&#8217;s actually quite sophisticated and relies on very specific knowledge about the underlying format of the <code>json: JValue</code>. In fact, the correct way to implement this feature is to support this filtering at the database level, which we will learn how to do with MongoDB. This approach is both more efficient (we don&#8217;t waste time returning stuff we&#8217;ll throw away), more flexible, and more robust.</h1>
+<h1>Add New Functionality (cont.)</h1>
+<p>You may not understand what this method is doing. It&#8217;s actually quite sophisticated and relies on very specific knowledge about the underlying format of the <code>json: JValue</code>. In fact, the correct way to implement this feature is to support this filtering at the database level, which we will learn how to do with MongoDB. This approach is both more efficient (we don&#8217;t waste time returning stuff we&#8217;ll throw away), more flexible, and more robust.</p>
 <p>Note that I added some <code>log.error</code> statements in comments. Try running the <code>~test-only</code> command again and uncomment those lines. Try to find them in all the noisy output. Do they help you understand what&#8217;s going on? Look at the Lift <span class="caps">JSON</span> documentation to further understand this <span class="caps">API</span>. It is here: <a href="http://main.scala-tools.org/mvnsites/liftweb-2.0/framework/scaladocs/index.html">scala-tools.org/mvnsites/liftweb-2.0/framework/scaladocs/index.html</a> (Hint: click the <code>net.liftweb.json</code> link to focus in on the <span class="caps">JSON</span> part of the <span class="caps">API</span>.)</p>
 </div>
 <div class="slide">
@@ -2440,6 +2439,10 @@ Think of hash maps on <em>steroids</em>.</p>
 	<li>Julian Brown, <a href="http://www.julianbrowne.com/article/viewer/brewers-cap-theorem">Brewer&#8217;s <span class="caps">CAP</span> Theorem: The Kool Aid Amazon and eBay Have Been Drinking</a>. Sometimes amusing discussion of Brewer&#8217;s theorem. (We&#8217;ll read Brewer&#8217;s original presentation &#8211; a conference keynote &#8211; in a later assignment.)</li>
 	<li>Dan Pritchett, <a href="http://queue.acm.org/detail.cfm?id=1394128"><span class="caps">BASE</span>: An Acid Alternative</a>. Excellent discussion of the limitations of <span class="caps">ACID</span> for large-scale, distributed systems, and the alternative, <span class="caps">BASE</span>. Provides specific examples of techniques for relaxing consistency.</li>
 </ul>
+<p>Also useful, but not required:</p>
+<ul>
+	<li>Coda Hale, <a href="http://codahale.com/you-cant-sacrifice-partition-tolerance/">You Can&#8217;t Sacrifice Partition Tolerance</a>. A good discussion of <span class="caps">CAP</span> that clears up some common misunderstandings. Also mentions Brewer&#8217;s other work on the concepts of <em>yield</em> and <em>harvest</em>.</li>
+</ul>
 </div>
 <div class="slide">
 <h1>Reading Assignment:</h1>
@@ -3423,6 +3426,13 @@ Map("start" -&gt; "2010-10-01", "end" -&gt; "2010-10-05")
 	<li>Jeffrey Dean and Sanjay Ghemawat, <a href="http://labs.google.com/papers/mapreduce.html">MapReduce: Simplified Data Processing on Large Clusters</a>.</li>
 </ul>
 <p>These authors also wrote an chapter on MapReduce called <em>Distributed Programming with Mapreduce</em>, in &#8220;Beautiful Code&#8221;, Chapter 23, pgs. 371-382.</p>
+</div>
+<div class="slide">
+<h1>Other References</h1>
+<p>Probably the best book on Hadoop, written by one of the core developers, Tom White:</p>
+<ul>
+	<li>Tom White, &#8220;Hadoop: The Definitive Guide, Second Edition&#8221;, O&#8217;Reilly, 2010, <span class="caps">ISBN</span>: 9781449389734. Available on Loyola&#8217;s <a href="http://proquestcombo.safaribooksonline.com.flagship.luc.edu/9781449398644">Safari Online</a>.</li>
+</ul>
 </div>
 <div class="title slide">
 <h1>Lecture 9: Recent Advances in Object-Oriented Programming (<span class="caps">OOP</span>)</h1>

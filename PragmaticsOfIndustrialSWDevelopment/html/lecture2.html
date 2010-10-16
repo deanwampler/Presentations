@@ -383,7 +383,7 @@ def receive = {
 (credit: <a href="http://blog.higher-order.net/2009/02/01/understanding-clojures-persistentvector-implementation/">Understanding Clojures PersistentVector Implementation</a>)</div>
 <div class="slide">
 <h1><span class="caps">STM</span> Recap</h1>
-<p>+ A very power mechanism for <em>principled</em> mutation of state.<br />
+<p>+ A very powerful mechanism for <em>principled</em> mutation of state.<br />
 + Cleanly separates <em>values</em> from <em>references</em> to them.<br />
 + Composable, modular transactional semantics.<br />
 - Imposes some unavoidable overhead.</p>
@@ -560,9 +560,8 @@ formatPriceResults(filter(result), instruments, statistics, startMillis, endMill
 </ul>
 </div>
 <div class="slide">
-<h1>Add New Functionality (cont.)<br />
- <br />
-You may not understand what this method is doing. It&#8217;s actually quite sophisticated and relies on very specific knowledge about the underlying format of the <code>json: JValue</code>. In fact, the correct way to implement this feature is to support this filtering at the database level, which we will learn how to do with MongoDB. This approach is both more efficient (we don&#8217;t waste time returning stuff we&#8217;ll throw away), more flexible, and more robust.</h1>
+<h1>Add New Functionality (cont.)</h1>
+<p>You may not understand what this method is doing. It&#8217;s actually quite sophisticated and relies on very specific knowledge about the underlying format of the <code>json: JValue</code>. In fact, the correct way to implement this feature is to support this filtering at the database level, which we will learn how to do with MongoDB. This approach is both more efficient (we don&#8217;t waste time returning stuff we&#8217;ll throw away), more flexible, and more robust.</p>
 <p>Note that I added some <code>log.error</code> statements in comments. Try running the <code>~test-only</code> command again and uncomment those lines. Try to find them in all the noisy output. Do they help you understand what&#8217;s going on? Look at the Lift <span class="caps">JSON</span> documentation to further understand this <span class="caps">API</span>. It is here: <a href="http://main.scala-tools.org/mvnsites/liftweb-2.0/framework/scaladocs/index.html">scala-tools.org/mvnsites/liftweb-2.0/framework/scaladocs/index.html</a> (Hint: click the <code>net.liftweb.json</code> link to focus in on the <span class="caps">JSON</span> part of the <span class="caps">API</span>.)</p>
 </div>
 <div class="slide">
