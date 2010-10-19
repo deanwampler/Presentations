@@ -3766,17 +3766,101 @@ GROUP BY CustomerName
 <p>These authors also wrote a chapter on MapReduce called <em>Distributed Programming with Mapreduce</em>, in &#8220;Beautiful Code&#8221;, Chapter 23, pgs. 371-382.</p>
 </div>
 <div class="slide">
-<h1>Exercise: MongoDB&#8217;s MapReduce</h1>
-<p>It would be too much work to setup and use Hadoop, so we&#8217;ll do an exercise this week using MongoDB&#8217;s MapReduce implementation and our stock data. Use the MongoDB <a href="http://www.mongodb.org/display/DOCS/MapReduce">MapReduce page</a> as a reference.</p>
-</div>
-<div class="slide">
 <h1>Other References</h1>
 <p>Probably the best book on Hadoop, written by one of the core developers, Tom White:</p>
 <ul>
 	<li>Tom White, &#8220;Hadoop: The Definitive Guide, Second Edition&#8221;, O&#8217;Reilly, 2010, <span class="caps">ISBN</span>: 9781449389734. Available on Loyola&#8217;s <a href="http://proquestcombo.safaribooksonline.com.flagship.luc.edu/9781449398644">Safari Online</a>.</li>
-	<li>Google&#8217;s new MapReduce replacement, <a href="http://googleblog.blogspot.com/2010/06/our-new-search-index-caffeine.html">Caffeine</a>.<br />
+	<li>Google&#8217;s new MapReduce replacement, <a href="http://googleblog.blogspot.com/2010/06/our-new-search-index-caffeine.html">Caffeine</a>.</li>
+</ul>
+</div>
+<div class="slide">
+<h1>Exercise: MongoDB&#8217;s MapReduce</h1>
+<p>It would be too much work to setup and use Hadoop, so we&#8217;ll do an exercise this week using MongoDB&#8217;s MapReduce implementation on our stock data. Use the MongoDB <a href="http://www.mongodb.org/display/DOCS/MapReduce">MapReduce page</a> as a reference.</p>
+</div>
+<div class="slide">
+<h1>Moving Averages of Asset Prices</h1>
+<p><em>Moving averages</em> of asset prices are popular because they smooth out the noise in prices. Some technical analysts believe that the behavior of these averages can indicate likely turning points for the asset price.</p>
+<p>A moving average is the average of the price for the <em>last</em> N days.</p>
+</div>
+<div class="slide">
+<h1>50- and 200-Day Moving Averages</h1>
+<center>
+<p><img src="images/mova-6-orclcross.png"></img></p>
+</center>
+</div>
+<div class="slide">
+<h1>Calculating Moving Averages (1/3)</h1>
+<p>Calculate the 50-day moving average for AA <em>ending</em> on 1980-03-12. The following code would be entered in the <code>mongo</code> console or put in a <code>.js</code> file and piped into the console: <code>mongo &lt; file.js</code>.</p>
+<div class="code-small">
+<pre name="code" id="code" class="brush: plain,;">
+
+use stocks_yahoo_NYSE;
+
+var map1 = function () {
+  // Use the stock_symbol as the key and use a JavaScript
+  // Object as the value, which contains the closing price
+  // and the date.
+  emit(this.stock_symbol, {close: this.close, date: this.date});
+}
+</pre></div>
+</div>
+<div class="slide">
+<h1>Calculating Moving Averages (2/3)</h1>
+<div class="code-small">
+<pre name="code" id="code" class="brush: plain,;">
+
+var reduce1 = function (key, values) {
+  // For this key (the stock symbol), and set of values
+  // (the object with the closing price and date), first
+  // grab the LAST date, which is the date for this
+  // moving average.
+  var date = values[values.length-1].date
+
+  // Now compute the moving average:
+  var sum = 0;
+  for (var n in values) {
+      sum += values[n].close;
+  }
+  var avg = sum / values.length
+
+  // Return the result, using the same keys as before!!
+  return {date: date, close: avg};
+}
+</pre></div>
+</div>
+<div class="slide">
+<h1>Calculating Moving Averages (3/3)</h1>
+<div class="code-small">
+<pre name="code" id="code" class="brush: plain,;">
+
+// Invoke mapReduce with map1 and reduce1. 
+// The query limits the documents to 'AA',
+// the STARTING date of 1980-01-01, 
+// and 50-days worth of data.
+var result1 = db.A_prices.mapReduce(map1, reduce1, { query: {stock_symbol: 'AA', date: {$gte: '1980-01-01'}}, limit: 50})
+
+// Get the answer from result1. Note the find() call:
+db[result1.result].find()                                                 
+// Here is the answer:
+// { "_id" : "AA", "value" : { "date" : "1980-03-12", "close" : 63.235600000000005 } }
+
+</pre></div>
+</div>
+<div class="slide">
+<h1>Exercise: Using MongoDB&#8217;s MapReduce</h1>
+<ul>
+	<li>Find the 200-day moving average of &#8216;AA&#8217;, <em>ending</em> on the date 1990-10-15.</li>
+</ul>
+<ul>
+	<li>Calculate how many days since 2008-01-01 that &#8216;<span class="caps">AZZ</span>&#8217; gained more than $1 in a single trading day.  Hints:
+	<ul>
+		<li>In your map function, filter out the days when the gains were less than $1, including loses. Also, what you &#8220;emit&#8221; will be much simpler and <em>very</em> similar to the word counting example we discussed earlier in the lecture. (Big hint&#8230;)</li>
+		<li>In you filter function, all you need to do is count.</li>
+		<li>Don&#8217;t forget to adjust the query used when invoking the mapReduce function.</li>
+		<li>I picked the parameters to make the result fairly small, so you should be able to check the answer manually, using a simple &#8220;ordinary&#8221; query.<br />
 </div><br />
 <div class="slide"></li>
+	</ul></li>
 </ul>
 <h1 class="slide0">Lecture 8: Recent Advances in Object-Oriented Programming (<span class="caps">OOP</span>)</h1>
 </div>
