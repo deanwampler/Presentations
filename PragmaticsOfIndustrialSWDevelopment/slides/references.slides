@@ -76,7 +76,7 @@ h1. Software Transactional Memory
 (See also the links on _Multiversion Concurrency Control_ in the section on _SQL and NoSQL Databases_.)
 </div>
 
-h1. ACID, CAP, and BASE
+h1. ACID, CAP, and BASE (1/2)
 
 <div class='small'>
 
@@ -85,6 +85,12 @@ h1. ACID, CAP, and BASE
 * Julian Brown, "Brewer's CAP Theorem: The kool aid Amazon and Ebay have been drinking":http://www.julianbrowne.com/article/viewer/brewers-cap-theorem. A sometimes humorous summary of Brewer's CAP theorem. Also has a good list of references for more information.
 * Coda Hale, "You Can't Sacrifice Partition Tolerance":http://codahale.com/you-cant-sacrifice-partition-tolerance/. A good discussion of CAP that clears up some common misunderstandings. Also mentions Brewer's other work on the concepts of _yield_ and _harvest_.
 * Seth Gilbert and Nancy Lynch, "The CAP Theorem":http://nosqlsummer.org/paper/cap-theorem. Proves Brewer's conjecture (hence, it's now called Brewer's Theorem) and elaborated on solutions, etc.
+</div>
+
+h1. ACID, CAP, and BASE (2/2)
+
+<div class='small'>
+
 * Dan Pritchett, "BASE: An Acid Alternative":http://queue.acm.org/detail.cfm?id=1394128. Excellent discussion of the limitations of ACID for large-scale, distributed systems, and the alternative, BASE. Provides specific examples of techniques for relaxing consistency. (The PDF version - click the PDF icon under the title - has a nicer format than the online article.)
 * Dan Pritchett, "The Challenges of Latency":http://www.infoq.com/articles/pritchett-latency.
 * "My Problem with CAP and Yahoo's Little Known NoSQL System":http://dbmsmusings.blogspot.com/2010/04/problems-with-cap-and-yahoos-little.html.
@@ -97,6 +103,7 @@ h1. SQL and NoSQL Databases
 
 <div class='small'>
 
+* Billy Newport, "Enterprise NoSQL: Silver Bullet or Poison Pill?":http://strangeloop2010.com/talk/presentation_file/14447/Newport-EnterpriseNoSQL.pdf. Keynote given at the "Strangeloop 2010 Conference":http://strangeloop2010.com. Provides practical guidance on the tradeoffs of SQL vs. NoSQL databases.
 * "NoSQL-Database.org":http://nosql-database.org/. Lists of NoSQL categories and implementations.
 * "MyNoSQL":http://nosql.mypopescu.com/. Good running blog on all things NoSQL.
 * "Multiversion Concurrency Control":http://en.wikipedia.org/wiki/Multiversion_concurrency_control (Wikipedia). Unfortunately, the text can be a little confusing.
@@ -106,7 +113,7 @@ h1. SQL and NoSQL Databases
 * "Column-oriented DBMS":http://en.wikipedia.org/wiki/Column-oriented_DBMS
 </div>
 
-h1. Document-Oriented Databases: MongoDB and CouchDB
+h1. Document-Oriented Databases: MongoDB, CouchDB
 
 <div class='small'>
 
@@ -138,23 +145,30 @@ h1. Column-Oriented Databases
 * "Apache Cassandra":http://en.wikipedia.org/wiki/Apache_Cassandra.
 * Avinash Lakshman and Prashant Malik, "Cassandra - A Decentralized, Structured Storage System":http://www.cs.cornell.edu/projects/ladis2009/papers/lakshman-ladis2009.pdf.
 
-h1. Graph Databases
+h1. Graph Databases (1/2)
 
-* "Graph (data structure)":http://en.wikipedia.org/wiki/Graph_(data_structure) (Wikipedia).
+<div class='small'>
+* <a href="http://en.wikipedia.org/wiki/Graph_(data_structure)">Graph (data structure)</a> (Wikipedia).
 * "Gephi":http://gephi.org. A graph visualization tool kit. The download page has a link to the "gephi wiki":http://wiki.gephi.org/ with "sample datasets":http://wiki.gephi.org/index.php?title=Datasets. (WARNING: requires a lot of memory!)
 * "Graph Database":http://en.wikipedia.org/wiki/Graph_database (Wikipedia).
 * "Neo4J":http://neo4j.org and on "Wikipedia":http://en.wikipedia.org/wiki/Neo4j.
 * "FlockDB":http://en.wikipedia.org/wiki/FlockDB (Wikipedia) and on "GitHub":http://github.com/twitter/flockdb.
 * "InfoGrid":http://infogrid.org/ and a "tutorial":http://infogrid.org/blog/2010/02/operations-on-a-graph-database-part-1/.
+</div>
+
+h1. Graph Databases (2/2)
+
+<div class='small'>
 * "Gremlin: a graph based programming language":http://www.nosqldatabases.com/main/2010/8/23/gremlin-a-graph-based-programming-language.html.
 * Marko A. Rodriguez and Peter Neubauer, "The Graph Traversal Pattern":http://nosqlsummer.org/paper/graph-traversal-pattern.
 * Renzo Angles, Claudio Gutierrez, "Survey of Graph Database Models":http://portal.acm.org/citation.cfm?id=1322433 (requires ACM online access).
+</div>
 
 h1. Miscellaneous Database References
 
-* "Gizzard":http://en.wikipedia.org/wiki/Gizzard_(scala_framework). Gizzard is a database-neutral sharding framework that supports different backends.
+* <a href="http://en.wikipedia.org/wiki/Gizzard_(scala_framework)">Gizzard</a> is a database-neutral sharding framework that supports different backends.
 
-h1. Distributed Systems
+h1. Distributed Systems - General (1/2)
 
 <div class='small'>
 
@@ -163,7 +177,13 @@ h1. Distributed Systems
 * "A Primer on Distributed Computing":http://www.bacchae.co.uk/docs/dist.html. A basic discussion of the issues and techniques involved in building a distributed system, like "SETI@home":http://setiathome.berkeley.edu/.
 * George Reese, "Cloud Application Architectures", O'Reilly, 2009. ISBN: 9780596156367.
 * Diomidis Spinellis and Georgios Gousios, "Beautiful Architecture", O'Reilly, 2009. ISBN: 0596517984. Good essays on architecture.
-* "Consensus":http://en.wikipedia.org/wiki/Consensus_(computer_science).
+</div>
+
+h1. Distributed Systems - General (2/2)
+
+<div class='small'>
+
+* <a href="http://en.wikipedia.org/wiki/Consensus_(computer_science)">Consensus</a>.
 * "Self Stabilization":http://en.wikipedia.org/wiki/Self-stabilisation.
 * "Byzantine fault tolerance":http://en.wikipedia.org/wiki/Byzantine_fault_tolerance.
 * Martin Fowler, et al., "Patterns of Enterprise Application Architecture", Addison-Wesley, 2003. ISBN: 0321127420. Conventional, object-oriented approach. Does not cover the latest thinking on highly-distributed architectures.
@@ -183,7 +203,7 @@ h1. Distributed Systems - Examples
 * "Swarm: a true distributed programming language":http://blog.locut.us/main/2008/10/6/swarm-a-true-distributed-programming-language.html
 </div>
 
-h1. Distributed Systems - MapReduce Frameworks
+h1. Distributed Systems - MapReduce Frameworks (1/2)
 
 <div class='small'>
 
@@ -192,6 +212,13 @@ h1. Distributed Systems - MapReduce Frameworks
 * Jeffrey Dean and Sanjay Ghemawat, _Distributed Programming with Mapreduce_, in "Beautiful Code", Chapter 23, pgs. 371-382. 
 * "Hadoop":http://hadoop.apache.org/. An open source map-reduce framework, originally developed at Yahoo!
 * Tom White, "Hadoop: The Definitive Guide, Second Edition", O'Reilly, 2010, ISBN: 9781449389734. Available on Loyola's "Safari Online":http://proquestcombo.safaribooksonline.com.flagship.luc.edu/9781449398644.
+* Google's new MapReduce replacement, "Caffeine":http://googleblog.blogspot.com/2010/06/our-new-search-index-caffeine.html.
+</div>
+
+h1. Distributed Systems - MapReduce Frameworks (2/2)
+
+<div class='small'>
+
 * "Pig: Making Hadoop Easy":http://www.slideshare.net/xefyr/pig-making-hadoop-easy.
 * "Google Percolator – global search jolt sans MapReduce comedown":http://www.theregister.co.uk/2010/09/24/google_percolator/. Google's just-announced replacement for their MapReduce-based search indexing infrastructure.
 * "Twitter Analytics Lead, Kevin Weil, and a Presenter at Hadoop World Interviewed":http://www.cloudera.com/blog/2010/09/twitter-analytics-lead-kevin-weil-and-a-presenter-at-hadoop-world-interviewed/. How Hadoop and related tools are used by Twitter.

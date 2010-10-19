@@ -319,7 +319,7 @@ h1. Reading Assignments:
 h1. For Further Research
 
 * Diomidis Spinellis and Georgios Gousios, "Beautiful Architecture", O'Reilly, 2009. ISBN: 0596517984. Good essays on architecture.
-* "Consensus":http://en.wikipedia.org/wiki/Consensus_(computer_science).
+* <a href="http://en.wikipedia.org/wiki/Consensus_(computer_science)">Consensus</a>.
 * "Self Stabilization":http://en.wikipedia.org/wiki/Self-stabilisation.
 * "Byzantine fault tolerance":http://en.wikipedia.org/wiki/Byzantine_fault_tolerance.
 * Martin Fowler, et al., "Patterns of Enterprise Application Architecture", Addison-Wesley, 2003. ISBN: 0321127420. Conventional, object-oriented approach. Does not cover the latest thinking on highly-distributed architectures.

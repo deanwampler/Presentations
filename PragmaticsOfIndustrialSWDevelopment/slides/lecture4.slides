@@ -346,7 +346,7 @@ Less like a database in the usual sense and more of a virtualized space where da
 
 h1. "Polyglot Persistence"
 
-A big trend today is that non-trivial systems mix different programming languages, libraries and tools. Do we use just one language to write all parts of a standard web application? No. ^1^  
+A big trend today is that non-trivial systems mix different programming languages, libraries and tools. Do we use just one language to write all parts of a standard web application? No.[1]  
 
 The same phenomenon is now happening at the persistence level. Often, one persistence strategy doesn't fit all needs in complex, distributed systems. You might use a fast, key-value store for user sessions, then persist key "events" to an RDBMS, for example.
 

@@ -128,14 +128,21 @@
 </ul>
 </div>
 <div class="slide">
-<h1><span class="caps">ACID</span>, <span class="caps">CAP</span>, and <span class="caps">BASE</span></h1>
+<h1><span class="caps">ACID</span>, <span class="caps">CAP</span>, and <span class="caps">BASE</span> (1/2)</h1>
 <div class='small'>
 <ul>
 	<li><a href="http://en.wikipedia.org/wiki/ACID"><span class="caps">ACID</span></a> (Wikipedia).</li>
 	<li>Eric Brewer, <a href="http://www.cs.berkeley.edu/~brewer/cs262b-2004/PODC-keynote.pdf">Toward Robust, Distributed Systems</a>. The keynote at the <a href="http://www.podc.org/podc2000/"><span class="caps">ACM</span> Symposium on Principles of Distributed Computing</a> that introduced Brewer&#8217;s <span class="caps">CAP</span> theorem.</li>
 	<li>Julian Brown, <a href="http://www.julianbrowne.com/article/viewer/brewers-cap-theorem">Brewer&#8217;s <span class="caps">CAP</span> Theorem: The kool aid Amazon and Ebay have been drinking</a>. A sometimes humorous summary of Brewer&#8217;s <span class="caps">CAP</span> theorem. Also has a good list of references for more information.</li>
 	<li>Coda Hale, <a href="http://codahale.com/you-cant-sacrifice-partition-tolerance/">You Can&#8217;t Sacrifice Partition Tolerance</a>. A good discussion of <span class="caps">CAP</span> that clears up some common misunderstandings. Also mentions Brewer&#8217;s other work on the concepts of <em>yield</em> and <em>harvest</em>.</li>
-	<li>Seth Gilbert and Nancy Lynch, <a href="http://nosqlsummer.org/paper/cap-theorem">The <span class="caps">CAP</span> Theorem</a>. Proves Brewer&#8217;s conjecture (hence, it&#8217;s now called Brewer&#8217;s Theorem) and elaborated on solutions, etc.</li>
+	<li>Seth Gilbert and Nancy Lynch, <a href="http://nosqlsummer.org/paper/cap-theorem">The <span class="caps">CAP</span> Theorem</a>. Proves Brewer&#8217;s conjecture (hence, it&#8217;s now called Brewer&#8217;s Theorem) and elaborated on solutions, etc.<br />
+</div></li>
+</ul>
+</div>
+<div class="slide">
+<h1><span class="caps">ACID</span>, <span class="caps">CAP</span>, and <span class="caps">BASE</span> (2/2)</h1>
+<div class='small'>
+<ul>
 	<li>Dan Pritchett, <a href="http://queue.acm.org/detail.cfm?id=1394128"><span class="caps">BASE</span>: An Acid Alternative</a>. Excellent discussion of the limitations of <span class="caps">ACID</span> for large-scale, distributed systems, and the alternative, <span class="caps">BASE</span>. Provides specific examples of techniques for relaxing consistency. (The <span class="caps">PDF</span> version &#8211; click the <span class="caps">PDF</span> icon under the title &#8211; has a nicer format than the online article.)</li>
 	<li>Dan Pritchett, <a href="http://www.infoq.com/articles/pritchett-latency">The Challenges of Latency</a>.</li>
 	<li><a href="http://dbmsmusings.blogspot.com/2010/04/problems-with-cap-and-yahoos-little.html">My Problem with <span class="caps">CAP</span> and Yahoo&#8217;s Little Known NoSQL System</a>.</li>
@@ -149,6 +156,7 @@
 <h1><span class="caps">SQL</span> and NoSQL Databases</h1>
 <div class='small'>
 <ul>
+	<li>Billy Newport, <a href="http://strangeloop2010.com/talk/presentation_file/14447/Newport-EnterpriseNoSQL.pdf">Enterprise NoSQL: Silver Bullet or Poison Pill?</a>. Keynote given at the <a href="http://strangeloop2010.com">Strangeloop 2010 Conference</a>. Provides practical guidance on the tradeoffs of <span class="caps">SQL</span> vs. NoSQL databases.</li>
 	<li><a href="http://nosql-database.org/">NoSQL-Database.org</a>. Lists of NoSQL categories and implementations.</li>
 	<li><a href="http://nosql.mypopescu.com/">MyNoSQL</a>. Good running blog on all things NoSQL.</li>
 	<li><a href="http://en.wikipedia.org/wiki/Multiversion_concurrency_control">Multiversion Concurrency Control</a> (Wikipedia). Unfortunately, the text can be a little confusing.</li>
@@ -160,7 +168,7 @@
 </ul>
 </div>
 <div class="slide">
-<h1>Document-Oriented Databases: MongoDB and CouchDB</h1>
+<h1>Document-Oriented Databases: MongoDB, CouchDB</h1>
 <div class='small'>
 <ul>
 	<li><a href="http://mongodb.org">MongoDB</a>. <a href="http://http://api.mongodb.org/">Language APIs</a>.</li>
@@ -197,35 +205,51 @@
 </ul>
 </div>
 <div class="slide">
-<h1>Graph Databases</h1>
+<h1>Graph Databases (1/2)</h1>
+<div class='small'>
 <ul>
-	<li><a href="http://en.wikipedia.org/wiki/Graph_(data_structure" title="data structure">Graph</a>) (Wikipedia).</li>
+	<li><a href="http://en.wikipedia.org/wiki/Graph_(data_structure)">Graph (data structure)</a> (Wikipedia).</li>
 	<li><a href="http://gephi.org">Gephi</a>. A graph visualization tool kit. The download page has a link to the <a href="http://wiki.gephi.org/">gephi wiki</a> with <a href="http://wiki.gephi.org/index.php?title=Datasets">sample datasets</a>. (<span class="caps">WARNING</span>: requires a lot of memory!)</li>
 	<li><a href="http://en.wikipedia.org/wiki/Graph_database">Graph Database</a> (Wikipedia).</li>
 	<li><a href="http://neo4j.org">Neo4J</a> and on <a href="http://en.wikipedia.org/wiki/Neo4j">Wikipedia</a>.</li>
 	<li><a href="http://en.wikipedia.org/wiki/FlockDB">FlockDB</a> (Wikipedia) and on <a href="http://github.com/twitter/flockdb">GitHub</a>.</li>
-	<li><a href="http://infogrid.org/">InfoGrid</a> and a <a href="http://infogrid.org/blog/2010/02/operations-on-a-graph-database-part-1/">tutorial</a>.</li>
+	<li><a href="http://infogrid.org/">InfoGrid</a> and a <a href="http://infogrid.org/blog/2010/02/operations-on-a-graph-database-part-1/">tutorial</a>.<br />
+</div></li>
+</ul>
+</div>
+<div class="slide">
+<h1>Graph Databases (2/2)</h1>
+<div class='small'>
+<ul>
 	<li><a href="http://www.nosqldatabases.com/main/2010/8/23/gremlin-a-graph-based-programming-language.html">Gremlin: a graph based programming language</a>.</li>
 	<li>Marko A. Rodriguez and Peter Neubauer, <a href="http://nosqlsummer.org/paper/graph-traversal-pattern">The Graph Traversal Pattern</a>.</li>
-	<li>Renzo Angles, Claudio Gutierrez, <a href="http://portal.acm.org/citation.cfm?id=1322433">Survey of Graph Database Models</a> (requires <span class="caps">ACM</span> online access).</li>
+	<li>Renzo Angles, Claudio Gutierrez, <a href="http://portal.acm.org/citation.cfm?id=1322433">Survey of Graph Database Models</a> (requires <span class="caps">ACM</span> online access).<br />
+</div></li>
 </ul>
 </div>
 <div class="slide">
 <h1>Miscellaneous Database References</h1>
 <ul>
-	<li><a href="http://en.wikipedia.org/wiki/Gizzard_(scala_framework">Gizzard</a>). Gizzard is a database-neutral sharding framework that supports different backends.</li>
+	<li><a href="http://en.wikipedia.org/wiki/Gizzard_(scala_framework)">Gizzard</a> is a database-neutral sharding framework that supports different backends.</li>
 </ul>
 </div>
 <div class="slide">
-<h1>Distributed Systems</h1>
+<h1>Distributed Systems &#8211; General (1/2)</h1>
 <div class='small'>
 <ul>
 	<li>Arnon Rotem-Gal-Ozhttp, <a href="//www.rgoarchitects.com/Files/fallacies.pdf">Fallacies of Distributed Computing Explained</a></li>
 	<li><a href="http://en.wikipedia.org/wiki/Distributed_computing">Distributed Computing</a> (Wikipedia).</li>
 	<li><a href="http://www.bacchae.co.uk/docs/dist.html">A Primer on Distributed Computing</a>. A basic discussion of the issues and techniques involved in building a distributed system, like <a href="http://setiathome.berkeley.edu/">SETI@home</a>.</li>
 	<li>George Reese, &#8220;Cloud Application Architectures&#8221;, O&#8217;Reilly, 2009. <span class="caps">ISBN</span>: 9780596156367.</li>
-	<li>Diomidis Spinellis and Georgios Gousios, &#8220;Beautiful Architecture&#8221;, O&#8217;Reilly, 2009. <span class="caps">ISBN</span>: 0596517984. Good essays on architecture.</li>
-	<li><a href="http://en.wikipedia.org/wiki/Consensus_(computer_science">Consensus</a>).</li>
+	<li>Diomidis Spinellis and Georgios Gousios, &#8220;Beautiful Architecture&#8221;, O&#8217;Reilly, 2009. <span class="caps">ISBN</span>: 0596517984. Good essays on architecture.<br />
+</div></li>
+</ul>
+</div>
+<div class="slide">
+<h1>Distributed Systems &#8211; General (2/2)</h1>
+<div class='small'>
+<ul>
+	<li><a href="http://en.wikipedia.org/wiki/Consensus_(computer_science)">Consensus</a>.</li>
 	<li><a href="http://en.wikipedia.org/wiki/Self-stabilisation">Self Stabilization</a>.</li>
 	<li><a href="http://en.wikipedia.org/wiki/Byzantine_fault_tolerance">Byzantine fault tolerance</a>.</li>
 	<li>Martin Fowler, et al., &#8220;Patterns of Enterprise Application Architecture&#8221;, Addison-Wesley, 2003. <span class="caps">ISBN</span>: 0321127420. Conventional, object-oriented approach. Does not cover the latest thinking on highly-distributed architectures.</li>
@@ -248,7 +272,7 @@
 </ul>
 </div>
 <div class="slide">
-<h1>Distributed Systems &#8211; MapReduce Frameworks</h1>
+<h1>Distributed Systems &#8211; MapReduce Frameworks (1/2)</h1>
 <div class='small'>
 <ul>
 	<li><a href="http://en.wikipedia.org/wiki/MapReduce">MapReduce</a> (Wikipedia).</li>
@@ -256,6 +280,14 @@
 	<li>Jeffrey Dean and Sanjay Ghemawat, <em>Distributed Programming with Mapreduce</em>, in &#8220;Beautiful Code&#8221;, Chapter 23, pgs. 371-382.</li>
 	<li><a href="http://hadoop.apache.org/">Hadoop</a>. An open source map-reduce framework, originally developed at Yahoo!</li>
 	<li>Tom White, &#8220;Hadoop: The Definitive Guide, Second Edition&#8221;, O&#8217;Reilly, 2010, <span class="caps">ISBN</span>: 9781449389734. Available on Loyola&#8217;s <a href="http://proquestcombo.safaribooksonline.com.flagship.luc.edu/9781449398644">Safari Online</a>.</li>
+	<li>Google&#8217;s new MapReduce replacement, <a href="http://googleblog.blogspot.com/2010/06/our-new-search-index-caffeine.html">Caffeine</a>.<br />
+</div></li>
+</ul>
+</div>
+<div class="slide">
+<h1>Distributed Systems &#8211; MapReduce Frameworks (2/2)</h1>
+<div class='small'>
+<ul>
 	<li><a href="http://www.slideshare.net/xefyr/pig-making-hadoop-easy">Pig: Making Hadoop Easy</a>.</li>
 	<li><a href="http://www.theregister.co.uk/2010/09/24/google_percolator/">Google Percolator – global search jolt sans MapReduce comedown</a>. Google&#8217;s just-announced replacement for their MapReduce-based search indexing infrastructure.</li>
 	<li><a href="http://www.cloudera.com/blog/2010/09/twitter-analytics-lead-kevin-weil-and-a-presenter-at-hadoop-world-interviewed/">Twitter Analytics Lead, Kevin Weil, and a Presenter at Hadoop World Interviewed</a>. How Hadoop and related tools are used by Twitter.<br />

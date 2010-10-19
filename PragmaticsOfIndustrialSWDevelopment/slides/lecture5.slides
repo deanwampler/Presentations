@@ -71,7 +71,7 @@ Better for Master-Slave configurations with failover.
 
 h1. Disadvantages of Update in Place
 
-If conflicting updates occur, only the last one survives. Transactions are more important to avoid collisions with out the recovery option that MVCC provides (e.g., picking a previous version or merging results some how).
+If conflicting updates occur, only the last one survives. Transactions are more important to avoid collisions without the recovery option that MVCC provides (e.g., picking a previous version or merging results some how).
 
 If MongoDB crashes, you will probably need to repair the database, prolonging the recovery and restoration of normal service. This is one reason why MongoDB recommends replicated database instances, so service is not interrupted. However, once the crashed instances are running again, you'll need to resync them, to get the most recent transactions pushed to the newly-recovered instance.
 

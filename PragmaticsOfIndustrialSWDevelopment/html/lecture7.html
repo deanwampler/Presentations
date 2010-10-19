@@ -49,8 +49,174 @@
 
 <div class="presentation">
 <div class="slide">
-<h1>Lecture 7: Midterm Break (No Class)</h1>
-<p>Have a good break!</div></p>
+<h1>Lecture 7: Midterm and Scaling Systems, Part II</h1>
+<p>In this lecture, we&#8217;ll complete our discussion of distributed systems by examining the most popular framework for distributed data computation (&#8220;big data&#8221;): <a href="http://en.wikipedia.org/wiki/MapReduce">MapReduce</a>.</p>
+</div>
+<div class="slide">
+<h1>How Would You Index the Web?</h1>
+<p>Google indexes the web by finding all the links to web pages related to particular keywords. A page with the most links for a given keyword will appear first in the search.</p>
+<p>(Of course it&#8217;s more complicated than this, but this is the basic idea.)</p>
+<p>By the way, how much data is out there??</p>
+</div>
+<div class="slide">
+<h1>Size of teh InterWebs</h1>
+<center>
+<p><img src="images/size-of-the-web.jpg"></img></p>
+</center>
+</div>
+<div class="slide">
+<h1>Recall from Lecture 4: Scaling Data, Part I</h1>
+<p>&#8230; your architecture has to tolerate high latency (<a href="http://www.infoq.com/articles/pritchett-latency">Dan Pritchett</a>). A couple of techniques help.</p>
+<ul>
+	<li>Moving data and computing resources close to customers.
+	<ul>
+		<li>Lowers the round-trip time</li>
+	</ul></li>
+	<li>Doing as much calculation asynchronously as possible.
+	<ul>
+		<li>E.g., google indexes the web asynchronously, so searches use precomputed data and are &#8220;instantaneous&#8221;.</li>
+	</ul></li>
+</ul>
+<p><img src="images/google-search.png"><img></p>
+</div>
+<div class="slide">
+<h1>Pre-computation of Data</h1>
+<p>Obviously you can&#8217;t index the Internet on demand if you want to return results this fast.</p>
+<p>In 2004, Google published a paper by Jeffrey Dean and Sanjay Ghemawat, called <a href="http://labs.google.com/papers/mapreduce.html">MapReduce: Simplified Data Processing on Large Clusters</a>, which introduced its approach, <strong>MapReduce</strong>.</p>
+</div>
+<div class="slide">
+<h1>MapReduce Implementations: Hadoop</h1>
+<p>Google&#8217;s MapReduce is not open to the public. Yahoo! open sourced <a href="http://hadoop.apache.org/">Hadoop</a> in 2006, its implementation of MapReduce. It is now an &#8220;umbrella&#8221; <a href="http://hadoop.apache.org/">Apache Project</a> that includes not only a MapReduce implementation, but additional support tools.</p>
+</div>
+<div class="slide">
+<h1>Hadoop?</h1>
+<p>The creator of Hadoop, Doug Cutting, named it after his young son&#8217;s pet Elephant.</p>
+</div>
+<div class="slide">
+<h1>Hadoop History</h1>
+<table>
+	<tr>
+		<th>Year </th>
+		<th>Event </th>
+	</tr>
+	<tr>
+		<td> 2005-2006 </td>
+		<td> Based on Google paper, MapReduce implementation, named &#8220;Hadoop&#8221;, added to the <em>Nutch</em> search project. </td>
+	</tr>
+	<tr>
+		<td> 2006 </td>
+		<td> Moved Hadoop to a subproject of Apache <em>Lucence</em>. </td>
+	</tr>
+	<tr>
+		<td> 2008 </td>
+		<td> Hadoop becomes a top-level Apache Project. </td>
+	</tr>
+	<tr>
+		<td> 2008 </td>
+		<td> Yahoo! runs a 10,000 node Hadoop, Linux cluster to process data for its search engine. (Google&#8217;s cluster is certainly larger.) </td>
+	</tr>
+</table>
+<p>(Adapted from Tom White, &#8220;Hadoop: The Definitive Guide, Second Edition&#8221; &#8211; see the references.)</p>
+</div>
+<div class="slide">
+<h1>New York Times Hadoop Story</h1>
+<p>Amazon offers Hadoop services in its Cloud Computing service, EC2. In 2007, The New York Times wanted to convert to PDFs its microfiche of every issue ever published. They used 100 Amazon EC2 instances and a Hadoop application to process 4TB of raw image <span class="caps">TIFF</span> data (stored in Amazon&#8217;s S3 datastore) into 11 million finished PDFs in the space of 24 hours at a computation cost of about $240 (not including bandwidth).</p>
+</div>
+<div class="slide">
+<h1>Value Proposition</h1>
+<ul>
+	<li>Supports massive horizontal scaling of computation.</li>
+	<li>In a &#8220;rental&#8221; cloud environment, you can do tremendous computation in a short period of time without investing in your own computing infrastructure.</li>
+</ul>
+</div>
+<div class="slide">
+<h1>Other MapReduce Implementations</h1>
+<p>Many NoSQL databases are bundling MapReduce implementations. For example:</p>
+<ul>
+	<li><strong>CouchDB</strong>: Used to build &#8220;views&#8221; incrementally, instead of providing a full, ad hoc query engine.</li>
+	<li><strong>MongoDB</strong>: Used to do computations that would be done with <span class="caps">GROUP</span> BY clauses in <span class="caps">SQL</span>.</li>
+</ul>
+</div>
+<div class="slide">
+<h1>What Is MapReduce?</h1>
+<p>MapReduce combines two classic operations on collections, <code>map</code> and <code>reduce</code>.</p>
+<ul>
+	<li><code>map</code>: Transform each value in a collection to another value.</li>
+	<li><code>reduce</code>: Reduce a collection of values to a smaller, perhaps one-element set.</li>
+</ul>
+<p>In the context of MapReduce the input collections are maps:</p>
+<ul>
+	<li><code>map</code>: Select interesting data and partition values, based on some criteria, creating a new key-value pair (the key may or may not be the same key as in the input data). The MapReduce framework sends key-value pairs with the same key to the same node in the cluster for processing. There may be multiple map steps.</li>
+	<li><code>reduce</code>: Collate and reduce the results from the nodes to compute the final result.</li>
+</ul>
+</div>
+<div class="slide">
+<h1>Classic Example: Word Counts</h1>
+<p>Count the appearance of each word in a set of documents (Pseudo-Java syntax).</p>
+<div class="code-tiny">
+<pre name="code" id="code" class="brush: scala,;">
+
+void map(String name, String document) {
+  // name: document name
+  // document: document contents
+  for (String w : tokenize(document))
+    EmitIntermediate(w, "1");
+}
+
+void reduce(String word, Iterator partialCounts) {
+  // word: a word
+  // partialCounts: a list of aggregated partial counts
+  int result = 0;
+  for (String pc : partialCounts)
+    result += ParseInt(pc);
+  Emit(AsString(result));
+}
+</pre></div>
+</div>
+<div class="slide">
+<h1>Requirements and Characteristics</h1>
+<ul>
+	<li>Must be able to chop data into pieces that can be processed independently, hence in parallel.
+	<ul>
+		<li>E.g., process microfiche images for each year on a separate server.</li>
+	</ul></li>
+	<li>May parallelize reduces.
+	<ul>
+		<li>E.g., one reducer per map key.</li>
+	</ul></li>
+	<li>May duplicate work, &#8220;wasting&#8221; resources, but getting results faster.</li>
+	<li>Framework can handle node failures.</li>
+</ul>
+</div>
+<div class="slide">
+<h1>Disadvantages</h1>
+<p>Not ideal for real-time computation; optimized for batch computation.</p>
+<p>Google is migrating to a new system called <a href="http://googleblog.blogspot.com/2010/06/our-new-search-index-caffeine.html">Caffeine</a> that provides more incremental and near-real time indexing.</p>
+</div>
+<div class="slide">
+<h1>Reading: Distributed Systems and &#8220;Big Data&#8221;</h1>
+<p>To conclude our discussion of distributed systems and <em>big data</em>:</p>
+<ul>
+	<li>Arnon Rotem-Gal-Ozhttp, <a href="//www.rgoarchitects.com/Files/fallacies.pdf">Fallacies of Distributed Computing Explained</a></li>
+	<li>Edd Dumbill, <a href="http://radar.oreilly.com/2010/09/the-smaq-stack-for-big-data.html">The <span class="caps">SMAQ</span> stack for big data</a>. Nice summary of some of the leading open-source technologies used for data processing.</li>
+</ul>
+</div>
+<div class="slide">
+<h1>Reading Assignment: MapReduce</h1>
+<p>Start with the Wikipedia page on <a href="http://en.wikipedia.org/wiki/MapReduce">MapReduce</a>.</p>
+<p>Then read the classic paper that introduced the first MapReduce framework, used at Google.</p>
+<ul>
+	<li>Jeffrey Dean and Sanjay Ghemawat, <a href="http://labs.google.com/papers/mapreduce.html">MapReduce: Simplified Data Processing on Large Clusters</a>.</li>
+</ul>
+<p>These authors also wrote a chapter on MapReduce called <em>Distributed Programming with Mapreduce</em>, in &#8220;Beautiful Code&#8221;, Chapter 23, pgs. 371-382.</p>
+</div>
+<div class="slide">
+<h1>Other References</h1>
+<p>Probably the best book on Hadoop, written by one of the core developers, Tom White:</p>
+<ul>
+	<li>Tom White, &#8220;Hadoop: The Definitive Guide, Second Edition&#8221;, O&#8217;Reilly, 2010, <span class="caps">ISBN</span>: 9781449389734. Available on Loyola&#8217;s <a href="http://proquestcombo.safaribooksonline.com.flagship.luc.edu/9781449398644">Safari Online</a>.</li>
+	<li>Google&#8217;s new MapReduce replacement, <a href="http://googleblog.blogspot.com/2010/06/our-new-search-index-caffeine.html">Caffeine</a>.</div></li>
+</ul>
 
   <!-- Syntax Highlighter -->
   <script language="javascript" type="text/javascript" src="../lib/scripts/shCore.js"></script>

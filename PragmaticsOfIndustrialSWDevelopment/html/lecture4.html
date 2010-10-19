@@ -440,7 +440,7 @@ Think of hash maps on <em>steroids</em>.</p>
 </div>
 <div class="slide">
 <h1>&#8220;Polyglot Persistence&#8221;</h1>
-<p>A big trend today is that non-trivial systems mix different programming languages, libraries and tools. Do we use just one language to write all parts of a standard web application? No. <sup>1</sup></p>
+<p>A big trend today is that non-trivial systems mix different programming languages, libraries and tools. Do we use just one language to write all parts of a standard web application? No.<sup class="footnote"><a href="#fn1">1</a></sup></p>
 <p>The same phenomenon is now happening at the persistence level. Often, one persistence strategy doesn&#8217;t fit all needs in complex, distributed systems. You might use a fast, key-value store for user sessions, then persist key &#8220;events&#8221; to an <span class="caps">RDBMS</span>, for example.</p>
 <p><sup class="footnote"><a href="#fn1">1</a></sup> Well, maybe we could with JavaScript&#8230;</p>
 </div>
@@ -458,6 +458,10 @@ Think of hash maps on <em>steroids</em>.</p>
 <ul>
 	<li>Julian Brown, <a href="http://www.julianbrowne.com/article/viewer/brewers-cap-theorem">Brewer&#8217;s <span class="caps">CAP</span> Theorem: The Kool Aid Amazon and eBay Have Been Drinking</a>. Sometimes amusing discussion of Brewer&#8217;s theorem. (We&#8217;ll read Brewer&#8217;s original presentation &#8211; a conference keynote &#8211; in a later assignment.)</li>
 	<li>Dan Pritchett, <a href="http://queue.acm.org/detail.cfm?id=1394128"><span class="caps">BASE</span>: An Acid Alternative</a>. Excellent discussion of the limitations of <span class="caps">ACID</span> for large-scale, distributed systems, and the alternative, <span class="caps">BASE</span>. Provides specific examples of techniques for relaxing consistency.</li>
+</ul>
+<p>Also useful, but not required:</p>
+<ul>
+	<li>Coda Hale, <a href="http://codahale.com/you-cant-sacrifice-partition-tolerance/">You Can&#8217;t Sacrifice Partition Tolerance</a>. A good discussion of <span class="caps">CAP</span> that clears up some common misunderstandings. Also mentions Brewer&#8217;s other work on the concepts of <em>yield</em> and <em>harvest</em>.</li>
 </ul>
 </div>
 <div class="slide">
