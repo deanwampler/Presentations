@@ -33,15 +33,93 @@ Obviously you can't index the Internet on demand if you want to return results t
 
 In 2004, Google published a paper by Jeffrey Dean and Sanjay Ghemawat, called "MapReduce: Simplified Data Processing on Large Clusters":http://labs.google.com/papers/mapreduce.html, which introduced its approach, *MapReduce*. 
 
+The name is taken from the classic _map_ and _reduce_ operations over collections, but there are differences...
+
+h1. What Is MapReduce?
+
+MapReduce is inspired by the combination two classic operations on collections: @map@ and @reduce@.
+
+* @map@: Transforms each item in a collection to another value and builds a new collection of the same size as the original collection.
+
+:inlinecode lang=scala, class=code-tiny
+List(1,2,3,4,5) map (i => i*i)  // List(1,4,9,16,25)
+:endinlinecode 
+
+* @reduce@: Reduces a collection of items to a smaller collection or single value.
+
+:inlinecode lang=scala, class=code-tiny
+List(1,2,3,4,5) reduceLeft ((total,i) => total*i)  // 120 == 5!
+:endinlinecode 
+
+* (You might also @filter@: Create a new collection of some items from the original.)
+
+:inlinecode lang=scala, class=code-tiny
+List(1,2,3,4,5) filter (i => i%2 == 0)  // List(2,4)
+:endinlinecode 
+
+h1. What Is MapReduce?
+
+In the context of MapReduce the input collections are key-value pairs. I'll use the word _dictionary_, rather than _map_, to avoid confusion with the map _operation_.
+
+* @map@: Filters values of interest and partitions them based on some criteria, creating _new_ key-value pairs, where the new keys are often not the same keys as in the input dictionary. There may be multiple map steps.
+* The MapReduce framework sends the new key-value pairs with the _same_ key to the _same_ MapReduce instance in the cluster for processing. 
+* @reduce@: Reduces the results from the nodes to compute the final result.
+
+h1. Classic Example: Word Counts
+
+Count the appearance of each word in a set of documents (Pseudo-Java syntax).
+
+:inlinecode lang=scala, class=code-tiny
+void map(String, documentName, String documentContents) {
+  // documentName: the "key" (the name of the document, e.g., file)
+  // documentContents: the "value" (String for the doc's contents)
+  if (documentName.equals("Index")) return;
+  for (String word : tokenize(documentContents))
+    emitNewKeyValue(word, "1");  // new (key, value) pair: (word, count)
+}
+
+void reduce(String word, Iterator partialCounts) {
+  // word: a word "key" we handled in the map (tokenized from documents)
+  // partialCounts: a list of aggregated partial counts ("values")
+  int result = 0;
+  for (String pc : partialCounts)
+    result += ParseInt(pc);
+  emit(AsString(result));
+}
+:endinlinecode 
+
+h1. Classic Example: Word Counts (cont.)
+
+* @map@ returns void and calls @EmitIntermediate@. 
+** You might not want to do anything with the input. 
+** In this case, we ignore the document if it is an "index" document.
+** Otherwise, we emit _new_ key-value pairs (1000's??), where the key is a word and the value is the count "1". Note that a duplicate word-"1" pair is emitted every time the same word appears.
+
+* @reduce@ is called for each unique word (as a key), with a list of all the "counts" emitted for that word. 
+** We parse those count strings and add the integers to compute the total count for the word across all the documents (except index documents...).
+
 h1. MapReduce Implementations: Hadoop
 
 Google's MapReduce is not open to the public. 
 
-Yahoo! open sourced "Hadoop":http://hadoop.apache.org/ in 2006, its implementation of MapReduce. It is now an "umbrella" "Apache Project":http://hadoop.apache.org/ that includes not only a MapReduce implementation, but additional support tools.
+Yahoo! open sourced "Hadoop":http://hadoop.apache.org/ in 2006, its implementation of MapReduce. It is now an "umbrella" "Apache Project":http://hadoop.apache.org/ that includes not only a MapReduce implementation, but additional support tools:
+
+* *HDFS*: A distributed file system that provides high throughput access to application data.
+* *ZooKeeper*: A high-performance coordination service for distributed applications.
+
+h1. Other Hadoop-related Apache Projects
+
+* *Avro*: A data serialization system.
+* *HBase*: A scalable, distributed database that supports structured data storage for large tables.
+* *Hive*: A data warehouse infrastructure that provides data summarization and ad hoc querying.
+* *Mahout*: A Scalable machine learning and data mining library.
+* *Pig*: A high-level data-flow language and execution framework for parallel computation.
 
 h1. Hadoop?
 
 The creator of Hadoop, Doug Cutting, named it after his young son's pet Elephant.
+
+_Mahout_ is the term for a person in India who tames and manages work Elephants.
 
 h1. Hadoop History
 
@@ -55,12 +133,44 @@ h1. Hadoop History
 
 h1. New York Times Hadoop Story
 
-Amazon offers Hadoop services in its Cloud Computing service, EC2. In 2007, The New York Times wanted to convert to PDFs its microfiche of every issue ever published. They used 100 Amazon EC2 instances and a Hadoop application to process 4TB of raw image TIFF data (stored in Amazon's S3 datastore) into 11 million finished PDFs in the space of 24 hours at a computation cost of about $240 (not including bandwidth).
+Amazon offers Hadoop services in its Cloud Computing service, EC2. 
 
-h1. Value Proposition
+In 2007, The New York Times wanted to convert to PDFs its microfiche of every issue ever published. They used 100 Amazon EC2 instances and a Hadoop application to process 4TB of raw image TIFF data (stored in Amazon's S3 datastore) into 11 million finished PDFs in the space of 24 hours at a computation cost of about $240 (not including bandwidth).
+ 
+h1. Aside: Cloud Computing (1/3)
+
+What if you don't want to own and manage a cluster, especially if you only need a lot of compute power occasionally? In cloud computing, you rent compute time and resources for short or long time intervals.
+
+The servers in the cloud are actually running _virtual images_ of the operating system, so you might actually share a "slice" of hardware, but be isolated as if you had the machine to yourself.
+
+These OS images sometimes come preconfigured with common applications required (like database servers, Java, etc.). 
+
+When you're done with an _instance_, it is safely thrown away.
+
+h1. Aside: Cloud Computing (2/3)
+
++ You don't worry about system administration, hardware, a datacenter.
++ You only buy the computing power you need.
++ You can scale up or down quickly, as needed.
+
+- Network bandwidth often inadequate for very high throughput applications.
+- Cost and performance of a cloud service eventually becomes higher than a self-owned datacenter for very large operations (e.g., Google).
+
+h1. Aside: Cloud Computing (3/3)
+
+*The Value Proposition*
 
 * Supports massive horizontal scaling of computation.
-* In a "rental" cloud environment, you can do tremendous computation in a short period of time without investing in your own computing infrastructure.
+* In a cloud environment, you can do tremendous computation in a short period of time without investing in your own computing infrastructure.
+
+h1. Hadoop Pros and Cons
+
++ Full-featured, high-scalable architecture for computation.
+
+- Some setup required...
+- Verbose syntax. See this "actual word count example":http://hadoop.apache.org/mapreduce/docs/r0.21.0/mapred_tutorial.html#Example%3A+WordCount+v1.0.
+
+Tools like "Pig":http://pig.apache.org/ and "Cascalog":http://github.com/nathanmarz/cascalog provide higher-levels of abstraction for creating Hadoop jobs.
 
 h1. Other MapReduce Implementations
 
@@ -69,54 +179,65 @@ Many NoSQL databases are bundling MapReduce implementations. For example:
 * *CouchDB*: Used to build "views" incrementally, instead of providing a full, ad hoc query engine.
 * *MongoDB*: Used to do computations that would be done with GROUP BY clauses in SQL.
 
-h1. What Is MapReduce?
+The "Wikipedia":http://en.wikipedia.org/wiki/MapReduce page on MapReduce lists many other implementations.
 
-MapReduce combines two classic operations on collections, @map@ and @reduce@.
+h1. Aside: SQL GROUP BY (1/3)
 
-* @map@: Transform each value in a collection to another value.
-* @reduce@: Reduce a collection of values to a smaller, perhaps one-element set.
+Suppose you want to list the unique customers in the following table and sum up how much each customer has spent. (Adapted from "SQL Tutorial":http://www.sql-tutorial.com/sql-group-by-sql-tutorial/)
 
-In the context of MapReduce the input collections are maps:
+<div class='small'>
+|_.OrderID|_.OrderDate|_.OrderPrice|_.OrderQuantity|_.CustomerName|
+| 1| 12/22/2005| 160 | 2| Smith |
+| 2| 08/10/2005| 190 | 2| Johnson |
+| 3| 07/13/2005| 500 | 5| Baldwin |
+| 4| 07/15/2005| 420 | 2| Smith |
+| 5| 12/22/2005| 1000| 4| Wood |
+| 6| 10/02/2005| 820 | 4| Smith |
+| 7| 11/03/2005| 2000| 2| Baldwin |
+</div>
 
-* @map@: Select interesting data and partition values, based on some criteria, creating a new key-value pair (the key may or may not be the same key as in the input data). The MapReduce framework sends key-value pairs with the same key to the same node in the cluster for processing. There may be multiple map steps.
-* @reduce@: Collate and reduce the results from the nodes to compute the final result.
+h1. Aside: SQL GROUP BY (2/3)
 
-h1. Classic Example: Word Counts
-
-Count the appearance of each word in a set of documents (Pseudo-Java syntax).
+Here's the query:
 
 :inlinecode lang=scala, class=code-tiny
-void map(String name, String document) {
-  // name: document name
-  // document: document contents
-  for (String w : tokenize(document))
-    EmitIntermediate(w, "1");
-}
-
-void reduce(String word, Iterator partialCounts) {
-  // word: a word
-  // partialCounts: a list of aggregated partial counts
-  int result = 0;
-  for (String pc : partialCounts)
-    result += ParseInt(pc);
-  Emit(AsString(result));
-}
+SELECT CustomerName, SUM(OrderPrice) FROM Sales
+GROUP BY CustomerName
 :endinlinecode 
 
-h1. Requirements and Characteristics
+Note the _aggregate_ function @SUM@. Combined with @GROUP BY@, it effectively sums the totals for each customer.
+
+h1. Aside: SQL GROUP BY (3/3)
+
+Result of the query:
+
+<div class='small'>
+|_.CustomerName|_.OrderPrice|
+| Baldwin| 2500 |
+| Johnson| 190  |
+| Smith  | 1400 |
+| Wood   | 1000 |
+</div>
+
+h1. MapReduce Requirements
 
 * Must be able to chop data into pieces that can be processed independently, hence in parallel.
 ** E.g., process microfiche images for each year on a separate server.
-* May parallelize reduces.
-** E.g., one reducer per map key.
-* May duplicate work, "wasting" resources, but getting results faster.
-* Framework can handle node failures.
+** E.g., count things...
+* Must have a good @map@ function.
+** You want a balanced distribution of key-value pairs. 
 
-h1. Disadvantages
+h1. Other MapReduce Characteristics
 
-Not ideal for real-time computation; optimized for batch computation.
+* You're trading away resource efficiency for time efficiency.
+** You may duplicate _lots_ work in the parallel processing, thereby "wasting" resources, but you can get results much faster.
+* MapReduce frameworks handle distribution of processing to nodes, monitoring of nodes, including detection of node failures, and rerouting processes off failed nodes.
 
-Google is migrating to a new system called "Caffeine":http://googleblog.blogspot.com/2010/06/our-new-search-index-caffeine.html that provides more incremental and near-real time indexing.
+h1. MapReduce Disadvantages
+
+* Not all computations fit the model.
+* Not ideal for _real-time_ computation; it's optimized for _batch_ processing.
+** Google is migrating to a new system called "Caffeine":http://googleblog.blogspot.com/2010/06/our-new-search-index-caffeine.html that provides more incremental and near-real time indexing.
 
 h1. Reading: Distributed Systems and "Big Data"
 
@@ -134,6 +255,12 @@ Then read the classic paper that introduced the first MapReduce framework, used 
 * Jeffrey Dean and Sanjay Ghemawat, "MapReduce: Simplified Data Processing on Large Clusters":http://labs.google.com/papers/mapreduce.html.
 
 These authors also wrote a chapter on MapReduce called _Distributed Programming with Mapreduce_, in "Beautiful Code", Chapter 23, pgs. 371-382. 
+
+h1. Exercise: MongoDB's MapReduce
+
+It would be too much work to setup and use Hadoop, so we'll do an exercise this week using MongoDB's MapReduce implementation and our stock data. Use the MongoDB "MapReduce page":http://www.mongodb.org/display/DOCS/MapReduce as a reference.
+
+
 
 h1. Other References
 

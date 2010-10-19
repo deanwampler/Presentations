@@ -54,7 +54,7 @@
 </div>
 <div class="slide">
 <h1>How Would You Index the Web?</h1>
-<p>Google indexes the web by finding all the links to web pages related to particular keywords. A page with the most links for a given keyword will appear first in the search.</p>
+<p>Google indexes the web by finding all the links to web pages related to particular keywords. A page with the most links for a given keyword will appear first in a search for that keyword.</p>
 <p>(Of course it&#8217;s more complicated than this, but this is the basic idea.)</p>
 <p>By the way, how much data is out there??</p>
 </div>
@@ -83,14 +83,109 @@
 <h1>Pre-computation of Data</h1>
 <p>Obviously you can&#8217;t index the Internet on demand if you want to return results this fast.</p>
 <p>In 2004, Google published a paper by Jeffrey Dean and Sanjay Ghemawat, called <a href="http://labs.google.com/papers/mapreduce.html">MapReduce: Simplified Data Processing on Large Clusters</a>, which introduced its approach, <strong>MapReduce</strong>.</p>
+<p>The name is taken from the classic <em>map</em> and <em>reduce</em> operations over collections, but there are differences&#8230;</p>
+</div>
+<div class="slide">
+<h1>What Is MapReduce?</h1>
+<p>MapReduce is inspired by the combination two classic operations on collections: <code>map</code> and <code>reduce</code>.</p>
+<ul>
+	<li><code>map</code>: Transforms each item in a collection to another value and builds a new collection of the same size as the original collection.</li>
+</ul>
+<div class="code-tiny">
+<pre name="code" id="code" class="brush: scala,;">
+
+List(1,2,3,4,5) map (i =&gt; i*i)  // List(1,4,9,16,25)
+</pre></div>
+<ul>
+	<li><code>reduce</code>: Reduces a collection of items to a smaller collection or single value.</li>
+</ul>
+<div class="code-tiny">
+<pre name="code" id="code" class="brush: scala,;">
+
+List(1,2,3,4,5) reduceLeft ((total,i) =&gt; total*i)  // 120 == 5!
+</pre></div>
+<ul>
+	<li>(You might also <code>filter</code>: Create a new collection of some items from the original.)</li>
+</ul>
+<div class="code-tiny">
+<pre name="code" id="code" class="brush: scala,;">
+
+List(1,2,3,4,5) filter (i =&gt; i%2 == 0)  // List(2,4)
+</pre></div>
+</div>
+<div class="slide">
+<h1>What Is MapReduce?</h1>
+<p>In the context of MapReduce the input collections are key-value pairs. I&#8217;ll use the word <em>dictionary</em>, rather than <em>map</em>, to avoid confusion with the map <em>operation</em>.</p>
+<ul>
+	<li><code>map</code>: Filters values of interest and partitions them based on some criteria, creating <em>new</em> key-value pairs, where the new keys are often not the same keys as in the input dictionary. There may be multiple map steps.</li>
+	<li>The MapReduce framework sends the new key-value pairs with the <em>same</em> key to the <em>same</em> MapReduce instance in the cluster for processing.</li>
+	<li><code>reduce</code>: Reduces the results from the nodes to compute the final result.</li>
+</ul>
+</div>
+<div class="slide">
+<h1>Classic Example: Word Counts</h1>
+<p>Count the appearance of each word in a set of documents (Pseudo-Java syntax).</p>
+<div class="code-tiny">
+<pre name="code" id="code" class="brush: scala,;">
+
+void map(String, documentName, String documentContents) {
+  // documentName: the "key" (the name of the document, e.g., file)
+  // documentContents: the "value" (String for the doc's contents)
+  if (documentName.equals("Index")) return;
+  for (String word : tokenize(documentContents))
+    emitNewKeyValue(word, "1");  // new (key, value) pair: (word, count)
+}
+
+void reduce(String word, Iterator partialCounts) {
+  // word: a word "key" we handled in the map (tokenized from documents)
+  // partialCounts: a list of aggregated partial counts ("values")
+  int result = 0;
+  for (String pc : partialCounts)
+    result += ParseInt(pc);
+  emit(AsString(result));
+}
+</pre></div>
+</div>
+<div class="slide">
+<h1>Classic Example: Word Counts (cont.)</h1>
+<ul>
+	<li><code>map</code> returns void and calls <code>EmitIntermediate</code>.
+	<ul>
+		<li>You might not want to do anything with the input.</li>
+		<li>In this case, we ignore the document if it is an &#8220;index&#8221; document.</li>
+		<li>Otherwise, we emit <em>new</em> key-value pairs (1000&#8217;s??), where the key is a word and the value is the count &#8220;1&#8221;. Note that a duplicate word-&#8220;1&#8221; pair is emitted every time the same word appears.</li>
+	</ul></li>
+</ul>
+<ul>
+	<li><code>reduce</code> is called for each unique word (as a key), with a list of all the &#8220;counts&#8221; emitted for that word.
+	<ul>
+		<li>We parse those count strings and add the integers to compute the total count for the word across all the documents (except index documents&#8230;).</li>
+	</ul></li>
+</ul>
 </div>
 <div class="slide">
 <h1>MapReduce Implementations: Hadoop</h1>
-<p>Google&#8217;s MapReduce is not open to the public. Yahoo! open sourced <a href="http://hadoop.apache.org/">Hadoop</a> in 2006, its implementation of MapReduce. It is now an &#8220;umbrella&#8221; <a href="http://hadoop.apache.org/">Apache Project</a> that includes not only a MapReduce implementation, but additional support tools.</p>
+<p>Google&#8217;s MapReduce is not open to the public.</p>
+<p>Yahoo! open sourced <a href="http://hadoop.apache.org/">Hadoop</a> in 2006, its implementation of MapReduce. It is now an &#8220;umbrella&#8221; <a href="http://hadoop.apache.org/">Apache Project</a> that includes not only a MapReduce implementation, but additional support tools:</p>
+<ul>
+	<li><strong><span class="caps">HDFS</span></strong>: A distributed file system that provides high throughput access to application data.</li>
+	<li><strong>ZooKeeper</strong>: A high-performance coordination service for distributed applications.</li>
+</ul>
+</div>
+<div class="slide">
+<h1>Other Hadoop-related Apache Projects</h1>
+<ul>
+	<li><strong>Avro</strong>: A data serialization system.</li>
+	<li><strong>HBase</strong>: A scalable, distributed database that supports structured data storage for large tables.</li>
+	<li><strong>Hive</strong>: A data warehouse infrastructure that provides data summarization and ad hoc querying.</li>
+	<li><strong>Mahout</strong>: A Scalable machine learning and data mining library.</li>
+	<li><strong>Pig</strong>: A high-level data-flow language and execution framework for parallel computation.</li>
+</ul>
 </div>
 <div class="slide">
 <h1>Hadoop?</h1>
 <p>The creator of Hadoop, Doug Cutting, named it after his young son&#8217;s pet Elephant.</p>
+<p><em>Mahout</em> is the term for a person in India who tames and manages work Elephants.</p>
 </div>
 <div class="slide">
 <h1>Hadoop History</h1>
@@ -120,14 +215,38 @@
 </div>
 <div class="slide">
 <h1>New York Times Hadoop Story</h1>
-<p>Amazon offers Hadoop services in its Cloud Computing service, EC2. In 2007, The New York Times wanted to convert to PDFs its microfiche of every issue ever published. They used 100 Amazon EC2 instances and a Hadoop application to process 4TB of raw image <span class="caps">TIFF</span> data (stored in Amazon&#8217;s S3 datastore) into 11 million finished PDFs in the space of 24 hours at a computation cost of about $240 (not including bandwidth).</p>
+<p>Amazon offers Hadoop services in its Cloud Computing service, EC2.</p>
+<p>In 2007, The New York Times wanted to convert to PDFs its microfiche of every issue ever published. They used 100 Amazon EC2 instances and a Hadoop application to process 4TB of raw image <span class="caps">TIFF</span> data (stored in Amazon&#8217;s S3 datastore) into 11 million finished PDFs in the space of 24 hours at a computation cost of about $240 (not including bandwidth).</p>
 </div>
 <div class="slide">
-<h1>Value Proposition</h1>
+<h1>Aside: Cloud Computing (1/3)</h1>
+<p>What if you don&#8217;t want to own and manage a cluster, especially if you only need a lot of compute power occasionally? In cloud computing, you rent compute time and resources for short or long time intervals.</p>
+<p>The servers in the cloud are actually running <em>virtual images</em> of the operating system, so you might actually share a &#8220;slice&#8221; of hardware, but be isolated as if you had the machine to yourself.</p>
+<p>These OS images sometimes come preconfigured with common applications required (like database servers, Java, etc.).</p>
+<p>When you&#8217;re done with an <em>instance</em>, it is safely thrown away.</p>
+</div>
+<div class="slide">
+<h1>Aside: Cloud Computing (2/3)</h1>
+<p>+ You don&#8217;t worry about system administration, hardware, a datacenter.<br />
++ You only buy the computing power you need.<br />
++ You can scale up or down quickly, as needed.</p>
+<p>- Network bandwidth often inadequate for very high throughput applications.<br />
+- Cost and performance of a cloud service eventually becomes higher than a self-owned datacenter for very large operations (e.g., Google).</p>
+</div>
+<div class="slide">
+<h1>Aside: Cloud Computing (3/3)</h1>
+<p><strong>The Value Proposition</strong></p>
 <ul>
 	<li>Supports massive horizontal scaling of computation.</li>
-	<li>In a &#8220;rental&#8221; cloud environment, you can do tremendous computation in a short period of time without investing in your own computing infrastructure.</li>
+	<li>In a cloud environment, you can do tremendous computation in a short period of time without investing in your own computing infrastructure.</li>
 </ul>
+</div>
+<div class="slide">
+<h1>Hadoop Pros and Cons</h1>
+<p>+ Full-featured, high-scalable architecture for computation.</p>
+<p>- Some setup required&#8230;<br />
+- Verbose syntax. See this <a href="http://hadoop.apache.org/mapreduce/docs/r0.21.0/mapred_tutorial.html#Example%3A+WordCount+v1.0">actual word count example</a>.</p>
+<p>Tools like <a href="http://pig.apache.org/">Pig</a> and <a href="http://github.com/nathanmarz/cascalog">Cascalog</a> provide higher-levels of abstraction for creating Hadoop jobs.</p>
 </div>
 <div class="slide">
 <h1>Other MapReduce Implementations</h1>
@@ -136,62 +255,144 @@
 	<li><strong>CouchDB</strong>: Used to build &#8220;views&#8221; incrementally, instead of providing a full, ad hoc query engine.</li>
 	<li><strong>MongoDB</strong>: Used to do computations that would be done with <span class="caps">GROUP</span> BY clauses in <span class="caps">SQL</span>.</li>
 </ul>
+<p>The <a href="http://en.wikipedia.org/wiki/MapReduce">Wikipedia</a> page on MapReduce lists many other implementations.</p>
 </div>
 <div class="slide">
-<h1>What Is MapReduce?</h1>
-<p>MapReduce combines two classic operations on collections, <code>map</code> and <code>reduce</code>.</p>
-<ul>
-	<li><code>map</code>: Transform each value in a collection to another value.</li>
-	<li><code>reduce</code>: Reduce a collection of values to a smaller, perhaps one-element set.</li>
-</ul>
-<p>In the context of MapReduce the input collections are maps:</p>
-<ul>
-	<li><code>map</code>: Select interesting data and partition values, based on some criteria, creating a new key-value pair (the key may or may not be the same key as in the input data). The MapReduce framework sends key-value pairs with the same key to the same node in the cluster for processing. There may be multiple map steps.</li>
-	<li><code>reduce</code>: Collate and reduce the results from the nodes to compute the final result.</li>
-</ul>
+<h1>Aside: <span class="caps">SQL</span> <span class="caps">GROUP</span> BY (1/3)</h1>
+<p>Suppose you want to list the unique customers in the following table and sum up how much each customer has spent. (Adapted from <a href="http://www.sql-tutorial.com/sql-group-by-sql-tutorial/"><span class="caps">SQL</span> Tutorial</a>)</p>
+<div class='small'>
+<table>
+	<tr>
+		<th>OrderID</th>
+		<th>OrderDate</th>
+		<th>OrderPrice</th>
+		<th>OrderQuantity</th>
+		<th>CustomerName</th>
+	</tr>
+	<tr>
+		<td> 1</td>
+		<td> 12/22/2005</td>
+		<td> 160 </td>
+		<td> 2</td>
+		<td> Smith </td>
+	</tr>
+	<tr>
+		<td> 2</td>
+		<td> 08/10/2005</td>
+		<td> 190 </td>
+		<td> 2</td>
+		<td> Johnson </td>
+	</tr>
+	<tr>
+		<td> 3</td>
+		<td> 07/13/2005</td>
+		<td> 500 </td>
+		<td> 5</td>
+		<td> Baldwin </td>
+	</tr>
+	<tr>
+		<td> 4</td>
+		<td> 07/15/2005</td>
+		<td> 420 </td>
+		<td> 2</td>
+		<td> Smith </td>
+	</tr>
+	<tr>
+		<td> 5</td>
+		<td> 12/22/2005</td>
+		<td> 1000</td>
+		<td> 4</td>
+		<td> Wood </td>
+	</tr>
+	<tr>
+		<td> 6</td>
+		<td> 10/02/2005</td>
+		<td> 820 </td>
+		<td> 4</td>
+		<td> Smith </td>
+	</tr>
+	<tr>
+		<td> 7</td>
+		<td> 11/03/2005</td>
+		<td> 2000</td>
+		<td> 2</td>
+		<td> Baldwin </td>
+	</tr>
+</table>
+</div>
 </div>
 <div class="slide">
-<h1>Classic Example: Word Counts</h1>
-<p>Count the appearance of each word in a set of documents (Pseudo-Java syntax).</p>
+<h1>Aside: <span class="caps">SQL</span> <span class="caps">GROUP</span> BY (2/3)</h1>
+<p>Here&#8217;s the query:</p>
 <div class="code-tiny">
 <pre name="code" id="code" class="brush: scala,;">
 
-void map(String name, String document) {
-  // name: document name
-  // document: document contents
-  for (String w : tokenize(document))
-    EmitIntermediate(w, "1");
-}
-
-void reduce(String word, Iterator partialCounts) {
-  // word: a word
-  // partialCounts: a list of aggregated partial counts
-  int result = 0;
-  for (String pc : partialCounts)
-    result += ParseInt(pc);
-  Emit(AsString(result));
-}
+SELECT CustomerName, SUM(OrderPrice) FROM Sales
+GROUP BY CustomerName
 </pre></div>
+<p>Note the <em>aggregate</em> function <code>SUM</code>. Combined with <code>GROUP BY</code>, it effectively sums the totals for each customer.</p>
 </div>
 <div class="slide">
-<h1>Requirements and Characteristics</h1>
+<h1>Aside: <span class="caps">SQL</span> <span class="caps">GROUP</span> BY (3/3)</h1>
+<p>Result of the query:</p>
+<div class='small'>
+<table>
+	<tr>
+		<th>CustomerName</th>
+		<th>OrderPrice</th>
+	</tr>
+	<tr>
+		<td> Baldwin</td>
+		<td> 2500 </td>
+	</tr>
+	<tr>
+		<td> Johnson</td>
+		<td> 190  </td>
+	</tr>
+	<tr>
+		<td> Smith  </td>
+		<td> 1400 </td>
+	</tr>
+	<tr>
+		<td> Wood   </td>
+		<td> 1000 </td>
+	</tr>
+</table>
+</div>
+</div>
+<div class="slide">
+<h1>MapReduce Requirements</h1>
 <ul>
 	<li>Must be able to chop data into pieces that can be processed independently, hence in parallel.
 	<ul>
 		<li>E.g., process microfiche images for each year on a separate server.</li>
+		<li>E.g., count things&#8230;</li>
 	</ul></li>
-	<li>May parallelize reduces.
+	<li>Must have a good <code>map</code> function.
 	<ul>
-		<li>E.g., one reducer per map key.</li>
+		<li>You want a balanced distribution of key-value pairs.</li>
 	</ul></li>
-	<li>May duplicate work, &#8220;wasting&#8221; resources, but getting results faster.</li>
-	<li>Framework can handle node failures.</li>
 </ul>
 </div>
 <div class="slide">
-<h1>Disadvantages</h1>
-<p>Not ideal for real-time computation; optimized for batch computation.</p>
-<p>Google is migrating to a new system called <a href="http://googleblog.blogspot.com/2010/06/our-new-search-index-caffeine.html">Caffeine</a> that provides more incremental and near-real time indexing.</p>
+<h1>Other MapReduce Characteristics</h1>
+<ul>
+	<li>You&#8217;re trading away resource efficiency for time efficiency.
+	<ul>
+		<li>You may duplicate <em>lots</em> work in the parallel processing, thereby &#8220;wasting&#8221; resources, but you can get results much faster.</li>
+	</ul></li>
+	<li>MapReduce frameworks handle distribution of processing to nodes, monitoring of nodes, including detection of node failures, and rerouting processes off failed nodes.</li>
+</ul>
+</div>
+<div class="slide">
+<h1>MapReduce Disadvantages</h1>
+<ul>
+	<li>Not all computations fit the model.</li>
+	<li>Not ideal for <em>real-time</em> computation; it&#8217;s optimized for <em>batch</em> processing.
+	<ul>
+		<li>Google is migrating to a new system called <a href="http://googleblog.blogspot.com/2010/06/our-new-search-index-caffeine.html">Caffeine</a> that provides more incremental and near-real time indexing.</li>
+	</ul></li>
+</ul>
 </div>
 <div class="slide">
 <h1>Reading: Distributed Systems and &#8220;Big Data&#8221;</h1>
@@ -209,6 +410,10 @@ void reduce(String word, Iterator partialCounts) {
 	<li>Jeffrey Dean and Sanjay Ghemawat, <a href="http://labs.google.com/papers/mapreduce.html">MapReduce: Simplified Data Processing on Large Clusters</a>.</li>
 </ul>
 <p>These authors also wrote a chapter on MapReduce called <em>Distributed Programming with Mapreduce</em>, in &#8220;Beautiful Code&#8221;, Chapter 23, pgs. 371-382.</p>
+</div>
+<div class="slide">
+<h1>Exercise: MongoDB&#8217;s MapReduce</h1>
+<p>It would be too much work to setup and use Hadoop, so we&#8217;ll do an exercise this week using MongoDB&#8217;s MapReduce implementation and our stock data. Use the MongoDB <a href="http://www.mongodb.org/display/DOCS/MapReduce">MapReduce page</a> as a reference.</p>
 </div>
 <div class="slide">
 <h1>Other References</h1>

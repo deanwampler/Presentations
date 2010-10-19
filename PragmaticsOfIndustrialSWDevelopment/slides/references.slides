@@ -219,9 +219,12 @@ h1. Distributed Systems - MapReduce Frameworks (2/2)
 
 <div class='small'>
 
+* "Pig":http://pig.apache.org/
 * "Pig: Making Hadoop Easy":http://www.slideshare.net/xefyr/pig-making-hadoop-easy.
+* "Cascalog":http://github.com/nathanmarz/cascalog.
 * "Google Percolator – global search jolt sans MapReduce comedown":http://www.theregister.co.uk/2010/09/24/google_percolator/. Google's just-announced replacement for their MapReduce-based search indexing infrastructure.
 * "Twitter Analytics Lead, Kevin Weil, and a Presenter at Hadoop World Interviewed":http://www.cloudera.com/blog/2010/09/twitter-analytics-lead-kevin-weil-and-a-presenter-at-hadoop-world-interviewed/. How Hadoop and related tools are used by Twitter.
+* "MongoDB's MapReduce":http://www.mongodb.org/display/DOCS/MapReduce.
 </div>
 
 h1. Data and Analytics
