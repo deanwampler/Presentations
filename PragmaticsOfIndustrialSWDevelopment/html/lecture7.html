@@ -117,7 +117,7 @@ List(1,2,3,4,5) filter (i =&gt; i%2 == 0)  // List(2,4)
 <h1>What Is MapReduce?</h1>
 <p>In the context of MapReduce the input collections are key-value pairs. I&#8217;ll use the word <em>dictionary</em>, rather than <em>map</em>, to avoid confusion with the map <em>operation</em>.</p>
 <ul>
-	<li><code>map</code>: Filters values of interest and partitions them based on some criteria, creating <em>new</em> key-value pairs, where the new keys are often not the same keys as in the input dictionary. There may be multiple map steps.</li>
+	<li><code>map</code>: Filters values of interest and partitions them based on some criteria, creating <em>new</em> key-value pairs, where the new keys are often not the same keys as in the input dictionary. There can be multiple, tiered map steps.</li>
 	<li>The MapReduce framework sends the new key-value pairs with the <em>same</em> key to the <em>same</em> MapReduce instance in the cluster for processing.</li>
 	<li><code>reduce</code>: Reduces the results from the nodes to compute the final result.</li>
 </ul>
@@ -149,7 +149,7 @@ void reduce(String word, Iterator partialCounts) {
 <div class="slide">
 <h1>Classic Example: Word Counts (cont.)</h1>
 <ul>
-	<li><code>map</code> returns void and calls <code>EmitIntermediate</code>.
+	<li><code>map</code> returns void and calls <code>emitNewKeyValue</code>.
 	<ul>
 		<li>You might not want to do anything with the input.</li>
 		<li>In this case, we ignore the document if it is an &#8220;index&#8221; document.</li>

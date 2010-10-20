@@ -61,7 +61,7 @@ h1. What Is MapReduce?
 
 In the context of MapReduce the input collections are key-value pairs. I'll use the word _dictionary_, rather than _map_, to avoid confusion with the map _operation_.
 
-* @map@: Filters values of interest and partitions them based on some criteria, creating _new_ key-value pairs, where the new keys are often not the same keys as in the input dictionary. There may be multiple map steps.
+* @map@: Filters values of interest and partitions them based on some criteria, creating _new_ key-value pairs, where the new keys are often not the same keys as in the input dictionary. There can be multiple, tiered map steps.
 * The MapReduce framework sends the new key-value pairs with the _same_ key to the _same_ MapReduce instance in the cluster for processing. 
 * @reduce@: Reduces the results from the nodes to compute the final result.
 
@@ -90,7 +90,7 @@ void reduce(String word, Iterator partialCounts) {
 
 h1. Classic Example: Word Counts (cont.)
 
-* @map@ returns void and calls @EmitIntermediate@. 
+* @map@ returns void and calls @emitNewKeyValue@. 
 ** You might not want to do anything with the input. 
 ** In this case, we ignore the document if it is an "index" document.
 ** Otherwise, we emit _new_ key-value pairs (1000's??), where the key is a word and the value is the count "1". Note that a duplicate word-"1" pair is emitted every time the same word appears.
