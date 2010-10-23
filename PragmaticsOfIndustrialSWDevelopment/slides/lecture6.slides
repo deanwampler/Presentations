@@ -362,9 +362,9 @@ h1. Exercise: Filter Stock Queries (cont.)
 
 Step 4: Extend @DataStorageServer@ to use other query parameters.
 
-In @DataStorageServer.getDataForRange@, the @critieria@ object is passed in as an argument.
+In @DataStorageServer.getDataForRange@, the @criteria@ object is passed in as an argument.
 
-* Add this @critieria@ object as the _third_ argument in the call to @DataStore.range@. (At this point, the compilation will fail in @sbt@.)
+* Add this @criteria@ object as the _third_ argument in the call to @DataStore.range@. (At this point, the compilation will fail in @sbt@.)
 
 h1. Exercise: Filter Stock Queries (cont.)
 
