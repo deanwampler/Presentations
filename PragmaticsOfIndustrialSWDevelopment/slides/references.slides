@@ -20,6 +20,7 @@ I don't expect you to read all these references! Some will be assigned as homewo
 
 * Dean Wampler and Alex Payne, "Programming Scala", O'Reilly, 2009. ISBN: 0596155957. My comprehensive introduction to Scala. You can read it for free by following the links on "http://programmingscala.com":http://programmingscala.com or on "Loyola's Safari Books Online":http://proquestcombo.safaribooksonline.com.flagship.luc.edu/.
 * Harold Abelson and Gerald Jay Sussman, "Structure and Interpretation of Computer Programs", MIT Press, 1996. ISBN: 0262011530. "Online access":http://mitpress.mit.edu/sicp/. A one-volume survey of computer science. Master this book and you'll be well ahead of most software developers!
+* Erich Gamma, Richard Helm, Ralph Johnson, John M. Vlissides, "Design Patterns: Elements of Reusable Object-Oriented Software", Addison-Wesley, 1994, ISBN 0201633612. Possibly the most important software development book of the last 20 years (and still a best seller). Because there are four authors and this book was published not long after the infamous trial in China of the _Gang of Four_ (including Mao's widow), the authors are affectionately known as the "Gang of Four" and this book is informally called the "Gang of Four book".
 * Andrew Hunt and David Thomas, "The Pragmatic Programmer: From Journeyman to Master", Addison-Wesley, 1999. ISBN: 020161622X. Very good advice for growing your professional career.
 </div>
 
@@ -256,6 +257,42 @@ h1. Git Resources
 * "git-scm.com":http://git-scm.com for downloads and documentation.   
 * "github.com":http://github.com (where the project code will be hosted) also has helpful documentation. 
 * "Why aren't you using git-flow?":http://jeffkreeftmeijer.com/2010/why-arent-you-using-git-flow/.
+</div>
+
+h1. Object-Oriented Programming (General)
+
+<div class='small'>
+
+* * "Object-oriented programming":http://en.wikipedia.org/wiki/Object-oriented_programming (Wikipedia).
+* Bertrand Meyer, "Object-Oriented Software Construction, 2nd Edition", Prentice Hall, 2000, ISBN 0-13-629155-4.
+* Rebecca Wirfs-Brock  and Alan McKean, "Object Design: Roles, Responsibilities, and Collaboration", Addison-Wesley, 2003, ISBN 0201379430.
+* James Rumbaugh, et al., "Object-Oriented Modeling and Design", Prentice Hall, 1991, ISBN 0-13-629841-9.
+* Grady Booch, "Object-Oriented Analysis and Design with Applications, 3rd Edition", Addison-Wesley, 2007, ISBN 020189551X.
+
+</div>
+
+h1. Design by Contract
+
+<div class='small'>
+
+* "Design by Contract":http://en.wikipedia.org/wiki/Design_by_contract.
+* "Contract4J":http://contract4j.org.
+
+</div>
+
+h1. Object-Oriented Programming (Specifics)
+
+<div class='small'>
+
+* Erich Gamma, Richard Helm, Ralph Johnson, John M. Vlissides, "Design Patterns: Elements of Reusable Object-Oriented Software", Addison-Wesley, 1994, ISBN 0201633612. See the longer discussion in the first *Recommended Reading* section.
+* <a href="http://en.wikipedia.org/wiki/Design_pattern_(computer_science)">Design Pattern</a>. This page doesn't provide a great discussion of what a design pattern *is*, but it does offer a nice catalog of known (or alleged) patterns.
+* "Design Patterns":http://sourcemaking.com/design_patterns. A succinct description of patterns and details on the 
+* "Abstract Factory Design Pattern":http://en.wikipedia.org/wiki/Abstract_factory_pattern (Wikipedia).
+* "Singleton Design Pattern":http://en.wikipedia.org/wiki/Singleton_pattern (Wikipedia).
+* <a href="http://en.wikipedia.org/wiki/Solid_(object-oriented_design)">SOLID Principles of Object-Oriented Design</a> (Wikipedia).
+* "Principles of OOD":http://butunclebob.com/ArticleS.UncleBob.PrinciplesOfOod. An older, but more complete blog post and accompanying articles (PDFs) that describe the SOLID principles.
+* Eric Evans, "Domain-Driven Design - Tackling Complexity in the Heart of Software", Addison-Wesley, 2004, ISBN 0321125215.
+
 </div>
 
 h1. General Programming

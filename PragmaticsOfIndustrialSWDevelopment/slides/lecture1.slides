@@ -39,6 +39,7 @@ h1. Course _Administrivia_
 
 h1. Schedule
 
+(Revised 10/26)
 |  8/31 | Course Intro and Scaling Computation, Part I (Multithreaded Programming, Actor Concurrency) |
 |  9/07 | Scaling Computation, Part II (Agents, Software Transactional Memory, Memory is the New Disk) |
 |  9/14 | Scaling Systems, Part I (Vertical vs. Horizontal Scaling, Distributed Systems like HTTP, etc.) _Last day to withdraw without a W grade._ |
@@ -50,14 +51,14 @@ h1. Schedule (cont.)
 | 10/05 | Scaling Data, Part III (Example NoSQL databases) |
 | 10/12 | Midterm break |
 | 10/19 | Midterm, Scaling Systems, Part II (MapReduce) |
-| 10/26 | Recent Advances in Object-Oriented Programming |
-| 11/02 | Functional Programming: Into the Real World |
-| 11/09 | Object-Oriented Programming vs. Functional Programming: a Critique of Pure Programming |
+| 10/26 | Effective Object-Oriented Programming, Part I |
+| 11/02 | Effective Object-Oriented Programming, Part II |
+| 11/09 | Functional Programming: Into the Real World |
+| 11/16 | Object-Oriented Programming vs. Functional Programming: a Critique of Pure Programming |
 
 h1. Schedule (cont.)
 
-| 11/16 | Complexity vs. Simplicity Part I: Effective Software Development Processes |
-| 11/23 | Complexity vs. Simplicity Part II: Scrum, XP, and Lean |
+| 11/23 | Complexity vs. Simplicity Part I: Effective Software Development Processes, including Scrum, XP, and Lean |
 | 11/30 | Complexity vs. Simplicity Part III: Simple Systems |
 | 12/07 | Student Presentations on the Code Project, Course Review |
 | 12/14 | Final Exam (regular class time) |

@@ -1,1 +1,732 @@
-h1. Lecture 8: Recent Advances in Object-Oriented Programming (OOP)
+h1. Lecture 8: Effective Object-Oriented Programming (OOP), Part I
+
+Object-oriented programming (OOP) is the most popular _paradigm_ for software development. It's been around a while, but people continue to refine it.
+
+h1. What Is OOP?
+
+It depends on who you ask. There are different _flavors_ of OOP and different feature sets that systems support which claim to be object-oriented.
+
+Almost all flavors include this:
+
+*Object*: An _encapsulation_ of _state_ and _functions_ that manipulate that state.
+
+h1. What Is OOP? (cont)
+
+*Encapsulation:* Limit the scope for access. Object systems usually provide means to protect access to object internals.
+*State:* The logical combination of the values of the object's _properties_ (a.k.a. _fields_ or _attributes_).
+*Functions:* Like normal functions, but with special access to the internals of the object, and with an implicit or explicit parameter referring to the object (e.g., @this@ or @self@).
+
+h1. More Terms
+
+You'll also see these terms used in some, but not all language communities.
+
+*Member*: A generic term for an object's functions and its properties (a.k.a. fields or attributes). 
+*Member function* or *Method*: what the object's functions are sometimes called.
+
+Also,
+
+*State space*: All the possible values of _state_ an object might have.
+
+h1. Encapsulation
+
+OO languages let you limit the access to object internals and even to objects themselves. For example, in Java:
+
+:inlinecode lang=scala, class=code-small
+package com.example.gui.windowing;
+
+public interface Window {...}
+...
+private class MacWindow implements Window {
+  protected MacWindow(Dimensions dimensions) {
+    this.dimensions = dimensions;
+  }
+  
+  private Dimensions dimensions;
+}
+:endinlinecode 
+
+Only types in the same package can create @MacWindow@, @X11Window@, etc. objects and only the objects can access their @dimensions@.
+
+h1. Encapsulation (cont.)
+
+Why is encapsulation important?
+
+* To expose the *abstractions* represented by the object.
+* To hide the *implementation* details used inside the object.
+* To clearly mark the line of separation between the two.
+
+Hiding the implementation has several advantages.
+
+* It gives the maintainer the freedom to change the internals as needed, while (hopefully) keeping the abstraction _invariant_ (unchanged).
+* Minimizes the _coupling_ between the object and the clients of the object.
+
+h1. Aside: Coupling
+
+Unnecessary coupling between objects is one of the _most serious impediments_ to productivity and quality (minimizing bugs) in mature software projects.
+
+I once worked with a client with such a serious coupling problem that it was extremely difficult to implement new, competitive features. They also had to deploy *multi-gigabyte* jar files (far larger than the JVM itself), because they couldn't separate the "components" into smaller "groups".
+
+h1. Module Encapsulation
+
+But most OO languages have poor support for building _components_ or _modules_, collections of classes that work closely together. You only want _clients_ to access a limited set of publicly visible types.
+
+*Abstract Factory Pattern* (see "Design Patterns: Elements of Reusable Object-Oriented Software"):
+
+<center>
+  <span style="width: 100%;">
+    <img src="images/Windows_WindowsFactories.png"></img>
+  </span>
+</center>
+
+
+h1. Module Encapsulation (cont.)
+
+Scala has better encapsulation controls, so we can achieve this public/private separation. You can more precisely specify package visibility, for example. However, everything is public, by default, and people rarely think about _component-level encapsulation_. 
+
+A separate "module" construct would make the language bigger, but also make people think more about _modularity_.
+
+h1. Module Encapsulation (cont.)
+
+:inlinecode lang=scala, class=code-small
+package gui.windowing {
+
+  trait Window(dimensions: Dimensions) {...}  
+  trait WindowFactory {
+    def make(dimensions: Dimensions): Window
+  }
+  
+  protected[windowing] package mac {
+    MacWindow(...) extends Window(...) {...}
+    object MacWindowFactory extends WindowFactory {
+      def make(properties: Properties): Window = {...}
+    }
+  }
+  protected[windowing] package windows {
+    WindowsWindow(...) extends Window(...) {...}
+    ...
+  }
+  ...
+}
+:endinlinecode 
+
+h1. Module Encapsulation (cont.)
+
+In this example, the _abstractions_ @Window@ and @WindowFactory@ are public and visible to clients of @gui.windowing@, while the _concrete_ classes for each GUI platform are protected from clients, yet visible to any type within the @windowing@ package hierarchy.
+
+h1. Module Encapsulation (cont.)
+
+Other languages are more explicit about public vs. private scoping. In Erlang, for example, you must declare which functions are accessible ("exported") to clients. All others are private to the module.
+
+h1. Good Object Design: Lesson 1
+
+Think carefully about modular boundaries. 
+* What _minimal abstractions_ should this module expose?
+* What are implementation details that should be hidden?
+* What characteristics are likely to change a lot as the module evolves?
+** These are best hidden!
+* What characteristics are more stable?
+** These are safer to expose.
+** Often core domain concepts don't change often (but not always!).
+
+Remember that any changes to public abstractions require the client code to change and retest!
+
+h1. State
+
+Consider this expanded example of the @Window@ abstraction.
+
+:inlinecode lang=scala, class=code-small
+package gui.windowing {
+
+  trait Window(dimensions: Dimensions) {
+    protected var _dimensions: Dimensions
+    protected var _position: Point
+    protected var _hidden: Boolean
+    
+    def resize(newDimensions: Dimensions): Unit // like "void"
+    def moveTo(newPosition: Point): Unit   
+    def hide: Unit
+    def show: Unit
+  }  
+}
+:endinlinecode 
+
+h1. State (cont.)
+
+The _state_ is the "sum" of the current values of @dimensions@, @position@, and @hidden@. Put another way, it is a particular value, represented here by a 3-dimensional _tuple_ in the _state space_.
+
+<center>
+  <span style="width: 100%;">
+    <img src="images/StateSpace.png"></img>
+  </span>
+</center>
+
+(Of course, @Dimensions@ and @Position@ are themselves 3-dimensional.)
+
+h1. Good Object Design: Lesson 2
+
+A common source of bugs is poorly-managed object state. To avoid this problem:
+
+* Once a constructor completes, the object should be in a _known-good state_.
+* _Every_ method should transition the object from one known-good state to another (possibly the same) known-good state.
+* Clean up resources when the object becomes garbage.[1][2]
+
+[1] C++ and C# have _destructors_ for this purpose (but they may be invoked too late for some resources, like database connections).
+[2] Java has finalizers, but they are effectively useless, maybe even harmful.
+
+h1. Design by Contract[1]
+
+"Design by Contract":http://en.wikipedia.org/wiki/Design_by_contract (DbC) is a programming discipline where you specify assertions about program behavior that the language infrastructure can enforce during testing, but disable in production deployments, for performance reasons.
+
+[1] A registered trademark of Eiffel Software
+
+h1. Design by Contract (cont.)
+
+There are three facets of a contract.
+* *Preconditions:* Assertions about state that must be true when entering a function.
+* *Postconditions:* Assertions about state that must be true when returning from a function.
+* *Invariants:* Assertions that should be true both before and after function invocation.
+
+It's possible to define these at the object level, i.e., applicable to all its functions, especially invariants.
+
+h1. Preconditions
+
+*Preconditions* are what must be true in order for the function to do its job. A trivial example: there must be enough free memory for the function to allocate the objects it creates.
+
+Hence, these are requirements on the runtime environment and the clients using the function. Here is an example using our Windowing API and a "mythical" DbC framework that uses annotations.
+ 
+:inlinecode lang=scala, class=code-small
+package gui.windowing {
+
+  @precondition(dimensions.foreach {dimension => 
+    dimension.greaterThanZero == true})
+  trait Window(dimensions: Dimensions) {
+    ...
+  }  
+}
+:endinlinecode 
+
+h1. Postconditions
+
+*Postconditions* are what the function guarantees to satisfy when it finishes its job, _if_ the preconditions are true. A trivial example: a function might promise to never return @null@.
+
+Hence, these are requirements on the function itself, constituting promises to clients. Here is an example using our Windowing API.
+ 
+:inlinecode lang=scala, class=code-small
+package gui.windowing {
+
+  trait Window(dimensions: Dimensions) {
+    @postcondition(this.position.isVisibleOnScreen)
+    def moveTo(newPosition: Point): Unit
+    ...
+  }  
+}
+:endinlinecode 
+
+h1. Invariants
+
+*Invariants* must be true before and after function invocation. They may specify some object (or global) property that doesn't change. They may specify a logical constraint that must remain true, etc. Invariants can be requirements on the function, the environment, or both.
+ 
+:inlinecode lang=scala, class=code-small
+package gui.windowing {
+
+  trait Window(dimensions: Dimensions) {
+    @invariant(this.hidden == $previous.hidden)
+    def moveTo(newPosition: Point): Unit
+    ...
+  }  
+}
+:endinlinecode 
+
+I'm using @$previous.hidden@ to refer the state of the @hidden@ property _before_ the function invocation.
+
+h1. Tool Support for Design by Contract
+
+DbC was "invented for Eiffel":http://eiffel.com/developers/design_by_contract.html, which contains language constructs for expressing constructs and for enforcing the constructs at runtime. Normally, enforcement is disabled in production builds, for performance.
+
+Few other languages embraced DbC to this extent (unfortunately), but you can come very close using other tools.
+
+* I wrote a DbC library for Java called "Contract4J":http://contract4j.org (now dormant). It used "AspectJ":http://aspectj.org to "instrument" code to inject the tests and to evaluate them at runtime.
+* I wrote a general-purpose "aspect" framework for Ruby called "Aquarium":http://aquarium.rubyforge.org/, which also lets you do "basic" DbC.
+
+h1. DbC and Test-Driven Development
+
+_Test-Driven Development_ (TDD), which we'll discuss in a few weeks, accomplishes many of the same goals as DbC. It is now more commonly used. 
+
+Before TDD, in the early 90's, I used DbC very successfully in a medical ultrasound project (written in C). Only *one* bug was ever reported against our subsystem. I still think in DbC terms, even when using TDD.
+
+h1. Classes
+
+So far, we have just discussed *objects*.
+
+*Class*: A template for creating objects. 
+
+Like a cookie cutter used to stamp out objects with the same members and with a particular state value. We've already used this familiar concept supported by Scala and Java. 
+
+h1. Scala Has Classes (for Example)
+
+Scala example, patterned after Java's @Exception@ Hierarchy:
+:inlinecode lang=scala, class=code-small
+class Exception(
+    message: String = "[No Message]", 
+    cause: Option[Exception] = None) {
+
+  def stackTrace: List[String] = ...
+}
+
+val exception1 = new Exception("Network error")
+println(exception1.message + ": " + exception1.stackTrace)
+
+val exception2 = new Exception("Unknown Stock Symbol")
+println(exception2.message + ": " + exception2.stackTrace)
+:endinlinecode 
+
+h1. Inheritance
+
+*Inheritance*: When one class inherits the members of another, with added _specializations_.
+
+*Specialization*: Going from more generic to more specific.
+
+<center>
+  <img src="images/UML1.png"></img>
+</center>
+
+h1. Inheritance in Scala
+
+:inlinecode lang=scala, class=code-small
+class NetworkException(
+    address: IpAddress, 
+    message: String = "", 
+    cause: Option[Exception] = None) extends Exception(
+      formatMessage(address, message), cause){
+  
+  def formatMessage(address: IpAddress, message: String) = ...
+}
+class ConnectionFailed(...) extends NetworkException(...) {...}
+
+val address = new IpAddress("google.com")
+val exception = new ConnectionFailed(address)
+println(exception.message + ": " + exception.stackTrace)
+:endinlinecode 
+
+h1. Specialization
+
+Note these two classes:
+
+:inlinecode lang=scala, class=code-small
+class Exception(
+    message: String = "[No Message]", 
+    cause: Option[Exception] = None) {
+  ...
+}
+
+class NetworkException(
+    address: IpAddress, 
+    message: String = "", 
+    cause: Option[Exception] = None) extends Exception(...) {
+  ...
+}
+:endinlinecode 
+
+@Exception@ has two properties, @message@ and @cause@, while @NetworkException@ has those properties plus the @address@ property.
+
+h1. Specialization (cont.)
+
+Note that the set of possible @NetworkException@ objects is _smaller_  than the set of possible @Exception@ objects, even though @NetworkException@ has one _more_ *property* than @Exception@ has. This is because a valid @Exception@ object can be an instance of other kinds of exceptions, e.g., @NullPointerException@, @InvalidArgumentException@, etc.
+
+However, there are _fewer_ possible behaviors for *methods* (*member functions*) in @Exception@ than for @NetworkException@, because @Exception@ has fewer *properties* upon which a method could act.
+
+In other words, when I have a reference to an @Exception@, I can't do as much with it as I can do if I know I have a @NetworkException@.
+
+h1. Specialization (cont.)
+
+To be explicit:
+
+:inlinecode lang=scala, class=code-small
+val ex = new Exception("Boo!", someOtherException)
+println(ex.message)
+println(ex.cause)
+
+// vs.
+
+val nex =  NetworkException(new IpAddress("google.com"),
+  "Bogus address?", looksLikeABogusAddressException)
+  
+println(nex.address)
+println(nex.message)
+println(nex.cause)
+:endinlinecode 
+
+h1. Liskov Substitution Principle (LSP)
+
+_Let q(x) be a property provable about objects x of type T. Then q(y) should be true for objects y of type S where S is a subtype of T._
+
+<span style="text-align: right; width: 100%">
+(The "Liskov Substitution Principle":http://en.wikipedia.org/wiki/Liskov_substitution_principle)
+</span>
+
+It's a definition of _subtyping_; If I claim that @S@ is a subtype of @T@, then objects of type @S@ must obey the _contract_ defined for objects of type @T@.
+
+I said _contract_, didn't I? There's a close relationship between LSP and Design by Contract.
+
+h1. Liskov Substitution Principle (cont.)
+
+<center>
+@Square@ _is a_ @Rectangle@
+</center>
+
+True? What does _is a_ mean??
+
+h1. Liskov Substitution Principle (cont.)
+
+What's the contract for @Rectangle@?
+
+:inlinecode lang=scala, class=code-small
+// We'll ignore its position
+class Rectangle(val height: Int, val width: Int) {
+  @invariant(this.height == $previous.height)
+  def setWidth(w: Int) = width = w
+  
+  @invariant(this.width == $previous.width)
+  def setHeight(h: Int) = height = h
+}
+:endinlinecode 
+
+h1. Liskov Substitution Principle (cont.)
+
+A test for @Rectangle@:
+
+:inlinecode lang=scala, class=code-small
+val r = new Rectangle(2, 4)
+r.setWidth(3)
+assert (r.height == 4)  // didn't change
+:endinlinecode 
+
+h1. Liskov Substitution Principle (cont.)
+
+I claim that @Square@ _is a_ @Rectangle@:
+
+:inlinecode lang=scala, class=code-small
+class Square(val side: Int) extends Rectangle(side, side)
+
+val s = new Square(4)
+s.setWidth(3)
+assert (s.height == 4)  // True???
+:endinlinecode 
+
+No.
+
+h1. Liskov Substitution Principle (cont.)
+
+The claim that @Square@ _is a_ @Rectangle@ is not precise enough.
+
+Rather it is @Square@ _behaves as a_ @Rectangle@, which is _false_.
+
+LSP tells us that substitutability is based on _behavior_, not "structural" simularities.
+
+h1. Liskov Substitution Principle (cont.)
+
+But it's not always false that @Square@ _behaves as a_ @Rectangle@!
+
+* If @Square@ and @Rectangle@ are _immutable_, then @Square@ is substitutable for @Rectangle@, because the breakage was related to mutation!
+* Note that contracts are two-way, involving a client. If the client never modifies a square, then the rectangle contract is never tested.
+
+So, once again, we need to understand an object's _contract_.
+
+h1. Prototype-Based Languages
+
+_Not all OO systems have classes!_
+
+_Prototype-based languages_ don't have classes. (Hence they are also called _classless_ languages.) Instead, you just build up objects "from scratch".
+
+JavaScript object-literal notation (essentially, a hash map):
+:inlinecode lang=scala, class=code-small
+var exception = {
+  address: "google.com",
+  message: "Could not connect to google.com",
+  stackTrace: function() { ... }
+};
+console.log(exception.stackTrace());
+:endinlinecode 
+
+h1. Prototype-Based Languages (cont.)
+
+You can add and remove members at will after creating the object.
+
+:inlinecode lang=scala, class=code-small
+delete exception.address;   // remove the 'address' element
+
+exception.name = "ExceptionFormerlyRepresentingANetworkException";
+:endinlinecode 
+
+h1. Aside: _Open Classes_
+
+Note that many _dynamically-typed, class-based_ languages, e.g., Ruby, allow this kind of object modification, too. They are said to have _open classes_. 
+
+Most _statically-typed_ languages, like Scala, Java, C#, and C++, have closed classes. You can't add or remove members in objects.[1]
+
+[1] There are some workarounds, both byte-code level hacks and some language features, like Scala's _implicits_.
+
+h1. Prototype-Based Languages (cont.)
+
+In most prototype-based languages, there is a @clone@ method for making _shallow_ or _deep_ copies from existing objects. 
+
+* *shallow copy*: References to members are _shared_.
+* *deep copy*: References to members are also copied _recursively_.
+
+Shallow copies are cheaper, but you have to be careful about modifying members; all copies will see the modifications. Deep copies are more expensive, but cleanly separate the states of the objects.
+
+h1. Prototype-Based Languages (cont.)
+
+Once you have a clone, then you can extend it to add new members (i.e., _specialize_ it). So:
+
+_Pure prototype-based languages don't have class-based inheritance._ 
+
+Instead, they support per-object extension.
+
+h1. Good Object Design: Lesson 3
+
+@NullPointerExceptions@ (@NPEs@) are a serious problem in applications, usually indicating bugs. Can we eliminate @nulls@ and @NPEs@? We can reduce their occurrence if we explicitly represent the concept of _optional_.
+
+We need a type that says, "I either have a value for you or I don't."
+
+h1. Java Map API
+
+:inlinecode lang=java, class=code-small
+interface Map<K,V> {
+  ...
+  V get(Object key);
+  ...
+}
+:endinlinecode 
+
+Note that @get@ could return @null@ or an object. It's easy to forget to check for @null@. 
+
+*Problem:* The API doesn't explicitly state that @nulls@ are a possible return value. (You have to read the documentation.)
+
+h1. Scala Map API
+
+:inlinecode lang=scala, class=code-small
+trait Map[K,+V] {
+  ...
+  def get(K key): Option[V]
+  ...
+}
+:endinlinecode 
+
+Note that the return value, @Option[V]@ explicitly says, "I might not have a value for that key." Put another way, "It's optional that I'll return a value..."
+
+h1. @Option[+A]@
+
+From the Scala library source:
+
+:inlinecode lang=scala, class=code-small
+sealed abstract class Option[+A] {
+  def isEmpty: Boolean
+  def get: A
+  ...
+}
+final case class Some[+A](x: A) extends Option[+A] {
+  def isEmpty: Boolean = false
+  def get: A = x
+}
+case object None extends Option[Nothing] {
+  def isEmpty: Boolean = true
+  def get = throw new NoSuchElementException("None.get")
+}
+:endinlinecode 
+
+h1. @Option[+A]@: Sealed Hierarchies
+
+:inlinecode lang=scala, class=code-small
+sealed abstract class Option[+A] {
+  def isEmpty: Boolean
+  def get: A
+  ...
+}
+:endinlinecode 
+
+*sealed:* Only allowed subclasses must be defined in the _same file_.
+
+Sometimes you want the type hierarchy to be open ended, e.g., geometric shapes in a graphics program. Other times, a class hierarchy represents a _finite set of well-defined "members"_.
+
+h1. @Option[+A]@: Sealed Hierarchies (cont.)
+
+@Option[+A]@ abstracts over a set with two elements, "something" (@Some[+A]@) and "nothing" (@None@).
+
+:inlinecode lang=scala, class=code-small
+sealed abstract class Option[+A] {...}
+... Some[+A](x: A) extends Option[+A] {...}
+... None extends Option[Nothing] {...}
+:endinlinecode 
+
+h1. @Option[+A]@: Abstract
+
+:inlinecode lang=scala, class=code-small
+sealed abstract class Option[+A] {
+  def isEmpty: Boolean
+  def get: A
+  ...
+}
+:endinlinecode 
+
+*abstract:* The type _declares_ an abstraction. Zero or more members that are _declared_ might also be _defined_ here.
+
+We're only showing abstract method declarations here, but the full @Option[+A]@ type also has many _concrete_ methods.
+
+h1. @Option[+A]@: _Covariant_ Typing (@[+A]@)
+
+:inlinecode lang=scala, class=code-small
+sealed abstract class Option[+A] {
+  def get: A
+  def isEmpty: Boolean
+  ...
+}
+:endinlinecode 
+
+*+A:* If @B@ is a _subtype_ of @A@, then @Option[B]@ is a _subtype_ of @Option[A]@.
+
+There are also cases where you want @SomeType[-A]@, where if @B@ is a _subtype_ of @A@, then @Option[B]@ is a _supertype_ of @Option[A]@. We'll come back to the question of what constitutes a _subtype_.
+
+h1. @Option[+A]@: @final@ class
+
+:inlinecode lang=scala, class=code-small
+final case class Some[+A](x: A) extends Option[+A] {
+  def isEmpty: Boolean = false
+  def get: A = x
+}
+:endinlinecode 
+
+*final*: You are not allowed to _subtype_ this type. 
+
+Part of the enforcement of the property that @Option[+A]@ has a fixed, well-defined set of subtypes.
+
+h1. @Option[+A]@: @case@ class
+
+:inlinecode lang=scala, class=code-small
+final case class Some[+A](x: A) extends Option[+A] {
+  def isEmpty: Boolean = false
+  def get: A = x
+}
+:endinlinecode 
+
+*case*: Causes the compiler to add additional methods. that are very useful.
+
+h1. @Option[+A]@: @case@ class (cont.)
+
+Properties of @case@ classes:
+
+* All constructor arguments default to @vals@ (_fields_).
+* Methods @toString@, @equals@, @hashCode@ generated.
+* A _companion object_, @object Some@, is also generated. It has these methods:
+** @apply(x: A)@: a _factory_ for creating a @Some[A]@ without @new@. E.g.,
+
+:inlinecode lang=scala, class=code-small
+def apply[A](x: A) = new Some(x)
+:endinlinecode 
+
+** @unapply[A](s: Some[A])@: a special method used in _pattern matching_ to extract the wrapped value without calling @get@ directly, etc.
+
+h1. @Unapply@ and Pattern Matching
+
+Here's a standard Scala idiom for extracting values from a map:
+
+:inlinecode lang=scala, class=code-small
+val oddMap = Map("one" -> 1, "three" -> 3, ...)
+oddMap.get("two") match {
+  case Some(value) => println("two -> "+value)
+  case None => println("No value for \"two\"")
+}
+:endinlinecode 
+
+Notice how we can't _avoid_ handling the case where nothing was available for the key. If we tried to treat the object returned by @get@ as an @Int@ and call @Int@ methods, we would get type errors. If @get@ returned @null@, the compiler couldn't catch the error.
+
+h1. @Option[+A]@: @case@ class (cont.)
+
+So, adding @case@ to the declaration is equivalent to this:
+:inlinecode lang=scala, class=code-small
+final class Some[+A](val x: A) extends Option[+A] {
+  def isEmpty: Boolean = false
+  def get: A = x
+  def equals(other: AnyRef): Boolean = {...}
+  def hashCode: Int = {...}
+  def toString: String = {...}
+}
+object Some {
+  def apply[A](x: A) = new Some(x)
+  def unapply[A](s: Some[A]) = {...}
+}
+:endinlinecode 
+
+h1. @Option[+A]@: @object@ (_Singletons_)
+
+*Singleton*: Where one and only one instance of a type is allowed.
+
+In most languages, you use a convention, the "Singleton Design Pattern":http://en.wikipedia.org/wiki/Singleton_pattern to do this. In scala, it's a keyword, @object@.
+
+:inlinecode lang=scala, class=code-small
+case object None extends Option[Nothing] {
+  def isEmpty: Boolean = true
+  def get = throw new NoSuchElementException("None.get")
+}
+:endinlinecode 
+
+We only need one instance of @None@, because it has only one possible _state_, hence it's best to use a singleton @object@.
+
+h1. @Option[+A]@: @Nothing@
+
+*Nothing*: A subtype of _all_ other types, with _no_ instances.
+
+Used for proper type safety.
+:inlinecode lang=scala, class=code-small
+case object None extends Option[Nothing] {...}
+:endinlinecode 
+
+Because @None@ extends @Option[Nothing]@ _and_ @Option[+A]@ is _covariant_ in @A@, a @None@ can be used anywhere an @Option[+A]@ is required.
+
+h1. @Option[+A]@ vs. @null@ Recap
+
+Note that we used the type system and names to more explicitly describe code behavior.
+
+The names chosen for the classes in the exception hierarchy also demonstrate this goal.
+
+However, there needs to be a balance between _abstraction_ and _concreteness_.
+
+h1. Recap: Good Object-Oriented Design, Part I
+
+* Clarify your encapsulation boundaries.
+* Always be in a known good state.
+* Know the possible states of your objects.
+** Make the type system work for you.
+* Clarify the contract of use.
+** Don't forget how it applies to subclasses!
+* Avoid @nulls@ with @Option[+A]@.
+
+h1. Exercise
+
+I'm not assigning a new exercise this week. Rather, I'm assigning more reading than usual. Also, since many of you are behind on the project assignment, I want you to try to catch up this week.
+
+h1. Reading Assignment: SOLID Principles
+
+The SOLID principles (an acronym) of OO design include the Liskov Substitution Principle and 4 others. They were cataloged by my former boss, Robert "Uncle Bob" Martin.
+
+* <a href="http://en.wikipedia.org/wiki/Solid_(object-oriented_design)">SOLID Principles of Object-Oriented Design</a> (Wikipedia).
+* "Principles of OOD":http://butunclebob.com/ArticleS.UncleBob.PrinciplesOfOod. An older, but more complete blog post and accompanying articles (PDFs) that describe the SOLID principles.
+
+h1. Reading Assignment: Design Patterns
+
+Design Patterns are one of the most influential ideas in software development in the last 20 years. At some point, you should buy your own copy of Erich Gamma, Richard Helm, Ralph Johnson, John M. Vlissides, "Design Patterns: Elements of Reusable Object-Oriented Software", Addison-Wesley, 1994, ISBN 0201633612. The authors are affectionately known as the _Gang of Four_. For now, read the following.
+
+* <a href="http://en.wikipedia.org/wiki/Design_pattern_(computer_science)">Design Pattern</a>. Provides some historical background, but not a very clear description of what patterns *are*. Also has a good list of documented patterns.
+* "Design Patterns":http://sourcemaking.com/design_patterns. A succinct description of the concept of patterns and description of the _Gang of Four_ patterns.
+
+h1. Reading Assignment: Specific Design Patterns
+
+Read the Wikipedia (or SourceMaking) descriptions of these, representative patterns.
+* "Abstract Factory Pattern":http://en.wikipedia.org/wiki/Abstract_factory_pattern.
+* "Singleton Pattern":http://en.wikipedia.org/wiki/Singleton_pattern.
+* "Observer Pattern":http://en.wikipedia.org/wiki/Observer_pattern.
+
+h1. Reading Assignment: Design by Contract
+
+* "Design by Contract":http://en.wikipedia.org/wiki/Design_by_contract.
+

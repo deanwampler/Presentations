@@ -1,1 +1,29 @@
-h1. Lecture 9: Functional Programming (FP): Into the Real World
+h1. Lecture 9: Effective Object-Oriented Programming (OOP), Part II
+
+h1. Some History
+
+|_.Year |_.Event|
+| 1967 | Simula created |
+| 1978 | Smalltalk |
+| 1984 | Macintosh |
+| 1987 | C++ |
+| 1995 | Java |
+| 2003 | Scala |
+| 2007 | Clojure |
+
+h1. Composition vs. Inheritance
+
+h1. Problems with Objects
+
+h1. Clone
+
+h1. Equals
+
+h1. Typing
+
+h1. LSP revisited
+
+Covariant and Contravariant behaviors.
+
+h1. Concurrency
+
