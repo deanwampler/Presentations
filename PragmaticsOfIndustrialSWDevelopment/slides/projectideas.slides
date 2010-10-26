@@ -51,6 +51,7 @@ h1. Other Research
 Another option is to do more in-depth reading on a topic we covered in the class (or convince me that a topic is close enough), then prepare a brief (3-4 page writeup) on your findings. Here are some examples.
 
 * If you are interested in learning more about Hadoop, investigate the many supporting tools that have been developed to make it easier to use.
+* Investigate other databases, like Cassandra, Neo4J, etc.
 * Investigate other concurrency approaches, like data-flow concurrency.
 * Investigate other parts of Akka.
 
