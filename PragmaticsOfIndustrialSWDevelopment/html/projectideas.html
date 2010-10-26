@@ -50,8 +50,72 @@
 <div class="presentation">
 <div class="slide">
 <h1>Appendix: Final Project Ideas</h1>
-<p>Recall that you will need to do a short presentation on the last class day, where you discuss a small aspect of the long-running project. This &#8220;aspect&#8221; could include extending the stock application with a new feature, doing a non-trivial calculation with the MongoDB database directory, or another topic related to the course.</p>
-<p>The following list is designed to give you ideas, but I&#8217;m open to other ideas. Please select a topic to work on and discuss it with me by November </div></p>
+<p>Recall that you will need to do a short presentation on the last day of class. You will discuss some aspect of the long-running <span class="caps">NYSE</span> project or some other topic you worked on or studied. For example, you could extend the <span class="caps">NYSE</span> application with a new feature, you could do more analysis of the data in the MongoDB database, or you could explore another topic related to the course.</p>
+<p>The following list is designed to give you ideas, but I&#8217;m open to other ideas. Please select a topic to work on and discuss it with me by <b>November 9<sup>th</sup></b>. Don&#8217;t forget to consider the course topics that we haven&#8217;t covered yet!</p>
+</div>
+<div class="slide">
+<h1>Analysis of the <span class="caps">NYSE</span> Data</h1>
+<p>Write Mongo JavaScript functions, possibly using MapReduce, to do additional analysis of the data. Possibilities include:</p>
+<ul>
+	<li>Find the most volatile stocks or time periods.</li>
+	<li>Calculate 50 and 200 day moving averages for many stocks over a time range.</li>
+	<li>Look for correlations. For example, do some stocks tend to move together, not just because of overall market trends, indicating some sort of dependency?</li>
+	<li>Analyze the dividends collections in some way.</li>
+</ul>
+</div>
+<div class="slide">
+<h1>Analysis of the <span class="caps">NYSE</span> Data (cont.)</h1>
+<p>Extend the <span class="caps">NYSE</span> application:</p>
+<ul>
+	<li>Calculate moving averages on demand and graph the results along with the closing price.</li>
+	<li>Graph daily volumes instead of price.</li>
+	<li>Show price data graphs using <em>candle stick</em> charts, which can be used to show open, close, high, low, and even volume in one presentation. (A good way to learn the UI code base and data visualization.)</li>
+</ul>
+</div>
+<div class="slide">
+<h1>Analysis of the <span class="caps">NYSE</span> Data (cont.)</h1>
+<p>Extend the <span class="caps">NYSE</span> application (cont.):</p>
+<ul>
+	<li>Allow more arbitrary queries, using a little Domain Specific Language (<span class="caps">DSL</span>). (Hard)</li>
+	<li>Explore other kinds of graphical representations of data. (Also good if you are interested data visualization.)</li>
+	<li>Replace MongoDB with another database, like Cassandra or Riak.</li>
+</ul>
+</div>
+<div class="slide">
+<h1>Map/Reduce</h1>
+<p>If you are really interested in <em>Big Data</em>, then mastering MapReduce is an essential skill.</p>
+<ul>
+	<li>Develop an application, perhaps based on one of the previous suggestions, that uses Mongo&#8217;s MapReduce as the backend.</li>
+	<li>Develop a simple Hadoop application.</li>
+</ul>
+</div>
+<div class="slide">
+<h1>System Operations Issues</h1>
+<p>There are a lot of issues involved in taking an application idea and turning it into a scalable, robust, highly-available application. Not only does the application have to be designed for this goal, but deploying, monitoring, and managing the application is a challenge. If you&#8217;re interested in this latter challenge, which is often called <em>System Operations</em> or <em>SysOps</em>, you could pursue a small project to explore it.</p>
+</div>
+<div class="slide">
+<h1>System Operations Issues (cont.)</h1>
+<ul>
+	<li>Add code to the Akka actors for gathering timing data and other statistics using <em>mixin</em> traits. You might start with <a href="http://williamlouth.wordpress.com/2010/09/08/async-call-path-profiling-via-metering/">this approach</a> aimed at Akka&#8217;s Java <span class="caps">API</span>, which uses AspectJ.</li>
+	<li>Investigate some of the startup log messages, especially the errors and warnings and determine their causes and solutions.</li>
+	<li>Extends the <span class="caps">NYSE</span> application to use distributed actors (across machines) for horizontal scalability.</li>
+</ul>
+</div>
+<div class="slide">
+<h1>Other Research</h1>
+<p>Another option is to do more in-depth reading on a topic we covered in the class (or convince me that a topic is close enough), then prepare a brief (3-4 page writeup) on your findings. Here are some examples.</p>
+<ul>
+	<li>If you are interested in learning more about Hadoop, investigate the many supporting tools that have been developed to make it easier to use.</li>
+	<li>Investigate other concurrency approaches, like data-flow concurrency.</li>
+	<li>Investigate other parts of Akka.</li>
+</ul>
+</div>
+<div class="slide">
+<h1>Other Research (cont.)</h1>
+<ul>
+	<li>Investigate the differences between various agile software processes, Lean, Agile, Scrum, and others.</li>
+	<li>Investigate particular Agile practices, like <span class="caps">TDD</span>, Continuous Integration, Pair Programming, User Stories.</div></li>
+</ul>
 
   <!-- Syntax Highlighter -->
   <script language="javascript" type="text/javascript" src="../lib/scripts/shCore.js"></script>

@@ -1,5 +1,61 @@
 h1. Appendix: Final Project Ideas
 
-Recall that you will need to do a short presentation on the last class day, where you discuss a small aspect of the long-running project. This "aspect" could include extending the stock application with a new feature, doing a non-trivial calculation with the MongoDB database directory, or another topic related to the course.
+Recall that you will need to do a short presentation on the last day of class. You will discuss some aspect of the long-running NYSE project or some other topic you worked on or studied. For example, you could extend the NYSE application with a new feature, you could do more analysis of the data in the MongoDB database, or you could explore another topic related to the course.
 
-The following list is designed to give you ideas, but I'm open to other ideas. Please select a topic to work on and discuss it with me by November 
+The following list is designed to give you ideas, but I'm open to other ideas. Please select a topic to work on and discuss it with me by <b>November 9<sup>th</sup></b>. Don't forget to consider the course topics that we haven't covered yet!
+
+h1. Analysis of the NYSE Data
+
+Write Mongo JavaScript functions, possibly using MapReduce, to do additional analysis of the data. Possibilities include:
+
+* Find the most volatile stocks or time periods.
+* Calculate 50 and 200 day moving averages for many stocks over a time range.
+* Look for correlations. For example, do some stocks tend to move together, not just because of overall market trends, indicating some sort of dependency?
+* Analyze the dividends collections in some way.
+
+h1. Analysis of the NYSE Data (cont.)
+
+Extend the NYSE application:
+
+* Calculate moving averages on demand and graph the results along with the closing price.
+* Graph daily volumes instead of price.
+* Show price data graphs using _candle stick_ charts, which can be used to show open, close, high, low, and even volume in one presentation. (A good way to learn the UI code base and data visualization.)
+
+h1. Analysis of the NYSE Data (cont.)
+
+Extend the NYSE application (cont.):
+
+* Allow more arbitrary queries, using a little Domain Specific Language (DSL). (Hard)
+* Explore other kinds of graphical representations of data. (Also good if you are interested data visualization.)
+* Replace MongoDB with another database, like Cassandra or Riak.
+
+h1. Map/Reduce
+
+If you are really interested in _Big Data_, then mastering MapReduce is an essential skill.
+
+* Develop an application, perhaps based on one of the previous suggestions, that uses Mongo's MapReduce as the backend.
+* Develop a simple Hadoop application.
+
+h1. System Operations Issues
+
+There are a lot of issues involved in taking an application idea and turning it into a scalable, robust, highly-available application. Not only does the application have to be designed for this goal, but deploying, monitoring, and managing the application is a challenge. If you're interested in this latter challenge, which is often called _System Operations_ or _SysOps_, you could pursue a small project to explore it.
+
+h1. System Operations Issues (cont.)
+
+* Add code to the Akka actors for gathering timing data and other statistics using _mixin_ traits. You might start with "this approach":http://williamlouth.wordpress.com/2010/09/08/async-call-path-profiling-via-metering/ aimed at Akka's Java API, which uses AspectJ.
+* Investigate some of the startup log messages, especially the errors and warnings and determine their causes and solutions.
+* Extends the NYSE application to use distributed actors (across machines) for horizontal scalability.
+
+h1. Other Research
+
+Another option is to do more in-depth reading on a topic we covered in the class (or convince me that a topic is close enough), then prepare a brief (3-4 page writeup) on your findings. Here are some examples.
+
+* If you are interested in learning more about Hadoop, investigate the many supporting tools that have been developed to make it easier to use.
+* Investigate other concurrency approaches, like data-flow concurrency.
+* Investigate other parts of Akka.
+
+h1. Other Research (cont.)
+
+* Investigate the differences between various agile software processes, Lean, Agile, Scrum, and others.
+* Investigate particular Agile practices, like TDD, Continuous Integration, Pair Programming, User Stories.
+
