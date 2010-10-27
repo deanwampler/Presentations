@@ -32,7 +32,7 @@ h1. Encapsulation
 OO languages let you limit the access to object internals and even to objects themselves. For example, in Java:
 
 :inlinecode lang=scala, class=code-small
-package com.example.gui.windowing;
+package gui.windowing;
 
 public interface Window {...}
 ...
@@ -90,18 +90,18 @@ h1. Module Encapsulation (cont.)
 :inlinecode lang=scala, class=code-small
 package gui.windowing {
 
-  trait Window(dimensions: Dimensions) {...}  
-  trait WindowFactory {
+  abstract class Window(dimensions: Dimensions) {...}  
+  abstract class WindowFactory {
     def make(dimensions: Dimensions): Window
   }
   
-  protected[windowing] package mac {
+  protected[gui] package mac {
     MacWindow(...) extends Window(...) {...}
     object MacWindowFactory extends WindowFactory {
       def make(properties: Properties): Window = {...}
     }
   }
-  protected[windowing] package windows {
+  protected[gui] package windows {
     WindowsWindow(...) extends Window(...) {...}
     ...
   }
@@ -111,7 +111,7 @@ package gui.windowing {
 
 h1. Module Encapsulation (cont.)
 
-In this example, the _abstractions_ @Window@ and @WindowFactory@ are public and visible to clients of @gui.windowing@, while the _concrete_ classes for each GUI platform are protected from clients, yet visible to any type within the @windowing@ package hierarchy.
+In this example, the _abstractions_ @Window@ and @WindowFactory@ are public and visible to clients of @gui.windowing@, while the _concrete_ classes for each GUI platform are protected from clients, yet visible to any type within the @gui@ package hierarchy.
 
 h1. Module Encapsulation (cont.)
 
@@ -137,7 +137,7 @@ Consider this expanded example of the @Window@ abstraction.
 :inlinecode lang=scala, class=code-small
 package gui.windowing {
 
-  trait Window(dimensions: Dimensions) {
+  abstract class Window(dimensions: Dimensions) {
     protected var _dimensions: Dimensions
     protected var _position: Point
     protected var _hidden: Boolean
@@ -168,7 +168,7 @@ A common source of bugs is poorly-managed object state. To avoid this problem:
 
 * Once a constructor completes, the object should be in a _known-good state_.
 * _Every_ method should transition the object from one known-good state to another (possibly the same) known-good state.
-* Clean up resources when the object becomes garbage.[1][2]
+* Clean up resources when the object becomes garbage.[1] [2]
 
 [1] C++ and C# have _destructors_ for this purpose (but they may be invoked too late for some resources, like database connections).
 [2] Java has finalizers, but they are effectively useless, maybe even harmful.
@@ -198,8 +198,8 @@ Hence, these are requirements on the runtime environment and the clients using t
 package gui.windowing {
 
   @precondition(dimensions.foreach {dimension => 
-    dimension.greaterThanZero == true})
-  trait Window(dimensions: Dimensions) {
+       dimension.greaterThanZero == true})
+  abstract class Window(dimensions: Dimensions) {
     ...
   }  
 }
@@ -214,7 +214,8 @@ Hence, these are requirements on the function itself, constituting promises to c
 :inlinecode lang=scala, class=code-small
 package gui.windowing {
 
-  trait Window(dimensions: Dimensions) {
+  abstract class Window(dimensions: Dimensions) {
+
     @postcondition(this.position.isVisibleOnScreen)
     def moveTo(newPosition: Point): Unit
     ...
@@ -229,7 +230,8 @@ h1. Invariants
 :inlinecode lang=scala, class=code-small
 package gui.windowing {
 
-  trait Window(dimensions: Dimensions) {
+  abstract class Window(dimensions: Dimensions) {
+
     @invariant(this.hidden == $previous.hidden)
     def moveTo(newPosition: Point): Unit
     ...
@@ -406,6 +408,7 @@ h1. Liskov Substitution Principle (cont.)
 I claim that @Square@ _is a_ @Rectangle@:
 
 :inlinecode lang=scala, class=code-small
+
 class Square(val side: Int) extends Rectangle(side, side)
 
 val s = new Square(4)
@@ -413,7 +416,7 @@ s.setWidth(3)
 assert (s.height == 4)  // True???
 :endinlinecode 
 
-No.
+Does the assertion still pass? No.
 
 h1. Liskov Substitution Principle (cont.)
 

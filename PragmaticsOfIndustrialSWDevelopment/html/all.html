@@ -3878,7 +3878,7 @@ db[result1.result].find()
 <div class="code-small">
 <pre name="code" id="code" class="brush: scala,;">
 
-package com.example.gui.windowing;
+package gui.windowing;
 
 public interface Window {...}
 ...
@@ -3933,18 +3933,18 @@ private class MacWindow implements Window {
 
 package gui.windowing {
 
-  trait Window(dimensions: Dimensions) {...}  
-  trait WindowFactory {
+  abstract class Window(dimensions: Dimensions) {...}  
+  abstract class WindowFactory {
     def make(dimensions: Dimensions): Window
   }
   
-  protected[windowing] package mac {
+  protected[gui] package mac {
     MacWindow(...) extends Window(...) {...}
     object MacWindowFactory extends WindowFactory {
       def make(properties: Properties): Window = {...}
     }
   }
-  protected[windowing] package windows {
+  protected[gui] package windows {
     WindowsWindow(...) extends Window(...) {...}
     ...
   }
@@ -3954,7 +3954,7 @@ package gui.windowing {
 </div>
 <div class="slide">
 <h1>Module Encapsulation (cont.)</h1>
-<p>In this example, the <em>abstractions</em> <code>Window</code> and <code>WindowFactory</code> are public and visible to clients of <code>gui.windowing</code>, while the <em>concrete</em> classes for each <span class="caps">GUI</span> platform are protected from clients, yet visible to any type within the <code>windowing</code> package hierarchy.</p>
+<p>In this example, the <em>abstractions</em> <code>Window</code> and <code>WindowFactory</code> are public and visible to clients of <code>gui.windowing</code>, while the <em>concrete</em> classes for each <span class="caps">GUI</span> platform are protected from clients, yet visible to any type within the <code>gui</code> package hierarchy.</p>
 </div>
 <div class="slide">
 <h1>Module Encapsulation (cont.)</h1>
@@ -3986,7 +3986,7 @@ package gui.windowing {
 
 package gui.windowing {
 
-  trait Window(dimensions: Dimensions) {
+  abstract class Window(dimensions: Dimensions) {
     protected var _dimensions: Dimensions
     protected var _position: Point
     protected var _hidden: Boolean
@@ -4015,7 +4015,7 @@ package gui.windowing {
 <ul>
 	<li>Once a constructor completes, the object should be in a <em>known-good state</em>.</li>
 	<li><em>Every</em> method should transition the object from one known-good state to another (possibly the same) known-good state.</li>
-	<li>Clean up resources when the object becomes garbage.<sup class="footnote"><a href="#fn1">1</a></sup><sup class="footnote"><a href="#fn2">2</a></sup></li>
+	<li>Clean up resources when the object becomes garbage.<sup class="footnote"><a href="#fn1">1</a></sup> <sup class="footnote"><a href="#fn2">2</a></sup></li>
 </ul>
 <p><sup class="footnote"><a href="#fn1">1</a></sup> C++ and C# have <em>destructors</em> for this purpose (but they may be invoked too late for some resources, like database connections).<br />
 <sup class="footnote"><a href="#fn2">2</a></sup> Java has finalizers, but they are effectively useless, maybe even harmful.</p>
@@ -4046,8 +4046,8 @@ package gui.windowing {
 package gui.windowing {
 
   @precondition(dimensions.foreach {dimension =&gt; 
-    dimension.greaterThanZero == true})
-  trait Window(dimensions: Dimensions) {
+       dimension.greaterThanZero == true})
+  abstract class Window(dimensions: Dimensions) {
     ...
   }  
 }
@@ -4063,7 +4063,8 @@ package gui.windowing {
 
 package gui.windowing {
 
-  trait Window(dimensions: Dimensions) {
+  abstract class Window(dimensions: Dimensions) {
+
     @postcondition(this.position.isVisibleOnScreen)
     def moveTo(newPosition: Point): Unit
     ...
@@ -4080,7 +4081,8 @@ package gui.windowing {
 
 package gui.windowing {
 
-  trait Window(dimensions: Dimensions) {
+  abstract class Window(dimensions: Dimensions) {
+
     @invariant(this.hidden == $previous.hidden)
     def moveTo(newPosition: Point): Unit
     ...
@@ -4253,13 +4255,14 @@ assert (r.height == 4)  // didn't change
 <div class="code-small">
 <pre name="code" id="code" class="brush: scala,;">
 
+
 class Square(val side: Int) extends Rectangle(side, side)
 
 val s = new Square(4)
 s.setWidth(3)
 assert (s.height == 4)  // True???
 </pre></div>
-<p>No.</p>
+<p>Does the assertion still pass? No.</p>
 </div>
 <div class="slide">
 <h1>Liskov Substitution Principle (cont.)</h1>
