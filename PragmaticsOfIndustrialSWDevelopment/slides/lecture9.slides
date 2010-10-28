@@ -11,6 +11,8 @@ h1. Some History
 | 2003 | Scala |
 | 2007 | Clojure |
 
+h1. Strong Coupling
+
 h1. Composition vs. Inheritance
 
 Mixins.
