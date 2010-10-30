@@ -52,7 +52,12 @@
 <h1>Lecture 9: Effective Object-Oriented Programming (<span class="caps">OOP</span>), Part II</h1>
 </div>
 <div class="slide">
+<h1>Why Are Objects Interesting?</h1>
+<p>Because managing complexity is one of our biggest challenges. Mentally, we object encapsulation in our daily lives to avoid being overwhelmed by sensory input. Object-Oriented Programming tries to apply that same strategy to managing software complexity.</p>
+</div>
+<div class="slide">
 <h1>Some History</h1>
+<div class='small'>
 <table>
 	<tr>
 		<th>Year </th>
@@ -72,16 +77,38 @@
 		<td> Object-oriented, dynamically typed, reflective. </td>
 		<td> First public version in 1980</td>
 	</tr>
+</table>
+</div>
+</div>
+<div class="slide">
+<h1>Some History (cont.)</h1>
+<div class='small'>
+<table>
+	<tr>
+		<th>Year </th>
+		<th>Event</th>
+		<th>Features</th>
+		<th>Notes</th>
+	</tr>
 	<tr>
 		<td> 1983 </td>
 		<td> C++ </td>
-		<td> Classes, virtual functions, operator overloading, multiple inheritance, templates, exception handling. </td>
+		<td> Classes, virtual functions, operator overloading, multiple inheritance, templates. </td>
 		<td> Most widely used OO language in the 90s. (?) </td>
 	</tr>
+	<tr>
+		<td> 1986 </td>
+		<td> Eiffel </td>
+		<td> Design by contract, command-query separation, uniform-access principle, single-choice principle, open-closed principle, and option-operand separation </td>
+		<td> Very innovative. Still used in some industries, esp. in Europe.</td>
+	</tr>
 </table>
+<p>In 1984, Apple introduced the Macintosh, the first popular copmuter with a Graphical User Interface. GUIs were quickly seen as ideal for <span class="caps">OOP</span>.</p>
+</div>
 </div>
 <div class="slide">
-<h1>Some History</h1>
+<h1>Some History (cont.)</h1>
+<div class='small'>
 <table>
 	<tr>
 		<th>Year </th>
@@ -93,7 +120,26 @@
 		<td> 1995 </td>
 		<td> Java </td>
 		<td> &#8220;Simplified C++&#8221;, plus byte code running on a virtual machine. </td>
-		<td> Rapid adoption when the Internet went mainstream. </td>
+		<td> Rapid adoption with the Internet. </td>
+	</tr>
+	<tr>
+		<td> 1995 </td>
+		<td> JavaScript </td>
+		<td> Prototype-based, scripting, dynamically and weakly typed, first-class functions, closures, higher-order functions. </td>
+		<td> Also considered a functional programming language. Inspired by Scheme. </td>
+	</tr>
+</table>
+</div>
+</div>
+<div class="slide">
+<h1>Some History (cont.)</h1>
+<div class='small'>
+<table>
+	<tr>
+		<th>Year </th>
+		<th>Event</th>
+		<th>Features</th>
+		<th>Notes</th>
 	</tr>
 	<tr>
 		<td> 2003 </td>
@@ -108,7 +154,79 @@
 		<td> Innovative approaches to mutable state. </td>
 	</tr>
 </table>
-<p>In 1984, Apple introduced the Macintosh, the first popular copmuter with a Graphical User Interface. GUIs were quickly seen as ideal for <span class="caps">OOP</span>.</p>
+</div>
+</div>
+<div class="slide">
+<h1>Eiffel Innovations</h1>
+<ul>
+	<li><strong>Design by Contract:</strong> Discussed last lecture.</li>
+	<li><strong>Command-Query Separation:</strong></li>
+	<li><strong>Uniform-Access Principle:</strong></li>
+	<li><strong>Single-Choice Principle:</strong></li>
+	<li><strong>Open-Closed Principle:</strong></li>
+	<li><strong>Option-Operand Separation:</strong></li>
+</ul>
+</div>
+<div class="slide">
+<h1>Command-Query Separation</h1>
+<p>To keep each &#8220;piece&#8221; of code as simple as possible, each object and function should <em>do only one &#8220;thing&#8221;</em>. This is the <em>Single Responsibility Principle</em>, the &#8220;S&#8221; in the <span class="caps">SOLID</span> principles.</p>
+</div>
+<div class="slide">
+<h1>Command-Query Separation (cont.)</h1>
+<p>If a function executes a &#8220;command&#8221; and it returns a value (&#8220;query&#8221;), it&#8217;s doing <em>two</em> things. Hence, you should have separate command and query functions:</p>
+<ul>
+	<li><strong>Command:</strong> Do something, i.e., update state, but don&#8217;t return values. (It might return a &#8220;success&#8221; indicator&#8230;)</li>
+	<li><strong>Query:</strong> Return a result, but don&#8217;t alter state (at least not the visible state &#8211; it may update an internal <em>cache</em>, for example.)</li>
+</ul>
+<p>Example: JavaBean getters and setters.</p>
+</div>
+<div class="slide">
+<h1>Uniform-Access Principle</h1>
+<div class="code-small">
+<pre name="code" id="code" class="brush: scala,;">
+
+case class Person(name:String, age: Int)
+...
+val dean = Person("Dean Wampler")
+println(dean.name)
+</pre></div>
+<p>Am I calling a method <code>name</code> or accessing a &#8220;bare&#8221; <code>name</code> field??</p>
+</div>
+<div class="slide">
+<h1>Uniform-Access Principle (cont.)</h1>
+<p>The <em>caller</em> doesn&#8217;t care whether a method is invoked or a bare field is accessed.</p>
+<p>The <em>implementer</em> might want to start with a simple bare field access, then eventually replace it with a method call (e.g., to do lazy initialization, etc.).</p>
+<p>The <em>uniform-access principle</em> means the caller&#8217;s code doesn&#8217;t have to change, because the syntax is identical. (The code might need a recompile).</p>
+</div>
+<div class="slide">
+<h1>Uniform-Access Principle (cont.)</h1>
+<p>Note that the JavaBean convention for getters and setters does <em>not</em> support this principle!</p>
+<div class="code-small">
+<pre name="code" id="code" class="brush: java,;">
+
+class Person {
+  private String name;
+  public String getName() { return name; }
+  
+  public Person(String name) { this.name = name; }
+}
+...
+val dean = Person("Dean Wampler")
+println(dean.getName());
+// very different from:
+// println(dean.name);
+</pre></div>
+</div>
+<div class="slide">
+<h1>Single-Choice Principle</h1>
+</div>
+<div class="slide">
+<h1>Open-Closed Principle</h1>
+<p>The &#8220;O&#8221; in the <span class="caps">SOLID</span> principles.</p>
+<p>We&#8217;ll return to this principle when we talk about <em>the Expression Problem</em> and <em>Type Classes</em>.</p>
+</div>
+<div class="slide">
+<h1>Option-Operand Separation</h1>
 </div>
 <div class="slide">
 <h1>Strong Coupling</h1>
@@ -116,6 +234,7 @@
 <center>
 <p><img src="images/Module_Dependencies.png"></img></p>
 </center>
+<p>Is it bad if <code>GUI</code> depends on <code>MacWindowFactory</code>??</p>
 </div>
 <div class="slide">
 <h1><code>gui.windowing</code></h1>
@@ -144,9 +263,10 @@ package gui.windowing {
 </pre></div>
 </div>
 <div class="slide">
-<h1>Other Modules</h1>
+<h1>Other <span class="caps">GUI</span> Modules</h1>
 <p><span class="caps">BAD</span>:<br />
 <div class="code-small"></p>
+
 <pre name="code" id="code" class="brush: scala,;">
 
 package gui.windowing {
@@ -158,6 +278,7 @@ package gui.windowing {
 </pre></div>
 <p><span class="caps">GOOD</span>:<br />
 <div class="code-small"></p>
+
 <pre name="code" id="code" class="brush: scala,;">
 
 package gui.windowing {
@@ -171,8 +292,8 @@ package gui.windowing {
 <div class="slide">
 <h1>Why is Strong Coupling Bad</h1>
 <ul>
-	<li>Testing</li>
-	<li>Maintenance</li>
+	<li><strong>Testing</strong></li>
+	<li><strong>Maintenance</strong></li>
 </ul>
 </div>
 <div class="slide">
@@ -194,8 +315,18 @@ package gui.windowing {
 </div>
 <div class="slide">
 <h1>Inheritance Is Strong Coupling</h1>
-<p>It&#8217;s important to note that <em>inheritance is a form of strong coupling</em>. (About the strongest in fact.)</p>
-<p>Like any form of coupling, it should be used <em>sparingly</em></p>
+<p>It&#8217;s important to note that <em>inheritance is a form of strong coupling</em>. (About the strongest in fact.) The advantages vs. disadvantages need to be weighed.</p>
+<p><strong>Advantages:</strong></p>
+<ul>
+	<li>Reuse of state and behavior.</li>
+	<li>Grouping of &#8220;logically-similar&#8221; things.</li>
+</ul>
+<p><strong>Disadvantages:</strong></p>
+<ul>
+	<li>Any change to parent may require changes to child.</li>
+	<li>Proper implementations of <code>clone</code>, <code>equals</code>, <code>hashCode</code> challenging.</li>
+</ul>
+<p>Like any form of coupling, it should be used <em>sparingly</em>.</p>
 </div>
 <div class="slide">
 <h1>Composition vs. Inheritance</h1>
