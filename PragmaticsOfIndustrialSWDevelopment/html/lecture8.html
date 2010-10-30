@@ -135,7 +135,7 @@ package gui.windowing {
 
   abstract class Window(dimensions: Dimensions) {...}  
   abstract class WindowFactory {
-    def make(dimensions: Dimensions): Window
+    def make(properties: Properties): Window
   }
   
   protected[gui] package mac {

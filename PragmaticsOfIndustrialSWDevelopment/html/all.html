@@ -3926,7 +3926,7 @@ package gui.windowing {
 
   abstract class Window(dimensions: Dimensions) {...}  
   abstract class WindowFactory {
-    def make(dimensions: Dimensions): Window
+    def make(properties: Properties): Window
   }
   
   protected[gui] package mac {
@@ -4701,7 +4701,7 @@ case object None extends Option[Nothing] {...}
 	<li><strong>Uniform-Access Principle:</strong></li>
 	<li><strong>Single-Choice Principle:</strong></li>
 	<li><strong>Open-Closed Principle:</strong></li>
-	<li><strong>Option-Operand Separation:</strong></li>
+	<li><strong>Option-Operand Separation:</strong> (We won&#8217;t discuss this one.)</li>
 </ul>
 </div>
 <div class="slide">
@@ -4756,18 +4756,46 @@ println(dean.getName());
 </div>
 <div class="slide">
 <h1>Single-Choice Principle</h1>
+<p>This is now more commonly known as <span class="caps">DRY</span>, <em>Don&#8217;t Repeat Yourself</em>. It means, don&#8217;t write code that duplicates the work of other code.</p>
+<ul>
+	<li>Leads to bloat.</li>
+	<li>Each version must be maintained, kept in sync.
+	<ul>
+		<li>It&#8217;s very common for the versions to &#8220;grow&#8221; out of sync, leading to bugs.</li>
+	</ul></li>
+</ul>
 </div>
 <div class="slide">
 <h1>Open-Closed Principle</h1>
 <p>The &#8220;O&#8221; in the <span class="caps">SOLID</span> principles.</p>
-<p>We&#8217;ll return to this principle when we talk about <em>the Expression Problem</em> and <em>Type Classes</em>.</p>
+<p>How can we add new behavior to the system without editing existing code? Philip Wadler called this the <em>Expression Problem</em>.</p>
+<ul>
+	<li>If we edit existing code,</li>
+	<li>we must retest, redeploy&#8230;</li>
+	<li>we force clients of the code to modify their code and retest, redeploy&#8230;</li>
+</ul>
 </div>
 <div class="slide">
-<h1>Option-Operand Separation</h1>
+<h1>Open-Closed Principle (cont.)</h1>
+<p>Inheritance is a classic way to do this. Our windowing example demonstrates this:</p>
+<center>
+<span style="width: 100%;">
+<img src="images/Windows_WindowsFactories.png"></img>
+</span>
+</center>
+<p>We could add iPhone and Android classes, for example, without changing any existing classes&#8230; in principle&#8230;</p>
+</div>
+<div class="slide">
+<h1>Open-Closed Principle (cont.)</h1>
+<p>In practice, when you introduce new subclasses, the existing abstractions may not fully support their needs, forcing some changes on the existing types. Hopefully, that&#8217;s rare.</p>
+</div>
+<div class="slide">
+<h1>Open-Closed Principle (cont.)</h1>
+<p>We&#8217;ll return to this principle when we talk about <em>Type Classes</em>.</p>
 </div>
 <div class="slide">
 <h1>Strong Coupling</h1>
-<p>Last time, we talked at length about encapsulation. We also mentioned that it helps minimize coupling between modules. Let&#8217;s explore this topic further.</p>
+<p>Last time, we talked at length about encapsulation. We also mentioned that it helps minimize coupling between modules. Some of the principles we just discussed also do this. Let&#8217;s explore coupling some more.</p>
 <center>
 <p><img src="images/Module_Dependencies.png"></img></p>
 </center>
@@ -4782,7 +4810,7 @@ package gui.windowing {
 
   abstract class Window(dimensions: Dimensions) {...}  
   abstract class WindowFactory {
-    def make(dimensions: Dimensions): Window
+    def make(properties: Properties): Window
   }
   
   protected[gui] package mac {
@@ -4867,7 +4895,182 @@ package gui.windowing {
 </div>
 <div class="slide">
 <h1>Composition vs. Inheritance</h1>
-<p>Mixins.</p>
+<p>Compare the following approaches:</p>
+<div class="code-small">
+<pre name="code" id="code" class="brush: scala,;">
+
+abstract class Addressable(
+  ..., val city:String, val state:String, val zip:ZipCode)
+  
+case class Person(name:String, age: Int)
+  extends Addressable
+</pre></div>
+<p>Does <code>Person</code> <em>behave as</em> an <code>Addressable</code>? What does <em>that</em> mean?</p>
+<div class="code-small">
+<pre name="code" id="code" class="brush: scala,;">
+
+class Address(
+  ..., val city:String, val state:String, val zip:ZipCode)
+  
+case class Person(name:String, age: Int, address: Address)
+</pre></div>
+<p>Makes more sense to say <code>Person</code> <em>has an</em> <code>Address</code>.</p>
+</div>
+<div class="slide">
+<h1>Less Trivial Example:</h1>
+<div class="code-small">
+<pre name="code" id="code" class="brush: scala,;">
+
+package graphics {
+  // Abstraction
+  trait Rectangle {...}
+}
+package opengl {
+  // Concrete implementation.
+  class OGLRectangle(val lowerLeft: Point, val upperRight: Point) 
+    extends graphics.Rectangle {...}
+}
+package gui.windowing.x11 {  
+  // Inherits concrete implementation
+  class X11Window(properties: Properties) 
+    extends opengl.OGLRectangle(...) {...}
+}
+</pre></div>
+</div>
+<div class="slide">
+<h1>Versus:</h1>
+<div class="code-small">
+<pre name="code" id="code" class="brush: scala,;">
+
+package graphics {
+  // Abstraction
+  trait Rectangle {...}  
+}
+package opengl {
+  // Concrete implementation.
+  class OGLRectangle(val lowerLeft: Point, val upperRight: Point) 
+    extends graphics.Rectangle {...}
+}
+package gui.windowing.x11 {  
+  // Uses an object implementing abstraction.
+  class X11Window(properties: Properties, rect: Rectangle) {...} 
+}
+</pre></div>
+<p>We <em>compose</em> the X11 window with an implementing rectangle.</p>
+</div>
+<div class="slide">
+<h1>Composition vs. Inheritance (cont.)</h1>
+<p>So, coupling to abstractions is the weakest form of dependency. Therefore, we should prefer <em>composing</em> behavior over <em>inheriting</em> it.</p>
+<p><strong>Object Properties:</strong></p>
+<p>Every property is a reference to another object (as long as you consider, numbers, booleans, etc. objects&#8230;)</p>
+</div>
+<div class="slide">
+<h1>Mixins</h1>
+<p>An alternative to using <em>properties</em> is to use <em>mixins</em>, which are like standalone objects (they have their own <em>behavior</em>: state and/or functions), but they are designed to be mixed into other objects, adding additional behavior.</p>
+<p>Most of the time, these behaviors will be <em>orthogonal</em>.</p>
+<center>
+<span style="width: 100%;">
+<img src="images/StateSpace.png"></img>
+</span>
+</center>
+</div>
+<div class="slide">
+<h1>Example: Logging Mixin</h1>
+<div class="code-small">
+<pre name="code" id="code" class="brush: scala,;">
+
+package utils {
+  trait Logging {
+    def error(message: String) = {...}
+    def warning(message: String) = {...}
+    def info(message: String) = {...}
+  }
+}
+
+package gui.windowing.x11 {  
+  // Make all windows with logging mixed in:
+  object X11WindowFactory extends WindowFactory { 
+    def make(properties: Properties) = {
+      val dimensions = // get dimensions from properties
+      new X11Window(dimensions) with utils.Logging
+    } // returns window WITH Logging mixed in!
+  } 
+}
+</pre></div>
+</div>
+<div class="slide">
+<h1>Mixins (cont.)</h1>
+<p>Other times, the mixin behavior may be closely linked to the class.</p>
+<p>Example: How could you model the M:N relationship between windowing toolkits (e.g., Xll, Windows, Aqua, etc.) and the low-level graphics APIs (e.g., OpenGL, DirectX, Quartz, etc.)</p>
+</div>
+<div class="slide">
+<h1>Joining <span class="caps">GUI</span> and Graphics Libs</h1>
+<div class="code-small">
+<pre name="code" id="code" class="brush: scala,;">
+
+package graphics { // for any graphics library...
+  trait Rectangle {  // abstraction of rectangle.
+    val lowerLeft: Point  // traits don't have constructors,
+    val upperRight: Point // ... so we declare "fields" here.
+    ...
+  }
+}
+package opengl {  // OpenGL-specific "driver"
+  trait OGLRectangle extends graphics.Rectangle {...}
+}
+package gui.windowing.x11 {  
+  // "self type" declaration:
+  // X11Window will be composed with a Rectangle...
+  abstract class X11Window(properties: Properties) { 
+    self: Rectangle =&gt;
+    ...
+  } 
+}
+</pre></div>
+</div>
+<div class="slide">
+<h1>Self Types in Scala</h1>
+<p><em>Self type declarations</em>, like this:</p>
+<div class="code-small">
+<pre name="code" id="code" class="brush: scala,;">
+
+abstract class X11Window(properties: Properties) { 
+  self: Rectangle =&gt;
+  ...
+}
+</pre></div>
+<p>are &#8220;promises&#8221; that any <em>concrete</em> class eventually created from <code>X11Window</code> will mix in a Rectangle trait. In byte code, it is identical to <code>X11Window extends Rectangle</code>, but avoids the <em>is a</em> trap (Liskov).</p>
+</div>
+<div class="slide">
+<h1>Self Types in Scala</h1>
+<p>In other words, we could write it this way:</p>
+<div class="code-small">
+<pre name="code" id="code" class="brush: scala,;">
+
+abstract class X11Window(properties: Properties) extends Rectangle { 
+  ...
+}
+</pre></div>
+<p>but that implies that window is substitutable for Rectangle (Liskov), which is a poor inheritance relationship.</p>
+<p>Self types emphasize instead that we will get the &#8220;Rectangle&#8221; behavior we need through a mixin.</p>
+</div>
+<div class="slide">
+<h1>Instantiating the Objects</h1>
+<p>So, to create actual objects the factory method would do this:</p>
+<div class="code-small">
+<pre name="code" id="code" class="brush: scala,;">
+
+object X11WindowFactory extends WindowFactory { 
+  def make(properties: Properties) = {
+    val dimensions = // get dimensions from properties
+    new X11Window(dimensions) with utils.Logging with OGLRectangle {
+      val lowerLeft = // get it from the dimensions
+      val upperRight = // get it from the dimensions
+    }
+  } // returns window WITH Logging WITH OGLRectangle!
+} 
+</pre></div>
+<p>Note: this technique is called the <a href="http://jonasboner.com/2008/10/06/real-world-scala-dependency-injection-di.html">Cake Pattern</a> (also discussed <a href="http://programming-scala.labs.oreilly.com/ch13.html">here</a> and used to <a href="http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.63.5834&amp;rep=rep1&amp;type=pdf">implement the Scala compiler itself</a>)</p>
 </div>
 <div class="slide">
 <h1>Problems with Objects</h1>

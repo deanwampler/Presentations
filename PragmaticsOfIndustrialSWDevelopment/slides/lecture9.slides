@@ -53,7 +53,7 @@ h1. Eiffel Innovations
 * *Uniform-Access Principle:*
 * *Single-Choice Principle:*
 * *Open-Closed Principle:* 
-* *Option-Operand Separation:*
+* *Option-Operand Separation:* (We won't discuss this one.)
 
 h1. Command-Query Separation
 
@@ -107,17 +107,45 @@ println(dean.getName());
 
 h1. Single-Choice Principle
 
+This is now more commonly known as DRY, _Don't Repeat Yourself_. It means, don't write code that duplicates the work of other code.
+
+* Leads to bloat.
+* Each version must be maintained, kept in sync.
+** It's very common for the versions to "grow" out of sync, leading to bugs.
+
 h1. Open-Closed Principle
 
 The "O" in the SOLID principles.
 
-We'll return to this principle when we talk about _the Expression Problem_ and _Type Classes_.
+How can we add new behavior to the system without editing existing code? Philip Wadler called this the _Expression Problem_.
 
-h1. Option-Operand Separation
+* If we edit existing code, 
+* we must retest, redeploy...
+* we force clients of the code to modify their code and retest, redeploy...
+
+h1. Open-Closed Principle (cont.)
+
+Inheritance is a classic way to do this. Our windowing example demonstrates this:
+
+<center>
+  <span style="width: 100%;">
+    <img src="images/Windows_WindowsFactories.png"></img>
+  </span>
+</center>
+
+We could add iPhone and Android classes, for example, without changing any existing classes... in principle...
+
+h1. Open-Closed Principle (cont.)
+
+In practice, when you introduce new subclasses, the existing abstractions may not fully support their needs, forcing some changes on the existing types. Hopefully, that's rare.
+
+h1. Open-Closed Principle (cont.)
+
+We'll return to this principle when we talk about _Type Classes_.
 
 h1. Strong Coupling
 
-Last time, we talked at length about encapsulation. We also mentioned that it helps minimize coupling between modules. Let's explore this topic further.
+Last time, we talked at length about encapsulation. We also mentioned that it helps minimize coupling between modules. Some of the principles we just discussed also do this. Let's explore coupling some more.
 
 <center>
 	<img src="images/Module_Dependencies.png"></img>
@@ -132,7 +160,7 @@ package gui.windowing {
 
   abstract class Window(dimensions: Dimensions) {...}  
   abstract class WindowFactory {
-    def make(dimensions: Dimensions): Window
+    def make(properties: Properties): Window
   }
   
   protected[gui] package mac {
@@ -211,7 +239,183 @@ Like any form of coupling, it should be used _sparingly_.
 
 h1. Composition vs. Inheritance
 
-Mixins.
+Compare the following approaches:
+
+:inlinecode lang=scala, class=code-small
+abstract class Addressable(
+  ..., val city:String, val state:String, val zip:ZipCode)
+  
+case class Person(name:String, age: Int)
+  extends Addressable
+:endinlinecode 
+
+Does @Person@ _behave as_ an @Addressable@? What does _that_ mean?
+
+:inlinecode lang=scala, class=code-small
+class Address(
+  ..., val city:String, val state:String, val zip:ZipCode)
+  
+case class Person(name:String, age: Int, address: Address)
+:endinlinecode 
+
+Makes more sense to say @Person@ _has an_ @Address@.
+
+h1. Less Trivial Example:
+
+:inlinecode lang=scala, class=code-small
+package graphics {
+  // Abstraction
+  trait Rectangle {...}
+}
+package opengl {
+  // Concrete implementation.
+  class OGLRectangle(val lowerLeft: Point, val upperRight: Point) 
+    extends graphics.Rectangle {...}
+}
+package gui.windowing.x11 {  
+  // Inherits concrete implementation
+  class X11Window(properties: Properties) 
+    extends opengl.OGLRectangle(...) {...}
+}
+:endinlinecode 
+
+
+h1. Versus:
+
+:inlinecode lang=scala, class=code-small
+package graphics {
+  // Abstraction
+  trait Rectangle {...}  
+}
+package opengl {
+  // Concrete implementation.
+  class OGLRectangle(val lowerLeft: Point, val upperRight: Point) 
+    extends graphics.Rectangle {...}
+}
+package gui.windowing.x11 {  
+  // Uses an object implementing abstraction.
+  class X11Window(properties: Properties, rect: Rectangle) {...} 
+}
+:endinlinecode 
+
+We _compose_ the X11 window with an implementing rectangle.
+
+h1. Composition vs. Inheritance (cont.)
+
+So, coupling to abstractions is the weakest form of dependency. Therefore, we should prefer _composing_ behavior over _inheriting_ it.
+
+*Object Properties:*
+
+Every property is a reference to another object (as long as you consider, numbers, booleans, etc. objects...)
+
+h1. Mixins
+
+An alternative to using _properties_ is to use _mixins_, which are like standalone objects (they have their own _behavior_: state and/or functions), but they are designed to be mixed into other objects, adding additional behavior.
+
+Most of the time, these behaviors will be _orthogonal_.
+
+<center>
+  <span style="width: 100%;">
+    <img src="images/StateSpace.png"></img>
+  </span>
+</center>
+
+h1. Example: Logging Mixin
+
+:inlinecode lang=scala, class=code-small
+package utils {
+  trait Logging {
+    def error(message: String) = {...}
+    def warning(message: String) = {...}
+    def info(message: String) = {...}
+  }
+}
+
+package gui.windowing.x11 {  
+  // Make all windows with logging mixed in:
+  object X11WindowFactory extends WindowFactory { 
+    def make(properties: Properties) = {
+      val dimensions = // get dimensions from properties
+      new X11Window(dimensions) with utils.Logging
+    } // returns window WITH Logging mixed in!
+  } 
+}
+:endinlinecode 
+
+
+h1. Mixins (cont.)
+
+Other times, the mixin behavior may be closely linked to the class.
+
+Example: How could you model the M:N relationship between windowing toolkits (e.g., Xll, Windows, Aqua, etc.) and the low-level graphics APIs (e.g., OpenGL, DirectX, Quartz, etc.)
+
+h1. Joining GUI and Graphics Libs
+
+:inlinecode lang=scala, class=code-small
+package graphics { // for any graphics library...
+  trait Rectangle {  // abstraction of rectangle.
+    val lowerLeft: Point  // traits don't have constructors,
+    val upperRight: Point // ... so we declare "fields" here.
+    ...
+  }
+}
+package opengl {  // OpenGL-specific "driver"
+  trait OGLRectangle extends graphics.Rectangle {...}
+}
+package gui.windowing.x11 {  
+  // "self type" declaration:
+  // X11Window will be composed with a Rectangle...
+  abstract class X11Window(properties: Properties) { 
+    self: Rectangle =>
+    ...
+  } 
+}
+:endinlinecode 
+
+h1. Self Types in Scala
+
+_Self type declarations_, like this:
+
+:inlinecode lang=scala, class=code-small
+abstract class X11Window(properties: Properties) { 
+  self: Rectangle =>
+  ...
+}
+:endinlinecode 
+
+are "promises" that any _concrete_ class eventually created from @X11Window@ will mix in a Rectangle trait. In byte code, it is identical to @X11Window extends Rectangle@, but avoids the _is a_ trap (Liskov).
+
+h1. Self Types in Scala
+
+In other words, we could write it this way:
+
+:inlinecode lang=scala, class=code-small
+abstract class X11Window(properties: Properties) extends Rectangle { 
+  ...
+}
+:endinlinecode 
+
+but that implies that window is substitutable for Rectangle (Liskov), which is a poor inheritance relationship. 
+
+Self types emphasize instead that we will get the "Rectangle" behavior we need through a mixin.
+
+h1. Instantiating the Objects
+
+So, to create actual objects the factory method would do this:
+
+:inlinecode lang=scala, class=code-small
+object X11WindowFactory extends WindowFactory { 
+  def make(properties: Properties) = {
+    val dimensions = // get dimensions from properties
+    new X11Window(dimensions) with utils.Logging with OGLRectangle {
+      val lowerLeft = // get it from the dimensions
+      val upperRight = // get it from the dimensions
+    }
+  } // returns window WITH Logging WITH OGLRectangle!
+} 
+:endinlinecode 
+
+Note: this technique is called the "Cake Pattern":http://jonasboner.com/2008/10/06/real-world-scala-dependency-injection-di.html (also discussed "here":http://programming-scala.labs.oreilly.com/ch13.html and used to "implement the Scala compiler itself":http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.63.5834&rep=rep1&type=pdf)
 
 h1. Problems with Objects
 
