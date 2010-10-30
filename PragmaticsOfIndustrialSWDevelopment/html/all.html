@@ -4602,39 +4602,145 @@ case object None extends Option[Nothing] {...}
 	<tr>
 		<th>Year </th>
 		<th>Event</th>
+		<th>Features</th>
+		<th>Notes</th>
 	</tr>
 	<tr>
 		<td> 1967 </td>
-		<td> Simula created </td>
+		<td> Simula </td>
+		<td> Objects, classes, subclasses, virtual methods, coroutines, discrete event simulation, garbage collection. </td>
+		<td> First OO Language.</td>
 	</tr>
 	<tr>
-		<td> 1978 </td>
+		<td> 1972 </td>
 		<td> Smalltalk </td>
+		<td> Object-oriented, dynamically typed, reflective. </td>
+		<td> First public version in 1980</td>
 	</tr>
 	<tr>
-		<td> 1984 </td>
-		<td> Macintosh </td>
-	</tr>
-	<tr>
-		<td> 1987 </td>
+		<td> 1983 </td>
 		<td> C++ </td>
-	</tr>
-	<tr>
-		<td> 1995 </td>
-		<td> Java </td>
-	</tr>
-	<tr>
-		<td> 2003 </td>
-		<td> Scala </td>
-	</tr>
-	<tr>
-		<td> 2007 </td>
-		<td> Clojure </td>
+		<td> Classes, virtual functions, operator overloading, multiple inheritance, templates, exception handling. </td>
+		<td> Most widely used OO language in the 90s. (?) </td>
 	</tr>
 </table>
 </div>
 <div class="slide">
+<h1>Some History</h1>
+<table>
+	<tr>
+		<th>Year </th>
+		<th>Event</th>
+		<th>Features</th>
+		<th>Notes</th>
+	</tr>
+	<tr>
+		<td> 1995 </td>
+		<td> Java </td>
+		<td> &#8220;Simplified C++&#8221;, plus byte code running on a virtual machine. </td>
+		<td> Rapid adoption when the Internet went mainstream. </td>
+	</tr>
+	<tr>
+		<td> 2003 </td>
+		<td> Scala </td>
+		<td> Object-oriented and functional programming. </td>
+		<td> Runs on the <span class="caps">JVM</span> and .<span class="caps">NET</span> <span class="caps">CLR</span>. </td>
+	</tr>
+	<tr>
+		<td> 2007 </td>
+		<td> Clojure </td>
+		<td> Lisp on the <span class="caps">JVM</span>. </td>
+		<td> Innovative approaches to mutable state. </td>
+	</tr>
+</table>
+<p>In 1984, Apple introduced the Macintosh, the first popular copmuter with a Graphical User Interface. GUIs were quickly seen as ideal for <span class="caps">OOP</span>.</p>
+</div>
+<div class="slide">
 <h1>Strong Coupling</h1>
+<p>Last time, we talked at length about encapsulation. We also mentioned that it helps minimize coupling between modules. Let&#8217;s explore this topic further.</p>
+<center>
+<p><img src="images/Module_Dependencies.png"></img></p>
+</center>
+</div>
+<div class="slide">
+<h1><code>gui.windowing</code></h1>
+<div class="code-small">
+<pre name="code" id="code" class="brush: scala,;">
+
+package gui.windowing {
+
+  abstract class Window(dimensions: Dimensions) {...}  
+  abstract class WindowFactory {
+    def make(dimensions: Dimensions): Window
+  }
+  
+  protected[gui] package mac {
+    MacWindow(...) extends Window(...) {...}
+    object MacWindowFactory extends WindowFactory {
+      def make(properties: Properties): Window = {...}
+    }
+  }
+  protected[gui] package windows {
+    WindowsWindow(...) extends Window(...) {...}
+    ...
+  }
+  ...
+}
+</pre></div>
+</div>
+<div class="slide">
+<h1>Other Modules</h1>
+<p><span class="caps">BAD</span>:<br />
+<div class="code-small"></p>
+<pre name="code" id="code" class="brush: scala,;">
+
+package gui.windowing {
+  def makeNewWindow(properties: Properties) {
+    val window = mac.MacWindowFactory.make(properties)
+    // Other Mac-specific calls...
+  }
+}
+</pre></div>
+<p><span class="caps">GOOD</span>:<br />
+<div class="code-small"></p>
+<pre name="code" id="code" class="brush: scala,;">
+
+package gui.windowing {
+  def makeNewWindow(properties: Properties) {
+    val window = WindowFactory.make(properties)
+    // Other generic calls...
+  }
+}
+</pre></div>
+</div>
+<div class="slide">
+<h1>Why is Strong Coupling Bad</h1>
+<ul>
+	<li>Testing</li>
+	<li>Maintenance</li>
+</ul>
+</div>
+<div class="slide">
+<h1>Testing</h1>
+<p>If I want to test a module, I have to set up all its dependencies. That&#8217;s painful if the dependencies are database connections, user interfaces, external processes, etc.</p>
+<p>For example, I could only test <code>makeNewWindow</code> with a Macintosh. Also, creating windows is much slower than just &#8220;running code&#8221;.</p>
+<p>But if <code>makeNewWindow</code> depends only on interfaces, I can use <em>stub</em> implementations that make testing easy and fast.</p>
+</div>
+<div class="slide">
+<h1>Maintenance</h1>
+<p>If you have several other teams that depend on the implementation of <code>MacWindowFactory</code>, you can&#8217;t change it without pain:</p>
+<ul>
+	<li>You have to plan with those teams when to introduce the changes.</li>
+	<li>You and they have to coordinate the changes.</li>
+	<li>They have to <em>unit</em> test their changes in isolation.</li>
+	<li>The organization has to <em>integration</em> test the changes.</li>
+	<li>All the changes need to be deployed in a coordinated manner.</li>
+</ul>
+</div>
+<div class="slide">
+<h1>Inheritance Is Strong Coupling</h1>
+<p>It&#8217;s important to note that <em>inheritance is a form of strong coupling</em>. (About the strongest in fact.)</p>
+<p>Like any form of coupling, it should be used <em>sparingly</em></p>
 </div>
 <div class="slide">
 <h1>Composition vs. Inheritance</h1>

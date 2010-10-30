@@ -2,16 +2,103 @@ h1. Lecture 9: Effective Object-Oriented Programming (OOP), Part II
 
 h1. Some History
 
-|_.Year |_.Event|
-| 1967 | Simula created |
-| 1978 | Smalltalk |
-| 1984 | Macintosh |
-| 1987 | C++ |
-| 1995 | Java |
-| 2003 | Scala |
-| 2007 | Clojure |
+|_.Year |_.Event|_.Features|_.Notes|
+| 1967 | Simula | Objects, classes, subclasses, virtual methods, coroutines, discrete event simulation, garbage collection. | First OO Language.|
+| 1972 | Smalltalk | Object-oriented, dynamically typed, reflective. | First public version in 1980|
+| 1983 | C++ | Classes, virtual functions, operator overloading, multiple inheritance, templates, exception handling. | Most widely used OO language in the 90s. (?) |
+
+h1. Some History
+
+|_.Year |_.Event|_.Features|_.Notes|
+| 1995 | Java | "Simplified C++", plus byte code running on a virtual machine. | Rapid adoption when the Internet went mainstream. |
+| 2003 | Scala | Object-oriented and functional programming. | Runs on the JVM and .NET CLR. |
+| 2007 | Clojure | Lisp on the JVM. | Innovative approaches to mutable state. |
+
+In 1984, Apple introduced the Macintosh, the first popular copmuter with a Graphical User Interface. GUIs were quickly seen as ideal for OOP.
 
 h1. Strong Coupling
+
+Last time, we talked at length about encapsulation. We also mentioned that it helps minimize coupling between modules. Let's explore this topic further.
+
+<center>
+	<img src="images/Module_Dependencies.png"></img>
+</center>
+
+h1. @gui.windowing@
+
+:inlinecode lang=scala, class=code-small
+package gui.windowing {
+
+  abstract class Window(dimensions: Dimensions) {...}  
+  abstract class WindowFactory {
+    def make(dimensions: Dimensions): Window
+  }
+  
+  protected[gui] package mac {
+    MacWindow(...) extends Window(...) {...}
+    object MacWindowFactory extends WindowFactory {
+      def make(properties: Properties): Window = {...}
+    }
+  }
+  protected[gui] package windows {
+    WindowsWindow(...) extends Window(...) {...}
+    ...
+  }
+  ...
+}
+:endinlinecode 
+
+h1. Other Modules
+
+BAD:
+:inlinecode lang=scala, class=code-small
+package gui.windowing {
+  def makeNewWindow(properties: Properties) {
+    val window = mac.MacWindowFactory.make(properties)
+    // Other Mac-specific calls...
+  }
+}
+:endinlinecode 
+
+GOOD:
+:inlinecode lang=scala, class=code-small
+package gui.windowing {
+  def makeNewWindow(properties: Properties) {
+    val window = WindowFactory.make(properties)
+    // Other generic calls...
+  }
+}
+:endinlinecode 
+
+
+h1. Why is Strong Coupling Bad
+
+* Testing
+* Maintenance
+
+h1. Testing
+
+If I want to test a module, I have to set up all its dependencies. That's painful if the dependencies are database connections, user interfaces, external processes, etc.
+
+For example, I could only test @makeNewWindow@ with a Macintosh. Also, creating windows is much slower than just "running code".
+
+But if @makeNewWindow@ depends only on interfaces, I can use _stub_ implementations that make testing easy and fast.
+
+h1. Maintenance
+
+If you have several other teams that depend on the implementation of @MacWindowFactory@, you can't change it without pain:
+
+* You have to plan with those teams when to introduce the changes.
+* You and they have to coordinate the changes.
+* They have to _unit_ test their changes in isolation.
+* The organization has to _integration_ test the changes.
+* All the changes need to be deployed in a coordinated manner.
+
+h1. Inheritance Is Strong Coupling
+
+It's important to note that _inheritance is a form of strong coupling_. (About the strongest in fact.) 
+
+Like any form of coupling, it should be used _sparingly_
 
 h1. Composition vs. Inheritance
 
