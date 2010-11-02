@@ -4,6 +4,8 @@ h1. Why Are Objects Interesting?
 
 Because managing complexity is one of our biggest challenges. Mentally, we object encapsulation in our daily lives to avoid being overwhelmed by sensory input. Object-Oriented Programming tries to apply that same strategy to managing software complexity.
 
+However, like any tool, objects can be used in situations where their drawbacks outweigh their benefits.
+
 h1. Some History
 
 <div class='small'>
@@ -44,6 +46,7 @@ h1. Some History (cont.)
 | 2003 | Scala | Object-oriented and functional programming. | Runs on the JVM and .NET CLR. |
 | 2007 | Clojure | Lisp on the JVM. | Innovative approaches to mutable state. |
 
+The rise of functional programming, with some languages taking a hybrid object-functional approach, like Scala, OCaml, and JavaScript, while other languages are discounting the value of objects, like Clojure.
 </div>
 
 h1. Eiffel Innovations
@@ -51,7 +54,7 @@ h1. Eiffel Innovations
 * *Design by Contract:* Discussed last lecture.
 * *Command-Query Separation:*
 * *Uniform-Access Principle:*
-* *Single-Choice Principle:*
+* *Single-Choice Principle:* (a.k.a. _Don't Repeat Yourself_)
 * *Open-Closed Principle:* 
 * *Option-Operand Separation:* (We won't discuss this one.)
 
@@ -67,6 +70,27 @@ If a function executes a "command" and it returns a value ("query"), it's doing 
 * *Query:* Return a result, but don't alter state (at least not the visible state - it may update an internal _cache_, for example.)
 
 Example: JavaBean getters and setters.
+
+h1. CQ Separation: Counterexamples
+
+*Builders:*
+
+:inlinecode lang=scala, class=code-small
+import org.chicagoscala.awse.domain.finance._
+val criteria = CriteriaMap().
+  withInstruments(instruments).
+  withStatistics(statistics).
+  withStart(start).
+  withEnd(end)
+:endinlinecode 
+
+*Functional Operations:*
+
+:inlinecode lang=scala, class=code-small
+(1 to 10) filter (_ % 2 == 0) map (_.toString) take 2
+// ...immutable.IndexedSeq[java.lang.String] = Vector(2, 4)
+:endinlinecode 
+
 
 h1. Uniform-Access Principle
 
@@ -151,9 +175,9 @@ h1. Good Object Design: Lesson 5
 
 In long-lived projects, take the time to factor out abstractions so you can exploit the _Open-Closed Principle_. It will minimize the maintenance effort over time.
 
-h1. Strong Coupling
+h1. Strong Dependencies
 
-Last time, we talked at length about encapsulation. We also mentioned that it helps minimize coupling between modules. Some of the principles we just discussed also do this. Let's explore coupling some more.
+Last time, we talked at length about encapsulation. We also mentioned that it helps minimize dependencies (coupling) between modules. Some of the principles we just discussed also do this. Let's explore dependencies some more.
 
 <center>
 	<img src="images/Module_Dependencies.png"></img>
@@ -185,11 +209,11 @@ package gui.windowing {
 }
 :endinlinecode 
 
-h1. Other GUI Modules
+h1. Other Modules
 
 BAD:
 :inlinecode lang=scala, class=code-small
-package gui.windowing {
+object MyApp {
   def makeNewWindow(properties: Properties) {
     val window = mac.MacWindowFactory.make(properties)
     // Other Mac-specific calls...
@@ -199,7 +223,7 @@ package gui.windowing {
 
 GOOD:
 :inlinecode lang=scala, class=code-small
-package gui.windowing {
+object MyApp {
   def makeNewWindow(properties: Properties) {
     val window = WindowFactory.make(properties)
     // Other generic calls...
@@ -208,18 +232,20 @@ package gui.windowing {
 :endinlinecode 
 
 
-h1. Why is Strong Coupling Bad
+h1. Why Are Strong Dependencies Bad?
 
 * *Testing*
 * *Maintenance*
 
 h1. Testing
 
-If I want to test a module, I have to set up all its dependencies. That's painful if the dependencies are database connections, user interfaces, external processes, etc.
+If I want to test a module, I have to set up all its dependencies. That's painful if the dependencies are *concrete* objects like database connections, user interfaces, external processes, etc.
 
-For example, I could only test @makeNewWindow@ with a Macintosh. Also, creating windows is much slower than just "running code".
+For example, I could only test the "bad" version of @MyApp.makeNewWindow@ with a Macintosh. Also, in general, creating GUI widgets is much slower than avoiding real UI calls.
 
-But if @makeNewWindow@ depends only on interfaces, I can use _stub_ implementations that make testing easy and fast.
+But if @makeNewWindow@ depends only on abstractions (e.g., Java interfaces), I can use a _stub_ implementation of @WindowFactory@ that makes _unit_ testing easy and fast.
+
+(We'll revisit testing in a few weeks.)
 
 h1. Maintenance
 
@@ -233,14 +259,16 @@ If you have several other teams that depend on the implementation of @MacWindowF
 
 h1. Good Object Design: Lesson 6
 
-Keep coupling to a minimum.
+Keep dependencies to a minimum.
 
 * Depend only on abstractions.
 * Depend on a minimum number of modules.
 
-h1. Inheritance Is Strong Coupling
+h1. Inheritance Is A Strong Dependency
 
-It's important to note that _inheritance is a form of strong coupling_. (About the strongest in fact.) The advantages vs. disadvantages need to be weighed.
+It's important to note that _inheritance is a form of strong dependency_. (About the strongest in fact.) The advantages vs. disadvantages need to be weighed.
+
+h1. Inheritance Is A Strong Dependency (cont.)
 
 *Advantages:*
 * Reuse of state and behavior.
@@ -249,8 +277,9 @@ It's important to note that _inheritance is a form of strong coupling_. (About t
 *Disadvantages:*
 * Any change to parent may require changes to child.
 * Proper implementations of @clone@, @equals@, @hashCode@ challenging.
+* Can't "abstract over" the dependency.
 
-Like any form of coupling, it should be used _sparingly_.
+Like any form of dependency, it should be used _sparingly_.
 
 h1. Composition vs. Inheritance
 
@@ -274,6 +303,10 @@ case class Person(name:String, age: Int, address: Address)
 :endinlinecode 
 
 Makes more sense to say @Person@ _has an_ @Address@.
+
+h1. Composition vs. Inheritance (cont.)
+
+Not only does "@Person@ _has an_ @Address@" make more sense, but now we can treat address as an abstraction. For example, we can pass in the correct kind of address appropriate for the country the person lives.
 
 h1. Less Trivial Example:
 
@@ -317,7 +350,7 @@ We _compose_ the X11 window with an implementing rectangle.
 
 h1. Composition vs. Inheritance (cont.)
 
-So, coupling to abstractions is the weakest form of dependency. Therefore, we should prefer _composing_ behavior over _inheriting_ it.
+So, dependency on abstractions is the weakest form of dependency. Therefore, we should prefer _composing_ behavior over _inheriting_ it.
 
 *Object Properties:*
 
@@ -325,7 +358,7 @@ Every property is a reference to another object (as long as you consider, number
 
 h1. Mixins
 
-An alternative to using _properties_ is to use _mixins_, which are like standalone objects (they have their own _behavior_: state and/or functions), but they are designed to be mixed into other objects, adding additional behavior.
+An alternative to using _properties_ is to use _mixins_, which are like standalone objects (they have their own _behavior_: state and/or functions), but they are designed to be mixed into other objects using the inheritance mechanism, but with weaker coupling.
 
 Most of the time, these behaviors will be _orthogonal_.
 
@@ -398,7 +431,7 @@ abstract class X11Window(properties: Properties) {
 }
 :endinlinecode 
 
-are "promises" that any _concrete_ class eventually created from @X11Window@ will mix in a Rectangle trait. In byte code, it is identical to @X11Window extends Rectangle@, but avoids the _is a_ trap (Liskov).
+are "promises" that any _concrete_ class eventually created from @X11Window@ will mix in a @Rectangle@ trait. In byte code, it is identical to @X11Window extends Rectangle@, but avoids the _is a_ trap (Liskov Substitution Principle).
 
 h1. Self Types in Scala
 
@@ -411,7 +444,7 @@ abstract class X11Window(properties: Properties)
 }
 :endinlinecode 
 
-but that implies that window is substitutable for Rectangle (Liskov), which is a poor inheritance relationship. 
+However, that would imply that @X11Window@ is _substitutable_ for @Rectangle@ (Liskov), which is a poor inheritance relationship. 
 
 Self types emphasize instead that we will get the "Rectangle" behavior we need through a mixin.
 
@@ -421,17 +454,18 @@ So, to create actual objects the factory method would do this:
 
 :inlinecode lang=scala, class=code-small
 object X11WindowFactory extends WindowFactory { 
-  def make(properties: Properties) = {
-    val dimensions = // get dimensions from properties
-    new X11Window(dimensions) with utils.Logging with OGLRectangle {
-      val lowerLeft = // get it from the dimensions
-      val upperRight = // get it from the dimensions
-    }
-  } // returns window WITH Logging WITH OGLRectangle!
+ def make(properties: Properties) = {
+  val dimensions = // get dimensions from properties
+  new X11Window(dimensions) with utils.Logging with OGLRectangle
+  {
+   val lowerLeft  = // get it from the dimensions
+   val upperRight = // get it from the dimensions
+  }
+ } // returns window WITH Logging WITH OGLRectangle!
 } 
 :endinlinecode 
 
-Note: this technique is called the "Cake Pattern":http://jonasboner.com/2008/10/06/real-world-scala-dependency-injection-di.html (also discussed "here":http://programming-scala.labs.oreilly.com/ch13.html and used to "implement the Scala compiler itself":http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.63.5834&rep=rep1&type=pdf)
+Note: this technique is called the "Cake Pattern":http://jonasboner.com/2008/10/06/real-world-scala-dependency-injection-di.html (also discussed "here":http://programming-scala.labs.oreilly.com/ch13.html and used to "implement the Scala compiler itself":http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.63.5834&rep=rep1&type=pdf).
 
 h1. Counterexample: Exception Hierarchies
 
@@ -454,6 +488,10 @@ Why? Because this hierarchy forms a _classification tree_, similar to the way th
 
 (credit: "http://en.wikipedia.org/wiki/Phylogenetic_tree":http://en.wikipedia.org/wiki/Phylogenetic_tree)
 
+h1. Counterexample: Exception Hierarchies
+
+However, this only works if this hierarchy is very stable.
+
 h1. Good Object Design: Lesson 7
 
 Prefer _composition_ over _inheritance_.
@@ -468,7 +506,7 @@ Objects offer benefits, but they also pose theoretical and practical problems.
 * *Unrestrained Mutability*
 * *Reusability*
 
-h1. Cloning Objects
+h1. Cloning Objects: Two Strategies
 
 * *Shallow Copy:* Parts are _shared_. References to other "sub-objects" in the new copy point to the same sub-objects in the original object.
 + Faster cloning.
@@ -477,7 +515,7 @@ h1. Cloning Objects
 - Expensive cloning.
 + Easier to control state of each object separately.
 
-This is a language (or API) design decision. Needs to be consistent!
+This is a language (or API) design decision. Needs to be consistently applied!
 
 h1. Cloning Objects (cont.)
 
@@ -485,32 +523,35 @@ Note that the "state problem" goes away if the objects are _immutable_!
 
 This fact is exploited by _software transactional memory_ implementations (e.g., subtree sharing) that we discussed earlier in the course.
 
+Recall that modifications are implemented by creating new objects where the "invariant" parts are shared. No object is ever modified directly.  <
+
 h1. Determining Equality
 
 It's actually hard to "write a correct equality operator":http://www.artima.com/lejava/articles/equality.html. Let's talk about Java, as a representative example.
 
 h1. The Signature of @equals@
 
-A common mistake is to get the signature wrong. Suppose I define @equals@ for the @Output@ class we used earlier:
+A common mistake is to get the signature wrong. Suppose I define @equals@ for the @MacWindow@ class we discussed earlier:
 
 :inlinecode lang=scala, class=code-small
-boolean equals(Output other) {...}  // WRONG!!
+boolean equals(MacWindow window) {...}  // WRONG!!
 :endinlinecode 
 
 :inlinecode lang=scala, class=code-small
 boolean equals(Object other) {...}  // Right!
 :endinlinecode 
 
-Why? Because in Java collections, all objects are @Object@, so the run time won't look for the method that takes an @Output@ argument. Rather, it will use the "closest" @equals@ method that takes an @Object@ argument, perhaps the one on @Object@ itself.
-
+Why? Because in Java collections, all objects are @Object@, so the run time won't look for the method that takes an @MacWindow@ argument. Rather, it will use the "closest" @equals@ method that takes an @Object@ argument, perhaps the one on @Object@ itself.
 
 h1. Overlooking @hashCode@ 
 
-You have to keep @hashCode@ consistent with @equals@, meaning that if @equals@ says that two objects are equivalent, then @hashCode@ applied to each should produce the same value.
+You have to keep @hashCode@ consistent with @equals@:
+
+_If @equals@ says that two objects are equivalent, then @hashCode@ applied to each object should return the same value._
 
 The default @Object.hashCode@ simply uses the object's reference address. So, if you put an  object in a @HashSet@ for example, then test for its presence using an equal but different object, you _might_ (or not) get a false negative, depending on whether or not the _addresses_ of the two objects both get hashed into the same bucket!
 
-h1. @equals@, @hashCode@, and Mutable
+h1. Mutability: @equals@, @hashCode@
 
 This is related to the previous problem with @HashSet@ and similar collections. Suppose you create an object, put it in a @HashSet@, then mutate the object. You _might_ find that the @HashSet@ no longer believes it has the object!
 
@@ -521,7 +562,7 @@ h1. @equals@ Is an _Equivalence Relation_
 Your @equals@ must satisfy the following properties:
 
 * *Reflexive:* for any non-null value @x@, the expression @x.equals(x)@ should return true.
-* *Symmetric:* for any non-null values @x@ and @y@, @x.equals(y)@ should return true if and only if @y.equals(x)@ returns true.
+* *Symmetric:* for any non-null values @x@ and @y@, @x.equals(y)@ should return true _if and only if_ @y.equals(x)@ returns true.
 * *Transitive:* for any non-null values @x@, @y@, and @z@, if @x.equals(y)@ returns true and @y.equals(z)@ returns true, then @x.equals(z)@ should return true.
 
 h1. @equals@ Is an _Equivalence Relation_ (cont.)
@@ -533,26 +574,22 @@ h1. @equals@ Is an _Equivalence Relation_
 
 That doesn't sound hard, but a classic mistake is to allow objects to be considered equal if the values of their _common supertypes are equal_.
 
-:inlinecode lang=scala, class=code-tiny
+:inlinecode lang=scala, class=code-small
 // Scala syntax now...
 class Point2D(val x: Double, val y: Double) { 
-  override def equals(other: Any): Boolean = 
-    other match {
+  override def equals(other: Any): Boolean = other match {
       case p: Point2D => x == p.x && y == p.y
       case _ => false
     }
-  }
-}
-
+  }}
+  
 class Point3D(x: Double, y: Double, val z: Double)
     extends Point2D(x, y) { 
-  override def equals(other: Any): Boolean = 
-    other match {
+  override def equals(other: Any): Boolean = other match {
       case p: Point3D => x == p.x && y == p.y && z == p.z
       case _ => false
     }
-  }
-}
+  }}
 :endinlinecode 
 
 h1. @equals@ Is an _Equivalence Relation_
@@ -566,6 +603,9 @@ p3 == p2   // false!
 
 Not only is symmetry broken, but this can lead to strange affects in collections, again.
 
+(It also begs the question, is Liskov Substitutability satisfied by 
+@Point2D <: Point3D@?)
+
 h1. @equals@ Is an _Equivalence Relation_
 
 You could implement a fix for the symmetry by making the relation @a == b || b == a@, but this breaks transitivity:
@@ -575,7 +615,7 @@ val p2 = new Point2D(1, 2)
 val p33 = new Point3D(1, 2, 3)
 val p34 = new Point3D(1, 2, 4)
 p2 == p33   // true
-p33 == p2   // true, if we "fix" symmetry
+p33 == p2   // true, if we "fix" symmetry (see exercises)
 
 p33 == p2   // true
 p2  == p34  // true
@@ -584,27 +624,31 @@ p33 == p34  // false!
 
 h1. Equals
 
-So, in most cases, you must also require the objects to be of the same type. However, than can be cases where a subtype doesn't add any more _state_ to the parent type. Our @LineOrientedOutput@ and @Output@ are examples. So, objects of these types _could_ be compared.
+So, in most cases, you must also require the objects to be of the _same_ type. However, than can be cases where a subtype doesn't add any more _state_ to the parent type. (We'll see an example later in the lecture.) Objects of these types _could_ be compared.
+
+However, it's still a questionable idea. Perhaps there shouldn't be two different types after all?
 
 See "here":http://www.artima.com/lejava/articles/equality.html for more details on show to implement this case.
 
 h1. Typing of Object-Oriented Languages
 
-Creating a sophisticated "sound" type system in object-oriented languages is harder than in a comparable functional language, because of subtyping. Java didn't really try very hard. Scala goes quite far, but it takes some effort to master the type system (which is _Turing complete_, by the way). An example of this is seen when you compare Haskell to Scala. Haskell infers most type information, while Scala is limited to _local type inference_ (which is why the types of function arguments must be declared).
+Creating a sophisticated and "sound" type system in object-oriented languages is harder than in a comparable functional language, because of subtyping. Java didn't really try very hard. Scala goes quite far, but it takes some effort to master the type system (which is _Turing complete_, by the way). 
 
-h1. Type "invariance" Under Transformations
+Compare Haskell to Scala. Haskell infers most type information, while Scala is limited to _local type inference_, which is why the types of function arguments must be declared.
+
+h1. Type "Invariance" Under Transformations
 
 Another common problem related to subtyping is what I'll call the desire for _type invariance under transformations_. Here's an example to describe what this means.
 
-Suppose you a Scala @List@  and you want to map over it. Conveniently, this class inherits a @map@ method implementation that happens to be defined in one of its ancestor types, @TraversableLike@.
+Suppose you want to map over a Scala @List@. Conveniently, @List@ inherits a @map@ method implementation that is defined in one of its ancestor types, @TraversableLike@.
 
-Here's the problem, I would like the result to also have the type @List@, not @TraversableLike@ or some other lowest-common denominator type.
+Here's the problem, I would like the result to also have the type @List@, not @TraversableLike@ or some other lowest-common denominator type. However, I definitely don't want @TraversableLike@ to know about @List@ or another other subtype.
 
-h1. Type "invariance" Under Transformations
+h1. Type "Invariance" Under Transformations
 
 In a lot of strongly-typed object-oriented languages, there is no built-in way to get a new collection with the same type as the original (with the type parameter for the @List@ possibly changed). Scala pre-2.8 also didn't do this. However, Scala 2.8 exploits _implicit parameters_ and special factory objects to do this. 
 
-h1. Type "invariance" Under Transformations
+h1. Type "Invariance" Under Transformations
 
 We want something "equivalent" to this @map@ method signature for @List@:
 
@@ -625,41 +669,51 @@ trait TraversableLike {
 }
 :endinlinecode 
 
-h1. Type "invariance" Under Transformations
+h1. Type "Invariance" Under Transformations
 
 Note there are two argument _lists_ and the second one takes a single @implicit@ parameter. Recall that the user doesn't have to specify these parameters if a suitable object is in scope. Here, @CanBuildFrom@ is supplied by the Scala library. It knows how to build a @List[B]@ object (which is what @That@ represents), based on the current "representation" @Repr@ and the type parameter @B@.
 
 h1. Static Types vs. Real-World Variability
 
-It is sometimes said that "objects model the real world". One problem with this view is that real world objects are not always fixed and unchangeable. The can be more fluid, depending on context and changes over time.
+It is sometimes said that "objects model the real world". One problem with this view is that real world objects are not always fixed and unchangeable. They can be more fluid, depending on context and changes over time.
 
-However, class-based and especially statically-typed languages don't reflect this fluid nature of reality. Prototype languages and languages with "open types" are more accommodating to this kind of change. Yet, as we'll discuss in subsequent lectures, trying to mimic the world too faithfully is overkill for most programming problems.
+However, class-based and especially statically-typed languages don't reflect this fluid nature of reality. Prototype languages and languages with "open types" are more accommodating to this kind of change. 
+
+Yet, as we'll discuss in subsequent lectures, trying to mimic the world too faithfully is overkill for most programming problems.
 
 h1. Unrestrained Mutability
 
-It's a hallmark of OOP that you send messages to objects, which do appropriate computations, possibly modify internal state, then send a reply and/or other messages to other objects.
+It's a hallmark of OOP that you send messages to objects, which do appropriate computations, possibly modifying internal state, then send a reply to the caller and/or send other messages to other objects.
 
 However, the mutability part presents problems.
 
-h1. Correctness
+h1. Mutability and Correctness
 
 We saw earlier that @hashCode@ and @equals@ are unreliable when objects mutate.
 
-Mutability also makes evaluating "correctness" (e.g., through testing) more difficult, because if we are testing one thing, we have to also test how it affects mutable objects with which it interacts. Furthermore, as we discussed last week, you have to carefully consider the state transitions of an object.
+Mutability also makes evaluating _correctness_ (e.g., through testing) more difficult, because if we are testing one thing, we have to also test how it affects mutable objects with which it interacts. 
 
-h1. Concurrency
+Furthermore, as we discussed last week, you have to carefully consider the state transitions of an object.
 
-However, more than any other reason, the growing need to embrace concurrency to create scalable and reliable applications has made mutability more problematic.
+h1. Mutability and Concurrency
+
+However, more than any other reason, the growing need to embrace _concurrency_ to create scalable and reliable applications has made mutability more problematic.
 
 As we discussed in an earlier lecture, all the locking challenges of multi-threaded programming go away when objects are immutable.
 
 h1. Reusability
 
-As OOP went mainstream, a perceived benefit was the ability to create reusable object libraries. This largely failed, except in limited cases (such as collections libraries and windowing APIs). Why?
+As OOP went mainstream, a perceived benefit was the ability to create _reusable object libraries_. This largely failed, except in limited cases (such as collections libraries and windowing APIs). 
 
-h1. Baroque Abstractions
+Why?
+
+h1. Reusability and "Baroque" Abstractions
 
 We'll explore this topic in depth towards the end of the course, but for now, note that objects can expose abstractions with almost no constraints at all. They can take virtually any form, following many different conventions and styles. Paradoxically, this freedom _inhibits_ reuse, because one object library is rarely API-compatible with others.
+
+Also, library designers often do a poor job of _minimizing dependencies_ (coupling), so to use their library requires you to use lots of dependencies you might not want.
+
+(We felt this pain, unfortunately, when setting up the Akka project.)
 
 h1. Conclusions, Part II
 
@@ -672,15 +726,22 @@ h1. Reading Assignments: OOP
 * "Real-World Scala: Dependency Injection (DI)":http://jonasboner.com/2008/10/06/real-world-scala-dependency-injection-di.html.
 * "How to Write an Equality Method in Java":http://www.artima.com/lejava/articles/equality.html.
 
-h1. Reading Assignments: Functional Programming
+h1. Reading Assignments: FP
 
 * "Functional Programming":http://en.wikipedia.org/wiki/Functional_programming (Wikipedia).
 * "Functional Programming for the Rest of Us":http://www.defmacro.org/ramblings/fp.html.
 
+h1. Exercise 1: Equality
+
+Implement the "improved" equals methods for @Point2D@ and @Point3D@ that satisfy symmetry. Demonstrate by example that they satisfy symmetry, but still fail to satisfy transitivity.
+
+h1. Exercise 2: Design by Contract
+
+In the Akka project, consider @DataStore.range@ in the @org.chicagoscala.awse.persistence@ package.
+
+Write down all the preconditions, postconditions, and invariants that you can think of that would be reasonable constraints on this method. (Hint: the @DataStoreTest@ checks some, but not all of the possibilities.)
 
 h1. Appendix: LSP Revisited
-
-(We won't cover this material in class, but it is worth understanding when you write your own object-oriented software.)
 
 Let's return to the Liskov Substitution Principle (LSP) and discuss how it works under inheritance.
 

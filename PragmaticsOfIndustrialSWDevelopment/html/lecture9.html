@@ -54,6 +54,7 @@
 <div class="slide">
 <h1>Why Are Objects Interesting?</h1>
 <p>Because managing complexity is one of our biggest challenges. Mentally, we object encapsulation in our daily lives to avoid being overwhelmed by sensory input. Object-Oriented Programming tries to apply that same strategy to managing software complexity.</p>
+<p>However, like any tool, objects can be used in situations where their drawbacks outweigh their benefits.</p>
 </div>
 <div class="slide">
 <h1>Some History</h1>
@@ -154,6 +155,7 @@
 		<td> Innovative approaches to mutable state. </td>
 	</tr>
 </table>
+<p>The rise of functional programming, with some languages taking a hybrid object-functional approach, like Scala, OCaml, and JavaScript, while other languages are discounting the value of objects, like Clojure.</p>
 </div>
 </div>
 <div class="slide">
@@ -162,7 +164,7 @@
 	<li><strong>Design by Contract:</strong> Discussed last lecture.</li>
 	<li><strong>Command-Query Separation:</strong></li>
 	<li><strong>Uniform-Access Principle:</strong></li>
-	<li><strong>Single-Choice Principle:</strong></li>
+	<li><strong>Single-Choice Principle:</strong> (a.k.a. <em>Don&#8217;t Repeat Yourself</em>)</li>
 	<li><strong>Open-Closed Principle:</strong></li>
 	<li><strong>Option-Operand Separation:</strong> (We won&#8217;t discuss this one.)</li>
 </ul>
@@ -179,6 +181,27 @@
 	<li><strong>Query:</strong> Return a result, but don&#8217;t alter state (at least not the visible state &#8211; it may update an internal <em>cache</em>, for example.)</li>
 </ul>
 <p>Example: JavaBean getters and setters.</p>
+</div>
+<div class="slide">
+<h1>CQ Separation: Counterexamples</h1>
+<p><strong>Builders:</strong></p>
+<div class="code-small">
+<pre name="code" id="code" class="brush: scala,;">
+
+import org.chicagoscala.awse.domain.finance._
+val criteria = CriteriaMap().
+  withInstruments(instruments).
+  withStatistics(statistics).
+  withStart(start).
+  withEnd(end)
+</pre></div>
+<p><strong>Functional Operations:</strong></p>
+<div class="code-small">
+<pre name="code" id="code" class="brush: scala,;">
+
+(1 to 10) filter (_ % 2 == 0) map (_.toString) take 2
+// ...immutable.IndexedSeq[java.lang.String] = Vector(2, 4)
+</pre></div>
 </div>
 <div class="slide">
 <h1>Uniform-Access Principle</h1>
@@ -265,8 +288,8 @@ println(dean.getName());
 <p>In long-lived projects, take the time to factor out abstractions so you can exploit the <em>Open-Closed Principle</em>. It will minimize the maintenance effort over time.</p>
 </div>
 <div class="slide">
-<h1>Strong Coupling</h1>
-<p>Last time, we talked at length about encapsulation. We also mentioned that it helps minimize coupling between modules. Some of the principles we just discussed also do this. Let&#8217;s explore coupling some more.</p>
+<h1>Strong Dependencies</h1>
+<p>Last time, we talked at length about encapsulation. We also mentioned that it helps minimize dependencies (coupling) between modules. Some of the principles we just discussed also do this. Let&#8217;s explore dependencies some more.</p>
 <center>
 <p><img src="images/Module_Dependencies.png"></img></p>
 </center>
@@ -299,13 +322,13 @@ package gui.windowing {
 </pre></div>
 </div>
 <div class="slide">
-<h1>Other <span class="caps">GUI</span> Modules</h1>
+<h1>Other Modules</h1>
 <p><span class="caps">BAD</span>:<br />
 <div class="code-small"></p>
 
 <pre name="code" id="code" class="brush: scala,;">
 
-package gui.windowing {
+object MyApp {
   def makeNewWindow(properties: Properties) {
     val window = mac.MacWindowFactory.make(properties)
     // Other Mac-specific calls...
@@ -317,7 +340,7 @@ package gui.windowing {
 
 <pre name="code" id="code" class="brush: scala,;">
 
-package gui.windowing {
+object MyApp {
   def makeNewWindow(properties: Properties) {
     val window = WindowFactory.make(properties)
     // Other generic calls...
@@ -326,7 +349,7 @@ package gui.windowing {
 </pre></div>
 </div>
 <div class="slide">
-<h1>Why is Strong Coupling Bad</h1>
+<h1>Why Are Strong Dependencies Bad?</h1>
 <ul>
 	<li><strong>Testing</strong></li>
 	<li><strong>Maintenance</strong></li>
@@ -334,9 +357,10 @@ package gui.windowing {
 </div>
 <div class="slide">
 <h1>Testing</h1>
-<p>If I want to test a module, I have to set up all its dependencies. That&#8217;s painful if the dependencies are database connections, user interfaces, external processes, etc.</p>
-<p>For example, I could only test <code>makeNewWindow</code> with a Macintosh. Also, creating windows is much slower than just &#8220;running code&#8221;.</p>
-<p>But if <code>makeNewWindow</code> depends only on interfaces, I can use <em>stub</em> implementations that make testing easy and fast.</p>
+<p>If I want to test a module, I have to set up all its dependencies. That&#8217;s painful if the dependencies are <strong>concrete</strong> objects like database connections, user interfaces, external processes, etc.</p>
+<p>For example, I could only test the &#8220;bad&#8221; version of <code>MyApp.makeNewWindow</code> with a Macintosh. Also, in general, creating <span class="caps">GUI</span> widgets is much slower than avoiding real UI calls.</p>
+<p>But if <code>makeNewWindow</code> depends only on abstractions (e.g., Java interfaces), I can use a <em>stub</em> implementation of <code>WindowFactory</code> that makes <em>unit</em> testing easy and fast.</p>
+<p>(We&#8217;ll revisit testing in a few weeks.)</p>
 </div>
 <div class="slide">
 <h1>Maintenance</h1>
@@ -351,15 +375,18 @@ package gui.windowing {
 </div>
 <div class="slide">
 <h1>Good Object Design: Lesson 6</h1>
-<p>Keep coupling to a minimum.</p>
+<p>Keep dependencies to a minimum.</p>
 <ul>
 	<li>Depend only on abstractions.</li>
 	<li>Depend on a minimum number of modules.</li>
 </ul>
 </div>
 <div class="slide">
-<h1>Inheritance Is Strong Coupling</h1>
-<p>It&#8217;s important to note that <em>inheritance is a form of strong coupling</em>. (About the strongest in fact.) The advantages vs. disadvantages need to be weighed.</p>
+<h1>Inheritance Is A Strong Dependency</h1>
+<p>It&#8217;s important to note that <em>inheritance is a form of strong dependency</em>. (About the strongest in fact.) The advantages vs. disadvantages need to be weighed.</p>
+</div>
+<div class="slide">
+<h1>Inheritance Is A Strong Dependency (cont.)</h1>
 <p><strong>Advantages:</strong></p>
 <ul>
 	<li>Reuse of state and behavior.</li>
@@ -369,8 +396,9 @@ package gui.windowing {
 <ul>
 	<li>Any change to parent may require changes to child.</li>
 	<li>Proper implementations of <code>clone</code>, <code>equals</code>, <code>hashCode</code> challenging.</li>
+	<li>Can&#8217;t &#8220;abstract over&#8221; the dependency.</li>
 </ul>
-<p>Like any form of coupling, it should be used <em>sparingly</em>.</p>
+<p>Like any form of dependency, it should be used <em>sparingly</em>.</p>
 </div>
 <div class="slide">
 <h1>Composition vs. Inheritance</h1>
@@ -394,6 +422,10 @@ class Address(
 case class Person(name:String, age: Int, address: Address)
 </pre></div>
 <p>Makes more sense to say <code>Person</code> <em>has an</em> <code>Address</code>.</p>
+</div>
+<div class="slide">
+<h1>Composition vs. Inheritance (cont.)</h1>
+<p>Not only does &#8220;<code>Person</code> <em>has an</em> <code>Address</code>&#8221; make more sense, but now we can treat address as an abstraction. For example, we can pass in the correct kind of address appropriate for the country the person lives.</p>
 </div>
 <div class="slide">
 <h1>Less Trivial Example:</h1>
@@ -439,13 +471,13 @@ package gui.windowing.x11 {
 </div>
 <div class="slide">
 <h1>Composition vs. Inheritance (cont.)</h1>
-<p>So, coupling to abstractions is the weakest form of dependency. Therefore, we should prefer <em>composing</em> behavior over <em>inheriting</em> it.</p>
+<p>So, dependency on abstractions is the weakest form of dependency. Therefore, we should prefer <em>composing</em> behavior over <em>inheriting</em> it.</p>
 <p><strong>Object Properties:</strong></p>
 <p>Every property is a reference to another object (as long as you consider, numbers, booleans, etc. objects&#8230;)</p>
 </div>
 <div class="slide">
 <h1>Mixins</h1>
-<p>An alternative to using <em>properties</em> is to use <em>mixins</em>, which are like standalone objects (they have their own <em>behavior</em>: state and/or functions), but they are designed to be mixed into other objects, adding additional behavior.</p>
+<p>An alternative to using <em>properties</em> is to use <em>mixins</em>, which are like standalone objects (they have their own <em>behavior</em>: state and/or functions), but they are designed to be mixed into other objects using the inheritance mechanism, but with weaker coupling.</p>
 <p>Most of the time, these behaviors will be <em>orthogonal</em>.</p>
 <center>
 <span style="width: 100%;">
@@ -518,7 +550,7 @@ abstract class X11Window(properties: Properties) {
   ...
 }
 </pre></div>
-<p>are &#8220;promises&#8221; that any <em>concrete</em> class eventually created from <code>X11Window</code> will mix in a Rectangle trait. In byte code, it is identical to <code>X11Window extends Rectangle</code>, but avoids the <em>is a</em> trap (Liskov).</p>
+<p>are &#8220;promises&#8221; that any <em>concrete</em> class eventually created from <code>X11Window</code> will mix in a <code>Rectangle</code> trait. In byte code, it is identical to <code>X11Window extends Rectangle</code>, but avoids the <em>is a</em> trap (Liskov Substitution Principle).</p>
 </div>
 <div class="slide">
 <h1>Self Types in Scala</h1>
@@ -531,7 +563,7 @@ abstract class X11Window(properties: Properties)
   ...
 }
 </pre></div>
-<p>but that implies that window is substitutable for Rectangle (Liskov), which is a poor inheritance relationship.</p>
+<p>However, that would imply that <code>X11Window</code> is <em>substitutable</em> for <code>Rectangle</code> (Liskov), which is a poor inheritance relationship.</p>
 <p>Self types emphasize instead that we will get the &#8220;Rectangle&#8221; behavior we need through a mixin.</p>
 </div>
 <div class="slide">
@@ -541,16 +573,17 @@ abstract class X11Window(properties: Properties)
 <pre name="code" id="code" class="brush: scala,;">
 
 object X11WindowFactory extends WindowFactory { 
-  def make(properties: Properties) = {
-    val dimensions = // get dimensions from properties
-    new X11Window(dimensions) with utils.Logging with OGLRectangle {
-      val lowerLeft = // get it from the dimensions
-      val upperRight = // get it from the dimensions
-    }
-  } // returns window WITH Logging WITH OGLRectangle!
+ def make(properties: Properties) = {
+  val dimensions = // get dimensions from properties
+  new X11Window(dimensions) with utils.Logging with OGLRectangle
+  {
+   val lowerLeft  = // get it from the dimensions
+   val upperRight = // get it from the dimensions
+  }
+ } // returns window WITH Logging WITH OGLRectangle!
 } 
 </pre></div>
-<p>Note: this technique is called the <a href="http://jonasboner.com/2008/10/06/real-world-scala-dependency-injection-di.html">Cake Pattern</a> (also discussed <a href="http://programming-scala.labs.oreilly.com/ch13.html">here</a> and used to <a href="http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.63.5834&amp;rep=rep1&amp;type=pdf">implement the Scala compiler itself</a>)</p>
+<p>Note: this technique is called the <a href="http://jonasboner.com/2008/10/06/real-world-scala-dependency-injection-di.html">Cake Pattern</a> (also discussed <a href="http://programming-scala.labs.oreilly.com/ch13.html">here</a> and used to <a href="http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.63.5834&amp;rep=rep1&amp;type=pdf">implement the Scala compiler itself</a>).</p>
 </div>
 <div class="slide">
 <h1>Counterexample: Exception Hierarchies</h1>
@@ -569,6 +602,10 @@ object X11WindowFactory extends WindowFactory {
 <p>(credit: <a href="http://en.wikipedia.org/wiki/Phylogenetic_tree">http://en.wikipedia.org/wiki/Phylogenetic_tree</a>)</p>
 </div>
 <div class="slide">
+<h1>Counterexample: Exception Hierarchies</h1>
+<p>However, this only works if this hierarchy is very stable.</p>
+</div>
+<div class="slide">
 <h1>Good Object Design: Lesson 7</h1>
 <p>Prefer <em>composition</em> over <em>inheritance</em>.</p>
 </div>
@@ -584,7 +621,7 @@ object X11WindowFactory extends WindowFactory {
 </ul>
 </div>
 <div class="slide">
-<h1>Cloning Objects</h1>
+<h1>Cloning Objects: Two Strategies</h1>
 <ul>
 	<li><strong>Shallow Copy:</strong> Parts are <em>shared</em>. References to other &#8220;sub-objects&#8221; in the new copy point to the same sub-objects in the original object.<br />
 + Faster cloning.<br />
@@ -593,12 +630,13 @@ object X11WindowFactory extends WindowFactory {
 - Expensive cloning.<br />
 + Easier to control state of each object separately.</li>
 </ul>
-<p>This is a language (or <span class="caps">API</span>) design decision. Needs to be consistent!</p>
+<p>This is a language (or <span class="caps">API</span>) design decision. Needs to be consistently applied!</p>
 </div>
 <div class="slide">
 <h1>Cloning Objects (cont.)</h1>
 <p>Note that the &#8220;state problem&#8221; goes away if the objects are <em>immutable</em>!</p>
 <p>This fact is exploited by <em>software transactional memory</em> implementations (e.g., subtree sharing) that we discussed earlier in the course.</p>
+<p>Recall that modifications are implemented by creating new objects where the &#8220;invariant&#8221; parts are shared. No object is ever modified directly.  &lt;</p>
 </div>
 <div class="slide">
 <h1>Determining Equality</h1>
@@ -606,26 +644,27 @@ object X11WindowFactory extends WindowFactory {
 </div>
 <div class="slide">
 <h1>The Signature of <code>equals</code></h1>
-<p>A common mistake is to get the signature wrong. Suppose I define <code>equals</code> for the <code>Output</code> class we used earlier:</p>
+<p>A common mistake is to get the signature wrong. Suppose I define <code>equals</code> for the <code>MacWindow</code> class we discussed earlier:</p>
 <div class="code-small">
 <pre name="code" id="code" class="brush: scala,;">
 
-boolean equals(Output other) {...}  // WRONG!!
+boolean equals(MacWindow window) {...}  // WRONG!!
 </pre></div>
 <div class="code-small">
 <pre name="code" id="code" class="brush: scala,;">
 
 boolean equals(Object other) {...}  // Right!
 </pre></div>
-<p>Why? Because in Java collections, all objects are <code>Object</code>, so the run time won&#8217;t look for the method that takes an <code>Output</code> argument. Rather, it will use the &#8220;closest&#8221; <code>equals</code> method that takes an <code>Object</code> argument, perhaps the one on <code>Object</code> itself.</p>
+<p>Why? Because in Java collections, all objects are <code>Object</code>, so the run time won&#8217;t look for the method that takes an <code>MacWindow</code> argument. Rather, it will use the &#8220;closest&#8221; <code>equals</code> method that takes an <code>Object</code> argument, perhaps the one on <code>Object</code> itself.</p>
 </div>
 <div class="slide">
 <h1>Overlooking <code>hashCode</code></h1>
-<p>You have to keep <code>hashCode</code> consistent with <code>equals</code>, meaning that if <code>equals</code> says that two objects are equivalent, then <code>hashCode</code> applied to each should produce the same value.</p>
+<p>You have to keep <code>hashCode</code> consistent with <code>equals</code>:</p>
+<p><em>If <code>equals</code> says that two objects are equivalent, then <code>hashCode</code> applied to each object should return the same value.</em></p>
 <p>The default <code>Object.hashCode</code> simply uses the object&#8217;s reference address. So, if you put an  object in a <code>HashSet</code> for example, then test for its presence using an equal but different object, you <em>might</em> (or not) get a false negative, depending on whether or not the <em>addresses</em> of the two objects both get hashed into the same bucket!</p>
 </div>
 <div class="slide">
-<h1><code>equals</code>, <code>hashCode</code>, and Mutable</h1>
+<h1>Mutability: <code>equals</code>, <code>hashCode</code></h1>
 <p>This is related to the previous problem with <code>HashSet</code> and similar collections. Suppose you create an object, put it in a <code>HashSet</code>, then mutate the object. You <em>might</em> find that the <code>HashSet</code> no longer believes it has the object!</p>
 <p>This is because the <code>HashSet</code> uses the value of <code>hashCode</code> to determine the correct bucket for the object. However, if the object is mutable, then the value returned by <code>hashCode</code> changes, so <code>HashSet</code> might start looking in the wrong bucket for the object!</p>
 </div>
@@ -634,7 +673,7 @@ boolean equals(Object other) {...}  // Right!
 <p>Your <code>equals</code> must satisfy the following properties:</p>
 <ul>
 	<li><strong>Reflexive:</strong> for any non-null value <code>x</code>, the expression <code>x.equals(x)</code> should return true.</li>
-	<li><strong>Symmetric:</strong> for any non-null values <code>x</code> and <code>y</code>, <code>x.equals(y)</code> should return true if and only if <code>y.equals(x)</code> returns true.</li>
+	<li><strong>Symmetric:</strong> for any non-null values <code>x</code> and <code>y</code>, <code>x.equals(y)</code> should return true <em>if and only if</em> <code>y.equals(x)</code> returns true.</li>
 	<li><strong>Transitive:</strong> for any non-null values <code>x</code>, <code>y</code>, and <code>z</code>, if <code>x.equals(y)</code> returns true and <code>y.equals(z)</code> returns true, then <code>x.equals(z)</code> should return true.</li>
 </ul>
 </div>
@@ -648,28 +687,24 @@ boolean equals(Object other) {...}  // Right!
 <div class="slide">
 <h1><code>equals</code> Is an <em>Equivalence Relation</em></h1>
 <p>That doesn&#8217;t sound hard, but a classic mistake is to allow objects to be considered equal if the values of their <em>common supertypes are equal</em>.</p>
-<div class="code-tiny">
+<div class="code-small">
 <pre name="code" id="code" class="brush: scala,;">
 
 // Scala syntax now...
 class Point2D(val x: Double, val y: Double) { 
-  override def equals(other: Any): Boolean = 
-    other match {
+  override def equals(other: Any): Boolean = other match {
       case p: Point2D =&gt; x == p.x &amp;&amp; y == p.y
       case _ =&gt; false
     }
-  }
-}
-
+  }}
+  
 class Point3D(x: Double, y: Double, val z: Double)
     extends Point2D(x, y) { 
-  override def equals(other: Any): Boolean = 
-    other match {
+  override def equals(other: Any): Boolean = other match {
       case p: Point3D =&gt; x == p.x &amp;&amp; y == p.y &amp;&amp; z == p.z
       case _ =&gt; false
     }
-  }
-}
+  }}
 </pre></div>
 </div>
 <div class="slide">
@@ -683,6 +718,8 @@ p2 == p3   // true
 p3 == p2   // false!
 </pre></div>
 <p>Not only is symmetry broken, but this can lead to strange affects in collections, again.</p>
+<p>(It also begs the question, is Liskov Substitutability satisfied by <br />
+<code>Point2D &lt;: Point3D</code>?)</p>
 </div>
 <div class="slide">
 <h1><code>equals</code> Is an <em>Equivalence Relation</em></h1>
@@ -694,7 +731,7 @@ val p2 = new Point2D(1, 2)
 val p33 = new Point3D(1, 2, 3)
 val p34 = new Point3D(1, 2, 4)
 p2 == p33   // true
-p33 == p2   // true, if we "fix" symmetry
+p33 == p2   // true, if we "fix" symmetry (see exercises)
 
 p33 == p2   // true
 p2  == p34  // true
@@ -703,25 +740,27 @@ p33 == p34  // false!
 </div>
 <div class="slide">
 <h1>Equals</h1>
-<p>So, in most cases, you must also require the objects to be of the same type. However, than can be cases where a subtype doesn&#8217;t add any more <em>state</em> to the parent type. Our <code>LineOrientedOutput</code> and <code>Output</code> are examples. So, objects of these types <em>could</em> be compared.</p>
+<p>So, in most cases, you must also require the objects to be of the <em>same</em> type. However, than can be cases where a subtype doesn&#8217;t add any more <em>state</em> to the parent type. (We&#8217;ll see an example later in the lecture.) Objects of these types <em>could</em> be compared.</p>
+<p>However, it&#8217;s still a questionable idea. Perhaps there shouldn&#8217;t be two different types after all?</p>
 <p>See <a href="http://www.artima.com/lejava/articles/equality.html">here</a> for more details on show to implement this case.</p>
 </div>
 <div class="slide">
 <h1>Typing of Object-Oriented Languages</h1>
-<p>Creating a sophisticated &#8220;sound&#8221; type system in object-oriented languages is harder than in a comparable functional language, because of subtyping. Java didn&#8217;t really try very hard. Scala goes quite far, but it takes some effort to master the type system (which is <em>Turing complete</em>, by the way). An example of this is seen when you compare Haskell to Scala. Haskell infers most type information, while Scala is limited to <em>local type inference</em> (which is why the types of function arguments must be declared).</p>
+<p>Creating a sophisticated and &#8220;sound&#8221; type system in object-oriented languages is harder than in a comparable functional language, because of subtyping. Java didn&#8217;t really try very hard. Scala goes quite far, but it takes some effort to master the type system (which is <em>Turing complete</em>, by the way).</p>
+<p>Compare Haskell to Scala. Haskell infers most type information, while Scala is limited to <em>local type inference</em>, which is why the types of function arguments must be declared.</p>
 </div>
 <div class="slide">
-<h1>Type &#8220;invariance&#8221; Under Transformations</h1>
+<h1>Type &#8220;Invariance&#8221; Under Transformations</h1>
 <p>Another common problem related to subtyping is what I&#8217;ll call the desire for <em>type invariance under transformations</em>. Here&#8217;s an example to describe what this means.</p>
-<p>Suppose you a Scala <code>List</code>  and you want to map over it. Conveniently, this class inherits a <code>map</code> method implementation that happens to be defined in one of its ancestor types, <code>TraversableLike</code>.</p>
-<p>Here&#8217;s the problem, I would like the result to also have the type <code>List</code>, not <code>TraversableLike</code> or some other lowest-common denominator type.</p>
+<p>Suppose you want to map over a Scala <code>List</code>. Conveniently, <code>List</code> inherits a <code>map</code> method implementation that is defined in one of its ancestor types, <code>TraversableLike</code>.</p>
+<p>Here&#8217;s the problem, I would like the result to also have the type <code>List</code>, not <code>TraversableLike</code> or some other lowest-common denominator type. However, I definitely don&#8217;t want <code>TraversableLike</code> to know about <code>List</code> or another other subtype.</p>
 </div>
 <div class="slide">
-<h1>Type &#8220;invariance&#8221; Under Transformations</h1>
+<h1>Type &#8220;Invariance&#8221; Under Transformations</h1>
 <p>In a lot of strongly-typed object-oriented languages, there is no built-in way to get a new collection with the same type as the original (with the type parameter for the <code>List</code> possibly changed). Scala pre-2.8 also didn&#8217;t do this. However, Scala 2.8 exploits <em>implicit parameters</em> and special factory objects to do this.</p>
 </div>
 <div class="slide">
-<h1>Type &#8220;invariance&#8221; Under Transformations</h1>
+<h1>Type &#8220;Invariance&#8221; Under Transformations</h1>
 <p>We want something &#8220;equivalent&#8221; to this <code>map</code> method signature for <code>List</code>:</p>
 <div class="code-small">
 <pre name="code" id="code" class="brush: scala,;">
@@ -743,36 +782,41 @@ trait TraversableLike {
 </pre></div>
 </div>
 <div class="slide">
-<h1>Type &#8220;invariance&#8221; Under Transformations</h1>
+<h1>Type &#8220;Invariance&#8221; Under Transformations</h1>
 <p>Note there are two argument <em>lists</em> and the second one takes a single <code>implicit</code> parameter. Recall that the user doesn&#8217;t have to specify these parameters if a suitable object is in scope. Here, <code>CanBuildFrom</code> is supplied by the Scala library. It knows how to build a <code>List[B]</code> object (which is what <code>That</code> represents), based on the current &#8220;representation&#8221; <code>Repr</code> and the type parameter <code>B</code>.</p>
 </div>
 <div class="slide">
 <h1>Static Types vs. Real-World Variability</h1>
-<p>It is sometimes said that &#8220;objects model the real world&#8221;. One problem with this view is that real world objects are not always fixed and unchangeable. The can be more fluid, depending on context and changes over time.</p>
-<p>However, class-based and especially statically-typed languages don&#8217;t reflect this fluid nature of reality. Prototype languages and languages with &#8220;open types&#8221; are more accommodating to this kind of change. Yet, as we&#8217;ll discuss in subsequent lectures, trying to mimic the world too faithfully is overkill for most programming problems.</p>
+<p>It is sometimes said that &#8220;objects model the real world&#8221;. One problem with this view is that real world objects are not always fixed and unchangeable. They can be more fluid, depending on context and changes over time.</p>
+<p>However, class-based and especially statically-typed languages don&#8217;t reflect this fluid nature of reality. Prototype languages and languages with &#8220;open types&#8221; are more accommodating to this kind of change.</p>
+<p>Yet, as we&#8217;ll discuss in subsequent lectures, trying to mimic the world too faithfully is overkill for most programming problems.</p>
 </div>
 <div class="slide">
 <h1>Unrestrained Mutability</h1>
-<p>It&#8217;s a hallmark of <span class="caps">OOP</span> that you send messages to objects, which do appropriate computations, possibly modify internal state, then send a reply and/or other messages to other objects.</p>
+<p>It&#8217;s a hallmark of <span class="caps">OOP</span> that you send messages to objects, which do appropriate computations, possibly modifying internal state, then send a reply to the caller and/or send other messages to other objects.</p>
 <p>However, the mutability part presents problems.</p>
 </div>
 <div class="slide">
-<h1>Correctness</h1>
+<h1>Mutability and Correctness</h1>
 <p>We saw earlier that <code>hashCode</code> and <code>equals</code> are unreliable when objects mutate.</p>
-<p>Mutability also makes evaluating &#8220;correctness&#8221; (e.g., through testing) more difficult, because if we are testing one thing, we have to also test how it affects mutable objects with which it interacts. Furthermore, as we discussed last week, you have to carefully consider the state transitions of an object.</p>
+<p>Mutability also makes evaluating <em>correctness</em> (e.g., through testing) more difficult, because if we are testing one thing, we have to also test how it affects mutable objects with which it interacts.</p>
+<p>Furthermore, as we discussed last week, you have to carefully consider the state transitions of an object.</p>
 </div>
 <div class="slide">
-<h1>Concurrency</h1>
-<p>However, more than any other reason, the growing need to embrace concurrency to create scalable and reliable applications has made mutability more problematic.</p>
+<h1>Mutability and Concurrency</h1>
+<p>However, more than any other reason, the growing need to embrace <em>concurrency</em> to create scalable and reliable applications has made mutability more problematic.</p>
 <p>As we discussed in an earlier lecture, all the locking challenges of multi-threaded programming go away when objects are immutable.</p>
 </div>
 <div class="slide">
 <h1>Reusability</h1>
-<p>As <span class="caps">OOP</span> went mainstream, a perceived benefit was the ability to create reusable object libraries. This largely failed, except in limited cases (such as collections libraries and windowing APIs). Why?</p>
+<p>As <span class="caps">OOP</span> went mainstream, a perceived benefit was the ability to create <em>reusable object libraries</em>. This largely failed, except in limited cases (such as collections libraries and windowing APIs).</p>
+<p>Why?</p>
 </div>
 <div class="slide">
-<h1>Baroque Abstractions</h1>
+<h1>Reusability and &#8220;Baroque&#8221; Abstractions</h1>
 <p>We&#8217;ll explore this topic in depth towards the end of the course, but for now, note that objects can expose abstractions with almost no constraints at all. They can take virtually any form, following many different conventions and styles. Paradoxically, this freedom <em>inhibits</em> reuse, because one object library is rarely <span class="caps">API</span>-compatible with others.</p>
+<p>Also, library designers often do a poor job of <em>minimizing dependencies</em> (coupling), so to use their library requires you to use lots of dependencies you might not want.</p>
+<p>(We felt this pain, unfortunately, when setting up the Akka project.)</p>
 </div>
 <div class="slide">
 <h1>Conclusions, Part II</h1>
@@ -787,15 +831,23 @@ trait TraversableLike {
 </ul>
 </div>
 <div class="slide">
-<h1>Reading Assignments: Functional Programming</h1>
+<h1>Reading Assignments: FP</h1>
 <ul>
 	<li><a href="http://en.wikipedia.org/wiki/Functional_programming">Functional Programming</a> (Wikipedia).</li>
 	<li><a href="http://www.defmacro.org/ramblings/fp.html">Functional Programming for the Rest of Us</a>.</li>
 </ul>
 </div>
 <div class="slide">
+<h1>Exercise 1: Equality</h1>
+<p>Implement the &#8220;improved&#8221; equals methods for <code>Point2D</code> and <code>Point3D</code> that satisfy symmetry. Demonstrate by example that they satisfy symmetry, but still fail to satisfy transitivity.</p>
+</div>
+<div class="slide">
+<h1>Exercise 2: Design by Contract</h1>
+<p>In the Akka project, consider <code>DataStore.range</code> in the <code>org.chicagoscala.awse.persistence</code> package.</p>
+<p>Write down all the preconditions, postconditions, and invariants that you can think of that would be reasonable constraints on this method. (Hint: the <code>DataStoreTest</code> checks some, but not all of the possibilities.)</p>
+</div>
+<div class="slide">
 <h1>Appendix: <span class="caps">LSP</span> Revisited</h1>
-<p>(We won&#8217;t cover this material in class, but it is worth understanding when you write your own object-oriented software.)</p>
 <p>Let&#8217;s return to the Liskov Substitution Principle (<span class="caps">LSP</span>) and discuss how it works under inheritance.</p>
 <p>Recall this definition from the last lecture:</p>
 </div>

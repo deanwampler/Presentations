@@ -1,6 +1,6 @@
 /* Following are the presentation styles -- edit away! */
 
-body {background: #D2E7DB url(bodybg.gif) -16px 0 no-repeat; color: #000; font-size: 1.6em;}
+body {background: #E3FAEF url(bodybg.gif) -16px 0 no-repeat; color: #000; font-size: 1.6em;}
 :link, :visited {text-decoration: none; color: #00C;}
 #controls :active {color: #88A !important;}
 #controls :focus {outline: 1px dotted #227;}
@@ -31,6 +31,7 @@ sup {font-size: smaller; line-height: 1px;}
 .slide ul ul {line-height: 1;}
 .slide ul ul li {margin: .2em; font-size: 85%; list-style: square;}
 .slide img.leader {display: block; margin: 0 auto;}
+.slide em {color: #804703;}
 
 div#header, div#footer {background: #005; color: #AAB;
   font-family: Verdana, Helvetica, sans-serif;}
@@ -85,6 +86,22 @@ img.incremental {visibility: hidden;}
 table, td {
   border: 1px solid gray;
   background-color: #F0EEE8;
+}
+
+.rounded-corners {
+  -webkit-border-radius: 5px;  
+}
+.top-left-rounded-corners {
+  -webkit-border-top-left-radius:  5px;
+}
+.top-right-rounded-corners {
+  -webkit-border-top-right-radius: 5px;
+}
+.bottom-left-rounded-corners {
+  -webkit-border-bottom-left-radius:  5px;
+}
+.bottom-right-rounded-corners {
+  -webkit-border-bottom-right-radius: 5px;
 }
 
 /* diagnostics
