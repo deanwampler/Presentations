@@ -741,6 +741,10 @@ In the Akka project, consider @DataStore.range@ in the @org.chicagoscala.awse.pe
 
 Write down all the preconditions, postconditions, and invariants that you can think of that would be reasonable constraints on this method. (Hint: the @DataStoreTest@ checks some, but not all of the possibilities.)
 
+h1. Exercise 3: Select a "Mini-Project" by Next Tuesday
+
+Talk to me over the next week about what you want to do for the mini-project we discussed last week. We need to agree on a project by next Tuesday, November 9.
+
 h1. Appendix: LSP Revisited
 
 Let's return to the Liskov Substitution Principle (LSP) and discuss how it works under inheritance.
