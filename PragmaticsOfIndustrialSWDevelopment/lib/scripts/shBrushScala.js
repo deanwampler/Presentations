@@ -31,8 +31,8 @@ SyntaxHighlighter.brushes.Scala = function()
 {
 	// Contributed by Yegor Jbanov and David Bernard.
 	
-	var keywords =	'val sealed case def true trait implicit forSome import match object null finally super ' +
-	                'override try lazy for var catch throw type extends class while with new final yield abstract ' +
+	var keywords =	'val var sealed case def true trait implicit forSome import match object null finally super ' +
+	                'override try lazy for catch throw type extends class while with new final yield abstract ' +
 	                'else do if return protected private this package false';
 
 	var keyops =	'[_:=><%#@]+';
@@ -43,7 +43,7 @@ SyntaxHighlighter.brushes.Scala = function()
 		{ regex: SyntaxHighlighter.regexLib.multiLineSingleQuotedString,	css: 'string' },	// multi-line strings
 		{ regex: SyntaxHighlighter.regexLib.multiLineDoubleQuotedString,    css: 'string' },	// double-quoted string
 		{ regex: SyntaxHighlighter.regexLib.singleQuotedString,				css: 'string' },	// strings
-		{ regex: /0x[a-f0-9]+|\d+(\.\d+)?/gi,								css: 'value' },		// numbers
+		{ regex: /0x[a-f0-9]+|\b\d+(\.\d+)?\b/gi,								css: 'value' },		// numbers
 		{ regex: new RegExp(this.getKeywords(keywords), 'gm'),				css: 'keyword' },	// keywords
 		{ regex: new RegExp(keyops, 'gm'),									css: 'keyword' }	// scala keyword
 		];

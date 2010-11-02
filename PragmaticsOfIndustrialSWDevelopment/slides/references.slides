@@ -263,7 +263,7 @@ h1. Object-Oriented Programming (General)
 
 <div class='small'>
 
-* * "Object-oriented programming":http://en.wikipedia.org/wiki/Object-oriented_programming (Wikipedia).
+* "Object-oriented programming":http://en.wikipedia.org/wiki/Object-oriented_programming (Wikipedia). Good overview of the history and "flavors" of OOP.
 * Bertrand Meyer, "Object-Oriented Software Construction, 2nd Edition", Prentice Hall, 2000, ISBN 0-13-629155-4.
 * Rebecca Wirfs-Brock  and Alan McKean, "Object Design: Roles, Responsibilities, and Collaboration", Addison-Wesley, 2003, ISBN 0201379430.
 * James Rumbaugh, et al., "Object-Oriented Modeling and Design", Prentice Hall, 1991, ISBN 0-13-629841-9.
@@ -294,6 +294,20 @@ h1. Object-Oriented Programming (Specifics)
 * Eric Evans, "Domain-Driven Design - Tackling Complexity in the Heart of Software", Addison-Wesley, 2004, ISBN 0321125215.
 
 </div>
+
+h1. Object-Oriented Programming (Specifics)
+
+<div class='small'>
+
+* Martin Odersky, Lex Spoon, and Bill Venners, "How to Write an Equality Method in Java":http://www.artima.com/lejava/articles/equality.html.
+* Joshua Bloch, "Effective Java, Second Edition", Addison-Wesley, 2008, ISBN 0321356683.
+
+</div>
+
+h1. Functional Programming
+
+* John Hughes, "Why Functional Programming Matters":http://www.cs.kent.ac.uk/people/staff/dat/miranda/whyfp90.pdf. A seminal paper making the case for FP. This "paper":http://day-to-day-stuff.blogspot.com/2010/09/why-functional-programming-matters.html ports the examples to Scala.
+* "Functional Programming for the Rest of Us":http://www.defmacro.org/ramblings/fp.html.
 
 h1. General Programming
 

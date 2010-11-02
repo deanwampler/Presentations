@@ -113,13 +113,17 @@ This is now more commonly known as DRY, _Don't Repeat Yourself_. It means, don't
 * Each version must be maintained, kept in sync.
 ** It's very common for the versions to "grow" out of sync, leading to bugs.
 
+h1. Good Object Design: Lesson 4
+
+_Don't Repeat Yourself_ is more valuable than it might sound at first. Removing duplication pays dividends in terms of code quality, size, and maintainability over the life of a project.
+
 h1. Open-Closed Principle
 
 The "O" in the SOLID principles.
 
 How can we add new behavior to the system without editing existing code? Philip Wadler called this the _Expression Problem_.
 
-* If we edit existing code, 
+If we edit existing code, 
 * we must retest, redeploy...
 * we force clients of the code to modify their code and retest, redeploy...
 
@@ -141,7 +145,11 @@ In practice, when you introduce new subclasses, the existing abstractions may no
 
 h1. Open-Closed Principle (cont.)
 
-We'll return to this principle when we talk about _Type Classes_.
+We'll return to this principle when we talk about _Type Classes_ in functional programming.
+
+h1. Good Object Design: Lesson 5
+
+In long-lived projects, take the time to factor out abstractions so you can exploit the _Open-Closed Principle_. It will minimize the maintenance effort over time.
 
 h1. Strong Coupling
 
@@ -222,6 +230,13 @@ If you have several other teams that depend on the implementation of @MacWindowF
 * They have to _unit_ test their changes in isolation.
 * The organization has to _integration_ test the changes.
 * All the changes need to be deployed in a coordinated manner.
+
+h1. Good Object Design: Lesson 6
+
+Keep coupling to a minimum.
+
+* Depend only on abstractions.
+* Depend on a minimum number of modules.
 
 h1. Inheritance Is Strong Coupling
 
@@ -390,7 +405,8 @@ h1. Self Types in Scala
 In other words, we could write it this way:
 
 :inlinecode lang=scala, class=code-small
-abstract class X11Window(properties: Properties) extends Rectangle { 
+abstract class X11Window(properties: Properties) 
+  extends Rectangle { 
   ...
 }
 :endinlinecode 
@@ -417,17 +433,402 @@ object X11WindowFactory extends WindowFactory {
 
 Note: this technique is called the "Cake Pattern":http://jonasboner.com/2008/10/06/real-world-scala-dependency-injection-di.html (also discussed "here":http://programming-scala.labs.oreilly.com/ch13.html and used to "implement the Scala compiler itself":http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.63.5834&rep=rep1&type=pdf)
 
+h1. Counterexample: Exception Hierarchies
+
+The Java exception hierarchy (and similar hierarchies in many other languages) is a good use of a deep inheritance hierarchy. 
+
+<center>
+	<img src="images/exceptFig1.gif"></img>
+</center>
+
+(credit: "http://www.artima.com/designtechniques/exceptions.html":http://www.artima.com/designtechniques/exceptions.html)
+
+
+h1. Counterexample: Exception Hierarchies
+
+Why? Because this hierarchy forms a _classification tree_, similar to the way that all life on Earth is classified into the _Phylogenetic Tree_.
+
+<center>
+	<img src="images/450px-Phylogenetic_tree.png"></img>
+</center>
+
+(credit: "http://en.wikipedia.org/wiki/Phylogenetic_tree":http://en.wikipedia.org/wiki/Phylogenetic_tree)
+
+h1. Good Object Design: Lesson 7
+
+Prefer _composition_ over _inheritance_.
+
 h1. Problems with Objects
 
-h1. Clone
+Objects offer benefits, but they also pose theoretical and practical problems.
+
+* *Cloning Objects*
+* *Determining Equality*
+* *Typing of Object-Oriented Code*
+* *Unrestrained Mutability*
+* *Reusability*
+
+h1. Cloning Objects
+
+* *Shallow Copy:* Parts are _shared_. References to other "sub-objects" in the new copy point to the same sub-objects in the original object.
++ Faster cloning.
+- Changes to sub-objects affect both objects, so state is harder to control.
+* *Deep Copy:* Sub-objects are also copied, so the new and old objects are completely independent.
+- Expensive cloning.
++ Easier to control state of each object separately.
+
+This is a language (or API) design decision. Needs to be consistent!
+
+h1. Cloning Objects (cont.)
+
+Note that the "state problem" goes away if the objects are _immutable_! 
+
+This fact is exploited by _software transactional memory_ implementations (e.g., subtree sharing) that we discussed earlier in the course.
+
+h1. Determining Equality
+
+It's actually hard to "write a correct equality operator":http://www.artima.com/lejava/articles/equality.html. Let's talk about Java, as a representative example.
+
+h1. The Signature of @equals@
+
+A common mistake is to get the signature wrong. Suppose I define @equals@ for the @Output@ class we used earlier:
+
+:inlinecode lang=scala, class=code-small
+boolean equals(Output other) {...}  // WRONG!!
+:endinlinecode 
+
+:inlinecode lang=scala, class=code-small
+boolean equals(Object other) {...}  // Right!
+:endinlinecode 
+
+Why? Because in Java collections, all objects are @Object@, so the run time won't look for the method that takes an @Output@ argument. Rather, it will use the "closest" @equals@ method that takes an @Object@ argument, perhaps the one on @Object@ itself.
+
+
+h1. Overlooking @hashCode@ 
+
+You have to keep @hashCode@ consistent with @equals@, meaning that if @equals@ says that two objects are equivalent, then @hashCode@ applied to each should produce the same value.
+
+The default @Object.hashCode@ simply uses the object's reference address. So, if you put an  object in a @HashSet@ for example, then test for its presence using an equal but different object, you _might_ (or not) get a false negative, depending on whether or not the _addresses_ of the two objects both get hashed into the same bucket!
+
+h1. @equals@, @hashCode@, and Mutable
+
+This is related to the previous problem with @HashSet@ and similar collections. Suppose you create an object, put it in a @HashSet@, then mutate the object. You _might_ find that the @HashSet@ no longer believes it has the object!
+
+This is because the @HashSet@ uses the value of @hashCode@ to determine the correct bucket for the object. However, if the object is mutable, then the value returned by @hashCode@ changes, so @HashSet@ might start looking in the wrong bucket for the object!
+
+h1. @equals@ Is an _Equivalence Relation_
+
+Your @equals@ must satisfy the following properties:
+
+* *Reflexive:* for any non-null value @x@, the expression @x.equals(x)@ should return true.
+* *Symmetric:* for any non-null values @x@ and @y@, @x.equals(y)@ should return true if and only if @y.equals(x)@ returns true.
+* *Transitive:* for any non-null values @x@, @y@, and @z@, if @x.equals(y)@ returns true and @y.equals(z)@ returns true, then @x.equals(z)@ should return true.
+
+h1. @equals@ Is an _Equivalence Relation_ (cont.)
+
+* *Consistent:* for any non-null values @x@ and @y@, multiple invocations of @x.equals(y)@ should consistently return true or false, provided no information used in equals comparisons on the objects is modified.
+* *Nulls:* For any non-null value @x@, @x.equals(null)@ should return false.
+
+h1. @equals@ Is an _Equivalence Relation_
+
+That doesn't sound hard, but a classic mistake is to allow objects to be considered equal if the values of their _common supertypes are equal_.
+
+:inlinecode lang=scala, class=code-tiny
+// Scala syntax now...
+class Point2D(val x: Double, val y: Double) { 
+  override def equals(other: Any): Boolean = 
+    other match {
+      case p: Point2D => x == p.x && y == p.y
+      case _ => false
+    }
+  }
+}
+
+class Point3D(x: Double, y: Double, val z: Double)
+    extends Point2D(x, y) { 
+  override def equals(other: Any): Boolean = 
+    other match {
+      case p: Point3D => x == p.x && y == p.y && z == p.z
+      case _ => false
+    }
+  }
+}
+:endinlinecode 
+
+h1. @equals@ Is an _Equivalence Relation_
+
+:inlinecode lang=scala, class=code-small
+val p2 = new Point2D(1, 2)
+val p3 = new Point3D(1, 2, 3)
+p2 == p3   // true
+p3 == p2   // false!
+:endinlinecode 
+
+Not only is symmetry broken, but this can lead to strange affects in collections, again.
+
+h1. @equals@ Is an _Equivalence Relation_
+
+You could implement a fix for the symmetry by making the relation @a == b || b == a@, but this breaks transitivity:
+
+:inlinecode lang=scala, class=code-small
+val p2 = new Point2D(1, 2)
+val p33 = new Point3D(1, 2, 3)
+val p34 = new Point3D(1, 2, 4)
+p2 == p33   // true
+p33 == p2   // true, if we "fix" symmetry
+
+p33 == p2   // true
+p2  == p34  // true
+p33 == p34  // false!
+:endinlinecode 
 
 h1. Equals
 
-h1. Typing
+So, in most cases, you must also require the objects to be of the same type. However, than can be cases where a subtype doesn't add any more _state_ to the parent type. Our @LineOrientedOutput@ and @Output@ are examples. So, objects of these types _could_ be compared.
 
-h1. LSP revisited
+See "here":http://www.artima.com/lejava/articles/equality.html for more details on show to implement this case.
 
-Covariant and Contravariant behaviors.
+h1. Typing of Object-Oriented Languages
+
+Creating a sophisticated "sound" type system in object-oriented languages is harder than in a comparable functional language, because of subtyping. Java didn't really try very hard. Scala goes quite far, but it takes some effort to master the type system (which is _Turing complete_, by the way). An example of this is seen when you compare Haskell to Scala. Haskell infers most type information, while Scala is limited to _local type inference_ (which is why the types of function arguments must be declared).
+
+h1. Type "invariance" Under Transformations
+
+Another common problem related to subtyping is what I'll call the desire for _type invariance under transformations_. Here's an example to describe what this means.
+
+Suppose you a Scala @List@  and you want to map over it. Conveniently, this class inherits a @map@ method implementation that happens to be defined in one of its ancestor types, @TraversableLike@.
+
+Here's the problem, I would like the result to also have the type @List@, not @TraversableLike@ or some other lowest-common denominator type.
+
+h1. Type "invariance" Under Transformations
+
+In a lot of strongly-typed object-oriented languages, there is no built-in way to get a new collection with the same type as the original (with the type parameter for the @List@ possibly changed). Scala pre-2.8 also didn't do this. However, Scala 2.8 exploits _implicit parameters_ and special factory objects to do this. 
+
+h1. Type "invariance" Under Transformations
+
+We want something "equivalent" to this @map@ method signature for @List@:
+
+:inlinecode lang=scala, class=code-small
+class List[A] {
+  def map [B] (f: (A) ⇒ B): List[B]
+  ...
+}
+:endinlinecode 
+
+Here is the actual signature for @TraversableLike.map@
+
+:inlinecode lang=scala, class=code-small
+trait TraversableLike {
+  def map [B, That] (f: (A) ⇒ B)(
+      implicit bf: CanBuildFrom[Repr, B, That]) : That
+  ...
+}
+:endinlinecode 
+
+h1. Type "invariance" Under Transformations
+
+Note there are two argument _lists_ and the second one takes a single @implicit@ parameter. Recall that the user doesn't have to specify these parameters if a suitable object is in scope. Here, @CanBuildFrom@ is supplied by the Scala library. It knows how to build a @List[B]@ object (which is what @That@ represents), based on the current "representation" @Repr@ and the type parameter @B@.
+
+h1. Static Types vs. Real-World Variability
+
+It is sometimes said that "objects model the real world". One problem with this view is that real world objects are not always fixed and unchangeable. The can be more fluid, depending on context and changes over time.
+
+However, class-based and especially statically-typed languages don't reflect this fluid nature of reality. Prototype languages and languages with "open types" are more accommodating to this kind of change. Yet, as we'll discuss in subsequent lectures, trying to mimic the world too faithfully is overkill for most programming problems.
+
+h1. Unrestrained Mutability
+
+It's a hallmark of OOP that you send messages to objects, which do appropriate computations, possibly modify internal state, then send a reply and/or other messages to other objects.
+
+However, the mutability part presents problems.
+
+h1. Correctness
+
+We saw earlier that @hashCode@ and @equals@ are unreliable when objects mutate.
+
+Mutability also makes evaluating "correctness" (e.g., through testing) more difficult, because if we are testing one thing, we have to also test how it affects mutable objects with which it interacts. Furthermore, as we discussed last week, you have to carefully consider the state transitions of an object.
 
 h1. Concurrency
+
+However, more than any other reason, the growing need to embrace concurrency to create scalable and reliable applications has made mutability more problematic.
+
+As we discussed in an earlier lecture, all the locking challenges of multi-threaded programming go away when objects are immutable.
+
+h1. Reusability
+
+As OOP went mainstream, a perceived benefit was the ability to create reusable object libraries. This largely failed, except in limited cases (such as collections libraries and windowing APIs). Why?
+
+h1. Baroque Abstractions
+
+We'll explore this topic in depth towards the end of the course, but for now, note that objects can expose abstractions with almost no constraints at all. They can take virtually any form, following many different conventions and styles. Paradoxically, this freedom _inhibits_ reuse, because one object library is rarely API-compatible with others.
+
+h1. Conclusions, Part II
+
+Effective OO design exploits principles like the _Open-Closed Principle_ and the _Liskov-Substitution Principle_ to minimize coupling and the impact of changes on clients of the code, etc.
+
+In addition to their benefits, objects present a number of difficulties. Correct implementations of @equals@ and @hashCode@ are hard to write. Mutability causes a number of problems.
+
+h1. Reading Assignments: OOP
+
+* "Real-World Scala: Dependency Injection (DI)":http://jonasboner.com/2008/10/06/real-world-scala-dependency-injection-di.html.
+* "How to Write an Equality Method in Java":http://www.artima.com/lejava/articles/equality.html.
+
+h1. Reading Assignments: Functional Programming
+
+* "Functional Programming":http://en.wikipedia.org/wiki/Functional_programming (Wikipedia).
+* "Functional Programming for the Rest of Us":http://www.defmacro.org/ramblings/fp.html.
+
+
+h1. Appendix: LSP Revisited
+
+(We won't cover this material in class, but it is worth understanding when you write your own object-oriented software.)
+
+Let's return to the Liskov Substitution Principle (LSP) and discuss how it works under inheritance.
+
+Recall this definition from the last lecture:
+
+h1. Liskov Substitution Principle (LSP)
+
+_Let q(x) be a property provable about objects x of type T. Then q(y) should be true for objects y of type S where S is a subtype of T._
+
+<span style="text-align: right; width: 100%">
+(The "Liskov Substitution Principle":http://en.wikipedia.org/wiki/Liskov_substitution_principle)
+</span>
+
+It's a definition of _subtyping_; If I claim that @S@ is a subtype of @T@, then objects of type @S@ must obey the _contract_ defined for objects of type @T@.
+
+I said _contract_, didn't I? There's a close relationship between LSP and Design by Contract.
+
+h1. How Subclasses Must Behave
+
+First, let's define @Output@ and @LineOrientedOutput@ classes:
+
+:inlinecode lang=scala, class=code-small
+class Output(val name: String) {
+  def write(chars: Array[Character]) = {...}
+  override def toString = "Output(" + name + ")"
+}
+class LineOrientedOutput(name: String) 
+    extends Output(name) {
+  def writeln(string: String) = {...}
+  override def toString = "LineOrientedOutput(" + name + ")"
+}
+:endinlinecode 
+
+@LineOrientedOutput@ _specializes_ @Output@ to add support for writing a line at a time.
+
+h1. How Subclass Must Behave (cont.)
+
+Now, consider _function literals_ (a.k.a _anonymous functions_) in Scala, which we'll use in a call to @List.map@:
+
+:inlinecode lang=scala, class=code-small
+// Return a list of Output streams.
+def toOutputs(list: List[String]): List[Output] =
+  list map { s => new Output("out" + s) }
+
+val outputs: List[Output] = toOutputs(List("A", "B"))
+// => List(Output(outA), Output(outB))
+:endinlinecode 
+
+h1. How Subclass Must Behave (cont.)
+
+For the anonymous function, the scala compiler generates an _anonymous subclass_ of the @Function1[String,Output]@ _trait_:
+
+:inlinecode lang=scala, class=code-small
+new Function1[String,Output] {
+  def apply(s: String) = new Output("out" + s)
+}
+:endinlinecode 
+
+Note that the _body_ of the function literal is used to define the @apply@ method, which is abstract in the @Function1[A,B]@ trait.
+
+h1. How Subclass Must Behave (cont.)
+
+Let's extract the anonymous function into a @val@ and pass it to @toOutputs@:
+
+:inlinecode lang=scala, class=code-small
+val s2o: (String => Output) = s => new Output("out" + s)
+
+def toOutputs(
+     list: List[String], f: String=>Output): List[Output] =
+  list map f
+
+val outputs: List[Output] = toOutputs(List("A", "B"), s2o)
+// => List(Output(outA), Output(outB))
+:endinlinecode 
+
+Is there a _subclass_ of @String => Output@? If so, how should it behave?
+
+h1. Function1 Subtypes
+
+Recall that the type is actually @Function1[-A,+R]@, where @A@ is the type of the single argument and @R@ is the type of the return value. Recall also from the last lecture that the @+R@ means the return type behaves _covariantly_ under inheritance, while @-A@ means that the argument behaves _contravariantly_ under inheritance. Let's understand what this really means.
+
+h1. Covariant and Contravariant Behaviors
+
+If I have a parameterized type @X[+A]@, it means that @X[String]@ is a _subtype_ of @X[AnyRef]@, since @String@ is a _subtype_ of @AnyRef@. This is _covariant_ behavior.
+
+However, if I have a parameterized type @Y[-A]@, it means that @Y[String]@ is a _super type_ of @Y[AnyRef]@, since @String@ is a _subtype_ of @AnyRef@. This is _contravariant_ behavior.
+
+The contravariant behavior is harder to grasp. Keep in mind that we are _always_ discussing inheritance in the context of the _Liskov Substitution Principle_. Inheritance only has meaning in the sense that I can _substitute_ an object of one type for an object of another type (i.e. a "parent" type).
+
+h1. Covariant and Contravariant Behaviors (cont.)
+
+So, what does this mean for @Function1[-A,+R]@? First consider the @+R@ for the return value, which behaves _covariantly_. In our example, we defined a function this way:
+
+:inlinecode lang=scala, class=code-small
+val s2o: (String => Output) = s => new Output("out" + s)
+:endinlinecode 
+
+Suppose we define a new function that returns @LineOrientedOutput@:
+
+:inlinecode lang=scala, class=code-small
+val s2loo: (String => LineOrientedOutput) = 
+  s => new LineOrientedOutput("out" + s)
+
+def toOutputs ... // same
+
+val outputs: List[Output] = toOutputs(List("A", "B"), s2loo)
+// returns: List[Output] = List(LineOrientedOutput(outA), LineOrientedOutput(outB))
+:endinlinecode 
+
+This works fine!
+
+h1. Covariant Behavior of Return Values
+
+@s2loo@ _always_ returns a @LineOrientedOutput@. That's fine, because the clients that use @toOutputs@ expect a @List[Output]@ and @List[LineOrientedOutput]@ is a subtype.
+
+This is why return values must be _covariant_.
+
+So, @s2loo@ of type @Function[String,LineOrientedOutput]@ is a _subtype_ of @Function1[String,Output]@, since @LineOrientedOutput@ is a _subtype_ of @Output@.
+
+h1. Contravariant Behavior of Arguments
+
+Now consider what we can do with the arguments, which behave _contravariantly_, since @Function1@ is declared @Function1[-A,+R]@.
+
+:inlinecode lang=scala, class=code-small
+val a2o: (Any => Output) = 
+  s => new Output("out" + s.toString)
+
+def toOutputs ... // same
+
+val outputs: List[Output] = toOutputs(List("A", "B"), a2o)
+// returns: List[Output] = List(LineOrientedOutput(outA), LineOrientedOutput(outB))
+:endinlinecode 
+
+This also works!
+
+h1. Contravariant Behavior of Arguments
+
+Why does it work? @toOutputs@ only accepts a @List[String]@ as the first argument. Each string will be passed to the 2nd argument, the transformation function which creates an @Output@. In this case, @a2o@ is that function. It can handle @Any@ object, so it can easily handle strings. Hence, no breakage.
+
+So, @a2o@ of type @Function[Any,Output]@ is also a _subtype_ of @Function1[String,Output]@, even though @Any@ is a _supertype_ of @String@.
+
+h1. LSP and Design by Contract
+
+Remember that we're describing the way that @Function1.apply@ behaves under inheritance. 
+
+LSP says that we can substitute an object if it _broadens_ the allowed input values its methods can handle, because clients will still only pass the subset of values the _preconditions_ say are acceptable. Hence, the precondition contract is preserved.
+
+Similarly, an object is substitutable if its methods return a _narrower_ set of values, because that set will always be within a broader set the client expects, as defined by the _postconditions_.
+
+That's how LSP and Design by Contract are related.
 
