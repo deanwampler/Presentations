@@ -87,6 +87,7 @@ val criteria = CriteriaMap().
 *Functional Operations:*
 
 :inlinecode lang=scala, class=code-small
+// Generate a sequence of strings: "2", "4"
 (1 to 10) filter (_ % 2 == 0) map (_.toString) take 2
 // ...immutable.IndexedSeq[java.lang.String] = Vector(2, 4)
 :endinlinecode 
@@ -523,7 +524,7 @@ Note that the "state problem" goes away if the objects are _immutable_!
 
 This fact is exploited by _software transactional memory_ implementations (e.g., subtree sharing) that we discussed earlier in the course.
 
-Recall that modifications are implemented by creating new objects where the "invariant" parts are shared. No object is ever modified directly.  <
+Recall that modifications are implemented by creating new objects where the "invariant" parts are shared. No object is ever modified directly.
 
 h1. Determining Equality
 

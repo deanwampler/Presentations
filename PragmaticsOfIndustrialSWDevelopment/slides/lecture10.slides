@@ -1,1 +1,128 @@
 h1. Lecture 10: Functional Programming (FP): Into the Real World
+
+Functional Programming is the oldest _paradigm_ of software development, yet it has had relatively little penetration outside academia, at least until now.
+
+h1. What Is Functional Programming?
+
+FP treats computation as the evaluation of mathematical functions and avoids state and mutable data. 
+
+FP has its roots in lambda calculus, a formal system developed in the 1930s to investigate function definition, function application, and recursion. Many functional programming languages can be viewed as elaborations on the lambda calculus.
+
+(Adapted from "Wikipedia":http://en.wikipedia.org/wiki/Functional_programming.)
+
+h1. FP and Mathematics
+
+How is FP like mathematics?
+
+h1. Immutability
+
+Math variables are not, well ... _variable_.
+
+x = cos(y)<sup>2</sup>
+
+When @y@ is chosen, @x@ is _fixed_.
+
+h1. Immutability Benefits
+
+We have seen many cases where mutability is problematic in software:
+* Multithreaded concurrency.
+* Behavior of @equals@ and @hashCode@.
+* Shallow cloning.
+
+h1. No Side Effects
+
+Note that immutability means there can be no side effects, by definition. This also has important implications for functions:
+
+x = cos(y)<sup>2</sup>
+
+*All* work done by @cos(y)@ (for example) is returned and assigned to @x@. there is no global state that is updated.[1]
+
+[1] However, a real implementation might update "invisible" state like a cache of previously-calculated values.
+
+h1. Benefits of No Side Effects
+
+If the work of a function is independent of global state:
+*Referentially Transparency:* I can call it _anywhere_ and _anytime_.
+*Correctness:* I can reason about its behavior (e.g., test it) in isolation.
+*Memoization:* I can memorize previous invocations with particular arguments and cache the results for faster subsequent invocations.[1]
+
+[1] This is the case where I add memoization explicitly, vs. the internal caching noted on the previous slide.
+
+h1. First Class Functions
+
+Functions are _first class_ concepts, just like values.
+
+square(z) = z<sup>2</sup>
+x = square(cos(y))
+
+Note that square takes a _value_, but the value could be a "variable" _or_ a function.
+
+That is, _functions are values_.
+
+Note: a function that takes other functions as arguments or returns a function value is called a _higher-order function_.
+ 
+h1. Benefits of First Class Functions
+
+*Composition:* Just like object composition, _function composition_ is a rich, _generative_ tool.
+
+:inlinecode lang=scala, class=code-small
+// Generate a sequence of strings: "2", "4"
+(1 to 10) filter (_ % 2 == 0) map (_.toString) take 2
+// ...immutable.IndexedSeq[java.lang.String] = Vector(2, 4)
+:endinlinecode 
+
+_Generative_ means I can combine pieces to generate new, more complex behaviors.
+
+h1. Objects as "First Class Functions" 
+
+Actually, this is not all that different than what you've done in Java, which doesn't have first class functions:
+
+:inlinecode lang=java, class=code-small
+// Pretend FilterFunc and MapFunc are interfaces with 
+// apply methods:
+FilterFunc even = new FilterFunc { 
+  boolean apply(int i) { return i % 2 == 0; }
+}
+MapFunc stringize = new MapFunc {
+  String apply(int i) { return Integer.toString(i); }
+}
+// Pretend there is a Range type and there are filter and
+// map methods that take "*Func" objects, and there is 
+// a take method:
+new Range(1, 10).filter(even).map(stringize).take(2)
+:endinlinecode 
+
+h1. FP != Imperative Programming (IP)
+
+Both have "functions", but FP emphasizes the application of (mathematical) functions, while IP emphasizes state changes. In fact, IP puts no constraints on mutability, side effects, etc. We've already seen in this course how these "freedoms" can be problematic.
+
+Note that OOP and _procedural programming_ (pre-OOP, e.g., C) are both examples of Imperative Programming.
+
+h1. Imperative vs. Declarative Programming
+
+*Imperative Programming:* Tell the system _how_ to do a computation.
+*Declarative Programming:* Tell the system _what_ computation to do.
+
+Declarative programming:
+* More clearly separates abstraction (the _what_) from implementation (the _how_).
+* Has no _visible_ side effects (therefore, is _referentially transparent_).
+
+
+h1. Higher-Kinded Types
+
+h1. Implicit Params
+
+h1. Laziness
+
+h1. Type Inference
+
+h1. For Comprehensions
+
+h1. Function(Data, Args) Vs. Receiver.Method(Args)
+
+h1. Closures vs. Objects
+
+h1. Generators
+
+h1. Combinators
+

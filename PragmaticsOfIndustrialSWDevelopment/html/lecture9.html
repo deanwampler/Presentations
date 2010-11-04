@@ -199,6 +199,7 @@ val criteria = CriteriaMap().
 <div class="code-small">
 <pre name="code" id="code" class="brush: scala,;">
 
+// Generate a sequence of strings: "2", "4"
 (1 to 10) filter (_ % 2 == 0) map (_.toString) take 2
 // ...immutable.IndexedSeq[java.lang.String] = Vector(2, 4)
 </pre></div>
@@ -636,7 +637,7 @@ object X11WindowFactory extends WindowFactory {
 <h1>Cloning Objects (cont.)</h1>
 <p>Note that the &#8220;state problem&#8221; goes away if the objects are <em>immutable</em>!</p>
 <p>This fact is exploited by <em>software transactional memory</em> implementations (e.g., subtree sharing) that we discussed earlier in the course.</p>
-<p>Recall that modifications are implemented by creating new objects where the &#8220;invariant&#8221; parts are shared. No object is ever modified directly.  &lt;</p>
+<p>Recall that modifications are implemented by creating new objects where the &#8220;invariant&#8221; parts are shared. No object is ever modified directly.</p>
 </div>
 <div class="slide">
 <h1>Determining Equality</h1>

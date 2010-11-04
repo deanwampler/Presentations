@@ -1,1 +1,10 @@
 h1. Lecture 11: Object-Oriented Programming vs. Functional Programming: a Critique of Pure Programming
+
+
+
+Notes from Jason Zaugg's Intro to Scalaz at the NYC Scala group: http://vimeo.com/15264203
+
+
+Why FP Now vs. OOP?
+
+Nature of the dominant problems of our time.

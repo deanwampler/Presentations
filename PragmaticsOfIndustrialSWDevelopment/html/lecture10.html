@@ -49,7 +49,131 @@
 
 <div class="presentation">
 <div class="slide">
-<h1>Lecture 10: Functional Programming (FP): Into the Real World</div></h1>
+<h1>Lecture 10: Functional Programming (FP): Into the Real World</h1>
+<p>Functional Programming is the oldest <em>paradigm</em> of software development, yet it has had relatively little penetration outside academia, at least until now.</p>
+</div>
+<div class="slide">
+<h1>What Is Functional Programming?</h1>
+<p>FP treats computation as the evaluation of mathematical functions and avoids state and mutable data.</p>
+<p>FP has its roots in lambda calculus, a formal system developed in the 1930s to investigate function definition, function application, and recursion. Many functional programming languages can be viewed as elaborations on the lambda calculus.</p>
+<p>(Adapted from <a href="http://en.wikipedia.org/wiki/Functional_programming">Wikipedia</a>.)</p>
+</div>
+<div class="slide">
+<h1>FP and Mathematics</h1>
+<p>How is FP like mathematics?</p>
+</div>
+<div class="slide">
+<h1>Immutability</h1>
+<p>Math variables are not, well &#8230; <em>variable</em>.</p>
+<p>x = cos(y)<sup>2</sup></p>
+<p>When <code>y</code> is chosen, <code>x</code> is <em>fixed</em>.</p>
+</div>
+<div class="slide">
+<h1>Immutability Benefits</h1>
+<p>We have seen many cases where mutability is problematic in software:</p>
+<ul>
+	<li>Multithreaded concurrency.</li>
+	<li>Behavior of <code>equals</code> and <code>hashCode</code>.</li>
+	<li>Shallow cloning.</li>
+</ul>
+</div>
+<div class="slide">
+<h1>No Side Effects</h1>
+<p>Note that immutability means there can be no side effects, by definition. This also has important implications for functions:</p>
+<p>x = cos(y)<sup>2</sup></p>
+<p><strong>All</strong> work done by <code>cos(y)</code> (for example) is returned and assigned to <code>x</code>. there is no global state that is updated.<sup class="footnote" id="fnr1"><a href="#fn1">1</a></sup></p>
+<p><sup class="footnote" id="fnr1"><a href="#fn1">1</a></sup> However, a real implementation might update &#8220;invisible&#8221; state like a cache of previously-calculated values.</p>
+</div>
+<div class="slide">
+<h1>Benefits of No Side Effects</h1>
+<p>If the work of a function is independent of global state:<br />
+<strong>Referentially Transparency:</strong> I can call it <em>anywhere</em> and <em>anytime</em>.<br />
+<strong>Correctness:</strong> I can reason about its behavior (e.g., test it) in isolation.<br />
+<strong>Memoization:</strong> I can memorize previous invocations with particular arguments and cache the results for faster subsequent invocations.<sup class="footnote" id="fnr1"><a href="#fn1">1</a></sup></p>
+<p><sup class="footnote" id="fnr1"><a href="#fn1">1</a></sup> This is the case where I add memoization explicitly, vs. the internal caching noted on the previous slide.</p>
+</div>
+<div class="slide">
+<h1>First Class Functions</h1>
+<p>Functions are <em>first class</em> concepts, just like values.</p>
+<p>square(z) = z<sup>2</sup><br />
+x = square(cos(y))</p>
+<p>Note that square takes a <em>value</em>, but the value could be a &#8220;variable&#8221; <em>or</em> a function.</p>
+<p>That is, <em>functions are values</em>.</p>
+<p>Note: a function that takes other functions as arguments or returns a function value is called a <em>higher-order function</em>.</p>
+</div>
+<div class="slide">
+<h1>Benefits of First Class Functions</h1>
+<p><strong>Composition:</strong> Just like object composition, <em>function composition</em> is a rich, <em>generative</em> tool.</p>
+<div class="code-small">
+<pre name="code" id="code" class="brush: scala,;">
+
+// Generate a sequence of strings: "2", "4"
+(1 to 10) filter (_ % 2 == 0) map (_.toString) take 2
+// ...immutable.IndexedSeq[java.lang.String] = Vector(2, 4)
+</pre></div>
+<p><em>Generative</em> means I can combine pieces to generate new, more complex behaviors.</p>
+</div>
+<div class="slide">
+<h1>Objects as &#8220;First Class Functions&#8221;</h1>
+<p>Actually, this is not all that different than what you&#8217;ve done in Java, which doesn&#8217;t have first class functions:</p>
+<div class="code-small">
+<pre name="code" id="code" class="brush: java,;">
+
+// Pretend FilterFunc and MapFunc are interfaces with 
+// apply methods:
+FilterFunc even = new FilterFunc { 
+  boolean apply(int i) { return i % 2 == 0; }
+}
+MapFunc stringize = new MapFunc {
+  String apply(int i) { return Integer.toString(i); }
+}
+// Pretend there is a Range type and there are filter and
+// map methods that take "*Func" objects, and there is 
+// a take method:
+new Range(1, 10).filter(even).map(stringize).take(2)
+</pre></div>
+</div>
+<div class="slide">
+<h1>FP != Imperative Programming (IP)</h1>
+<p>Both have &#8220;functions&#8221;, but FP emphasizes the application of (mathematical) functions, while IP emphasizes state changes. In fact, IP puts no constraints on mutability, side effects, etc. We&#8217;ve already seen in this course how these &#8220;freedoms&#8221; can be problematic.</p>
+<p>Note that <span class="caps">OOP</span> and <em>procedural programming</em> (pre-<span class="caps">OOP</span>, e.g., C) are both examples of Imperative Programming.</p>
+</div>
+<div class="slide">
+<h1>Imperative vs. Declarative Programming</h1>
+<p><strong>Imperative Programming:</strong> Tell the system <em>how</em> to do a computation.<br />
+<strong>Declarative Programming:</strong> Tell the system <em>what</em> computation to do.</p>
+<p>Declarative programming:</p>
+<ul>
+	<li>More clearly separates abstraction (the <em>what</em>) from implementation (the <em>how</em>).</li>
+	<li>Has no <em>visible</em> side effects (therefore, is <em>referentially transparent</em>).</li>
+</ul>
+</div>
+<div class="slide">
+<h1>Higher-Kinded Types</h1>
+</div>
+<div class="slide">
+<h1>Implicit Params</h1>
+</div>
+<div class="slide">
+<h1>Laziness</h1>
+</div>
+<div class="slide">
+<h1>Type Inference</h1>
+</div>
+<div class="slide">
+<h1>For Comprehensions</h1>
+</div>
+<div class="slide">
+<h1>Function(Data, Args) Vs. Receiver.Method(Args)</h1>
+</div>
+<div class="slide">
+<h1>Closures vs. Objects</h1>
+</div>
+<div class="slide">
+<h1>Generators</h1>
+</div>
+<div class="slide">
+<h1>Combinators</div></h1>
 
   <!-- Syntax Highlighter -->
   <script language="javascript" type="text/javascript" src="../lib/scripts/shCore.js"></script>
