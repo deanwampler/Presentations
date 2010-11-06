@@ -92,6 +92,25 @@ MapFunc stringize = new MapFunc {
 new Range(1, 10).filter(even).map(stringize).take(2)
 :endinlinecode 
 
+h1. Closures as Objects
+
+:inlinecode lang=scala, class=code-small
+var count = -1
+val uniqueFileName: Function1[String, String] = { prefix =>
+	count += 1
+	prefix + count
+}
+uniqueFileName("/foo/bar") // => "/foo/bar/0"
+uniqueFileName("/foo/bar") // => "/foo/bar/1"
+uniqueFileName("/foo/bar") // => "/foo/bar/2"
+:endinlinecode 
+
+Because @uniqueFileName@ is a function that refers to a variable outside its scope (including its argument list), it forms a _closure_. I.e., it "closes over" the variables it references.
+
+Note that the 3 calls behave just like a stateful object.
+
+_Prototype-based objects are essentially closures_. (e.g., JavaScript)
+
 h1. FP != Imperative Programming (IP)
 
 Both have "functions", but FP emphasizes the application of (mathematical) functions, while IP emphasizes state changes. In fact, IP puts no constraints on mutability, side effects, etc. We've already seen in this course how these "freedoms" can be problematic.
@@ -110,19 +129,46 @@ Declarative programming:
 
 h1. Higher-Kinded Types
 
-h1. Implicit Params
+Consider constructing an @Exception@:
 
-h1. Laziness
+:inlinecode lang=scala, class=code-small
+val ex = new Exception("This is an exception.")
+:endinlinecode 
 
-h1. Type Inference
+Now consider creating a @List@ of @Exceptions@:
+
+:inlinecode lang=scala, class=code-small
+type ExceptionList = List[Exception]
+:endinlinecode 
+
+We've used Scala's way of declaring a @type@, just like a variable. You can think of it like a type "alias", just like the variable @int ONE = 1@ is an "alias" for the value of @1@. 
+
+h1. Higher-Kinded Types (cont.)
+
+The example illustrates an analogy; @List[A]@ is a _type constructor_, used to construct concrete types like @List[Exception]@, just like the @Exception@ class is used to construct concrete objects.
+
+Because types like @List[A]@ takes a type as an argument, they are called _higher-kinded_ types, analogous to _higher-order_ functions, which take other functions as arguments or return function results.
 
 h1. For Comprehensions
 
 h1. Function(Data, Args) Vs. Receiver.Method(Args)
 
-h1. Closures vs. Objects
+h1. Pattern Matching and Collections
 
 h1. Generators
 
 h1. Combinators
+
+h1. Laziness
+
+If you remember (fondly?) your math courses, you were often asked to manipulate expressions symbolically, e.g., reduce them to simpler forms, compute integrals or derivatives, etc. Then, you might have been asked to evaluate the expression for a final numerical result.
+
+Also, we talk about infinite data types, like the real numbers, without having to specify an finite limit. 
+
+In functional programming, _lazy evaluation_ allows you to represent such data structures and computations, then evaluate them only when needed.
+
+h1. Implicit Params
+
+h1. Type Inference
+
 

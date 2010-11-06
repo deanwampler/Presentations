@@ -81,16 +81,16 @@
 <h1>No Side Effects</h1>
 <p>Note that immutability means there can be no side effects, by definition. This also has important implications for functions:</p>
 <p>x = cos(y)<sup>2</sup></p>
-<p><strong>All</strong> work done by <code>cos(y)</code> (for example) is returned and assigned to <code>x</code>. there is no global state that is updated.<sup class="footnote" id="fnr1"><a href="#fn1">1</a></sup></p>
-<p><sup class="footnote" id="fnr1"><a href="#fn1">1</a></sup> However, a real implementation might update &#8220;invisible&#8221; state like a cache of previously-calculated values.</p>
+<p><strong>All</strong> work done by <code>cos(y)</code> (for example) is returned and assigned to <code>x</code>. there is no global state that is updated.<sup class="footnote"><a href="#fn1">1</a></sup></p>
+<p><sup class="footnote"><a href="#fn1">1</a></sup> However, a real implementation might update &#8220;invisible&#8221; state like a cache of previously-calculated values.</p>
 </div>
 <div class="slide">
 <h1>Benefits of No Side Effects</h1>
 <p>If the work of a function is independent of global state:<br />
 <strong>Referentially Transparency:</strong> I can call it <em>anywhere</em> and <em>anytime</em>.<br />
 <strong>Correctness:</strong> I can reason about its behavior (e.g., test it) in isolation.<br />
-<strong>Memoization:</strong> I can memorize previous invocations with particular arguments and cache the results for faster subsequent invocations.<sup class="footnote" id="fnr1"><a href="#fn1">1</a></sup></p>
-<p><sup class="footnote" id="fnr1"><a href="#fn1">1</a></sup> This is the case where I add memoization explicitly, vs. the internal caching noted on the previous slide.</p>
+<strong>Memoization:</strong> I can memorize previous invocations with particular arguments and cache the results for faster subsequent invocations.<sup class="footnote"><a href="#fn1">1</a></sup></p>
+<p><sup class="footnote"><a href="#fn1">1</a></sup> This is the case where I add memoization explicitly, vs. the internal caching noted on the previous slide.</p>
 </div>
 <div class="slide">
 <h1>First Class Functions</h1>
@@ -134,6 +134,24 @@ new Range(1, 10).filter(even).map(stringize).take(2)
 </pre></div>
 </div>
 <div class="slide">
+<h1>Closures as Objects</h1>
+<div class="code-small">
+<pre name="code" id="code" class="brush: scala,;">
+
+var count = -1
+val uniqueFileName: Function1[String, String] = { prefix =&gt;
+	count += 1
+	prefix + count
+}
+uniqueFileName("/foo/bar") // =&gt; "/foo/bar/0"
+uniqueFileName("/foo/bar") // =&gt; "/foo/bar/1"
+uniqueFileName("/foo/bar") // =&gt; "/foo/bar/2"
+</pre></div>
+<p>Because <code>uniqueFileName</code> is a function that refers to a variable outside its scope (including its argument list), it forms a <em>closure</em>. I.e., it &#8220;closes over&#8221; the variables it references.</p>
+<p>Note that the 3 calls behave just like a stateful object.</p>
+<p><em>Prototype-based objects are essentially closures</em>. (e.g., JavaScript)</p>
+</div>
+<div class="slide">
 <h1>FP != Imperative Programming (IP)</h1>
 <p>Both have &#8220;functions&#8221;, but FP emphasizes the application of (mathematical) functions, while IP emphasizes state changes. In fact, IP puts no constraints on mutability, side effects, etc. We&#8217;ve already seen in this course how these &#8220;freedoms&#8221; can be problematic.</p>
 <p>Note that <span class="caps">OOP</span> and <em>procedural programming</em> (pre-<span class="caps">OOP</span>, e.g., C) are both examples of Imperative Programming.</p>
@@ -150,15 +168,24 @@ new Range(1, 10).filter(even).map(stringize).take(2)
 </div>
 <div class="slide">
 <h1>Higher-Kinded Types</h1>
+<p>Consider constructing an <code>Exception</code>:</p>
+<div class="code-small">
+<pre name="code" id="code" class="brush: scala,;">
+
+val ex = new Exception("This is an exception.")
+</pre></div>
+<p>Now consider creating a <code>List</code> of <code>Exceptions</code>:</p>
+<div class="code-small">
+<pre name="code" id="code" class="brush: scala,;">
+
+type ExceptionList = List[Exception]
+</pre></div>
+<p>We&#8217;ve used Scala&#8217;s way of declaring a <code>type</code>, just like a variable. You can think of it like a type &#8220;alias&#8221;, just like the variable <code>int ONE = 1</code> is an &#8220;alias&#8221; for the value of <code>1</code>.</p>
 </div>
 <div class="slide">
-<h1>Implicit Params</h1>
-</div>
-<div class="slide">
-<h1>Laziness</h1>
-</div>
-<div class="slide">
-<h1>Type Inference</h1>
+<h1>Higher-Kinded Types (cont.)</h1>
+<p>The example illustrates an analogy; <code>List[A]</code> is a <em>type constructor</em>, used to construct concrete types like <code>List[Exception]</code>, just like the <code>Exception</code> class is used to construct concrete objects.</p>
+<p>Because types like <code>List[A]</code> takes a type as an argument, they are called <em>higher-kinded</em> types, analogous to <em>higher-order</em> functions, which take other functions as arguments or return function results.</p>
 </div>
 <div class="slide">
 <h1>For Comprehensions</h1>
@@ -167,13 +194,25 @@ new Range(1, 10).filter(even).map(stringize).take(2)
 <h1>Function(Data, Args) Vs. Receiver.Method(Args)</h1>
 </div>
 <div class="slide">
-<h1>Closures vs. Objects</h1>
+<h1>Pattern Matching and Collections</h1>
 </div>
 <div class="slide">
 <h1>Generators</h1>
 </div>
 <div class="slide">
-<h1>Combinators</div></h1>
+<h1>Combinators</h1>
+</div>
+<div class="slide">
+<h1>Laziness</h1>
+<p>If you remember (fondly?) your math courses, you were often asked to manipulate expressions symbolically, e.g., reduce them to simpler forms, compute integrals or derivatives, etc. Then, you might have been asked to evaluate the expression for a final numerical result.</p>
+<p>Also, we talk about infinite data types, like the real numbers, without having to specify an finite limit.</p>
+<p>In functional programming, <em>lazy evaluation</em> allows you to represent such data structures and computations, then evaluate them only when needed.</p>
+</div>
+<div class="slide">
+<h1>Implicit Params</h1>
+</div>
+<div class="slide">
+<h1>Type Inference</div></h1>
 
   <!-- Syntax Highlighter -->
   <script language="javascript" type="text/javascript" src="../lib/scripts/shCore.js"></script>
