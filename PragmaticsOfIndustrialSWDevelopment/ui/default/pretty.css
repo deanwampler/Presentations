@@ -33,6 +33,16 @@ sup {font-size: smaller; line-height: 1px;}
 .slide img.leader {display: block; margin: 0 auto;}
 .slide em {color: #804703;}
 
+/* Sigh: the following don't work :(  DeanW */
+slide ul.plus { 
+  list-style: none  !important;
+  list-style-image: url(images/24px-Nuvola_action_edit_plus.png)  !important; 
+}
+slide ul.minus { 
+  list-style: none  !important;
+  list-style-image: url(images/24px-Nuvola_action_edit_minus.png) !important; 
+}
+
 div#header, div#footer {background: #005; color: #AAB;
   font-family: Verdana, Helvetica, sans-serif;}
 div#header {background: #005 url(bodybg.gif) -16px 0 no-repeat;

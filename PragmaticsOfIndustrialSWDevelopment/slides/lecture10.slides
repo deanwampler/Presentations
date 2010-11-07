@@ -1,15 +1,23 @@
 h1. Lecture 10: Functional Programming (FP): Into the Real World
 
-Functional Programming is the oldest _paradigm_ of software development, yet it has had relatively little penetration outside academia, at least until now.
+Functional Programming is the oldest _paradigm_ of software development, yet it has had relatively little penetration outside academia, at least until recently.
 
 h1. What Is Functional Programming?
 
-FP treats computation as the evaluation of mathematical functions and avoids state and mutable data. 
+FP treats computation as the application of functions and avoids mutable data. 
 
-FP has its roots in lambda calculus, a formal system developed in the 1930s to investigate function definition, function application, and recursion. Many functional programming languages can be viewed as elaborations on the lambda calculus.
+FP has its roots in mathematics, specifically lambda calculus, a formal system developed in the 1930s to investigate function definition, function application, and recursion. Many functional programming languages can be viewed as elaborations on the lambda calculus.
 
 (Adapted from "Wikipedia":http://en.wikipedia.org/wiki/Functional_programming.)
 
+h1. State in Functional Programming
+
+There is a common misconception that functional programs are _stateless_. If this were true, they could accomplish _nothing_, except to heat up your computer!
+
+Where object oriented programs (for example) change state by mutating variables, pure functional programmers represent state _on the stack_.
+
+That is, the values you pass to functions and the values they return represent the current state of the world.
+ 
 h1. FP and Mathematics
 
 How is FP like mathematics?
@@ -36,6 +44,8 @@ Note that immutability means there can be no side effects, by definition. This a
 x = cos(y)<sup>2</sup>
 
 *All* work done by @cos(y)@ (for example) is returned and assigned to @x@. there is no global state that is updated.[1]
+
+Functions without side effects are called _pure._
 
 [1] However, a real implementation might update "invisible" state like a cache of previously-calculated values.
 
@@ -97,8 +107,8 @@ h1. Closures as Objects
 :inlinecode lang=scala, class=code-small
 var count = -1
 val uniqueFileName: Function1[String, String] = { prefix =>
-	count += 1
-	prefix + count
+  count += 1
+  prefix + count
 }
 uniqueFileName("/foo/bar") // => "/foo/bar/0"
 uniqueFileName("/foo/bar") // => "/foo/bar/1"
@@ -111,12 +121,6 @@ Note that the 3 calls behave just like a stateful object.
 
 _Prototype-based objects are essentially closures_. (e.g., JavaScript)
 
-h1. FP != Imperative Programming (IP)
-
-Both have "functions", but FP emphasizes the application of (mathematical) functions, while IP emphasizes state changes. In fact, IP puts no constraints on mutability, side effects, etc. We've already seen in this course how these "freedoms" can be problematic.
-
-Note that OOP and _procedural programming_ (pre-OOP, e.g., C) are both examples of Imperative Programming.
-
 h1. Imperative vs. Declarative Programming
 
 *Imperative Programming:* Tell the system _how_ to do a computation.
@@ -124,7 +128,14 @@ h1. Imperative vs. Declarative Programming
 
 Declarative programming:
 * More clearly separates abstraction (the _what_) from implementation (the _how_).
-* Has no _visible_ side effects (therefore, is _referentially transparent_).
+* Minimizes writing the _how_.
+* Minimizes _visible_ side effects (therefore, promotes _referentially transparent_).
+
+h1. FP != Imperative Programming (IP)
+
+Both have "functions", but FP emphasizes the application of (mathematical) functions, while IP emphasizes state changes. In fact, IP puts no constraints on mutability, side effects, etc. We've already seen in this course how these "freedoms" can be problematic.
+
+Note that OOP and _procedural programming_ (pre-OOP, e.g., C) are both examples of Imperative Programming.
 
 
 h1. Higher-Kinded Types
@@ -149,13 +160,310 @@ The example illustrates an analogy; @List[A]@ is a _type constructor_, used to c
 
 Because types like @List[A]@ takes a type as an argument, they are called _higher-kinded_ types, analogous to _higher-order_ functions, which take other functions as arguments or return function results.
 
+h1. Higher-Kinded Types (cont.)
+
+Why are they useful, because they let us abstract over the details of the "contained" type and focus on operations applied to the container itself.
+
+:inlinecode lang=scala, class=code-small
+def printList(list: List[_]) = list map println
+printList(List(1, "two", 3.3))
+// => 1
+// => two
+// => 3.3
+:endinlinecode 
+
+Note that we use the wildcard @_@ for the @List[_]@ parameter, because we don't care what it is.[1]
+
+[1] Actually, on the JVM we have no choice, because this type information is _erased_ in the byte code.
+
+h1. Higher-Kinded Types (cont.)
+
+Note also the _point-free style_ of the function definition: @list map println@. It's equivalent to this
+
+:inlinecode lang=scala, class=code-small
+def printList(list: List[_]) = list map (x => println(x))
+:endinlinecode 
+
+Not having to write "boilerplate", like the @x@ variable simplifies the code and minimizes mistakes. This is also a benefit in Scala of using _function application_, e.g., @foo(x)@, vs. object method syntax, e.g., @x.foo@. For the latter, if @println@ were a method on all objects, we would have to write:
+
+:inlinecode lang=scala, class=code-small
+def printList(list: List[_]) = list map (x => x.println)
+:endinlinecode 
+
+
 h1. For Comprehensions
+
+Consider this code from @InstrumentAnalysisServerSupervisor@, which calculates (or retrieves) the desired statistics for the desired instruments (stocks):
+
+:inlinecode lang=scala, class=code-tiny
+def calculate (criteria: CriteriaMap) = {
+  val futures = // Save a sequence of "futures"
+    for {       // "for comprehension"
+      instrument <- criteria.instruments // each instrument
+      statistic  <- criteria.statistics  // each statistic
+      calculator <-       // get an InstrumentAnalysisServer...
+        getOrMakeInstrumentAnalysisServerFor(instrument, statistic)
+    } yield (    // "yield" the future; goes into sequence
+      calculator !!!    // send message to actor, returning future 
+        CalculateStatistics(    // message to send...
+          criteria.             // criteria ...
+            withInstruments(instrument).  // this instrument
+            withStatistics(statistic)))   // this statistic
+  Futures.awaitAll(futures)    // Wait for all futures to finish
+  futuresToJSON(futures, ...)  // convert result to JSON
+}
+:endinlinecode 
+
+h1. For Comprehensions
+
+Let's focus on the _for comprehension_.
+
+:inlinecode lang=scala, class=code-tiny
+for {
+  instrument <- criteria.instruments   // iterates through list
+  statistic  <- criteria.statistics    // same
+  calculator <-  // getOrMake... returns an Option[...]
+    getOrMakeInstrumentAnalysisServerFor(instrument, statistic)
+} yield (...)
+}
+:endinlinecode 
+
+Note that even though @Option[A]@ has 0 or 1 item, it behaves like any other collection. You can "iterate" through it, for example.
+
+h1. For Comprehensions
+
+Other languages call these constructs _list comprehensions_ or _sequence comprehensions_; you can "comprehend" a collection, process it, generate a new collection, etc. 
+
+You don't have to worry about loop counters, "fencepost errors", etc.
+
+h1. For Comprehensions
+
+What does this do?
+
+:inlinecode lang=scala, class=code-tiny
+val list = List(Some(0), None, Some(1), None, Some(2), None, Some(3))
+val list2 = for {
+  option <- list
+  number <- option
+  if number % 2 == 0
+} yield (number)
+:endinlinecode 
+
+h1. For Comprehensions
+
+What does this do?
+
+:inlinecode lang=scala, class=code-tiny
+val list = List(Some(0), None, Some(1), None, Some(2), None, Some(3))
+val list2 = for {
+  option <- list
+  number <- option
+  if number % 2 == 0
+} yield (number)
+
+// list2: List[Int] = List(0, 2)
+:endinlinecode 
+
+No checks for @None@ required! Another argument for preferring @Options@ instead of @nulls@, too.
+
+h1. For Comprehensions
+
+In the Akka project, many methods return @Option[A]@ so that when they have no results (and return @None@) they are simply ignored by for comprehensions.
+
+(Note: There are times when you might want to report that no results were found, but that can usually be handled in the lower-level method.)
+
+For comprehensions are very declarative. They abstract over the details of handling "no results", iteration, etc.
+
+h1. For Comprehensions
+
+In Scala, for comprehensions that @yield@ are actually "sugar" around calls to @map@ and @flatMap@ (the @x <- expression@ expressions), and @filter@ (the @if@ expressions).
+
+If the comprehension doesn't @yield@, it is sugar around equivalent @filter@ and @foreach@ expressions.
+
+h1. For Comprehensions
+
+For comprehensions can also have _definitions_, e.g., @string = number.toString@.
+
+The @x <- expression@ expressions are called _generators_, because they generate a sequence. For example:
+
+:inlinecode lang=scala, class=code-tiny
+for (i <- (0 to 5)) yield i
+// => ...immutable.IndexedSeq[Int] = Vector(0, 1, 2, 3, 4, 5)
+
+// Sugar for a call to map? It's equivalent to: 
+(0 to 5) map (i => i)
+// => ...immutable.IndexedSeq[Int] = Vector(0, 1, 2, 3, 4, 5)
+:endinlinecode 
+
+h1. For Comprehensions
+
+Where does @flatMap@ come in?? Consider this comprehension:
+
+:inlinecode lang=scala, class=code-tiny
+for {
+  i <- (1 to 4)
+  j <- (1 to i)  // like a nested for loop in Java
+} yield j
+// => ...immutable.IndexedSeq[Int] = Vector(1, 1, 2, 1, 2, 3, 1, 2, 3, 4)
+
+// Sugar for a call to map and flatMap? It's equivalent to: 
+(1 to 4) map (i => i) flatMap (j => (1 to j))
+// => ...immutable.IndexedSeq[Int] = Vector(1, 1, 2, 1, 2, 3, 1, 2, 3, 4)
+:endinlinecode 
+
+The second version only takes one line ;), but it's harder to understand.
+
 
 h1. Function(Data, Args) Vs. Receiver.Method(Args)
 
 h1. Pattern Matching and Collections
 
-h1. Generators
+h1. OCP and Expression Problem
+
+Last week, we discussed the _Open-Closed Principle_ (OCP), an object-oriented solution to a problem that Philip Wadler called the _Expression Problem_.
+
+h1. OCP and Expression Problem
+
+Specifically, how do we add new behavior without modifying existing code? This is useful so we minimize the need to retest and redeploy code that has already been tested and deployed, which can be costly in many cases.
+
+h1. OCP and Expression Problem
+
+In the object-oriented approach, we rely on a well-defined abstraction, which is implemented by concrete types to add new behaviors. As long as the abstraction is sufficiently expressive and clients don't depend on the concrete subtypes, we can add new concrete subtypes to add new behaviors to the code base.
+
+h1. OCP and Expression Problem
+
+Example: geometric shapes
+
+:inlinecode lang=scala, class=code-small
+case class Point(x: Double, y: Double)
+trait Shape { 
+  def draw: Unit
+}
+case class Circle(center: Point, radius: Double) extends Shape { 
+  def draw: Unit = // draw the shape
+}
+case class Rectangle(lowerLeft: Point, upperRight: Point) extends Shape { 
+  def draw: Unit = // draw the shape
+}
+:endinlinecode 
+
+We can easily add new shapes ("behaviors") in other files by extending @Shape@. Now, client code won't break when we add (or remove) shapes, if the code only depends on @Shape@.
+
+:inlinecode lang=scala, class=code-small
+val shapes = ...
+shapes foreach { _.draw }
+:endinlinecode 
+
+h1. OCP and Expression Problem
+
+But wait, even these case classes are abstract in the sense that @draw@ will be different depending on the graphics library, etc. In fact, you might not even need @draw@ in many contexts (e.g., rendering an image, but not yet drawing it).
+
+Also, what if we suddenly need the ability to _serialize_ and _deserialize_ shapes, e.g., for writing to and reading from files?
+
+Do we now have find and modify all shape definitions in the code base to add this functionality, then retest, redeploy, etc.?
+
+h1. OCP and Expression Problem
+
+In "naïve" OO, we would say that the _draw_, _serialize_, and _deserialize_ should be methods on the @Point@ and @Shape@ type hierarchies. At least as early as the nineties, people realized it's not a good idea, and sometimes impossible, to add every such method to objects. So, they invented the _Visitor Design Pattern_, which is documented in the "Gang of Four" patterns book.
+
+This is actually an _inelegant_ pattern that disrupts the code significantly. It's been widely criticized, even called an _antipattern_. We won't discuss it further. Instead, let's discuss a far more elegant solution: _type classes_.
+
+h1. Type Classes
+
+So, how do we add new behaviors to types, _as if the types already supported these behaviors_? In OO terms, we would like the new behaviors to work like methods on the types.
+
+Enter _type classes_, a term from Haskell, where the word @class@ here should not be confused with the notion of @class@ in typical OO languages (like Scala).
+
+h1. Type Classes
+
+Both the visitor pattern and type classes support the following two goals:
+
+# Avoiding the difficulty of adding a "similar" behavior to a family of existing types.
+# Avoiding _feature creep_ in types, where behavior is now available _globally_, even when it's only needed in a few _local contexts_.
+
+To explain #2, recall that @draw@ might not be needed by all clients of the @Shapes@. Only those clients which draw shapes should pay that "tax".
+
+h1. Type Classes
+
+Conceptually, a type class is like an interface that defines some operations to support a behavior:
+
+:inlinecode lang=scala, class=code-small
+val shapes = ...
+trait Drawable { 
+  def draw: Unit
+}
+:endinlinecode 
+
+There is a "class" (or set) of types that can support this behavior, hence the name.
+
+h1. Type Classes
+
+But wait, is this any different than the _mixins_ we saw previously? Yes:
+* The implementation of @draw@ varies with the type, unlike mixin behavior.
+* To use a mixin, we have to control instantiation of the objects, which isn't always possible.
+
+So, it's not really the same as an interface (trait) in OO terms.
+
+Type classes were invented for Haskell. Here's how we can simulate them in Scala. We use _implicits_.
+
+h1. Type Classes
+
+:inlinecode lang=scala, class=code-tiny
+// An exception for when we FORGET to support a shape!
+case class DrawNotUnsupported(a: Any) 
+  extends RuntimeException(a.toString + " does not support draw")
+  
+class Drawable(shape: Shape) {
+  def draw = shape match {
+    case c: Circle => doDraw(c)
+    case r: Rectangle => doDraw(r)
+    case _ => throw DrawNotUnsupported(shape) 
+  }
+  private
+  def doDraw(s: Shape) = println(s) // just print it for now.
+}
+
+object Drawable {
+  // An implicit method, invoked by the compiler to convert shape:
+  implicit def shapeToDrawable(s: Shape) = new Drawable(s)
+}
+...
+:endinlinecode 
+
+h1. Type Classes
+
+:inlinecode lang=scala, class=code-tiny
+...
+case class Point(x: Double, y: Double)
+// Remove the draw methods now!
+trait Shape  
+case class Circle(center: Point, radius: Double) extends Shape
+case class Rectangle(lowerLeft: Point, upperRight: Point) extends Shape
+
+import Drawable._  // bring the implicit method in scope
+
+Circle(Point(0.0, 0.0), 5.0).draw  // call the draw "method"!
+// => Circle(Point(0.0,0.0),5.0)
+
+Rectangle(Point(0.0, 0.0), Point(4.0, 2.0)).draw
+// => Rectangle(Point(0.0,0.0),Point(4.0,2.0))
+
+// Add a new Triangle class:
+case class Triangle(one: Point, two: Point, three: Point) extends Shape
+Triangle(Point(0.0, 0.0), Point(2.0, 0.0), Point(1.0, 1.0)).draw
+// => ...DrawNotUnsupported: Triangle(Point(0.0,0.0),...) does not support draw
+// =>   (stack trace)
+:endinlinecode 
+
+h1. Type Classes
+
++ Localizes behavior not universally applicable for types.
++ Permits the addition of behavior without modifying existing types (OCP/Expression Problem).
+
+- _Everything_ about a particular type is not in one place.
+- Easy to forget to change the type class code when the type hierarchy changes.
+
+(Some of these points are more specific to the Scala implementation).
 
 h1. Combinators
 
@@ -167,8 +475,6 @@ Also, we talk about infinite data types, like the real numbers, without having t
 
 In functional programming, _lazy evaluation_ allows you to represent such data structures and computations, then evaluate them only when needed.
 
-h1. Implicit Params
-
-h1. Type Inference
+h1. No Side Effects and Laziness: Drawbacks
 
 

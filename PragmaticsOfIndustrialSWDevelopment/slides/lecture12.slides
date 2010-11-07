@@ -6,6 +6,25 @@ h1. Project Planning
 
 John Gavin, Director of the Lunar Module Program, in an article in M.I.T.'s Technology Review, 1994, and quoted in his obituary on November 4, 2010 in the "New York Times":http://nyti.ms/a2yPRN.
 
+The pervasive principle that successful systems, processes, tools, etc. avoid unnecessary complexity. We start by looking at the evolution of software processes.
+
+* Fundamental requirements for any process.
+* Waterfall, Agile Methodologies, and others.
+* Why many approaches fail: 
+  * Excess complexity.
+  * Poor mapping to the real "nature" of software development.
+* What should a process do?
+
+h1. Complexity vs. Simplicity Part II: Scrum, XP, and Lean
+  
+Agile software processes
+* Scrum - arguably the first?
+* XP - a complete, small-team process
+* Lean - Toyota Manufacturing
+* Scaling Agile
+* Is there one "true" software process for industrial development?
+
+
 h1. Reading for Next Week's Lecture
 
 * Eric Brewer, "Toward Robust, Distributed Systems":http://www.cs.berkeley.edu/~brewer/cs262b-2004/PODC-keynote.pdf. The keynote at the "ACM Symposium on Principles of Distributed Computing":http://www.podc.org/podc2000/ that introduced Brewer's CAP theorem. Focus on the first 2/3^rd^s of the presentation (up to _The DQ Principle_.)

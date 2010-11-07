@@ -1,6 +1,18 @@
 h1. Lecture 11: Object-Oriented Programming vs. Functional Programming: a Critique of Pure Programming
 
 
+Functional Programming is based on mathematics, specifically work on computation that predates electronic computers. Long an academic focus, it is now experiencing greater industry adoption. 
+
+* Why industry is adopting FP now: concurrency.
+* The practical benefits of FP.
+* The challenges FP presents to software development teams.
+
+* OOP and FP: comparisons and contrasts.
+  * The future of software: more FP or more OOP (or something else)?
+  * Why is FP more interesting and OOP less interesting today? 
+* Example: Design Patterns and Revisionism.
+
+
 
 Notes from Jason Zaugg's Intro to Scalaz at the NYC Scala group: http://vimeo.com/15264203
 

@@ -2,3 +2,8 @@ h1. Lecture 13: Complexity vs. Simplicity Part III: Simple Systems
 
 
 SOA vs. the rest. See Brewer's CAP theorem keynote.
+
+* "Essential" vs. "Accidental" complexity. 
+* Examples of simple systems that succeeded.
+* Examples of complex systems that failed.
+

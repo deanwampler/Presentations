@@ -127,10 +127,9 @@
 	<li>To hard to do this manually.</li>
 	<li>Keys are hashed, using consistent hashing.</li>
 	<li>The range of possible hash values is treated as a &#8220;ring&#8221; that wraps.</li>
-	<li>Each node is assigned a random position on the ring.<br />
- <br />
-When a row&#8217;s key is hashed, the node with the closest key <em>greater than</em> the row&#8217;s key is assigned the responsibility for coordinating reads and writes.</li>
+	<li>Each node is assigned a random position on the ring.</li>
 </ul>
+<p>When a row&#8217;s key is hashed, the node with the closest key <em>greater than</em> the row&#8217;s key is assigned the responsibility for coordinating reads and writes.</p>
 </div>
 <div class="slide">
 <h1>Reads and Writes</h1>

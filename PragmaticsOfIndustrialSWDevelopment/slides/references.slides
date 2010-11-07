@@ -289,9 +289,7 @@ h1. Object-Oriented Programming (Specifics)
 * "Design Patterns":http://sourcemaking.com/design_patterns. A succinct description of patterns and details on the 
 * "Abstract Factory Design Pattern":http://en.wikipedia.org/wiki/Abstract_factory_pattern (Wikipedia).
 * "Singleton Design Pattern":http://en.wikipedia.org/wiki/Singleton_pattern (Wikipedia).
-* <a href="http://en.wikipedia.org/wiki/Solid_(object-oriented_design)">SOLID Principles of Object-Oriented Design</a> (Wikipedia).
-* "Principles of OOD":http://butunclebob.com/ArticleS.UncleBob.PrinciplesOfOod. An older, but more complete blog post and accompanying articles (PDFs) that describe the SOLID principles.
-* Eric Evans, "Domain-Driven Design - Tackling Complexity in the Heart of Software", Addison-Wesley, 2004, ISBN 0321125215.
+* "Visitor Pattern":http://en.wikipedia.org/wiki/Visitor_pattern (Wikipedia). A truly ugly pattern. A good illustration of forcing a "pure" OO solution when a much more elegant approach should be used instead, i.e., _type classes_ (see the FP section below.)
 
 </div>
 
@@ -301,13 +299,20 @@ h1. Object-Oriented Programming (Specifics)
 
 * Martin Odersky, Lex Spoon, and Bill Venners, "How to Write an Equality Method in Java":http://www.artima.com/lejava/articles/equality.html.
 * Joshua Bloch, "Effective Java, Second Edition", Addison-Wesley, 2008, ISBN 0321356683.
+* <a href="http://en.wikipedia.org/wiki/Solid_(object-oriented_design)">SOLID Principles of Object-Oriented Design</a> (Wikipedia).
+* "Principles of OOD":http://butunclebob.com/ArticleS.UncleBob.PrinciplesOfOod. An older, but more complete blog post and accompanying articles (PDFs) that describe the SOLID principles.
+* Eric Evans, "Domain-Driven Design - Tackling Complexity in the Heart of Software", Addison-Wesley, 2004, ISBN 0321125215.
 
 </div>
 
 h1. Functional Programming
 
+* "Functional Programming":http://en.wikipedia.org/wiki/Functional_programming (Wikipedia).
 * John Hughes, "Why Functional Programming Matters":http://www.cs.kent.ac.uk/people/staff/dat/miranda/whyfp90.pdf. A seminal paper making the case for FP. This "paper":http://day-to-day-stuff.blogspot.com/2010/09/why-functional-programming-matters.html ports the examples to Scala.
 * "Functional Programming for the Rest of Us":http://www.defmacro.org/ramblings/fp.html.
+* Erik Meier, "Asynchronous and Event-Driven Programming":http://ecn.channel9.msdn.com/o9/mix/10/mp4/FTL01.mp4 (video).
+* "Type classes":* "Visitor Pattern":http://en.wikipedia.org/wiki/Visitor_pattern (Wikipedia).
+* Type classes in Scala; two blog posts: "first":http://debasishg.blogspot.com/2010/06/scala-implicits-type-classes-here-i.html, "second":http://debasishg.blogspot.com/2010/07/refactoring-into-scala-type-classes.html.
 
 h1. General Programming
 

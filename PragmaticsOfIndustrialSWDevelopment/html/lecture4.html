@@ -404,9 +404,8 @@ or split <em>functionality</em> across servers:</li>
 </div>
 <div class="slide">
 <h1>Key-Value Stores</h1>
-<p>E.g., <em>Amazon SimpleDB, Riak, Redis, Tokyo Cabinet, Scalaris, MemcacheDB, BerkeleyDB, MNesia.</em><br />
- <br />
-Think of hash maps on <em>steroids</em>.</p>
+<p>E.g., <em>Amazon SimpleDB, Riak, Redis, Tokyo Cabinet, Scalaris, MemcacheDB, BerkeleyDB, MNesia.</em></p>
+<p>Think of hash maps on <em>steroids</em>.</p>
 <ul>
 	<li>May be purely in-memory (with optional flushing to disk) and resident on one machine.</li>
 	<li>Excellent for &#8220;persisting&#8221; semi-structured data with shorter lifespans (e.g., web sessions).</li>
@@ -440,9 +439,9 @@ Think of hash maps on <em>steroids</em>.</p>
 </div>
 <div class="slide">
 <h1>&#8220;Polyglot Persistence&#8221;</h1>
-<p>A big trend today is that non-trivial systems mix different programming languages, libraries and tools. Do we use just one language to write all parts of a standard web application? No.<sup class="footnote"><a href="#fn1">1</a></sup></p>
+<p>A big trend today is that non-trivial systems mix different programming languages, libraries and tools. Do we use just one language to write all parts of a standard web application? No.<sup class="footnote" id="fnr1"><a href="#fn1">1</a></sup></p>
 <p>The same phenomenon is now happening at the persistence level. Often, one persistence strategy doesn&#8217;t fit all needs in complex, distributed systems. You might use a fast, key-value store for user sessions, then persist key &#8220;events&#8221; to an <span class="caps">RDBMS</span>, for example.</p>
-<p><sup class="footnote"><a href="#fn1">1</a></sup> Well, maybe we could with JavaScript&#8230;</p>
+<p><sup class="footnote" id="fnr1"><a href="#fn1">1</a></sup> Well, maybe we could with JavaScript&#8230;</p>
 </div>
 <div class="slide">
 <h1>Some Techniques We&#8217;ll Discuss</h1>
