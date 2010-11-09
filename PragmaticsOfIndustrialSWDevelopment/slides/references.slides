@@ -313,6 +313,7 @@ h1. Functional Programming
 * Erik Meier, "Asynchronous and Event-Driven Programming":http://ecn.channel9.msdn.com/o9/mix/10/mp4/FTL01.mp4 (video).
 * "Type classes":* "Visitor Pattern":http://en.wikipedia.org/wiki/Visitor_pattern (Wikipedia).
 * Type classes in Scala; two blog posts: "first":http://debasishg.blogspot.com/2010/06/scala-implicits-type-classes-here-i.html, "second":http://debasishg.blogspot.com/2010/07/refactoring-into-scala-type-classes.html.
+* Daniel Spiewak "The Magic Behind Parser Combinators":http://www.codecommit.com/blog/scala/the-magic-behind-parser-combinators. Lucid introduction to building parsers using Scala's parser combinator library, which I also discuss in "my book":http://programming-scala.labs.oreilly.com/ch11.html as a tool for building _Domain Specific Languages_ (DSLs).
 
 h1. General Programming
 

@@ -51,17 +51,19 @@
 <div class="slide">
 <h1>Lecture 10: Functional Programming (FP): Into the Real World</h1>
 <p>Functional Programming is the oldest <em>paradigm</em> of software development, yet it has had relatively little penetration outside academia, at least until recently.</p>
+<p>We&#8217;ll discuss why this transition is happening next week.</p>
 </div>
 <div class="slide">
 <h1>What Is Functional Programming?</h1>
-<p>FP treats computation as the application of functions and avoids mutable data.</p>
-<p>FP has its roots in mathematics, specifically lambda calculus, a formal system developed in the 1930s to investigate function definition, function application, and recursion. Many functional programming languages can be viewed as elaborations on the lambda calculus.</p>
+<p>FP treats computation as the <em>application of functions</em> rather than the direct <em>mutation of state</em>.</p>
+<p>FP has its roots in mathematics, specifically <em>lambda calculus</em><sup class="footnote" id="fnr1"><a href="#fn1">1</a></sup>, a formal system developed in the 1930s to investigate function definition, function application,  recursion, etc. (Yes, before the invention of electronic computers.) Many functional programming languages can be viewed as elaborations on the lambda calculus.</p>
+<p><sup class="footnote" id="fnr1"><a href="#fn1">1</a></sup> For this reason, anonymous functions in many languages are called <em>lambdas</em>.</p>
 <p>(Adapted from <a href="http://en.wikipedia.org/wiki/Functional_programming">Wikipedia</a>.)</p>
 </div>
 <div class="slide">
 <h1>State in Functional Programming</h1>
 <p>There is a common misconception that functional programs are <em>stateless</em>. If this were true, they could accomplish <em>nothing</em>, except to heat up your computer!</p>
-<p>Where object oriented programs (for example) change state by mutating variables, pure functional programmers represent state <em>on the stack</em>.</p>
+<p>Where object oriented programs (for example) change state by mutating variables explicitly, <em>pure</em> functional programs represent state <em>on the stack</em> only.</p>
 <p>That is, the values you pass to functions and the values they return represent the current state of the world.</p>
 </div>
 <div class="slide">
@@ -85,7 +87,7 @@
 </div>
 <div class="slide">
 <h1>No Side Effects</h1>
-<p>Note that immutability means there can be no side effects, by definition. This also has important implications for functions:</p>
+<p>Just as <code>x</code> is not mutable, so to is the rest of the world. So, by definition, immutability means there can be no <em>side effects</em>. This also has important implications for functions:</p>
 <p>x = cos(y)<sup>2</sup></p>
 <p><strong>All</strong> work done by <code>cos(y)</code> (for example) is returned and assigned to <code>x</code>. there is no global state that is updated.<sup class="footnote" id="fnr1"><a href="#fn1">1</a></sup></p>
 <p>Functions without side effects are called <em>pure.</em></p>
@@ -93,11 +95,12 @@
 </div>
 <div class="slide">
 <h1>Benefits of No Side Effects</h1>
-<p>If the work of a function is independent of global state:<br />
-<strong>Referentially Transparency:</strong> I can call it <em>anywhere</em> and <em>anytime</em>.<br />
-<strong>Correctness:</strong> I can reason about its behavior (e.g., test it) in isolation.<br />
-<strong>Memoization:</strong> I can memorize previous invocations with particular arguments and cache the results for faster subsequent invocations.<sup class="footnote" id="fnr1"><a href="#fn1">1</a></sup></p>
-<p><sup class="footnote" id="fnr1"><a href="#fn1">1</a></sup> This is the case where I add memoization explicitly, vs. the internal caching noted on the previous slide.</p>
+<p>If the work of a function is independent of global state:</p>
+<ul>
+	<li><strong>Referentially Transparency:</strong> I can call it <em>anywhere</em> and <em>anytime</em>.</li>
+	<li><strong>Correctness:</strong> I can reason about its behavior (e.g., test it) in isolation.</li>
+	<li><strong>Memoization:</strong> I can substitute a value for the function invocation (subject to the arguments). That is, I can remember previous invocations with particular arguments and cache the results for faster subsequent invocations. I.e., create a &#8220;memo&#8221; of the previous call.</li>
+</ul>
 </div>
 <div class="slide">
 <h1>First Class Functions</h1>
@@ -114,7 +117,7 @@ x = square(cos(y))</p>
 <div class="code-small">
 <pre name="code" id="code" class="brush: scala,;">
 
-// Generate a sequence of strings: "2", "4"
+// Generate a sequence of strings:
 (1 to 10) filter (_ % 2 == 0) map (_.toString) take 2
 // ...immutable.IndexedSeq[java.lang.String] = Vector(2, 4)
 </pre></div>
@@ -154,9 +157,8 @@ uniqueFileName("/foo/bar") // =&gt; "/foo/bar/0"
 uniqueFileName("/foo/bar") // =&gt; "/foo/bar/1"
 uniqueFileName("/foo/bar") // =&gt; "/foo/bar/2"
 </pre></div>
-<p>Because <code>uniqueFileName</code> is a function that refers to a variable outside its scope (including its argument list), it forms a <em>closure</em>. I.e., it &#8220;closes over&#8221; the variables it references.</p>
-<p>Note that the 3 calls behave just like a stateful object.</p>
-<p><em>Prototype-based objects are essentially closures</em>. (e.g., JavaScript)</p>
+<p><code>uniqueFileName</code> refers to a variable outside its scope (including its argument list). It forms a <em>closure</em>, i.e., it &#8220;closes over&#8221; the variables it references. Note that the 3 calls behave just like a stateful object.</p>
+<p><em>Objects are essentially closures</em>. (Especially clear in prototype-based languages, like JavaScript.)</p>
 </div>
 <div class="slide">
 <h1>Imperative vs. Declarative Programming</h1>
@@ -167,6 +169,7 @@ uniqueFileName("/foo/bar") // =&gt; "/foo/bar/2"
 	<li>More clearly separates abstraction (the <em>what</em>) from implementation (the <em>how</em>).</li>
 	<li>Minimizes writing the <em>how</em>.</li>
 	<li>Minimizes <em>visible</em> side effects (therefore, promotes <em>referentially transparent</em>).</li>
+	<li>Can sometimes be understood by non-programmers (e.g., project &#8220;stakeholders&#8221;).</li>
 </ul>
 </div>
 <div class="slide">
@@ -176,11 +179,12 @@ uniqueFileName("/foo/bar") // =&gt; "/foo/bar/2"
 </div>
 <div class="slide">
 <h1>Higher-Kinded Types</h1>
-<p>Consider constructing an <code>Exception</code>:</p>
+<p>Much of type theory has been worked out in FP, then applied more broadly. Consider constructing an <code>Exception</code>:</p>
 <div class="code-small">
 <pre name="code" id="code" class="brush: scala,;">
 
-val ex = new Exception("This is an exception.")
+case class MyException(...) extends RuntimeException(...)
+val ex = MyException("This is an exception.")
 </pre></div>
 <p>Now consider creating a <code>List</code> of <code>Exceptions</code>:</p>
 <div class="code-small">
@@ -188,11 +192,11 @@ val ex = new Exception("This is an exception.")
 
 type ExceptionList = List[Exception]
 </pre></div>
-<p>We&#8217;ve used Scala&#8217;s way of declaring a <code>type</code>, just like a variable. You can think of it like a type &#8220;alias&#8221;, just like the variable <code>int ONE = 1</code> is an &#8220;alias&#8221; for the value of <code>1</code>.</p>
+<p>(We&#8217;ve used Scala&#8217;s way of declaring a <code>type</code>, just like a variable. You can think of it like a type &#8220;alias&#8221;).</p>
 </div>
 <div class="slide">
 <h1>Higher-Kinded Types (cont.)</h1>
-<p>The example illustrates an analogy; <code>List[A]</code> is a <em>type constructor</em>, used to construct concrete types like <code>List[Exception]</code>, just like the <code>Exception</code> class is used to construct concrete objects.</p>
+<p>The example illustrates an analogy; <code>List[A]</code> is a <em>type constructor</em>, used to construct <em>concrete types</em> like <code>List[Exception]</code>, just like the <code>MyException</code> class is used to construct <em>concrete objects</em>.</p>
 <p>Because types like <code>List[A]</code> takes a type as an argument, they are called <em>higher-kinded</em> types, analogous to <em>higher-order</em> functions, which take other functions as arguments or return function results.</p>
 </div>
 <div class="slide">
@@ -212,13 +216,19 @@ printList(List(1, "two", 3.3))
 </div>
 <div class="slide">
 <h1>Higher-Kinded Types (cont.)</h1>
-<p>Note also the <em>point-free style</em> of the function definition: <code>list map println</code>. It&#8217;s equivalent to this</p>
+<p>Note also the <em>point-free style</em> of the function definition:</p>
+<div class="code-small">
+<pre name="code" id="code" class="brush: scala,;">
+
+def printList(list: List[_]) = list map println
+</pre></div>
+<p>It&#8217;s equivalent to this</p>
 <div class="code-small">
 <pre name="code" id="code" class="brush: scala,;">
 
 def printList(list: List[_]) = list map (x =&gt; println(x))
 </pre></div>
-<p>Not having to write &#8220;boilerplate&#8221;, like the <code>x</code> variable simplifies the code and minimizes mistakes. This is also a benefit in Scala of using <em>function application</em>, e.g., <code>foo(x)</code>, vs. object method syntax, e.g., <code>x.foo</code>. For the latter, if <code>println</code> were a method on all objects, we would have to write:</p>
+<p>Not having to write &#8220;boilerplate&#8221;, like the <code>x</code> variable, simplifies the code and minimizes mistakes. This is also a benefit in Scala of using <em>function application</em>, e.g., <code>foo(x)</code>, vs. object method syntax, e.g., <code>x.foo</code>. For the latter, if <code>println</code> were a method on all objects, we would have to write:</p>
 <div class="code-small">
 <pre name="code" id="code" class="brush: scala,;">
 
@@ -226,14 +236,14 @@ def printList(list: List[_]) = list map (x =&gt; x.println)
 </pre></div>
 </div>
 <div class="slide">
-<h1>For Comprehensions</h1>
+<h1>For Comprehensions (Expressions)</h1>
 <p>Consider this code from <code>InstrumentAnalysisServerSupervisor</code>, which calculates (or retrieves) the desired statistics for the desired instruments (stocks):</p>
 <div class="code-tiny">
 <pre name="code" id="code" class="brush: scala,;">
 
 def calculate (criteria: CriteriaMap) = {
   val futures = // Save a sequence of "futures"
-    for {       // "for comprehension"
+    for {     // "for comprehension"
       instrument &lt;- criteria.instruments // each instrument
       statistic  &lt;- criteria.statistics  // each statistic
       calculator &lt;-       // get an InstrumentAnalysisServer...
@@ -261,22 +271,23 @@ for {
   calculator &lt;-  // getOrMake... returns an Option[...]
     getOrMakeInstrumentAnalysisServerFor(instrument, statistic)
 } yield (...)
-}
 </pre></div>
-<p>Note that even though <code>Option[A]</code> has 0 or 1 item, it behaves like any other collection. You can &#8220;iterate&#8221; through it, for example.</p>
+<p><code>getOrMakeInstrumentAnalysisServerFor</code> returns an <code>Option[A]</code>. Even though it has 0 or 1 item, it behaves like any other collection. You can &#8220;iterate&#8221; through it, for example.</p>
 </div>
 <div class="slide">
 <h1>For Comprehensions</h1>
-<p>Other languages call these constructs <em>list comprehensions</em> or <em>sequence comprehensions</em>; you can &#8220;comprehend&#8221; a collection, process it, generate a new collection, etc.</p>
-<p>You don&#8217;t have to worry about loop counters, &#8220;fencepost errors&#8221;, etc.</p>
+<p>Other languages have similar constructs, e.g., <em>list comprehensions</em> (Python) or <em>sequence comprehensions</em>.</p>
+<p>You are <em>comprehending</em> a collection, processing it, and possibly generating a new collection, etc.</p>
+<p>It&#8217;s <em>declarative</em>. You don&#8217;t have to worry about loop counters, &#8220;fencepost errors&#8221;, etc.</p>
 </div>
 <div class="slide">
 <h1>For Comprehensions</h1>
 <p>What does this do?</p>
-<div class="code-tiny">
+<div class="code-small">
 <pre name="code" id="code" class="brush: scala,;">
 
-val list = List(Some(0), None, Some(1), None, Some(2), None, Some(3))
+val list =
+  List(Some(0), None, Some(1), None, Some(2), None, Some(3))
 val list2 = for {
   option &lt;- list
   number &lt;- option
@@ -287,10 +298,11 @@ val list2 = for {
 <div class="slide">
 <h1>For Comprehensions</h1>
 <p>What does this do?</p>
-<div class="code-tiny">
+<div class="code-small">
 <pre name="code" id="code" class="brush: scala,;">
 
-val list = List(Some(0), None, Some(1), None, Some(2), None, Some(3))
+val list =
+  List(Some(0), None, Some(1), None, Some(2), None, Some(3))
 val list2 = for {
   option &lt;- list
   number &lt;- option
@@ -299,72 +311,114 @@ val list2 = for {
 
 // list2: List[Int] = List(0, 2)
 </pre></div>
-<p>No checks for <code>None</code> required! Another argument for preferring <code>Options</code> instead of <code>nulls</code>, too.</p>
+<p>No checks for <code>None</code> required! They are simply filtered out by the &#8220;iteration&#8221; over each option. Another argument for preferring <code>Options</code> instead of <code>nulls</code>, which would require explicit checks.</p>
 </div>
 <div class="slide">
 <h1>For Comprehensions</h1>
 <p>In the Akka project, many methods return <code>Option[A]</code> so that when they have no results (and return <code>None</code>) they are simply ignored by for comprehensions.</p>
 <p>(Note: There are times when you might want to report that no results were found, but that can usually be handled in the lower-level method.)</p>
-<p>For comprehensions are very declarative. They abstract over the details of handling &#8220;no results&#8221;, iteration, etc.</p>
+<p>For comprehensions are very declarative. They abstract over the details of handling iteration, &#8220;no results&#8221; (i.e., <code>None</code> or <code>Nil</code> lists), etc.</p>
+</div>
+<div class="slide">
+<h1>For Comprehensions</h1>
+<div class="code-small">
+<pre name="code" id="code" class="brush: scala,;">
+
+val list = for {
+  number &lt;- (0 to 4)
+  if number % 2 == 0
+  nstring = "#" + number
+} yield (nstring)
+// =&gt; Vector(#0, #2, #4)
+</pre></div>
+<p>The three kinds of expressions in for comprehensions are shown in this example:</p>
+<ul>
+	<li><strong>Generators:</strong> &#8220;Generate&#8221; a sequence, e.g., <code>number &lt;- (0 to 4)</code>.</li>
+	<li><strong>Filters:</strong> Filter some of the values, e.g., <code>if number % 2 == 0</code>.</li>
+	<li><strong>Definitions:</strong> E.g., <code>string = number.toString</code>, where <code>string</code> is a value (without the <code>val</code> required).</li>
+</ul>
 </div>
 <div class="slide">
 <h1>For Comprehensions</h1>
 <p>In Scala, for comprehensions that <code>yield</code> are actually &#8220;sugar&#8221; around calls to <code>map</code> and <code>flatMap</code> (the <code>x &lt;- expression</code> expressions), and <code>filter</code> (the <code>if</code> expressions).</p>
-<p>If the comprehension doesn&#8217;t <code>yield</code>, it is sugar around equivalent <code>filter</code> and <code>foreach</code> expressions.</p>
+<p>If the comprehension doesn&#8217;t <code>yield</code> (as in the following example), it is sugar around equivalent <code>filter</code> and <code>foreach</code> expressions:</p>
+<div class="code-small">
+<pre name="code" id="code" class="brush: scala,;">
+
+// Note: this comprehension has "pure" side effects!
+for {
+  number &lt;- (0 to 4)
+  if number % 2 == 0
+  nstring = "#" + number
+} println (nstring)
+</pre></div>
 </div>
 <div class="slide">
 <h1>For Comprehensions</h1>
-<p>For comprehensions can also have <em>definitions</em>, e.g., <code>string = number.toString</code>.</p>
-<p>The <code>x &lt;- expression</code> expressions are called <em>generators</em>, because they generate a sequence. For example:</p>
-<div class="code-tiny">
+<p>The <em>first</em> generator is sugar for <em>map</em>.</p>
+<div class="code-small">
 <pre name="code" id="code" class="brush: scala,;">
 
 for (i &lt;- (0 to 5)) yield i
 // =&gt; ...immutable.IndexedSeq[Int] = Vector(0, 1, 2, 3, 4, 5)
 
-// Sugar for a call to map? It's equivalent to: 
+// It's equivalent to: 
 (0 to 5) map (i =&gt; i)
 // =&gt; ...immutable.IndexedSeq[Int] = Vector(0, 1, 2, 3, 4, 5)
 </pre></div>
+<p>The for comprehension syntax is a bit easier to follow.</p>
 </div>
 <div class="slide">
 <h1>For Comprehensions</h1>
 <p>Where does <code>flatMap</code> come in?? Consider this comprehension:</p>
-<div class="code-tiny">
+<div class="code-small">
 <pre name="code" id="code" class="brush: scala,;">
 
 for {
   i &lt;- (1 to 4)
   j &lt;- (1 to i)  // like a nested for loop in Java
-} yield j
-// =&gt; ...immutable.IndexedSeq[Int] = Vector(1, 1, 2, 1, 2, 3, 1, 2, 3, 4)
+} yield (i,j)
+// =&gt; ....immutable.IndexedSeq[(Int, Int)] = \ 
+//  Vector((1,1), (2,1), (2,2), (3,1), (3,2), (3,3), (4,1), (4,2), (4,3), (4,4))
 
 // Sugar for a call to map and flatMap? It's equivalent to: 
-(1 to 4) map (i =&gt; i) flatMap (j =&gt; (1 to j))
-// =&gt; ...immutable.IndexedSeq[Int] = Vector(1, 1, 2, 1, 2, 3, 1, 2, 3, 4)
+(1 to 4) map (i =&gt; i) flatMap (j =&gt; (1 to j) map {x =&gt; (j,x)})
+// =&gt; same
 </pre></div>
-<p>The second version only takes one line ;), but it&#8217;s harder to understand.</p>
+<p>The second version only takes one line ;), but it&#8217;s <strong>much</strong> harder to understand.</p>
 </div>
 <div class="slide">
-<h1>Function(Data, Args) Vs. Receiver.Method(Args)</h1>
+<h1>Invocation Styles</h1>
+<p><strong>receiver.method(args)</strong> vs. <strong>function(receiver, args)</strong></p>
+<p>If you cut your teeth on OO languages, the syntax <code>receiver.method(args)</code> or perhaps <code>receiver message args</code> is familiar. It&#8217;s called the <em>method invocation</em> or <em>message send</em> syntax, depending on the OO environment.</p>
+<p>Note that it is really syntactic sugar for <code>function(receiver, args)</code>. This syntax is called <em>function application</em> syntax. In fact, it is actually used in some OO languages, like Python.</p>
 </div>
 <div class="slide">
-<h1>Pattern Matching and Collections</h1>
+<h1>Invocation Styles (cont.)</h1>
+<p>We&#8217;ve seen an example where the function application syntax is advantageous, for using <em>point free style</em>:</p>
+<div class="code-small">
+<pre name="code" id="code" class="brush: scala,;">
+
+def printList(list: List[_]) = list map println
+</pre></div>
+<p>There are no &#8220;points&#8221;, e.g., variables required, which are actually distracting, once you become accustomed to this style. That can take a while, but it has the strong benefit of minimizing clutter and promoting a composition of behavior using <em>combinators</em>. (We won&#8217;t have time to explore these further.)</p>
 </div>
 <div class="slide">
-<h1><span class="caps">OCP</span> and Expression Problem</h1>
+<h1><span class="caps">OCP</span> and The Expression Problem</h1>
 <p>Last week, we discussed the <em>Open-Closed Principle</em> (<span class="caps">OCP</span>), an object-oriented solution to a problem that Philip Wadler called the <em>Expression Problem</em>.</p>
 </div>
 <div class="slide">
-<h1><span class="caps">OCP</span> and Expression Problem</h1>
-<p>Specifically, how do we add new behavior without modifying existing code? This is useful so we minimize the need to retest and redeploy code that has already been tested and deployed, which can be costly in many cases.</p>
+<h1><span class="caps">OCP</span> and The Expression Problem (cont.)</h1>
+<p>Specifically, how do we add new behavior without modifying existing code? This is useful so we minimize the need to retest and redeploy code that has already been tested and deployed, which if often costly in many scenarios. (Think about Google retesting and redeploying their code&#8230;)</p>
 </div>
 <div class="slide">
-<h1><span class="caps">OCP</span> and Expression Problem</h1>
-<p>In the object-oriented approach, we rely on a well-defined abstraction, which is implemented by concrete types to add new behaviors. As long as the abstraction is sufficiently expressive and clients don&#8217;t depend on the concrete subtypes, we can add new concrete subtypes to add new behaviors to the code base.</p>
+<h1><span class="caps">OCP</span> and The Expression Problem (cont.)</h1>
+<p>The object-oriented approach is to use <em>inheritance</em>, where clients depend only on a <em>well-defined abstraction</em>, which is implemented by <em>concrete subtypes</em>. New &#8220;behaviors&#8221; can be added by defining new concrete subtypes for the same abstraction.</p>
+<p>As long as the abstraction is sufficiently expressive and clients don&#8217;t depend on the concrete subtypes, we can add new behaviors to the code base without modifying existing code.<sup class="footnote" id="fnr1"><a href="#fn1">1</a></sup></p>
+<p><sup class="footnote" id="fnr1"><a href="#fn1">1</a></sup> Recall that, every now and then, the abstraction won&#8217;t be general enough to support a new behavior, so the abstraction and possibly all the subtypes will require modification.</p>
 </div>
 <div class="slide">
-<h1><span class="caps">OCP</span> and Expression Problem</h1>
+<h1><span class="caps">OCP</span> and The Expression Problem (cont.)</h1>
 <p>Example: geometric shapes</p>
 <div class="code-small">
 <pre name="code" id="code" class="brush: scala,;">
@@ -380,7 +434,7 @@ case class Rectangle(lowerLeft: Point, upperRight: Point) extends Shape {
   def draw: Unit = // draw the shape
 }
 </pre></div>
-<p>We can easily add new shapes (&#8220;behaviors&#8221;) in other files by extending <code>Shape</code>. Now, client code won&#8217;t break when we add (or remove) shapes, if the code only depends on <code>Shape</code>.</p>
+<p>We can easily add new shapes (&#8220;behaviors&#8221;) in other files by extending <code>Shape</code>. Now, client code won&#8217;t break when we add (or remove) shapes, if the client code only depends on <code>Shape</code>.</p>
 <div class="code-small">
 <pre name="code" id="code" class="brush: scala,;">
 
@@ -389,19 +443,19 @@ shapes foreach { _.draw }
 </pre></div>
 </div>
 <div class="slide">
-<h1><span class="caps">OCP</span> and Expression Problem</h1>
-<p>But wait, even these case classes are abstract in the sense that <code>draw</code> will be different depending on the graphics library, etc. In fact, you might not even need <code>draw</code> in many contexts (e.g., rendering an image, but not yet drawing it).</p>
-<p>Also, what if we suddenly need the ability to <em>serialize</em> and <em>deserialize</em> shapes, e.g., for writing to and reading from files?</p>
-<p>Do we now have find and modify all shape definitions in the code base to add this functionality, then retest, redeploy, etc.?</p>
+<h1><span class="caps">OCP</span> and The Expression Problem (cont.)</h1>
+<p>But wait! Even these case classes are abstractions in the sense that <code>draw</code> will be <em>different</em> depending on the <em>graphics library</em>, OS, etc. In fact, you might not even need <code>draw</code> in many contexts (e.g., rendering an image, but not  drawing it).</p>
+<p>Also, what if we suddenly need the ability to <em>serialize</em> and <em>deserialize</em> shapes, e.g., for writing to and reading from files? Now we have to modify the whole hierarchy, which means finding and modifying all shape definitions throughout the code base (they aren&#8217;t necessarily defined together), then retesting, redeploying, etc.</p>
+<p>Or, do we??</p>
 </div>
 <div class="slide">
-<h1><span class="caps">OCP</span> and Expression Problem</h1>
-<p>In &#8220;naïve&#8221; OO, we would say that the <em>draw</em>, <em>serialize</em>, and <em>deserialize</em> should be methods on the <code>Point</code> and <code>Shape</code> type hierarchies. At least as early as the nineties, people realized it&#8217;s not a good idea, and sometimes impossible, to add every such method to objects. So, they invented the <em>Visitor Design Pattern</em>, which is documented in the &#8220;Gang of Four&#8221; patterns book.</p>
+<h1><span class="caps">OCP</span> and The Expression Problem (cont.)</h1>
+<p>In &#8220;naïve&#8221; OO, we would say that the <em>draw</em>, <em>serialize</em>, and <em>deserialize</em> must be methods on the <code>Point</code> and <code>Shape</code> type hierarchies. At least as early as the nineties, people realized it&#8217;s not a good idea, and sometimes impossible, to add every such method to objects. So, they invented the <em>Visitor Design Pattern</em>, which is documented in the &#8220;Gang of Four&#8221; patterns book.</p>
 <p>This is actually an <em>inelegant</em> pattern that disrupts the code significantly. It&#8217;s been widely criticized, even called an <em>antipattern</em>. We won&#8217;t discuss it further. Instead, let&#8217;s discuss a far more elegant solution: <em>type classes</em>.</p>
 </div>
 <div class="slide">
 <h1>Type Classes</h1>
-<p>So, how do we add new behaviors to types, <em>as if the types already supported these behaviors</em>? In OO terms, we would like the new behaviors to work like methods on the types.</p>
+<p>So, how do we add new behaviors to types, <em>as if the types already supported these behaviors</em>? In OO terms, we would like the new behaviors to work like methods on the types, but we <em>still</em> don&#8217;t want to modify existing code.</p>
 <p>Enter <em>type classes</em>, a term from Haskell, where the word <code>class</code> here should not be confused with the notion of <code>class</code> in typical OO languages (like Scala).</p>
 </div>
 <div class="slide">
@@ -411,11 +465,11 @@ shapes foreach { _.draw }
 	<li>Avoiding the difficulty of adding a &#8220;similar&#8221; behavior to a family of existing types.</li>
 	<li>Avoiding <em>feature creep</em> in types, where behavior is now available <em>globally</em>, even when it&#8217;s only needed in a few <em>local contexts</em>.</li>
 </ol>
-<p>To explain #2, recall that <code>draw</code> might not be needed by all clients of the <code>Shapes</code>. Only those clients which draw shapes should pay that &#8220;tax&#8221;.</p>
+<p>To explain #2, recall that <code>draw</code> might not be needed by all clients of the <code>Shapes</code>. Only those clients which draw shapes should pay that &#8220;tax&#8221;. Also, a Window&#8217;s version shouldn&#8217;t have X11 code hanging around.</p>
 </div>
 <div class="slide">
 <h1>Type Classes</h1>
-<p>Conceptually, a type class is like an interface that defines some operations to support a behavior:</p>
+<p>Superficially, a type class is like an interface that defines some operations to support a behavior:</p>
 <div class="code-small">
 <pre name="code" id="code" class="brush: scala,;">
 
@@ -424,13 +478,13 @@ trait Drawable {
   def draw: Unit
 }
 </pre></div>
-<p>There is a &#8220;class&#8221; (or set) of types that can support this behavior, hence the name.</p>
+<p>There is a &#8220;class&#8221; (or set) of types that can support this behavior, hence the name. But don&#8217;t take this analogy too seriously&#8230;</p>
 </div>
 <div class="slide">
 <h1>Type Classes</h1>
-<p>But wait, is this any different than the <em>mixins</em> we saw previously? Yes:</p>
+<p>Is this any different than the <em>mixins</em> we saw previously? Yes:</p>
 <ul>
-	<li>The implementation of <code>draw</code> varies with the type, unlike mixin behavior.</li>
+	<li>The implementation of <code>draw</code> varies with the type, unlike typical mixin behavior.</li>
 	<li>To use a mixin, we have to control instantiation of the objects, which isn&#8217;t always possible.</li>
 </ul>
 <p>So, it&#8217;s not really the same as an interface (trait) in OO terms.</p>
@@ -438,25 +492,25 @@ trait Drawable {
 </div>
 <div class="slide">
 <h1>Type Classes</h1>
-<div class="code-tiny">
+<div class="code-small">
 <pre name="code" id="code" class="brush: scala,;">
 
 // An exception for when we FORGET to support a shape!
-case class DrawNotUnsupported(a: Any) 
-  extends RuntimeException(a.toString + " does not support draw")
+case class DrawNotSupported(a: Any) 
+  extends RuntimeException(a.toString + ".draw() not supported")
   
 class Drawable(shape: Shape) {
   def draw = shape match {
     case c: Circle =&gt; doDraw(c)
     case r: Rectangle =&gt; doDraw(r)
-    case _ =&gt; throw DrawNotUnsupported(shape) 
+    case _ =&gt; throw DrawNotSupported(shape) 
   }
   private
   def doDraw(s: Shape) = println(s) // just print it for now.
 }
 
 object Drawable {
-  // An implicit method, invoked by the compiler to convert shape:
+  // An implicit method, invoked by the compiler...
   implicit def shapeToDrawable(s: Shape) = new Drawable(s)
 }
 ...
@@ -464,41 +518,128 @@ object Drawable {
 </div>
 <div class="slide">
 <h1>Type Classes</h1>
-<div class="code-tiny">
+<div class="code-small">
 <pre name="code" id="code" class="brush: scala,;">
 
 ...
 case class Point(x: Double, y: Double)
-// Remove the draw methods now!
-trait Shape  
+trait Shape   // No draw methods now!
 case class Circle(center: Point, radius: Double) extends Shape
-case class Rectangle(lowerLeft: Point, upperRight: Point) extends Shape
+case class Rectangle(lowLeft:Point,upRight:Point) extends Shape
 
 import Drawable._  // bring the implicit method in scope
 
 Circle(Point(0.0, 0.0), 5.0).draw  // call the draw "method"!
 // =&gt; Circle(Point(0.0,0.0),5.0)
-
 Rectangle(Point(0.0, 0.0), Point(4.0, 2.0)).draw
 // =&gt; Rectangle(Point(0.0,0.0),Point(4.0,2.0))
 
 // Add a new Triangle class:
-case class Triangle(one: Point, two: Point, three: Point) extends Shape
+case class Triangle(a:Point,b:Point,c:Point) extends Shape
 Triangle(Point(0.0, 0.0), Point(2.0, 0.0), Point(1.0, 1.0)).draw
-// =&gt; ...DrawNotUnsupported: Triangle(Point(0.0,0.0),...) does not support draw
+// =&gt; ...DrawNotSupported: Triangle(...) does not support draw
 // =&gt;   (stack trace)
 </pre></div>
 </div>
 <div class="slide">
 <h1>Type Classes</h1>
-<p>+ Localizes behavior not universally applicable for types.<br />
+<p>- Easy to forget to change the type class code when the type hierarchy changes.<br />
+- <em>Everything</em> about a particular type is not in one place.</p>
+<p>+ Localizes behavior not universally applicable for types. (It&#8217;s lexically scoped, too!)<br />
 + Permits the addition of behavior without modifying existing types (<span class="caps">OCP</span>/Expression Problem).</p>
-<p>- <em>Everything</em> about a particular type is not in one place.<br />
-- Easy to forget to change the type class code when the type hierarchy changes.</p>
 <p>(Some of these points are more specific to the Scala implementation).</p>
 </div>
 <div class="slide">
-<h1>Combinators</h1>
+<h1>Pattern Matching vs. Inheritance</h1>
+<p>We&#8217;ve seen many examples of pattern matching, like this one we just used.</p>
+<div class="code-small">
+<pre name="code" id="code" class="brush: scala,;">
+
+class Drawable(shape: Shape) {
+  def draw = shape match {
+    case c: Circle =&gt; ...
+    case r: Rectangle =&gt; ...
+    case _ =&gt; throw DrawNotSupported(shape) 
+  }
+}
+</pre></div>
+<p>We also saw a drawback; it&#8217;s easy to forget to modify this code when the type hierarchy changes. Traditional OO would claim this code is an <em>antipattern</em>, for this reason. You should always replace it with inheritance. Yet, we just some reasons why this is not always a good idea.</p>
+</div>
+<div class="slide">
+<h1>Pattern Matching vs. Inheritance (cont.)</h1>
+<p>All design decisions are tradeoffs. Sometimes, the inheritance based solution is best. Other times, type classes are best.</p>
+<p>This is a general principle: <em>Always question absolute statements about software design. There are always pros and cons.</em></p>
+</div>
+<div class="slide">
+<h1>Pattern Matching and Modularity</h1>
+<div class="code-small">
+<pre name="code" id="code" class="brush: scala,;">
+
+class Drawable(shape: Shape) {
+  def draw = shape match {
+    case c: Circle =&gt; ...
+    case r: Rectangle =&gt; ...
+    case _ =&gt; throw DrawNotSupported(shape) 
+  }
+}
+</pre></div>
+<p>Most languages have some form of <code>switch/case</code> statement. It&#8217;s usually syntactic sugar for <code>if/else</code> expressions. Most functional languages provide much richer pattern matching, often using it ubiquitously like inheritance is used in OO programs.</p>
+</div>
+<div class="slide">
+<h1>Pattern Matching and Modularity (cont.)</h1>
+<p>Here&#8217;s the same example expanded a bit.</p>
+<div class="code-small">
+<pre name="code" id="code" class="brush: scala,;">
+
+class Drawable(shape: Shape) {
+  def draw = shape match {
+    case Circle(center, radius) =&gt; 
+      drawCircle(center, radius)
+    case Rectangle(lowerLeft, upperRight) =&gt; 
+      drawRect(lowerLeft, upperRight)
+    case _ =&gt; throw DrawNotSupported(shape) 
+  }
+  ...
+}
+</pre></div>
+<p>The <code>unapply</code> methods are called that were provided automatically by the <code>case</code> keyword used to declare these types.</p>
+</div>
+<div class="slide">
+<h1>Pattern Matching and Modularity (cont.)</h1>
+<p>The <code>Circle.unapply</code> method is created on the <em>companion object</em>.</p>
+<div class="code-small">
+<pre name="code" id="code" class="brush: scala,;">
+
+object Circle {
+  ...
+  def unapply(c: Circle):Option[Pair(Point,Point)] = 
+    Some(Pair(c.center, c.radius))
+}
+</pre></div>
+<p>The pattern-match byte code generated by the compiler does a type check on the <code>Shape</code> object (in the previous slide). If it&#8217;s a circle, it is passed to <code>Circle.unapply</code> to &#8220;deconstruct&#8221; it. Note that a <code>Tuple</code> is used to hold the returned values (a <code>Pair</code> in this case), wrapped in a <code>Some</code>. By returning <code>Option</code>, <code>unapply</code> is free to reject the operation, say if it doesn&#8217;t like one of the values.</p>
+</div>
+<div class="slide">
+<h1>Pattern Matching and Modularity (cont.)</h1>
+<p>This kind of pattern matching is a <em>principled</em> way to extract data from composites, without violating encapsulation, since the author of the type controls what gets extracted and how.</p>
+<p>In the general case, the values exposed might not be the same as the properties of the object, but some computation over them. There might be no readers for object properties; only pattern matching support.</p>
+<p>Note that other languages, like Erlang and Haskell, use pattern matching with different function signatures. Scala uses <em>overloaded</em> functions in the typical OO way, instead.</p>
+</div>
+<div class="slide">
+<h1>Pattern Matching and Collections</h1>
+<p>As a last example, pattern matching is a beautiful way to compute over a collection.</p>
+<div class="code-small">
+<pre name="code" id="code" class="brush: scala,;">
+
+def double[A](list: List[A]): List[A] = list match {
+  case Nil =&gt; Nil
+  case head :: tail =&gt; head :: head :: double(tail)
+}
+double(1 :: 2 :: 3 :: 4 :: Nil)
+// =&gt; List[Int] = List(1, 1, 2, 2, 3, 3, 4, 4)
+double(Nil)
+// =&gt; List[Nothing] = List()
+</pre></div>
+<p>This is classic functional style. There are no mutable variables. Recursion is used (another heavily-used concept in FP), and the state is on the stack!</p>
 </div>
 <div class="slide">
 <h1>Laziness</h1>
@@ -514,9 +655,9 @@ Triangle(Point(0.0, 0.0), Point(2.0, 0.0), Point(1.0, 1.0)).draw
 <div class="code-tiny">
 <pre name="code" id="code" class="brush: plain,;">
 
-fibs[0] = 0
-fibs[1] = 1
-fibs[n] = fibs[n-1] + fibs[n-2]
+fibs(0) = 0
+fibs(1) = 1
+fibs(n) = fibs(n-1) + fibs(n-2)
 </pre></div>
 </div>
 <div class="slide">
@@ -527,7 +668,7 @@ fibs[n] = fibs[n-1] + fibs[n-2]
 
 fibs = 0 : 1 : zipWith (+) fibs (tail fibs)
 </pre></div>
-<p>This is an <em>infinite</em> recursion. <code>fibs</code> is the sequence and it is defined by two recursive calls to itself. The sequence starts with 0 and 1 (<code>:</code> is the &#8220;cons&#8221; operator, which is <code>::</code> in Scala). The expression <code>zipWith (+) fibs (tail fibs)</code> is easiest to understand schematically:</p>
+<p>This is an <em>infinite</em> recursion. (Notice the point free style&#8230;) <code>fibs</code> is the sequence and it is defined by two recursive calls to itself. The sequence starts with 0 and 1 (<code>:</code> is the &#8220;cons&#8221; operator, which is <code>::</code> in Scala). The expression <code>zipWith (+) fibs (tail fibs)</code> is easiest to understand schematically:</p>
 <div class="code-tiny">
 <pre name="code" id="code" class="brush: plain,;">
 
@@ -541,7 +682,7 @@ val map = zipped map (array =&gt; array[0] + array[1])
 <div class="slide">
 <h1>Laziness</h1>
 <p>This only works if the sequences are not evaluated <em>strictly</em>; i.e., they are <em>lazy</em>.</p>
-<p>Most Scala collections are <em>strict</em>, but <code>Streams</code> are lazy. So, here&#8217;s the same formula in Scala:</p>
+<p>Most Scala collections are <em>strict</em>, but <code>Streams</code> are lazy. So, here&#8217;s the same formula in Scala (Courtesy <a href="http://www.scala-blogs.org/2007/12/project-euler-fun-in-scala.html">Jorge Ortiz</a>):</p>
 <div class="code-tiny">
 <pre name="code" id="code" class="brush: scala,;">
 
@@ -550,7 +691,7 @@ lazy val fib: Stream[Int] =
 fib.take(15).print
 // =&gt; 0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377, ...
 </pre></div>
-<p>Courtesy <a href="http://www.scala-blogs.org/2007/12/project-euler-fun-in-scala.html">Jorge Ortiz</a>.</p>
+<p>Not as elegant as the Haskell case.</p>
 </div>
 <div class="slide">
 <h1>Lazy Functions</h1>
@@ -566,16 +707,46 @@ println("Input your name, please.")
 val response = readLine
 </pre></div>
 <ol>
-	<li>They have side effects.<br />
+	<li>Both lines have side effects.<br />
 We&#8217;re modifying the state of the world when we do I/O, which seems to violate the goal of side-effect-free functions.</li>
 	<li>They can&#8217;t be evaluated <em>lazily</em>.<br />
-A virtue of lazy evaluation is that the runtime can decide when or even if to evaluate an expression, but clearly we must have these two expressions evaluated in the order shown.</li>
+A virtue of lazy evaluation is that the runtime can decide when or even if to evaluate an expression, but clearly we must have these two expressions evaluated and in the order shown.</li>
 </ol>
 </div>
 <div class="slide">
 <h1>No Side Effects and Laziness: Drawbacks</h1>
-<p>All functional languages must allow for these &#8220;exceptions&#8221;. Hybrid object-functional languages, like Scala, simply allow these exceptions anytime. &#8220;Pure&#8221; languages like Haskell use special containers, called <em>monads</em>, which let the programmer clearly indicate these statements must be strict and/or allow side effects.</p>
-<p>Just as <em>software transactional memory</em> offers a &#8220;principled&#8221; way to manage state changes, techniques like monads are a &#8220;principled&#8221; way to allow essential side effects and strict evaluation in a controlled way.</div></p>
+<p>All functional languages must allow for these &#8220;exceptions&#8221;. Hybrid object-functional languages, like Scala, simply allow these exceptions anytime; they are just normal procedural code.</p>
+<p>&#8220;Pure&#8221; languages like Haskell use special containers, called <em>monads</em>, which let the programmer clearly indicate these statements must be strict and/or allow side effects.</p>
+<p>Just as <em>software transactional memory</em> offers a &#8220;principled&#8221; way to manage state changes, techniques like monads are a &#8220;principled&#8221; way to allow essential side effects and strict evaluation in a controlled way.</p>
+</div>
+<div class="slide">
+<h1>Reading Assignments: FP</h1>
+<ul>
+	<li>Dean Wampler and Alex Payne, <a href="http://programming-scala.labs.oreilly.com/ch08.html">Functional Programming in Scala</a>, chapter 8 in <a href="http://programming-scala.labs.oreilly.com">Programming Scala</a>.</li>
+</ul>
+</div>
+<div class="slide">
+<h1>Reading Assignments: <span class="caps">OOP</span> vs. FP</h1>
+<ul>
+	<li>Dean Wampler, <a href="http://blog.objectmentor.com/articles/2009/04/20/is-the-supremacy-of-object-oriented-programming-over">Is the Supremacy of Object-Oriented Programming Over?</a>. A blog post I wrote last year on the changing landscape for FP vs. <span class="caps">OOP</span>. Read the non-<span class="caps">SPAM</span> comments, too.</li>
+</ul>
+</div>
+<div class="slide">
+<h1>Reading Assignments: Domain Specific Languages</h1>
+<ul>
+	<li><a href="http://www.martinfowler.com/bliki/DomainSpecificLanguage.html">Domain Specific Languages</a>. We talked about declarative programming. Domain-specific languages also tend to be declarative. Read this short introduction to get the &#8220;gist&#8221; of their purpose.</li>
+</ul>
+</div>
+<div class="slide">
+<h1>Optional Reading: Combinator Parsers, Etc.</h1>
+<p>Daniel Spiewak, <a href="http://www.codecommit.com/blog/scala/the-magic-behind-parser-combinators">The Magic Behind Parser Combinators</a>. A good example of a <span class="caps">DSL</span> for parsing. The <span class="caps">DSL</span> is a Scala library for writing parser grammers in a syntax that is very similar to Backus-Naur form.</p>
+<ul>
+	<li>Daniel Spiewak, <a href="http://dl.dropbox.com/u/1679797/CME%20Conf/Linguistic%20Programming%20v1.pdf">Linguistic Programming</a>. A talk that Daniel is giving <em>next week</em> at a <span class="caps">CME</span> conference here in Chicago. The example code is <a href="https://github.com/djspiewak/linguistic-programming">here</a>.</li>
+</ul>
+</div>
+<div class="slide">
+<h1>Exercise 1:</h1>
+<p><span class="caps">TBD</span></div></p>
 
   <!-- Syntax Highlighter -->
   <script language="javascript" type="text/javascript" src="../lib/scripts/shCore.js"></script>
