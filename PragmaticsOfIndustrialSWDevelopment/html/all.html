@@ -5984,11 +5984,79 @@ Triangle(Point(0.0, 0.0), Point(2.0, 0.0), Point(1.0, 1.0)).draw
 <div class="slide">
 <h1>Laziness</h1>
 <p>If you remember (fondly?) your math courses, you were often asked to manipulate expressions symbolically, e.g., reduce them to simpler forms, compute integrals or derivatives, etc. Then, you might have been asked to evaluate the expression for a final numerical result.</p>
-<p>Also, we talk about infinite data types, like the real numbers, without having to specify an finite limit.</p>
-<p>In functional programming, <em>lazy evaluation</em> allows you to represent such data structures and computations, then evaluate them only when needed.</p>
+<p>Also, you worked with infinite data types, like the set of real numbers, without having to specify a finite limit, like you have to do in software.</p>
+</div>
+<div class="slide">
+<h1>Laziness</h1>
+<p>&#8230; or do you?</p>
+<p>In functional programming, <em>lazy evaluation</em> allows you to represent data structures &#8230; and computations &#8230; without requiring immediate evaluate.</p>
+<p>In Haskell, everything is lazy by default. Let&#8217;s see one way to write the Fibonacci sequence (0, 1, 1, 2, 3, 5, 8, 13, &#8230;) using this feature.</p>
+<p>First, recall the simplest definition of the Fibonacci sequence is this (using pseudo code):</p>
+<div class="code-tiny">
+<pre name="code" id="code" class="brush: plain,;">
+
+fibs[0] = 0
+fibs[1] = 1
+fibs[n] = fibs[n-1] + fibs[n-2]
+</pre></div>
+</div>
+<div class="slide">
+<h1>Laziness</h1>
+<p>Here is one of many ways to implement the sequence in Haskell.</p>
+<div class="code-tiny">
+<pre name="code" id="code" class="brush: plain,;">
+
+fibs = 0 : 1 : zipWith (+) fibs (tail fibs)
+</pre></div>
+<p>This is an <em>infinite</em> recursion. <code>fibs</code> is the sequence and it is defined by two recursive calls to itself. The sequence starts with 0 and 1 (<code>:</code> is the &#8220;cons&#8221; operator, which is <code>::</code> in Scala). The expression <code>zipWith (+) fibs (tail fibs)</code> is easiest to understand schematically:</p>
+<div class="code-tiny">
+<pre name="code" id="code" class="brush: plain,;">
+
+val fibs2 = [0, 1, 1, 2, 3, 5, ...] // infinite!
+val tail  = [1, 1, 2, 3, 5, ...]
+val zipped = fibs2 zip tail // =&gt; [[0, 1], [1, 1], [1, 2], [2, 3], ...]
+val map = zipped map (array =&gt; array[0] + array[1])
+// =&gt; [1, 2, 3, 5, ...] which is everything after the initial 0 and 1!!
+</pre></div>
+</div>
+<div class="slide">
+<h1>Laziness</h1>
+<p>This only works if the sequences are not evaluated <em>strictly</em>; i.e., they are <em>lazy</em>.</p>
+<p>Most Scala collections are <em>strict</em>, but <code>Streams</code> are lazy. So, here&#8217;s the same formula in Scala:</p>
+<div class="code-tiny">
+<pre name="code" id="code" class="brush: scala,;">
+
+lazy val fib: Stream[Int] = 
+  Stream.cons(0, Stream.cons(1, fib.zip(fib.tail).map(p =&gt; p._1 + p._2)))
+fib.take(15).print
+// =&gt; 0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377, ...
+</pre></div>
+<p>Courtesy <a href="http://www.scala-blogs.org/2007/12/project-euler-fun-in-scala.html">Jorge Ortiz</a>.</p>
+</div>
+<div class="slide">
+<h1>Lazy Functions</h1>
+<p>Of course, functions are also lazy in the sense that we define a computation, but treat it as a value that we can pass around and evaluate later.</p>
 </div>
 <div class="slide">
 <h1>No Side Effects and Laziness: Drawbacks</h1>
+<p>What&#8217;s wrong with this code?</p>
+<div class="code-tiny">
+<pre name="code" id="code" class="brush: scala,;">
+
+println("Input your name, please.")
+val response = readLine
+</pre></div>
+<ol>
+	<li>They have side effects.<br />
+We&#8217;re modifying the state of the world when we do I/O, which seems to violate the goal of side-effect-free functions.</li>
+	<li>They can&#8217;t be evaluated <em>lazily</em>.<br />
+A virtue of lazy evaluation is that the runtime can decide when or even if to evaluate an expression, but clearly we must have these two expressions evaluated in the order shown.</li>
+</ol>
+</div>
+<div class="slide">
+<h1>No Side Effects and Laziness: Drawbacks</h1>
+<p>All functional languages must allow for these &#8220;exceptions&#8221;. Hybrid object-functional languages, like Scala, simply allow these exceptions anytime. &#8220;Pure&#8221; languages like Haskell use special containers, called <em>monads</em>, which let the programmer clearly indicate these statements must be strict and/or allow side effects.</p>
+<p>Just as <em>software transactional memory</em> offers a &#8220;principled&#8221; way to manage state changes, techniques like monads are a &#8220;principled&#8221; way to allow essential side effects and strict evaluation in a controlled way.</p>
 </div>
 <div class="title slide">
 <h1>Lecture 11: Object-Oriented Programming vs. Functional Programming: a Critique of Pure Programming</h1>

@@ -471,10 +471,77 @@ h1. Laziness
 
 If you remember (fondly?) your math courses, you were often asked to manipulate expressions symbolically, e.g., reduce them to simpler forms, compute integrals or derivatives, etc. Then, you might have been asked to evaluate the expression for a final numerical result.
 
-Also, we talk about infinite data types, like the real numbers, without having to specify an finite limit. 
+Also, you worked with infinite data types, like the set of real numbers, without having to specify a finite limit, like you have to do in software. 
 
-In functional programming, _lazy evaluation_ allows you to represent such data structures and computations, then evaluate them only when needed.
+h1. Laziness
+
+... or do you?
+
+In functional programming, _lazy evaluation_ allows you to represent data structures ... and computations ... without requiring immediate evaluate.
+
+In Haskell, everything is lazy by default. Let's see one way to write the Fibonacci sequence (0, 1, 1, 2, 3, 5, 8, 13, ...) using this feature.
+
+First, recall the simplest definition of the Fibonacci sequence is this (using pseudo code):
+
+:inlinecode lang=plain, class=code-tiny
+fibs[0] = 0
+fibs[1] = 1
+fibs[n] = fibs[n-1] + fibs[n-2]
+:endinlinecode 
+
+h1. Laziness
+
+Here is one of many ways to implement the sequence in Haskell.
+
+:inlinecode lang=plain, class=code-tiny
+fibs = 0 : 1 : zipWith (+) fibs (tail fibs)
+:endinlinecode 
+
+This is an _infinite_ recursion. @fibs@ is the sequence and it is defined by two recursive calls to itself. The sequence starts with 0 and 1 (@:@ is the "cons" operator, which is @::@ in Scala). The expression @zipWith (+) fibs (tail fibs)@ is easiest to understand schematically:
+
+:inlinecode lang=plain, class=code-tiny
+val fibs2 = [0, 1, 1, 2, 3, 5, ...] // infinite!
+val tail  = [1, 1, 2, 3, 5, ...]
+val zipped = fibs2 zip tail // => [[0, 1], [1, 1], [1, 2], [2, 3], ...]
+val map = zipped map (array => array[0] + array[1])
+// => [1, 2, 3, 5, ...] which is everything after the initial 0 and 1!!
+:endinlinecode 
+
+h1. Laziness
+
+This only works if the sequences are not evaluated _strictly_; i.e., they are _lazy_. 
+
+Most Scala collections are _strict_, but @Streams@ are lazy. So, here's the same formula in Scala:
+
+:inlinecode lang=scala, class=code-tiny
+lazy val fib: Stream[Int] = 
+  Stream.cons(0, Stream.cons(1, fib.zip(fib.tail).map(p => p._1 + p._2)))
+fib.take(15).print
+// => 0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377, ...
+:endinlinecode 
+
+Courtesy "Jorge Ortiz":http://www.scala-blogs.org/2007/12/project-euler-fun-in-scala.html.
+
+h1. Lazy Functions
+
+Of course, functions are also lazy in the sense that we define a computation, but treat it as a value that we can pass around and evaluate later.
 
 h1. No Side Effects and Laziness: Drawbacks
 
+What's wrong with this code?
 
+:inlinecode lang=scala, class=code-tiny
+println("Input your name, please.")
+val response = readLine
+:endinlinecode 
+
+# They have side effects.
+We're modifying the state of the world when we do I/O, which seems to violate the goal of side-effect-free functions.
+# They can't be evaluated _lazily_.
+A virtue of lazy evaluation is that the runtime can decide when or even if to evaluate an expression, but clearly we must have these two expressions evaluated in the order shown.
+
+h1. No Side Effects and Laziness: Drawbacks
+
+All functional languages must allow for these "exceptions". Hybrid object-functional languages, like Scala, simply allow these exceptions anytime. "Pure" languages like Haskell use special containers, called _monads_, which let the programmer clearly indicate these statements must be strict and/or allow side effects.
+
+Just as _software transactional memory_ offers a "principled" way to manage state changes, techniques like monads are a "principled" way to allow essential side effects and strict evaluation in a controlled way.
