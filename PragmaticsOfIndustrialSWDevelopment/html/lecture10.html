@@ -686,7 +686,7 @@ val map = zipped map (array =&gt; array[0] + array[1])
 <div class="code-tiny">
 <pre name="code" id="code" class="brush: scala,;">
 
-lazy val fib: Stream[Int] = 
+lazy val fib: Stream[Long] = 
   Stream.cons(0, Stream.cons(1, fib.zip(fib.tail).map(p =&gt; p._1 + p._2)))
 fib.take(15).print
 // =&gt; 0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377, ...
@@ -745,8 +745,38 @@ A virtue of lazy evaluation is that the runtime can decide when or even if to ev
 </ul>
 </div>
 <div class="slide">
-<h1>Exercise 1:</h1>
-<p><span class="caps">TBD</span></div></p>
+<h1>Exercise 1: Fibonacci Sequence</h1>
+<p>Implement the following recursive algorithm to compute the Fibonacci value for input n. Calculate the values for n = 0 to 10. What happens if you try a very large n, like 10000 or 1000000?</p>
+<div class="code-tiny">
+<pre name="code" id="code" class="brush: plain,;">
+
+fibs(0) = 0
+fibs(1) = 1
+fibs(n) = fibs(n-1) + fibs(n-2)
+</pre></div>
+<p>The Scala compiler does <em>tail-call optimization</em>. Does that work here?</p>
+<p>The easy way to do this and the subsequent exercises is to start <code>sbt</code> in the Akka project directory and run <code>console-quick</code>. You&#8217;re now in the Scala <span class="caps">REPL</span> where you can experiment. You can copy code to the terminal to run it and you can save the output to submit as your solution (clean it up, first&#8230;).</p>
+</div>
+<div class="slide">
+<h1>Exercise 2: Fibonacci Sequence</h1>
+<p>Using the zip definition (repeated below), try <code>fib.take(100).print</code>. What happens for large N. Why?</p>
+<div class="code-tiny">
+<pre name="code" id="code" class="brush: scala,;">
+
+lazy val fib: Stream[Long] = 
+  Stream.cons(0, Stream.cons(1, fib.zip(fib.tail).map(p =&gt; p._1 + p._2)))
+fib.take(100).print
+// =&gt; 0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377, ...
+</pre></div>
+<p>Change the implementation to use <code>scala.math.BigInt</code>. What is the minimum number of code changes you have to make? (Hint, do you have to change line 2? Why or why not?) Now what happens when you run the code?</p>
+</div>
+<div class="slide">
+<h1>Exercise 3: Fibonacci Sequence</h1>
+<p>There are simple implementations that use iteration, a for loop, to avoid the problems of the first, recursive implementation. Find one on the web (or in an algorithms text) and implement it. Run the function with n = 0 to 10, 100 and 1000.</p>
+</div>
+<div class="slide">
+<h1>Mini-Project</h1>
+<p>By Friday, each of you should have reached an agreement with me on your mini-project. </div></p>
 
   <!-- Syntax Highlighter -->
   <script language="javascript" type="text/javascript" src="../lib/scripts/shCore.js"></script>

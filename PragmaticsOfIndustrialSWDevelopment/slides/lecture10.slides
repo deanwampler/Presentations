@@ -660,7 +660,7 @@ This only works if the sequences are not evaluated _strictly_; i.e., they are _l
 Most Scala collections are _strict_, but @Streams@ are lazy. So, here's the same formula in Scala (Courtesy "Jorge Ortiz":http://www.scala-blogs.org/2007/12/project-euler-fun-in-scala.html):
 
 :inlinecode lang=scala, class=code-tiny
-lazy val fib: Stream[Int] = 
+lazy val fib: Stream[Long] = 
   Stream.cons(0, Stream.cons(1, fib.zip(fib.tail).map(p => p._1 + p._2)))
 fib.take(15).print
 // => 0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377, ...
@@ -711,6 +711,37 @@ h1. Optional Reading: Combinator Parsers, Etc.
 Daniel Spiewak, "The Magic Behind Parser Combinators":http://www.codecommit.com/blog/scala/the-magic-behind-parser-combinators. A good example of a DSL for parsing. The DSL is a Scala library for writing parser grammers in a syntax that is very similar to Backus-Naur form.
 * Daniel Spiewak, "Linguistic Programming":http://dl.dropbox.com/u/1679797/CME%20Conf/Linguistic%20Programming%20v1.pdf. A talk that Daniel is giving _next week_ at a CME conference here in Chicago. The example code is "here":https://github.com/djspiewak/linguistic-programming.
 
-h1. Exercise 1: 
+h1. Exercise 1: Fibonacci Sequence
 
-TBD
+Implement the following recursive algorithm to compute the Fibonacci value for input n. Calculate the values for n = 0 to 10. What happens if you try a very large n, like 10000 or 1000000?
+
+:inlinecode lang=plain, class=code-tiny
+fibs(0) = 0
+fibs(1) = 1
+fibs(n) = fibs(n-1) + fibs(n-2)
+:endinlinecode 
+
+The Scala compiler does _tail-call optimization_. Does that work here?
+
+The easy way to do this and the subsequent exercises is to start @sbt@ in the Akka project directory and run @console-quick@. You're now in the Scala REPL where you can experiment. You can copy code to the terminal to run it and you can save the output to submit as your solution (clean it up, first...).
+
+h1. Exercise 2: Fibonacci Sequence
+
+Using the zip definition (repeated below), try @fib.take(100).print@. What happens for large N. Why?
+
+:inlinecode lang=scala, class=code-tiny
+lazy val fib: Stream[Long] = 
+  Stream.cons(0, Stream.cons(1, fib.zip(fib.tail).map(p => p._1 + p._2)))
+fib.take(100).print
+// => 0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377, ...
+:endinlinecode 
+
+Change the implementation to use @scala.math.BigInt@. What is the minimum number of code changes you have to make? (Hint, do you have to change line 2? Why or why not?) Now what happens when you run the code? 
+
+h1. Exercise 3: Fibonacci Sequence
+
+There are simple implementations that use iteration, a for loop, to avoid the problems of the first, recursive implementation. Find one on the web (or in an algorithms text) and implement it. Run the function with n = 0 to 10, 100 and 1000.
+
+h1. Mini-Project
+
+By Friday, each of you should have reached an agreement with me on your mini-project. 
