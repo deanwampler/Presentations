@@ -390,7 +390,7 @@ h1. OCP and The Expression Problem (cont.)
 
 Example: geometric shapes
 
-:inlinecode lang=scala, class=code-small
+:inlinecode lang=scala, class=code-tiny
 case class Point(x: Double, y: Double)
 trait Shape { 
   def draw: Unit
@@ -403,7 +403,9 @@ case class Rectangle(lowerLeft: Point, upperRight: Point) extends Shape {
 }
 :endinlinecode 
 
-We can easily add new shapes ("behaviors") in other files by extending @Shape@. Now, client code won't break when we add (or remove) shapes, if the client code only depends on @Shape@.
+h1. OCP and The Expression Problem (cont.)
+
+Now, we can easily add new shapes ("behaviors") in other files by extending @Shape@. Now, client code won't break when we add (or remove) shapes, if the client code only depends on @Shape@.
 
 :inlinecode lang=scala, class=code-small
 val shapes = ...
@@ -464,7 +466,7 @@ Type classes were invented for Haskell. Here's how we can simulate them in Scala
 
 h1. Type Classes
 
-:inlinecode lang=scala, class=code-small
+:inlinecode lang=scala, class=code-tiny
 // An exception for when we FORGET to support a shape!
 case class DrawNotSupported(a: Any) 
   extends RuntimeException(a.toString + ".draw() not supported")
@@ -488,7 +490,7 @@ object Drawable {
 
 h1. Type Classes
 
-:inlinecode lang=scala, class=code-small
+:inlinecode lang=scala, class=code-tiny
 ...
 case class Point(x: Double, y: Double)
 trait Shape   // No draw methods now!
@@ -742,6 +744,12 @@ h1. Exercise 3: Fibonacci Sequence
 
 There are simple implementations that use iteration, a for loop, to avoid the problems of the first, recursive implementation. Find one on the web (or in an algorithms text) and implement it. Run the function with n = 0 to 10, 100 and 1000.
 
+h1. Exercise 4: Type Classes
+
+It's common for object-oriented languages to add a @toString@ method to their root @Object@ type. Note that this is essentially a _serialization_ method. However, the default implementation is usually not very useful (e.g., Java's). Also, the most useful format for the generated strings will be context dependent, i.e., sometimes you'll want XML, sometimes JSON, sometimes an ad-hoc format. So, this is actually an excellent example for a type class implementation.
+
+Using the type class example for @Shapes@ starting around slide #40, implement @toXML@ "methods" that write shape instances in a simple XML format. Show some examples where the methods generate XML.
+
 h1. Mini-Project
 
-By Friday, each of you should have reached an agreement with me on your mini-project. 
+I haven't heard from many of you about the mini-project you want to do. By Friday, I want each of you to reach an agreement with me on your mini-project.

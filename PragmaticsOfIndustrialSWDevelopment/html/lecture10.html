@@ -56,8 +56,8 @@
 <div class="slide">
 <h1>What Is Functional Programming?</h1>
 <p>FP treats computation as the <em>application of functions</em> rather than the direct <em>mutation of state</em>.</p>
-<p>FP has its roots in mathematics, specifically <em>lambda calculus</em><sup class="footnote" id="fnr1"><a href="#fn1">1</a></sup>, a formal system developed in the 1930s to investigate function definition, function application,  recursion, etc. (Yes, before the invention of electronic computers.) Many functional programming languages can be viewed as elaborations on the lambda calculus.</p>
-<p><sup class="footnote" id="fnr1"><a href="#fn1">1</a></sup> For this reason, anonymous functions in many languages are called <em>lambdas</em>.</p>
+<p>FP has its roots in mathematics, specifically <em>lambda calculus</em><sup class="footnote"><a href="#fn1">1</a></sup>, a formal system developed in the 1930s to investigate function definition, function application,  recursion, etc. (Yes, before the invention of electronic computers.) Many functional programming languages can be viewed as elaborations on the lambda calculus.</p>
+<p><sup class="footnote"><a href="#fn1">1</a></sup> For this reason, anonymous functions in many languages are called <em>lambdas</em>.</p>
 <p>(Adapted from <a href="http://en.wikipedia.org/wiki/Functional_programming">Wikipedia</a>.)</p>
 </div>
 <div class="slide">
@@ -89,9 +89,9 @@
 <h1>No Side Effects</h1>
 <p>Just as <code>x</code> is not mutable, so to is the rest of the world. So, by definition, immutability means there can be no <em>side effects</em>. This also has important implications for functions:</p>
 <p>x = cos(y)<sup>2</sup></p>
-<p><strong>All</strong> work done by <code>cos(y)</code> (for example) is returned and assigned to <code>x</code>. there is no global state that is updated.<sup class="footnote" id="fnr1"><a href="#fn1">1</a></sup></p>
+<p><strong>All</strong> work done by <code>cos(y)</code> (for example) is returned and assigned to <code>x</code>. there is no global state that is updated.<sup class="footnote"><a href="#fn1">1</a></sup></p>
 <p>Functions without side effects are called <em>pure.</em></p>
-<p><sup class="footnote" id="fnr1"><a href="#fn1">1</a></sup> However, a real implementation might update &#8220;invisible&#8221; state like a cache of previously-calculated values.</p>
+<p><sup class="footnote"><a href="#fn1">1</a></sup> However, a real implementation might update &#8220;invisible&#8221; state like a cache of previously-calculated values.</p>
 </div>
 <div class="slide">
 <h1>Benefits of No Side Effects</h1>
@@ -211,8 +211,8 @@ printList(List(1, "two", 3.3))
 // =&gt; two
 // =&gt; 3.3
 </pre></div>
-<p>Note that we use the wildcard <code>_</code> for the <code>List[_]</code> parameter, because we don&#8217;t care what it is.<sup class="footnote" id="fnr1"><a href="#fn1">1</a></sup></p>
-<p><sup class="footnote" id="fnr1"><a href="#fn1">1</a></sup> Actually, on the <span class="caps">JVM</span> we have no choice, because this type information is <em>erased</em> in the byte code.</p>
+<p>Note that we use the wildcard <code>_</code> for the <code>List[_]</code> parameter, because we don&#8217;t care what it is.<sup class="footnote"><a href="#fn1">1</a></sup></p>
+<p><sup class="footnote"><a href="#fn1">1</a></sup> Actually, on the <span class="caps">JVM</span> we have no choice, because this type information is <em>erased</em> in the byte code.</p>
 </div>
 <div class="slide">
 <h1>Higher-Kinded Types (cont.)</h1>
@@ -414,13 +414,13 @@ def printList(list: List[_]) = list map println
 <div class="slide">
 <h1><span class="caps">OCP</span> and The Expression Problem (cont.)</h1>
 <p>The object-oriented approach is to use <em>inheritance</em>, where clients depend only on a <em>well-defined abstraction</em>, which is implemented by <em>concrete subtypes</em>. New &#8220;behaviors&#8221; can be added by defining new concrete subtypes for the same abstraction.</p>
-<p>As long as the abstraction is sufficiently expressive and clients don&#8217;t depend on the concrete subtypes, we can add new behaviors to the code base without modifying existing code.<sup class="footnote" id="fnr1"><a href="#fn1">1</a></sup></p>
-<p><sup class="footnote" id="fnr1"><a href="#fn1">1</a></sup> Recall that, every now and then, the abstraction won&#8217;t be general enough to support a new behavior, so the abstraction and possibly all the subtypes will require modification.</p>
+<p>As long as the abstraction is sufficiently expressive and clients don&#8217;t depend on the concrete subtypes, we can add new behaviors to the code base without modifying existing code.<sup class="footnote"><a href="#fn1">1</a></sup></p>
+<p><sup class="footnote"><a href="#fn1">1</a></sup> Recall that, every now and then, the abstraction won&#8217;t be general enough to support a new behavior, so the abstraction and possibly all the subtypes will require modification.</p>
 </div>
 <div class="slide">
 <h1><span class="caps">OCP</span> and The Expression Problem (cont.)</h1>
 <p>Example: geometric shapes</p>
-<div class="code-small">
+<div class="code-tiny">
 <pre name="code" id="code" class="brush: scala,;">
 
 case class Point(x: Double, y: Double)
@@ -434,7 +434,10 @@ case class Rectangle(lowerLeft: Point, upperRight: Point) extends Shape {
   def draw: Unit = // draw the shape
 }
 </pre></div>
-<p>We can easily add new shapes (&#8220;behaviors&#8221;) in other files by extending <code>Shape</code>. Now, client code won&#8217;t break when we add (or remove) shapes, if the client code only depends on <code>Shape</code>.</p>
+</div>
+<div class="slide">
+<h1><span class="caps">OCP</span> and The Expression Problem (cont.)</h1>
+<p>Now, we can easily add new shapes (&#8220;behaviors&#8221;) in other files by extending <code>Shape</code>. Now, client code won&#8217;t break when we add (or remove) shapes, if the client code only depends on <code>Shape</code>.</p>
 <div class="code-small">
 <pre name="code" id="code" class="brush: scala,;">
 
@@ -492,7 +495,7 @@ trait Drawable {
 </div>
 <div class="slide">
 <h1>Type Classes</h1>
-<div class="code-small">
+<div class="code-tiny">
 <pre name="code" id="code" class="brush: scala,;">
 
 // An exception for when we FORGET to support a shape!
@@ -518,7 +521,7 @@ object Drawable {
 </div>
 <div class="slide">
 <h1>Type Classes</h1>
-<div class="code-small">
+<div class="code-tiny">
 <pre name="code" id="code" class="brush: scala,;">
 
 ...
@@ -775,8 +778,13 @@ fib.take(100).print
 <p>There are simple implementations that use iteration, a for loop, to avoid the problems of the first, recursive implementation. Find one on the web (or in an algorithms text) and implement it. Run the function with n = 0 to 10, 100 and 1000.</p>
 </div>
 <div class="slide">
+<h1>Exercise 4: Type Classes</h1>
+<p>It&#8217;s common for object-oriented languages to add a <code>toString</code> method to their root <code>Object</code> type. Note that this is essentially a <em>serialization</em> method. However, the default implementation is usually not very useful (e.g., Java&#8217;s). Also, the most useful format for the generated strings will be context dependent, i.e., sometimes you&#8217;ll want <span class="caps">XML</span>, sometimes <span class="caps">JSON</span>, sometimes an ad-hoc format. So, this is actually an excellent example for a type class implementation.</p>
+<p>Using the type class example for <code>Shapes</code> starting around slide #40, implement <code>toXML</code> &#8220;methods&#8221; that write shape instances in a simple <span class="caps">XML</span> format. Show some examples where the methods generate <span class="caps">XML</span>.</p>
+</div>
+<div class="slide">
 <h1>Mini-Project</h1>
-<p>By Friday, each of you should have reached an agreement with me on your mini-project. </div></p>
+<p>I haven&#8217;t heard from many of you about the mini-project you want to do. By Friday, I want each of you to reach an agreement with me on your mini-project.</div></p>
 
   <!-- Syntax Highlighter -->
   <script language="javascript" type="text/javascript" src="../lib/scripts/shCore.js"></script>
