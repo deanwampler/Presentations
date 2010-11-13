@@ -710,7 +710,7 @@ h1. Reading Assignments: Domain Specific Languages
 
 h1. Optional Reading: Combinator Parsers, Etc.
 
-Daniel Spiewak, "The Magic Behind Parser Combinators":http://www.codecommit.com/blog/scala/the-magic-behind-parser-combinators. A good example of a DSL for parsing. The DSL is a Scala library for writing parser grammers in a syntax that is very similar to Backus-Naur form.
+* Daniel Spiewak, "The Magic Behind Parser Combinators":http://www.codecommit.com/blog/scala/the-magic-behind-parser-combinators. A good example of a DSL for parsing. The DSL is a Scala library for writing parser grammers in a syntax that is very similar to Backus-Naur form.
 * Daniel Spiewak, "Linguistic Programming":http://dl.dropbox.com/u/1679797/CME%20Conf/Linguistic%20Programming%20v1.pdf. A talk that Daniel is giving _next week_ at a CME conference here in Chicago. The example code is "here":https://github.com/djspiewak/linguistic-programming.
 
 h1. Exercise 1: Fibonacci Sequence

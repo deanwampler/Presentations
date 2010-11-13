@@ -50,21 +50,65 @@
 <div class="presentation">
 <div class="slide">
 <h1>Lecture 11: Object-Oriented Programming vs. Functional Programming: a Critique of Pure Programming</h1>
-<p>Functional Programming is based on mathematics, specifically work on computation that predates electronic computers. Long an academic focus, it is now experiencing greater industry adoption.</p>
+<p>Functional Programming is starting to go &#8220;mainstream&#8221; (it&#8217;s still very early in that process). This implies that people are seeing problems with Object-Oriented Programming or how it is used. This lecture explores this trend.</p>
+</div>
+<div class="slide">
+<h1>Why Is Industry Interest in FP Growing?</h1>
+<p>We&#8217;ve discussed this before: concurrency. Multithreaded programming requires <em>synchronized access to shared, mutable state</em>. This is hard for all the reasons we&#8217;ve seen before.</p>
+<p>However, immutable state, a hallmark of FP, doesn&#8217;t have this problem.</p>
+</div>
+<div class="slide">
+<h1>A Little History; How Did <span class="caps">OOP</span> Go Mainstream?</h1>
+<p>One common view is that <span class="caps">OOP</span> went mainstream in the 80&#8217;s and 90&#8217;s with the emergence of graphical user interfaces (GUIs). The object paradigm was a natural fit and it made the complexity of <span class="caps">GUI</span> development easier to manage.</p>
+<p>Once people started using <span class="caps">OOP</span> for GUIs, they soon discovered that <span class="caps">OOP</span> is more broadly applicable. Soon, it became the &#8220;received wisdom&#8221; that <span class="caps">OOP</span> should be used universally for <em>modularizing</em> applications.</p>
+<p>A similar trend is happening with FP. Industry is looking at FP for concurrency, but recognizing broader applicability.</p>
+</div>
+<div class="slide">
+<h1>Were We Wrong About <span class="caps">OOP</span>?</h1>
+<p>The nature of programming challenges has changed.</p>
 <ul>
-	<li>Why industry is adopting FP now: concurrency.</li>
-	<li>The practical benefits of FP.</li>
-	<li>The challenges FP presents to software development teams.</li>
+	<li>Slow Pace vs. Agility</li>
+	<li>Self Contained vs. Globally Connected</li>
+	<li>Self Sufficient vs. Integrated Architectures</li>
+	<li>Data-centric vs. Compute-centric apps.</li>
 </ul>
+<p>and</p>
 <ul>
-	<li><span class="caps">OOP</span> and FP: comparisons and contrasts.<br />
-  * The future of software: more FP or more <span class="caps">OOP</span> (or something else)?<br />
-  * Why is FP more interesting and <span class="caps">OOP</span> less interesting today?</li>
-	<li>Example: Design Patterns and Revisionism.</li>
+	<li>and Lessons Learned From Experience
+	<ul>
+		<li>Representing domain models in code &#8211; how far to go?</li>
+	</ul></li>
 </ul>
+</div>
+<div class="slide">
+<h1>How FP Affects Architecture</h1>
+<ul>
+	<li>Brian McNamara, <a href="http://lorgonblog.wordpress.com/2008/09/22/how-does-functional-programming-affect-the-structure-of-your-code/">How does functional programming affect the structure of your code?</a>. Argues that FP makes code better at all levels of the architecture.</li>
+</ul>
+</div>
+<div class="slide">
+<h1>Aspects?</h1>
+</div>
+<div class="slide">
+<h1>Design Patterns?</h1>
+</div>
+<div class="slide">
+<h1>Reusability that Works</h1>
 <p>Notes from Jason Zaugg&#8217;s Intro to Scalaz at the <span class="caps">NYC</span> Scala group: http://vimeo.com/15264203</p>
 <p>Why FP Now vs. <span class="caps">OOP</span>?</p>
-<p>Nature of the dominant problems of our time.</div></p>
+<p>Nature of the dominant problems of our time.</p>
+</div>
+<div class="slide">
+<h1>Questions</h1>
+<ul>
+	<li>Why is industry adopting FP now?</li>
+</ul>
+<ul>
+	<li>Contrasting <span class="caps">OOP</span> and FP:</li>
+	<li>Is the software of the future likely to be more FP or more <span class="caps">OOP</span> (or perhaps something else)?</li>
+	<li>Why is FP more interesting and <span class="caps">OOP</span> less interesting today?</li>
+	<li>Example: Design Patterns and Revisionism.</div></li>
+</ul>
 
   <!-- Syntax Highlighter -->
   <script language="javascript" type="text/javascript" src="../lib/scripts/shCore.js"></script>

@@ -307,13 +307,36 @@ h1. Object-Oriented Programming (Specifics)
 
 h1. Functional Programming
 
+<div class='small'>
+
 * "Functional Programming":http://en.wikipedia.org/wiki/Functional_programming (Wikipedia).
 * John Hughes, "Why Functional Programming Matters":http://www.cs.kent.ac.uk/people/staff/dat/miranda/whyfp90.pdf. A seminal paper making the case for FP. This "paper":http://day-to-day-stuff.blogspot.com/2010/09/why-functional-programming-matters.html ports the examples to Scala.
 * "Functional Programming for the Rest of Us":http://www.defmacro.org/ramblings/fp.html.
+
+</div>
+
+h1. Functional Programming (Specifics)
+
+<div class='small'>
+
 * Erik Meier, "Asynchronous and Event-Driven Programming":http://ecn.channel9.msdn.com/o9/mix/10/mp4/FTL01.mp4 (video).
 * "Type classes":* "Visitor Pattern":http://en.wikipedia.org/wiki/Visitor_pattern (Wikipedia).
 * Type classes in Scala; two blog posts: "first":http://debasishg.blogspot.com/2010/06/scala-implicits-type-classes-here-i.html, "second":http://debasishg.blogspot.com/2010/07/refactoring-into-scala-type-classes.html.
 * Daniel Spiewak "The Magic Behind Parser Combinators":http://www.codecommit.com/blog/scala/the-magic-behind-parser-combinators. Lucid introduction to building parsers using Scala's parser combinator library, which I also discuss in "my book":http://programming-scala.labs.oreilly.com/ch11.html as a tool for building _Domain Specific Languages_ (DSLs).
+* Daniel Spiewak, "Linguistic Programming":http://dl.dropbox.com/u/1679797/CME%20Conf/Linguistic%20Programming%20v1.pdf. A talk that Daniel is giving _next week_ at a CME conference here in Chicago. The example code is "here":https://github.com/djspiewak/linguistic-programming.
+* Jorge Ortiz "Project Euler Fun In Scala":http://www.scala-blogs.org/2007/12/project-euler-fun-in-scala.html). Shows the Stream-based Fibonacci Sequence.
+
+</div>
+
+h1. OOP vs. Functional Programming
+
+* Brian McNamara, "How does functional programming affect the structure of your code?":http://lorgonblog.wordpress.com/2008/09/22/how-does-functional-programming-affect-the-structure-of-your-code/. Argues that FP makes code better at all levels of the architecture.
+* Matthew Podwysocki, "Which Is More Beautiful Architecture - FP or OOP":http://codebetter.com/blogs/matthew.podwysocki/archive/2009/03/09/which-is-more-beautiful-architecture-fp-or-oop.aspx. Argues that the paper by Bertrand Meyer, which claims that OOP is superior to FP, is flawed. Matt also discusses Brian McNamara's blog post.
+
+<div class='small'>
+
+
+</div>
 
 h1. General Programming
 

@@ -1,18 +1,45 @@
 h1. Lecture 11: Object-Oriented Programming vs. Functional Programming: a Critique of Pure Programming
 
+Functional Programming is starting to go "mainstream" (it's still very early in that process). This implies that people are seeing problems with Object-Oriented Programming or how it is used. This lecture explores this trend. 
 
-Functional Programming is based on mathematics, specifically work on computation that predates electronic computers. Long an academic focus, it is now experiencing greater industry adoption. 
+h1. Why Is Industry Interest in FP Growing?
 
-* Why industry is adopting FP now: concurrency.
-* The practical benefits of FP.
-* The challenges FP presents to software development teams.
+We've discussed this before: concurrency. Multithreaded programming requires _synchronized access to shared, mutable state_. This is hard for all the reasons we've seen before. 
 
-* OOP and FP: comparisons and contrasts.
-  * The future of software: more FP or more OOP (or something else)?
-  * Why is FP more interesting and OOP less interesting today? 
-* Example: Design Patterns and Revisionism.
+However, immutable state, a hallmark of FP, doesn't have this problem.
+
+h1. A Little History; How Did OOP Go Mainstream?
+
+One common view is that OOP went mainstream in the 80's and 90's with the emergence of graphical user interfaces (GUIs). The object paradigm was a natural fit and it made the complexity of GUI development easier to manage.
+
+Once people started using OOP for GUIs, they soon discovered that OOP is more broadly applicable. Soon, it became the "received wisdom" that OOP should be used universally for _modularizing_ applications.
+
+A similar trend is happening with FP. Industry is looking at FP for concurrency, but recognizing broader applicability.
+
+h1. Were We Wrong About OOP?
+
+The nature of programming challenges has changed. 
+
+* Slow Pace vs. Agility
+* Self Contained vs. Globally Connected
+* Self Sufficient vs. Integrated Architectures
+* Data-centric vs. Compute-centric apps.
+
+and
+
+* and Lessons Learned From Experience
+** Representing domain models in code - how far to go?
 
 
+h1. How FP Affects Architecture
+
+* Brian McNamara, "How does functional programming affect the structure of your code?":http://lorgonblog.wordpress.com/2008/09/22/how-does-functional-programming-affect-the-structure-of-your-code/. Argues that FP makes code better at all levels of the architecture.
+
+h1. Aspects?
+
+h1. Design Patterns?
+
+h1. Reusability that Works
 
 Notes from Jason Zaugg's Intro to Scalaz at the NYC Scala group: http://vimeo.com/15264203
 
@@ -20,3 +47,13 @@ Notes from Jason Zaugg's Intro to Scalaz at the NYC Scala group: http://vimeo.co
 Why FP Now vs. OOP?
 
 Nature of the dominant problems of our time.
+
+h1. Questions
+
+* Why is industry adopting FP now?
+
+* Contrasting OOP and FP:
+  * Is the software of the future likely to be more FP or more OOP (or perhaps something else)?
+  * Why is FP more interesting and OOP less interesting today? 
+* Example: Design Patterns and Revisionism.
+
