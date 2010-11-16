@@ -1,12 +1,12 @@
 h1. Lecture 11: OOP vs. FP: a Critique of Pure Programming
 
-Functional Programming is starting to go "mainstream" (it's still very early in that process). This implies that people are seeing problems with Object-Oriented Programming or how it is used. This lecture explores this trend. 
+Functional Programming is starting to go "mainstream" (it's still very early in that process). This suggests that people are facing problems for which Object-Oriented Programming is not the best solution. This lecture explores this trend. 
 
 h1. Why Is Industry Interest in FP Growing?
 
-We've discussed this before: concurrency. Multithreaded programming requires _synchronized access to shared, mutable state_. This is hard for all the reasons we've seen before. 
+We've already discussed the root cause for this trend: _concurrency_. Multithreaded programming requires _synchronized access to shared, mutable state_. This is hard for all the reasons we've seen before. 
 
-However, immutable state, a hallmark of FP, doesn't have this problem.
+Since FP emphasizes immutable state and side-effect free functions, it makes concurrent applications far easier to implement.
 
 h1. A Little History
 
@@ -14,33 +14,241 @@ _How Did OOP Go Mainstream?_
 
 One common view is that OOP went mainstream in the 80's and 90's with the emergence of graphical user interfaces (GUIs). The object paradigm was a natural fit and it made the complexity of GUI development easier to manage.
 
-However, once people started using OOP for GUIs, they soon discovered that OOP is more broadly applicable. Soon, it became the "best practice" that OOP should be used universally for _modularizing_ applications.
+However, once people started using OOP for GUIs, they soon discovered that OOP is more broadly applicable. Soon, it became the "best practice" to use OOP to _modularize_ most applications.
 
 A similar trend is happening with FP. Industry is looking at FP for concurrency, but recognizing broader applicability.
 
 h1. Were We Wrong About OOP?
 
-The nature of programming challenges changes constantly. 
+Not necessarily, but times change. The kinds of applications we write today are different than they have been in the past. Similarly, competitive pressures, cost structures, etc. have evolved. 
 
-* Slow Pace vs. Agility
-* Self Contained vs. Globally Connected
-* Self Sufficient vs. Integrated Architectures
-* Data-centric vs. Compute-centric apps.
+Also, we learned lessons over the years about what works and what doesn't.
 
-and
+h1. Why OOP Then? Why FP Now?
 
-* and Lessons Learned From Experience
-** Representing domain models in code - how far to go?
+Software development is still a young discipline, ~70 years old, compared to other forms of "engineering". 
 
+We're still figuring out what works best. The problems we're solving and the applications we're building are changing rapidly, too.
+
+Here's a very high level view of how things have evolved in the last 30 years.
+
+h1. GUI, Pre-Internet Era, 1980s - 1995:
+
+The characteristics of GUI-based applications before the Internet:
+
+|_.Dominant Apps | "Productivity" tools (e.g., MS Office). |
+|_.UIs | "Thick" desktop UIs. |
+|_.Architectures | Self-contained and autonomous. |
+|_.Business Model | Dominated by commercial development. |
+|_.Release Cycles | Relatively long. |
+
+h1. Internet Era, 1995 - late 2000's:
+
+Application characteristics during the "formative" years of the Internet, dominated by e-commerce and search:
+
+|_.Dominant Apps | E-commerce and search. |
+|_.UIs | "Thin" browser-based UIs. |
+|_.Architectures | Large components, networked together. |
+|_.Business Model | Dominated by open-source development. |
+|_.Release Cycles | Relatively short release cycles. |
+
+h1. Big Data Era, late 2000's - ??:
+
+Application characteristics as the Internet matures, where people try to leverage the vast data sets that are being accumulated (Web 2.0??):
+
+|_.Dominant Apps | Social networking, context-aware service delivery. |
+|_.UIs | "Rich" browser-based UIs. |
+|_.Architectures | Small services, choreographed together. |
+|_.Business Model | Dominated by social networking and other data. |
+|_.Release Cycles | Asymptotically towards zero-length release cycles (a.k.a continuous delivery). |
+
+h1. Summarized Together
+
+<div class='tiny'>
+|_. |_.Pre-Internet |_.Internet |_.Big Data |
+|_.Apps | Productivity Tools | E-Commerce, search | Social networking, context-aware services |
+|_.UIs | Thick desktop | Thin browser | Rich Browser |
+|_.Architecture | Self-contained, autonomous | Large components, networked | Small services, choreographed |
+|_.Dev Model | Commercial | Open-Source | Data aggregators |
+|_.Cycle Times | Long | Short | Approaching 0 |
+</div>
+
+h1. Trends
+
+Note that most of the categories have been trending to lower/smaller/finer-grained values. Let's discuss them in detail.
+
+h1. Trends (cont.)
+
+<div class='tiny'>
+|_. |_.Pre-Internet |_.Internet |_.Big Data |
+|_.Apps | Productivity Tools | E-Commerce, search | Social networking, context-aware services |
+</div>
+
+*Then:* Users work done in large, self-contained applications.
+*Now:* Tasks done with small apps, with or without significant integration with other apps.
+
+h1. Trends (cont.)
+
+<div class='tiny'>
+|_. |_.Pre-Internet |_.Internet |_.Big Data |
+(opacity_50). |_.Apps | Productivity Tools | E-Commerce, search | Social networking, context-aware services |
+|_.UIs | Thick desktop | Thin browser | Rich Browser |
+</div>
+
+*Then:* Fat desktop toolkits with mundane features.
+*Now:* Thin web-based toolkits with rich features.
+
+h1. Trends (cont.)
+
+<div class='tiny'>
+|_. |_.Pre-Internet |_.Internet |_.Big Data |
+(opacity_50). |_.Apps | Productivity Tools | E-Commerce, search | Social networking, context-aware services |
+(opacity_50). |_.UIs | Thick desktop | Thin browser | Rich Browser |
+|_.Architecture | Self-contained, autonomous | Large components, networked | Small services, choreographed |
+</div>
+
+*Then:* Fat, compiled binaries with poor modularity, minimal interoperability.
+*Now:* Small, focused web-based services, integrated together to provide rich features.
+
+h1. Trends (cont.)
+
+<div class='tiny'>
+|_. |_.Pre-Internet |_.Internet |_.Big Data |
+(opacity_50). |_.Apps | Productivity Tools | E-Commerce, search | Social networking, context-aware services |
+(opacity_50). |_.UIs | Thick desktop | Thin browser | Rich Browser |
+(opacity_50). |_.Architecture | Self-contained, autonomous | Large components, networked | Small services, choreographed |
+|_.Dev Model | Commercial | Open-Source | Data aggregators |
+</div>
+
+*Then:* Large development teams, separate QA. Lots of feature and release planning, baroque feature sets to justify high retail prices.
+*Now:* Open source development is lean, efficient, quality conscious from day one. Data aggregators build their own apps and provide controlled access to third-party developers.
+
+h1. Trends (cont.)
+
+<div class='tiny'>
+|_. |_.Pre-Internet |_.Internet |_.Big Data |
+(opacity_50). |_.Apps | Productivity Tools | E-Commerce, search | Social networking, context-aware services |
+(opacity_50). |_.UIs | Thick desktop | Thin browser | Rich Browser |
+(opacity_50). |_.Architecture | Self-contained, autonomous | Large components, networked | Small services, choreographed |
+(opacity_50). |_.Dev Model | Commercial | Open-Source | Data aggregators |
+|_.Cycle Times | Long | Short | Approaching 0 |
+</div>
+
+*Then:* Long release cycles (6-12 months or longer). 
+*Now:* Internet time + developer testing (e.g., TDD, continuous integration/delivery) = asymptotically 0-length release times.
+
+h1. Trends (cont.)
+
+For OOP vs. FP, the smaller components and faster cycles means there is less incentive for building object models and more incentive for exploiting the collections and other types we already have.
+
+* Time to implement new features is _shrinking_.
+** Large object models require more modifications for new features.
+* Smaller services only care about a _thin slice_ of each "object".
+* Scaling for _massive_ numbers of slices requires that we _minimize_ overhead.
+
+h1. OO Design
+
+In the 90's, it was believed that modeling your system before implementing it minimized errors.
+* Now, such modeling (e.g., with UML diagrams) is seen as too inefficient and time consuming.
+* Instead, design is done as part of the testing and coding (yes, in that order, using _test-driven development_ - TDD) gives us the quality we need _and_ delivers working software as quickly as possible.
+
+h1. OO Design vs. Functional Design
+
+If you look at our project app, there aren't many classes that model financial domain concepts (and some of those present could be removed without great loss...).
+
+Most of the uses of object-orientation are in the service infrastructure itself, with relatively flat type hierarchies for collections, actors, messages, errors, etc. In a language without objects, like Clojure or Haskell, these "objects" would just be abstract data types, type classes, etc.
+
+h1. Software Reuse
+
+I'll show an example later that compares modeling domain concepts with _classes_ vs. representing objects as _maps_ (which is how objects _are_ represented in languages like JavaScript and Perl).
+
+There are some significant benefits for _reuse_ when using such functional data structures[1].
+* These types are very well tested.
+* They provide a variety of functions for computations over the collections.
+* They define a few usage _protocols_ that are flexible and powerful.
+
+[1] As opposed to the dumbed-down versions found in Java, etc.
+
+h1. Software Reuse (cont.)
+
+Objects are great for mapping our real-world concepts directly to code, but they have drawbacks for reuse.
+
+* Each object has to be designed, implemented, and tested.
+** Often it re-implements or just delegates to familiar collections and their functions.
+* Each object defines an ad-hoc _protocol_ (signature) that must be learned and conformed to.
+** This is actually the biggest barrier to object reuse. Paradoxically, _the more flexibility you have for variation, the less opportunity you have for reuse._
+
+h1. Software Process
+
+I mentioned a few cases where these trends have affected software process itself (e.g., cycle times, TDD). In fact, these trends have forced top-to-bottom changes in our thinking about software process. We'll explore this topic more fully in the next lecture. 
 
 h1. How FP Affects Architecture
 
-* Brian McNamara, "How does functional programming affect the structure of your code?":http://lorgonblog.wordpress.com/2008/09/22/how-does-functional-programming-affect-the-structure-of-your-code/. Argues that FP makes code better at all levels of the architecture.
+In "How does functional programming affect the structure of your code?":http://lorgonblog.wordpress.com/2008/09/22/how-does-functional-programming-affect-the-structure-of-your-code/, Brian McNamara argues that FP makes code better at all levels of the architecture.
+
+(reading assignment)
 
 h1. Other Modularity Ideas
 
-* Aspect-Oriented Programming (AOP)
+Let's conclude by examining two other important trends in software development in the last few decades.
+
 * Design Patterns
+* Aspect-Oriented Programming (AOP)
+
+h1. Design Patterns
+
+A _solution_ to a _problem_ in a _context_.
+
+Patterns are "templates" for solving recurring problems in similar, but often slightly different ways. For example, a software design issue that occurs in different languages. 
+
+The _context_ part is important. Part of a pattern's description is the context information about when it is applicable and when it _isn't_. These details are designed to prevent the misapplication of a pattern.
+
+h1. Design Patterns (cont.)
+
+Design Patterns actually originated with the building architect, Christopher Alexander, who cataloged recurring ideas in buildings, even those built by non-professionals.
+
+Kent Beck and Ward Cunningham, who would later invent _Extreme Programming_, first began applying Alexander's work to software in the mid-1980s. The "Gang of Four" book in 1994 exposed them to the wider world.
+
+h1. Criticisms of Patterns
+
+Not everyone thinks patterns are a good idea. "Are Design Patterns Missing Language Features":http://www.c2.com/cgi/wiki?AreDesignPatternsMissingLanguageFeatures is a good starting place for the discussion.
+
+Peter Norvig argues that dynamic languages like Lisp are so powerful that most of the patterns aren't needed. In particular, he claims that 16 of the 23 GoF patterns are unnecessary in Lisp.
+
+For example, I mentioned last week that _Visitor_ is very ugly and invasive, where a functional approach, like type classes, is much more elegant.
+
+h1. Criticisms of Patterns (cont.)
+
+Here is a list of "unnecessary" patterns, adapted from "AreDesignPatternsMissingLanguageFeatures":http://www.c2.com/cgi/wiki?AreDesignPatternsMissingLanguageFeatures on the "c2 wiki":http://www.c2.com.
+
+<div class='tiny'>
+| Visitor  | Generic functions (multiple dispatch), type classes | |
+| Factory  | Meta classes, closures, companion objects (Scala) | |
+| Singleton | Meta classes, object declarations (Scala) | |
+| Iterator | Anonymous functions | used with higher order functions, like map, filter, etc.) |
+| Interpreter | Macros (extending the language), @eval@ functions, meta-circular interpreters, support for parser generation (for differing syntax) | |
+| Command | Closures, anonymous functions, first-class functions, lexical scope | |
+| Adapter | Delegation, macros, meta classes | a.k.a. Handle-Body |
+</div>
+
+h1. Table (cont.)
+
+<div class='tiny'>
+| Run and return successor | Tail-call optimization | |
+| Abstract factory, flyweight, factory-method, state, proxy, chain-of-responsibility | First-class types | |
+| Mediator, Observer | Method combination | |
+| Builder Pattern | Multi Methods | |
+| Facade Pattern | Modules | |
+| Strategy Pattern | higher-order functions | |
+</div>
+
+The patterns and their functional replacements go by numerous names in different languages and contexts.
+
+h1. Criticisms of Patterns (cont.)
+
+The problem with the criticisms of design patterns, in my view, is that they tend to confuse the concepts with how they are implemented. Some patterns are clearly of dubious value, like _Visitor_, and should be used only as a last resort. Other patterns, like _Observer_, are far more useful and powerful. Different languages make these "good" patterns easier or harder to implement. Sometimes a pattern is just a built-in feature (like _Singleton_ in Scala).
+
+Some of the OO patterns are redundant with functional concepts. Others aren't. Functional programming has its own patterns, although the community has not adopted the patterns terminology.
 
 h1. AOP: An Example Problem
 
@@ -211,60 +419,11 @@ What this means is that if we just use @Maps@ (and perhaps a few other fundament
 
 The key point here is that working with more "primitive" building blocks; functions, and core data structures, it is actually easier to _generate_ the variations of behavior we need. We'll return to this point in a few weeks when we talk about _simplicity_ in systems, etc.
 
-h1. Design Patterns
 
-A _solution_ to a _problem_ in a _context_.
+h1. Reading Assignment 
 
-Patterns are "templates" for solving recurring problems in similar, but often slightly different ways. For example, a software design issue that occurs in different languages. 
+Brian McNamara, "How does functional programming affect the structure of your code?":http://lorgonblog.wordpress.com/2008/09/22/how-does-functional-programming-affect-the-structure-of-your-code/.
 
-The _context_ part is important. Part of a pattern's description is the context information about when it is applicable and when it _isn't_. These details are designed to prevent the misapplication of a pattern.
-
-h1. Design Patterns (cont.)
-
-Design Patterns actually originated with the building architect, Christopher Alexander, who cataloged recurring ideas in buildings, even those built by non-professionals.
-
-Kent Beck and Ward Cunningham, who would later invent _Extreme Programming_, first began applying Alexander's work to software in the mid-1980s. The "Gang of Four" book in 1994 exposed them to the wider world.
-
-h1. Criticisms of Patterns
-
-Not everyone thinks patterns are a good idea. "Are Design Patterns Missing Language Features":http://www.c2.com/cgi/wiki?AreDesignPatternsMissingLanguageFeatures is a good starting place for the discussion.
-
-Peter Norvig argues that dynamic languages like Lisp are so powerful that most of the patterns aren't needed. In particular, he claims that 16 of the 23 GoF patterns are unnecessary in Lisp.
-
-For example, I mentioned last week that _Visitor_ is very ugly and invasive, where a functional approach, like type classes, is much more elegant.
-
-h1. Criticisms of Patterns (cont.)
-
-Here is a list of "unnecessary" patterns, adapted from "AreDesignPatternsMissingLanguageFeatures":http://www.c2.com/cgi/wiki?AreDesignPatternsMissingLanguageFeatures on the "c2 wiki":http://www.c2.com.
-
-<div class='tiny'>
-| Visitor  | Generic functions (multiple dispatch), type classes | |
-| Factory  | Meta classes, closures, companion objects (Scala) | |
-| Singleton | Meta classes, object declarations (Scala) | |
-| Iterator | Anonymous functions | used with higher order functions, like map, filter, etc.) |
-| Interpreter | Macros (extending the language), @eval@ functions, meta-circular interpreters, support for parser generation (for differing syntax) | |
-| Command | Closures, anonymous functions, first-class functions, lexical scope | |
-| Adapter | Delegation, macros, meta classes | a.k.a. Handle-Body |
-</div>
-
-h1. Table (cont.)
-
-<div class='tiny'>
-| Run and return successor | Tail-call optimization | |
-| Abstract factory, flyweight, factory-method, state, proxy, chain-of-responsibility | First-class types | |
-| Mediator, Observer | Method combination | |
-| Builder Pattern | Multi Methods | |
-| Facade Pattern | Modules | |
-| Strategy Pattern | higher-order functions | |
-</div>
-
-The patterns and their functional replacements go by numerous names in different languages and contexts.
-
-h1. Criticisms of Patterns (cont.)
-
-The problem with the criticisms of design patterns, in my view, is that they tend to confuse the concepts with how they are implemented. Some patterns are clearly of dubious value, like _Visitor_, and should be used only as a last resort. Other patterns, like _Observer_, are far more useful and powerful. Different languages make these "good" patterns easier or harder to implement. Sometimes a pattern is just a built-in feature (like _Singleton_ in Scala).
-
-Some of the OO patterns are redundant with functional concepts. Others aren't. Functional programming has its own patterns, although the community has not adopted the patterns terminology.
 
 h1. Reusability that Works
 
@@ -272,73 +431,6 @@ Notes from Jason Zaugg's Intro to Scalaz at the NYC Scala group:
 
 http://vimeo.com/15264203
 
-
-h1. Why OOP Then? Why FP Now?
-
-Software development is still a young discipline, ~70 years old, compared to other forms of "engineering". 
-
-We're still figuring out what works best. The problems we're solving and the applications we're building are changing rapidly, too.
-
-Here's a very high level view of how things have evolved in the last 30 years.
-
-h1. GUI, Pre-Internet Era, 1980s - 1995:
-
-The characteristics of GUI-based applications before the Internet:
-
-* *Dominant Apps:* "Productivity" tools (e.g., MS Office).
-* *UIs:* "Thick" desktop UIs.
-* *Architectures:* Self-contained and autonomous.
-* *Business Model:* Dominated by commercial development.
-* *Release Cycles:* Relatively long.
-
-h1. Internet Era, 1995 - late 2000's:
-
-Application characteristics during the "formative" years of the Internet, dominated by e-commerce and search:
-
-* *Dominant Apps:* E-commerce and search
-* *UIs:* "Thin" browser-based UIs.
-* *Architectures:* Large components, networked together.
-* *Business Model:* Dominated by open-source development.
-* *Release Cycles:* Relatively short release cycles.
-
-h1. Big Data Era, late 2000's - ??:
-
-Application characteristics as the Internet matures, where people try to leverage the vast data sets that are being accumulated (Web 2.0??):
-
-* *Dominant Apps:* Social networking, context-aware service delivery.
-* *UIs:* "Rich" browser-based UIs.
-* *Architectures:* Small services, choreographed together.
-* *Business Model:* Dominated by social networking and other data 
-* *Release Cycles:* Asymptotically towards zero-length release cycles (a.k.a continuous delivery).
-
-h1. Summarized Together
-
-<div class='tiny'>
-|_. |_.Pre-Internet |_.Internet |_.Big Data |
-|_.Apps | Productivity Tools | E-Commerce, search | Social networking, context-aware services |
-|_.UIs | Thick desktop | Thin browser | Rich Browser |
-|_.Architecture | Self-contained, autonomous | Large components, networked | Small services, choreographed |
-|_.Dev Model | Commercial | Open-Source | Data aggregators |
-|_.Cycle Times | Long | Short | Approaching 0 |
-</div>
-
-h1. Trends
-
-Note that most of the categories have been trending to lower values:
-
-* *UIs:* Smaller UI toolkits (but delivering richer features).
-* *Structure:* Smaller, focused pieces, "glued" together.
-* *Dev Model:* Lower cost.
-* *Cycle Times:* Shorter and shorter; approaching zero!
-
-h1. Trends (cont.)
-
-We'll discuss the implications for software process next week. For OOP vs. FP, the smaller components and faster cycles means there is little incentive for building object models.
-
-* Faster modification.
-* Changing requirements.
-* Each service only cares about a data slice.
-* UML modeling is absurd now...
 
 h1. Questions
 
@@ -350,3 +442,5 @@ h1. Questions
 
 h1. Notes
 point free style and composition.
+
+** Representing domain models in code - how far to go?

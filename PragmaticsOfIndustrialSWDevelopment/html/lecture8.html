@@ -215,15 +215,15 @@ package gui.windowing {
 <ul>
 	<li>Once a constructor completes, the object should be in a <em>known-good state</em>.</li>
 	<li><em>Every</em> method should transition the object from one known-good state to another (possibly the same) known-good state.</li>
-	<li>Clean up resources when the object becomes garbage.<sup class="footnote"><a href="#fn1">1</a></sup> <sup class="footnote"><a href="#fn2">2</a></sup></li>
+	<li>Clean up resources when the object becomes garbage.<sup class="footnote" id="fnr1"><a href="#fn1">1</a></sup> <sup class="footnote" id="fnr2"><a href="#fn2">2</a></sup></li>
 </ul>
-<p><sup class="footnote"><a href="#fn1">1</a></sup> C++ and C# have <em>destructors</em> for this purpose (but they may be invoked too late for some resources, like database connections).<br />
-<sup class="footnote"><a href="#fn2">2</a></sup> Java has finalizers, but they are effectively useless, maybe even harmful.</p>
+<p><sup class="footnote" id="fnr1"><a href="#fn1">1</a></sup> C++ and C# have <em>destructors</em> for this purpose (but they may be invoked too late for some resources, like database connections).<br />
+<sup class="footnote" id="fnr2"><a href="#fn2">2</a></sup> Java has finalizers, but they are effectively useless, maybe even harmful.</p>
 </div>
 <div class="slide">
-<h1>Design by Contract<sup class="footnote"><a href="#fn1">1</a></sup></h1>
+<h1>Design by Contract<sup class="footnote" id="fnr1"><a href="#fn1">1</a></sup></h1>
 <p><a href="http://en.wikipedia.org/wiki/Design_by_contract">Design by Contract</a> (DbC) is a programming discipline where you specify assertions about program behavior that the language infrastructure can enforce during testing, but disable in production deployments, for performance reasons.</p>
-<p><sup class="footnote"><a href="#fn1">1</a></sup> A registered trademark of Eiffel Software</p>
+<p><sup class="footnote" id="fnr1"><a href="#fn1">1</a></sup> A registered trademark of Eiffel Software</p>
 </div>
 <div class="slide">
 <h1>Design by Contract (cont.)</h1>
@@ -238,9 +238,8 @@ package gui.windowing {
 <div class="slide">
 <h1>Preconditions</h1>
 <p><strong>Preconditions</strong> are what must be true in order for the function to do its job. A trivial example: there must be enough free memory for the function to allocate the objects it creates.</p>
-<p>Hence, these are requirements on the runtime environment and the clients using the function. Here is an example using our Windowing <span class="caps">API</span> and a &#8220;mythical&#8221; DbC framework that uses annotations.<br />
- <br />
-<div class="code-small"></p>
+<p>Hence, these are requirements on the runtime environment and the clients using the function. Here is an example using our Windowing <span class="caps">API</span> and a &#8220;mythical&#8221; DbC framework that uses annotations.</p>
+<div class="code-small">
 <pre name="code" id="code" class="brush: scala,;">
 
 package gui.windowing {
@@ -256,9 +255,8 @@ package gui.windowing {
 <div class="slide">
 <h1>Postconditions</h1>
 <p><strong>Postconditions</strong> are what the function guarantees to satisfy when it finishes its job, <em>if</em> the preconditions are true. A trivial example: a function might promise to never return <code>null</code>.</p>
-<p>Hence, these are requirements on the function itself, constituting promises to clients. Here is an example using our Windowing <span class="caps">API</span>.<br />
- <br />
-<div class="code-small"></p>
+<p>Hence, these are requirements on the function itself, constituting promises to clients. Here is an example using our Windowing <span class="caps">API</span>.</p>
+<div class="code-small">
 <pre name="code" id="code" class="brush: scala,;">
 
 package gui.windowing {
@@ -274,9 +272,8 @@ package gui.windowing {
 </div>
 <div class="slide">
 <h1>Invariants</h1>
-<p><strong>Invariants</strong> must be true before and after function invocation. They may specify some object (or global) property that doesn&#8217;t change. They may specify a logical constraint that must remain true, etc. Invariants can be requirements on the function, the environment, or both.<br />
- <br />
-<div class="code-small"></p>
+<p><strong>Invariants</strong> must be true before and after function invocation. They may specify some object (or global) property that doesn&#8217;t change. They may specify a logical constraint that must remain true, etc. Invariants can be requirements on the function, the environment, or both.</p>
+<div class="code-small">
 <pre name="code" id="code" class="brush: scala,;">
 
 package gui.windowing {
@@ -315,6 +312,7 @@ package gui.windowing {
 <h1>Scala Has Classes (for Example)</h1>
 <p>Scala example, patterned after Java&#8217;s <code>Exception</code> Hierarchy:<br />
 <div class="code-small"></p>
+
 <pre name="code" id="code" class="brush: scala,;">
 
 class Exception(
@@ -485,6 +483,7 @@ assert (s.height == 4)  // True???
 <p><em>Prototype-based languages</em> don&#8217;t have classes. (Hence they are also called <em>classless</em> languages.) Instead, you just build up objects &#8220;from scratch&#8221;.</p>
 <p>JavaScript object-literal notation (essentially, a hash map):<br />
 <div class="code-small"></p>
+
 <pre name="code" id="code" class="brush: scala,;">
 
 var exception = {
@@ -509,8 +508,8 @@ exception.name = "ExceptionFormerlyRepresentingANetworkException";
 <div class="slide">
 <h1>Aside: <em>Open Classes</em></h1>
 <p>Note that many <em>dynamically-typed, class-based</em> languages, e.g., Ruby, allow this kind of object modification, too. They are said to have <em>open classes</em>.</p>
-<p>Most <em>statically-typed</em> languages, like Scala, Java, C#, and C++, have closed classes. You can&#8217;t add or remove members in objects.<sup class="footnote"><a href="#fn1">1</a></sup></p>
-<p><sup class="footnote"><a href="#fn1">1</a></sup> There are some workarounds, both byte-code level hacks and some language features, like Scala&#8217;s <em>implicits</em>.</p>
+<p>Most <em>statically-typed</em> languages, like Scala, Java, C#, and C++, have closed classes. You can&#8217;t add or remove members in objects.<sup class="footnote" id="fnr1"><a href="#fn1">1</a></sup></p>
+<p><sup class="footnote" id="fnr1"><a href="#fn1">1</a></sup> There are some workarounds, both byte-code level hacks and some language features, like Scala&#8217;s <em>implicits</em>.</p>
 </div>
 <div class="slide">
 <h1>Prototype-Based Languages (cont.)</h1>
@@ -696,6 +695,7 @@ oddMap.get("two") match {
 <h1><code>Option[+A]</code>: <code>case</code> class (cont.)</h1>
 <p>So, adding <code>case</code> to the declaration is equivalent to this:<br />
 <div class="code-small"></p>
+
 <pre name="code" id="code" class="brush: scala,;">
 
 final class Some[+A](val x: A) extends Option[+A] {
@@ -730,6 +730,7 @@ case object None extends Option[Nothing] {
 <p><strong>Nothing</strong>: A subtype of <em>all</em> other types, with <em>no</em> instances.</p>
 <p>Used for proper type safety.<br />
 <div class="code-small"></p>
+
 <pre name="code" id="code" class="brush: scala,;">
 
 case object None extends Option[Nothing] {...}

@@ -93,9 +93,14 @@ html>body .external {border-bottom: none;}
 img.incremental {visibility: hidden;}
 .slide .current {color: #B02;}
 
-table, td {
+table {
   border: 1px solid gray;
+}
+table, td {
   background-color: #F0EEE8;
+}
+th {
+  padding: 5px;
 }
 
 .rounded-corners {
@@ -114,6 +119,12 @@ table, td {
   -webkit-border-bottom-right-radius: 5px;
 }
 
+.opacity_50 {
+	filter:alpha(opacity=50);
+	-moz-opacity:0.5;
+	-khtml-opacity: 0.5;
+	opacity: 0.5;
+}
 /* diagnostics
 
 li:after {content: " [" attr(class) "]"; color: #F88;}
