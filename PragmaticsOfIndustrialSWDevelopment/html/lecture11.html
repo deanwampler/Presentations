@@ -58,14 +58,15 @@
 <p>However, immutable state, a hallmark of FP, doesn&#8217;t have this problem.</p>
 </div>
 <div class="slide">
-<h1>A Little History; How Did <span class="caps">OOP</span> Go Mainstream?</h1>
+<h1>A Little History</h1>
+<p><em>How Did <span class="caps">OOP</span> Go Mainstream?</em></p>
 <p>One common view is that <span class="caps">OOP</span> went mainstream in the 80&#8217;s and 90&#8217;s with the emergence of graphical user interfaces (GUIs). The object paradigm was a natural fit and it made the complexity of <span class="caps">GUI</span> development easier to manage.</p>
-<p>Once people started using <span class="caps">OOP</span> for GUIs, they soon discovered that <span class="caps">OOP</span> is more broadly applicable. Soon, it became the &#8220;received wisdom&#8221; that <span class="caps">OOP</span> should be used universally for <em>modularizing</em> applications.</p>
+<p>However, once people started using <span class="caps">OOP</span> for GUIs, they soon discovered that <span class="caps">OOP</span> is more broadly applicable. Soon, it became the &#8220;best practice&#8221; that <span class="caps">OOP</span> should be used universally for <em>modularizing</em> applications.</p>
 <p>A similar trend is happening with FP. Industry is looking at FP for concurrency, but recognizing broader applicability.</p>
 </div>
 <div class="slide">
 <h1>Were We Wrong About <span class="caps">OOP</span>?</h1>
-<p>The nature of programming challenges has changed.</p>
+<p>The nature of programming challenges changes constantly.</p>
 <ul>
 	<li>Slow Pace vs. Agility</li>
 	<li>Self Contained vs. Globally Connected</li>
@@ -115,7 +116,7 @@ trait Account {
 case class CheckingAccount(customer: Customer, var balance: Money) extends Account 
 case class SavingsAccount(customer: Customer, var balance: Money, 
   var interestRate: Double) extends Account 
-</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/deanwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/bank-account.scala">code/bank-account.scala</a></div></p>
+</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/dwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/bank-account.scala">code/bank-account.scala</a></div></p>
 </div>
 <div class="slide">
 <h1><span class="caps">AOP</span>: An Example Problem (cont.)</h1>
@@ -138,7 +139,7 @@ println("Checking: final account: " + sa)
 // Checking: initial account: CheckingAccount(Customer(Dean),Money(1000.0))
 // Checking: final account: CheckingAccount(Customer(Dean),Money(1500.0))
 // Savings: initial account: SavingsAccount(Customer(Dean),Money(2000.0),0.02)
-// Checking: final account: SavingsAccount(Customer(Dean),Money(900.0),0.3)</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/deanwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/bank-account-usage.scala">code/bank-account-usage.scala</a></div></p>
+// Checking: final account: SavingsAccount(Customer(Dean),Money(900.0),0.3)</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/dwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/bank-account-usage.scala">code/bank-account-usage.scala</a></div></p>
 </div>
 <div class="slide">
 <h1><span class="caps">AOP</span> and Modularity</h1>
@@ -160,7 +161,7 @@ case class Customer(initialName: String) extends Persister{
     _name = newName
     putToDatabase("name", _name)
   }
-}</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/deanwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/bank-account-bad-persistence.scala">code/bank-account-bad-persistence.scala</a></div></p>
+}</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/dwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/bank-account-bad-persistence.scala">code/bank-account-bad-persistence.scala</a></div></p>
 </div>
 <div class="slide">
 <h1>Modularity Breakdown</h1>
@@ -251,7 +252,7 @@ class InstrumentedCustomer(customer: Customer)
     customer.name = newName
     putToDatabase("name", newName)
   }
-}</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/deanwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/bank-account-instrumented.scala">code/bank-account-instrumented.scala</a></div></p>
+}</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/dwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/bank-account-instrumented.scala">code/bank-account-instrumented.scala</a></div></p>
 </div>
 <div class="slide">
 <h1><span class="caps">AOP</span> Tools</h1>
@@ -284,7 +285,7 @@ public aspect PersisentCustomer {
       case None =&gt;
     }
   }
-}</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/deanwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/bank-account-aspect.scala">code/bank-account-aspect.scala</a></div></p>
+}</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/dwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/bank-account-aspect.scala">code/bank-account-aspect.scala</a></div></p>
 <p>(I don&#8217;t expect you to fully understand this code&#8230;)</p>
 </div>
 <div class="slide">
@@ -351,7 +352,7 @@ trait PersistentName extends Named with Persister {
 
 case class Customer(var name: String) extends Named
 
-val dean = new Customer("Dean") with PersistentName</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/deanwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/bank-account-mixin.scala">code/bank-account-mixin.scala</a></div></p>
+val dean = new Customer("Dean") with PersistentName</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/dwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/bank-account-mixin.scala">code/bank-account-mixin.scala</a></div></p>
 </div>
 <div class="slide">
 <h1>Why Isn&#8217;t <span class="caps">AOP</span> Pervasive? (cont.)</h1>
@@ -384,7 +385,7 @@ trait PersistentMap[K,V] extends scala.collection.mutable.Map[K,V] with KeyValue
 }
 
 val dean = new scala.collection.mutable.HashMap[String,Any] with PersistentMap[String,Any]
-dean.put("name", "Dean")</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/deanwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/persistent-map.scala">code/persistent-map.scala</a></div></p>
+dean.put("name", "Dean")</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/dwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/persistent-map.scala">code/persistent-map.scala</a></div></p>
 </div>
 <div class="slide">
 <h1>Why Isn&#8217;t <span class="caps">AOP</span> Pervasive? (cont.)</h1>
@@ -543,7 +544,7 @@ dean.put("name", "Dean")</pre><p></div><div class="codeurl"><a href="txmt://open
 <div class='tiny'>
 <table>
 	<tr>
-		<th></th>
+		<th> </th>
 		<th>Pre-Internet </th>
 		<th>Internet </th>
 		<th>Big Data </th>
@@ -607,9 +608,9 @@ dean.put("name", "Dean")</pre><p></div><div class="codeurl"><a href="txmt://open
 	<li>Why is industry adopting FP now?</li>
 </ul>
 <ul>
-	<li>Contrasting <span class="caps">OOP</span> and FP:</li>
-	<li>Is the software of the future likely to be more FP or more <span class="caps">OOP</span> (or perhaps something else)?</li>
-	<li>Why is FP more interesting and <span class="caps">OOP</span> less interesting today?</li>
+	<li>Contrasting <span class="caps">OOP</span> and FP:<br />
+  * Is the software of the future likely to be more FP or more <span class="caps">OOP</span> (or perhaps something else)?<br />
+  * Why is FP more interesting and <span class="caps">OOP</span> less interesting today?</li>
 </ul>
 </div>
 <div class="slide">
