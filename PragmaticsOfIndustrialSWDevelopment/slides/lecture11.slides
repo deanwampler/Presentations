@@ -471,5 +471,19 @@ Since JavaScript is becoming an essential language to know, at least for web dev
 
 h1. Optional Reading: Functional Javascript
 
-* "Underscore.js": http://documentcloud.github.com/underscore/. Provides many of the functions expected in a functional language that are missing in JavaScript. Nice complement to the indispensable "JQuery":http://jquery.com library.
+* "Underscore.js":http://documentcloud.github.com/underscore/. Provides many of the functions expected in a functional language that are missing in JavaScript. Nice complement to the indispensable "JQuery":http://jquery.com library.
 
+h1. Exercise: Maps vs. Classes
+
+The Akka project defines a @CriteriaMap@ class and object in the  @org.chicagoscala.awse.domain.finance@ package. It wraps an ordinary _immutable_ Map with _builder_ methods for adding different kinds of criteria: instruments, statistics (e.g., moving averages), start and end times.
+
+I could have just used a plain Map as the inputs to methods that currently take a criteria object. The disadvantages of introducing @CriteriaMap@ are the ones we discussed for using classes in general: it has to be designed, implemented, and tested, which take time, and it introduces an ad hoc "protocol" the user has to understand.
+
+h1. Exercise: Maps vs. Classes (cont.)
+
+However, it also has advantages. Read the implementation of this type and find where it is used in the code base, e.g., in method calls. Ask yourself the following questions.
+
+# If I were learning this code for the first time, would it be quicker to understand what's going on with a plain map or a @CriteriaMap@?
+# What mistakes might I make if the code just used a plain map that @CriteriaMap@ helps prevent?
+
+Based on your answers, write down as many benefits of using @CriteriaMap@ that you can think of.

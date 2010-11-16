@@ -906,8 +906,22 @@ dean.put("name", "Dean")</pre><p></div><div class="codeurl"><a href="txmt://open
 <div class="slide">
 <h1>Optional Reading: Functional Javascript</h1>
 <ul>
-	<li>&#8220;Underscore.js&#8221;: http://documentcloud.github.com/underscore/. Provides many of the functions expected in a functional language that are missing in JavaScript. Nice complement to the indispensable <a href="http://jquery.com">JQuery</a> library.</div></li>
+	<li><a href="http://documentcloud.github.com/underscore/">Underscore.js</a>. Provides many of the functions expected in a functional language that are missing in JavaScript. Nice complement to the indispensable <a href="http://jquery.com">JQuery</a> library.</li>
 </ul>
+</div>
+<div class="slide">
+<h1>Exercise: Maps vs. Classes</h1>
+<p>The Akka project defines a <code>CriteriaMap</code> class and object in the  <code>org.chicagoscala.awse.domain.finance</code> package. It wraps an ordinary <em>immutable</em> Map with <em>builder</em> methods for adding different kinds of criteria: instruments, statistics (e.g., moving averages), start and end times.</p>
+<p>I could have just used a plain Map as the inputs to methods that currently take a criteria object. The disadvantages of introducing <code>CriteriaMap</code> are the ones we discussed for using classes in general: it has to be designed, implemented, and tested, which take time, and it introduces an ad hoc &#8220;protocol&#8221; the user has to understand.</p>
+</div>
+<div class="slide">
+<h1>Exercise: Maps vs. Classes (cont.)</h1>
+<p>However, it also has advantages. Read the implementation of this type and find where it is used in the code base, e.g., in method calls. Ask yourself the following questions.</p>
+<ol>
+	<li>If I were learning this code for the first time, would it be quicker to understand what&#8217;s going on with a plain map or a <code>CriteriaMap</code>?</li>
+	<li>What mistakes might I make if the code just used a plain map that <code>CriteriaMap</code> helps prevent?</li>
+</ol>
+<p>Based on your answers, write down as many benefits of using <code>CriteriaMap</code> that you can think of.</div></p>
 
   <!-- Syntax Highlighter -->
   <script language="javascript" type="text/javascript" src="../lib/scripts/shCore.js"></script>

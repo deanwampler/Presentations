@@ -7125,8 +7125,22 @@ dean.put("name", "Dean")</pre><p></div><div class="codeurl"><a href="txmt://open
 <div class="slide">
 <h1>Optional Reading: Functional Javascript</h1>
 <ul>
-	<li>&#8220;Underscore.js&#8221;: http://documentcloud.github.com/underscore/. Provides many of the functions expected in a functional language that are missing in JavaScript. Nice complement to the indispensable <a href="http://jquery.com">JQuery</a> library.</li>
+	<li><a href="http://documentcloud.github.com/underscore/">Underscore.js</a>. Provides many of the functions expected in a functional language that are missing in JavaScript. Nice complement to the indispensable <a href="http://jquery.com">JQuery</a> library.</li>
 </ul>
+</div>
+<div class="slide">
+<h1>Exercise: Maps vs. Classes</h1>
+<p>The Akka project defines a <code>CriteriaMap</code> class and object in the  <code>org.chicagoscala.awse.domain.finance</code> package. It wraps an ordinary <em>immutable</em> Map with <em>builder</em> methods for adding different kinds of criteria: instruments, statistics (e.g., moving averages), start and end times.</p>
+<p>I could have just used a plain Map as the inputs to methods that currently take a criteria object. The disadvantages of introducing <code>CriteriaMap</code> are the ones we discussed for using classes in general: it has to be designed, implemented, and tested, which take time, and it introduces an ad hoc &#8220;protocol&#8221; the user has to understand.</p>
+</div>
+<div class="slide">
+<h1>Exercise: Maps vs. Classes (cont.)</h1>
+<p>However, it also has advantages. Read the implementation of this type and find where it is used in the code base, e.g., in method calls. Ask yourself the following questions.</p>
+<ol>
+	<li>If I were learning this code for the first time, would it be quicker to understand what&#8217;s going on with a plain map or a <code>CriteriaMap</code>?</li>
+	<li>What mistakes might I make if the code just used a plain map that <code>CriteriaMap</code> helps prevent?</li>
+</ol>
+<p>Based on your answers, write down as many benefits of using <code>CriteriaMap</code> that you can think of.</p>
 </div>
 <div class="title slide">
 <h1>Lecture 12: Complexity vs. Simplicity Part I: Effective Software Development Processes, Scrum, XP, and Lean</h1>
@@ -7539,6 +7553,17 @@ dean.put("name", "Dean")</pre><p></div><div class="codeurl"><a href="txmt://open
 </div>
 </div>
 <div class="slide">
+<h1>Functional JavaScript</h1>
+<div class='small'>
+<ul>
+	<li><a href="http://documentcloud.github.com/underscore/">Underscore.js</a>. Provides many of the functions expected in a functional language that are missing in JavaScript. Nice complement to the indispensable <a href="http://jquery.com">JQuery</a> library.</li>
+	<li><a href="http://bayfp.org/talks/slides/douglas_crockford_15_oct_08_bayfp.pdf">Functional Javascript</a>. A talk by Douglas Crockford, who wrote the valuable &#8220;JavaScript: The Good Parts&#8221; and also defined the <span class="caps">JSON</span> standard.</li>
+	<li><a href="http://www.hunlock.com/blogs/Functional_Javascript">Functional Javascript</a>.</li>
+	<li><a href="http://www.ibm.com/developerworks/library/wa-javascript.html">Use functional programming techniques to write elegant JavaScript</a>. This one has some <span class="caps">ASCII</span> characters that are incorrectly rendered in the source listings.</li>
+</ul>
+</div>
+</div>
+<div class="slide">
 <h1><span class="caps">OOP</span> vs. Functional Programming</h1>
 <div class='small'>
 <ul>
@@ -7581,6 +7606,16 @@ dean.put("name", "Dean")</pre><p></div><div class="codeurl"><a href="txmt://open
 	<li>Scott Berkun, &#8220;The Art of Project Management&#8221;, O&#8217;Reilly, 2005. <span class="caps">ISBN</span>: 0596007868.<br />
 </div></li>
 </ul>
+</div>
+<div class="slide">
+<h1>Agile Methods</h1>
+<div class='small'>
+<ul>
+	<li><a href="http://en.wikipedia.org/wiki/Agile_software_development">Agile Software Development</a> (Wikipedia). Provides a good overview and history.</li>
+	<li><a href="http://martinfowler.com/articles/newMethodology.html">The New Methodology</a>. Fowler is the Chief Scientist at Thoughtworks. He&#8217;s written several influential books on patterns, refactoring, DSLs, etc.</li>
+	<li><a href="http://agilemanifesto.org/">Manifesto for Agile Software Development</a>. Very short read ;)</li>
+</ul>
+</div>
 </div>
 <div class="slide">
 <h1>Simplicity</h1>

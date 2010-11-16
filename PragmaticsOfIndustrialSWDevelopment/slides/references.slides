@@ -330,6 +330,17 @@ h1. Functional Programming (Specifics)
 
 </div>
 
+h1. Functional JavaScript
+
+<div class='small'>
+
+* "Underscore.js":http://documentcloud.github.com/underscore/. Provides many of the functions expected in a functional language that are missing in JavaScript. Nice complement to the indispensable "JQuery":http://jquery.com library.
+* "Functional Javascript":http://bayfp.org/talks/slides/douglas_crockford_15_oct_08_bayfp.pdf. A talk by Douglas Crockford, who wrote the valuable "JavaScript: The Good Parts" and also defined the JSON standard.
+* "Functional Javascript":http://www.hunlock.com/blogs/Functional_Javascript.
+* "Use functional programming techniques to write elegant JavaScript":http://www.ibm.com/developerworks/library/wa-javascript.html. This one has some ASCII characters that are incorrectly rendered in the source listings.
+
+</div>
+
 h1. OOP vs. Functional Programming
 
 <div class='small'>
@@ -370,6 +381,16 @@ h1. Software Process
 * Mike Cohn, "User Stories Applied", Addison-Wesley, 2004. ISBN: 0321205685.
 * Mike Cohn, "Agile Estimating and Planning", Addison-Wesley, 2006. ISBN: 0131479415.
 * Scott Berkun, "The Art of Project Management", O'Reilly, 2005. ISBN: 0596007868.
+</div>
+
+h1. Agile Methods
+
+<div class='small'>
+
+* "Agile Software Development":http://en.wikipedia.org/wiki/Agile_software_development (Wikipedia). Provides a good overview and history.
+* "The New Methodology":http://martinfowler.com/articles/newMethodology.html. Fowler is the Chief Scientist at Thoughtworks. He's written several influential books on patterns, refactoring, DSLs, etc.
+* "Manifesto for Agile Software Development":http://agilemanifesto.org/. Very short read ;)
+
 </div>
 
 h1. Simplicity
