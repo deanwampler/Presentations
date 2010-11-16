@@ -1,4 +1,4 @@
-h1. Lecture 11: Object-Oriented Programming vs. Functional Programming: a Critique of Pure Programming
+h1. Lecture 11: OOP vs. FP: a Critique of Pure Programming
 
 Functional Programming is starting to go "mainstream" (it's still very early in that process). This implies that people are seeing problems with Object-Oriented Programming or how it is used. This lecture explores this trend. 
 
@@ -35,18 +35,308 @@ h1. How FP Affects Architecture
 
 * Brian McNamara, "How does functional programming affect the structure of your code?":http://lorgonblog.wordpress.com/2008/09/22/how-does-functional-programming-affect-the-structure-of-your-code/. Argues that FP makes code better at all levels of the architecture.
 
-h1. Aspects?
+h1. Other Modularity Ideas
 
-h1. Design Patterns?
+* Aspect-Oriented Programming (AOP)
+* Design Patterns
+
+h1. AOP: An Example Problem
+
+Consider this object model:
+
+:code code/bank-account.scala[class=code-tiny]
+
+h1. AOP: An Example Problem (cont.)
+
+:code code/bank-account-usage.scala[class=code-tiny]
+
+h1. AOP and Modularity
+
+_Aspect-Oriented Programming_ was invented in the mid-nineties to address a particular kind of modularity problem. Imagine I need to have all state changes to @Customers@ and @Accounts@ persisted? I could do this:
+
+:code code/bank-account-bad-persistence.scala[class=code-tiny]
+
+h1. Modularity Breakdown
+
+Recall that @Customer@ was:
+
+:inlinecode lang=scala, class=code-small
+case class Customer(var name: String)
+:endinlinecode 
+
+The code is now _significantly_ more complicated, making it much harder to develop, test, maintain, etc., etc. 
+
+Worse, I would require similar code for _every_ class that was backed by a datastore. 
+
+h1. Cross-Cutting Concerns
+
+Because the persistence code is basically the same in every class that uses it, we say it is a _cross-cutting concern_. It cuts right across the modularity (class) boundaries of the domain model. Modularity is severely compromised.
+
+There are other kinds of cross-cutting concerns: 
+
+* Transactions
+* Security
+* Logging
+* Error handling
+
+h1. Enterprise Java Beans
+
+_Enterprise Java Beans_ (EJBs) where a flawed attempt to address this problem (the flaws were mostly fixed in the v3.0 redo). This model let you specify some data for persistence, transactions, security, etc. in XML configuration files, but you still had very invasive code in your domain objects.
+
+Specifically, while the model "separated concerns" such as persistence from the domain model, the model objects needed to subclass EJB container types, implement methods to support lifecycle management, etc. 
+
+That is, EJBs traded one set of problems for another set.
+
+h1. Aspect-Oriented Programming
+
+The idea behind aspects is that the domain model shouldn't need to know the details of persistence, transactions, etc. _and_ it shouldn't be necessary to introduce framework code, either. 
+
+Instead, you should be able to inject the behavior where needed through tools, language support, etc.
+
+h1. AOP Schematic View: Before
+
+<center>
+  <span style="width: 100%;">
+    <img src="images/tangled-code.png"></img>
+  </span>
+</center>
+
+h1. AOP Schematic View: After
+
+<center>
+  <span style="width: 100%;">
+    <img src="images/aspects.png"></img>
+  </span>
+</center>
+
+h1. Characteristics of AOP Solutions
+
+An aspect solution has two parts.
+
+* *Quantification:* You need to specify in a succinct way (code or declarations) which "points of execution" to observe or modify in the code base.
+* *Behavior Modification*: Once identified, you need ways to modify the behavior.
+
+h1. AOP Terminology
+
+* *Join Points:* The points of execution where observation or modification might be needed.
+* *Pointcuts:* (yes, one word.) A set of join points, like a result set for a query over all _join points_.
+* *Advice:* The behavior modification inserted by an _aspect_.
+* *Aspect:* A class-like type that combines _pointcuts_ and _advice_.
+
+h1. Code for AOP
+
+The code might look something like this:
+
+:code code/bank-account-instrumented.scala[class=code-tiny]
+
+h1. AOP Tools
+
+To minimize writing this kind of code and to inject the behavior in "normal" objects (as opposed to instantiating special wrapper objects), several techniques are available:
+
+* *AspectJ:* Superset of Java with declarative aspects.
+* *Byte Code Instrumentation:* e.g., Spring (early versions), JBoss, etc.
+
+h1. AspectJ Example
+
+Here is a "schematic" AspectJ aspect:
+
+:code code/bank-account-aspect.scala[class=code-tiny]
+
+(I don't expect you to fully understand this code...)
+
+
+h1. Aspects Beyond Cross-Cutting Concerns
+
+Is this all there is for aspects? Note that the cross-cutting concerns that we mentioned, persistence, transactions, security, and logging, are sometimes called _non-functional requirements_, because they mostly relate to implementation concerns, rather than business requirements. (This is not really an accurate distinction; everything we do is ultimately tied in some way to business requirements...)
+
+h1. Aspects Beyond Cross-Cutting Concerns
+
+We could imagine implementing "functional" requirements:
+
+* Treat interest calculations as a feature that is mixed into the basic account type. Note that we didn't show @CheckingAccount@ with interest, but often checking accounts do pay interest. 
+* Mixin overdraft handling, perhaps on a per-account basis. (That is, "premium" account holders get better overdraft protection than others.)
+<br/><br/>
+
+(Notice that I used the term "mixin" a few times. Hmm...)
+
+h1. Do We Really Need Aspects?
+
+I was actively involved in the AOP community between 2002 and 2008. I expected AOP to have broad applicability as a technique for composing applications from "features", beyond the sorts of cross-cutting concerns shown here. I even wrote an "AOP framework for Ruby":http://aquarium.rubyforge.org and a "Design by Contract tool for Java":http://contract4j.org in AspectJ.
+
+However, broader applicability never materialized. Why?
+
+h1. Why Isn't AOP Pervasive?
+
+First, while the vision of feature composition is attractive, attempts to make it work proved difficult (e.g., "Multidimensional Separation of Concerns":http://www.research.ibm.com/hyperspace/). 
+
+Also, most of the time, developers don't really need feature composition. Traditional coding approaches, i.e., regular classes, are good enough.
+
+h1. Why Isn't AOP Pervasive? (cont.)
+
+Second, AOP was originally invented by people look at problems in Java and it really only gained traction in the Java community, with some penetration in .NET. 
+
+In dynamically-typed languages with open classes, like Ruby, it's quite easy to implement "advice-like" behavior, using the _metaprogramming_ features of the languages. 
+
+A good example is the @ActiveRecord@ persistence framework in Ruby on Rails.
+
+h1. Why Isn't AOP Pervasive? (cont.)
+
+Third, the _advice_ feature of AOP can be implemented by mixins.
+
+Languages like Scala, Ruby, Python, JavaScript, and many others let you create and use mixins (@traits@ in Scala).
+
+h1. Why Isn't AOP Pervasive? (cont.)
+
+:code code/bank-account-mixin.scala[class=code-tiny]
+
+h1. Why Isn't AOP Pervasive? (cont.)
+
+So we can get _advice_ without aspects, although it's still tedious to write all these special cases. We also still don't have _quantification_.
+
+Functional data structures can address both limitations.
+
+Objects are just ad hoc groupings of collections and "atoms" (numbers, strings, etc.), recursively. More specifically, they work like _maps_ and in languages like JavaScript, they _are_ maps!
+
+So, if you create a @PersistentMap@ (in this case, meaning persistent to a database, not as in the _software transactional memory_ case.) and represent our objects as maps, we've solved the quantification problem!
+
+h1. Why Isn't AOP Pervasive? (cont.)
+
+:code code/persistent-map.scala[class=code-tiny]
+
+h1. Why Isn't AOP Pervasive? (cont.)
+
+What this means is that if we just use @Maps@ (and perhaps a few other fundamental collections), we can instrument them as needed with less effort than instrumenting lots of ad-hoc classes. The quantification problem is reduced.
+
+The key point here is that working with more "primitive" building blocks; functions, and core data structures, it is actually easier to _generate_ the variations of behavior we need. We'll return to this point in a few weeks when we talk about _simplicity_ in systems, etc.
+
+h1. Design Patterns
+
+A _solution_ to a _problem_ in a _context_.
+
+Patterns are "templates" for solving recurring problems in similar, but often slightly different ways. For example, a software design issue that occurs in different languages. 
+
+The _context_ part is important. Part of a pattern's description is the context information about when it is applicable and when it _isn't_. These details are designed to prevent the misapplication of a pattern.
+
+h1. Design Patterns (cont.)
+
+Design Patterns actually originated with the building architect, Christopher Alexander, who cataloged recurring ideas in buildings, even those built by non-professionals.
+
+Kent Beck and Ward Cunningham, who would later invent _Extreme Programming_, first began applying Alexander's work to software in the mid-1980s. The "Gang of Four" book in 1994 exposed them to the wider world.
+
+h1. Criticisms of Patterns
+
+Not everyone thinks patterns are a good idea. "Are Design Patterns Missing Language Features":http://www.c2.com/cgi/wiki?AreDesignPatternsMissingLanguageFeatures is a good starting place for the discussion.
+
+Peter Norvig argues that dynamic languages like Lisp are so powerful that most of the patterns aren't needed. In particular, he claims that 16 of the 23 GoF patterns are unnecessary in Lisp.
+
+For example, I mentioned last week that _Visitor_ is very ugly and invasive, where a functional approach, like type classes, is much more elegant.
+
+h1. Criticisms of Patterns (cont.)
+
+Here is a list of "unnecessary" patterns, adapted from "AreDesignPatternsMissingLanguageFeatures":http://www.c2.com/cgi/wiki?AreDesignPatternsMissingLanguageFeatures on the "c2 wiki":http://www.c2.com.
+
+<div class='tiny'>
+| Visitor  | Generic functions (multiple dispatch), type classes | |
+| Factory  | Meta classes, closures, companion objects (Scala) | |
+| Singleton | Meta classes, object declarations (Scala) | |
+| Iterator | Anonymous functions | used with higher order functions, like map, filter, etc.) |
+| Interpreter | Macros (extending the language), @eval@ functions, meta-circular interpreters, support for parser generation (for differing syntax) | |
+| Command | Closures, anonymous functions, first-class functions, lexical scope | |
+| Adapter | Delegation, macros, meta classes | a.k.a. Handle-Body |
+</div>
+
+h1. Table (cont.)
+
+<div class='tiny'>
+| Run and return successor | Tail-call optimization | |
+| Abstract factory, flyweight, factory-method, state, proxy, chain-of-responsibility | First-class types | |
+| Mediator, Observer | Method combination | |
+| Builder Pattern | Multi Methods | |
+| Facade Pattern | Modules | |
+| Strategy Pattern | higher-order functions | |
+</div>
+
+The patterns and their functional replacements go by numerous names in different languages and contexts.
+
+h1. Criticisms of Patterns (cont.)
+
+The problem with the criticisms of design patterns, in my view, is that they tend to confuse the concepts with how they are implemented. Some patterns are clearly of dubious value, like _Visitor_, and should be used only as a last resort. Other patterns, like _Observer_, are far more useful and powerful. Different languages make these "good" patterns easier or harder to implement. Sometimes a pattern is just a built-in feature (like _Singleton_ in Scala).
+
+Some of the OO patterns are redundant with functional concepts. Others aren't. Functional programming has its own patterns, although the community has not adopted the patterns terminology.
 
 h1. Reusability that Works
 
-Notes from Jason Zaugg's Intro to Scalaz at the NYC Scala group: http://vimeo.com/15264203
+Notes from Jason Zaugg's Intro to Scalaz at the NYC Scala group: 
+
+http://vimeo.com/15264203
 
 
-Why FP Now vs. OOP?
+h1. Why OOP Then? Why FP Now?
 
-Nature of the dominant problems of our time.
+Software development is still a young discipline, ~70 years old, compared to other forms of "engineering". 
+
+We're still figuring out what works best. The problems we're solving and the applications we're building are changing rapidly, too.
+
+Here's a very high level view of how things have evolved in the last 30 years.
+
+h1. GUI, Pre-Internet Era, 1980s - 1995:
+
+The characteristics of GUI-based applications before the Internet:
+
+* *Dominant Apps:* "Productivity" tools (e.g., MS Office).
+* *UIs:* "Thick" desktop UIs.
+* *Architectures:* Self-contained and autonomous.
+* *Business Model:* Dominated by commercial development.
+* *Release Cycles:* Relatively long.
+
+h1. Internet Era, 1995 - late 2000's:
+
+Application characteristics during the "formative" years of the Internet, dominated by e-commerce and search:
+
+* *Dominant Apps:* E-commerce and search
+* *UIs:* "Thin" browser-based UIs.
+* *Architectures:* Large components, networked together.
+* *Business Model:* Dominated by open-source development.
+* *Release Cycles:* Relatively short release cycles.
+
+h1. Big Data Era, late 2000's - ??:
+
+Application characteristics as the Internet matures, where people try to leverage the vast data sets that are being accumulated (Web 2.0??):
+
+* *Dominant Apps:* Social networking, context-aware service delivery.
+* *UIs:* "Rich" browser-based UIs.
+* *Architectures:* Small services, choreographed together.
+* *Business Model:* Dominated by social networking and other data 
+* *Release Cycles:* Asymptotically towards zero-length release cycles (a.k.a continuous delivery).
+
+h1. Summarized Together
+
+<div class='tiny'>
+|_. |_.Pre-Internet |_.Internet |_.Big Data |
+|_.Apps | Productivity Tools | E-Commerce, search | Social networking, context-aware services |
+|_.UIs | Thick desktop | Thin browser | Rich Browser |
+|_.Architecture | Self-contained, autonomous | Large components, networked | Small services, choreographed |
+|_.Dev Model | Commercial | Open-Source | Data aggregators |
+|_.Cycle Times | Long | Short | Approaching 0 |
+</div>
+
+h1. Trends
+
+Note that most of the categories have been trending to lower values:
+
+* *UIs:* Smaller UI toolkits (but delivering richer features).
+* *Structure:* Smaller, focused pieces, "glued" together.
+* *Dev Model:* Lower cost.
+* *Cycle Times:* Shorter and shorter; approaching zero!
+
+h1. Trends (cont.)
+
+We'll discuss the implications for software process next week. For OOP vs. FP, the smaller components and faster cycles means there is little incentive for building object models.
+
+* Faster modification.
+* Changing requirements.
+* Each service only cares about a data slice.
+* UML modeling is absurd now...
 
 h1. Questions
 
@@ -55,5 +345,6 @@ h1. Questions
 * Contrasting OOP and FP:
   * Is the software of the future likely to be more FP or more OOP (or perhaps something else)?
   * Why is FP more interesting and OOP less interesting today? 
-* Example: Design Patterns and Revisionism.
 
+h1. Notes
+point free style and composition.

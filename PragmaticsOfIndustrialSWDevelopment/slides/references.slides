@@ -290,7 +290,9 @@ h1. Object-Oriented Programming (Specifics)
 * "Abstract Factory Design Pattern":http://en.wikipedia.org/wiki/Abstract_factory_pattern (Wikipedia).
 * "Singleton Design Pattern":http://en.wikipedia.org/wiki/Singleton_pattern (Wikipedia).
 * "Visitor Pattern":http://en.wikipedia.org/wiki/Visitor_pattern (Wikipedia). A truly ugly pattern. A good illustration of forcing a "pure" OO solution when a much more elegant approach should be used instead, i.e., _type classes_ (see the FP section below.)
-
+* "Are Design Patterns Missing Language Features":http://www.c2.com/cgi/wiki?AreDesignPatternsMissingLanguageFeatures. A starting place for criticisms of patterns.
+* Peter Norvig, "Design Patterns":http://www.norvig.com/design-patterns. Argues that 16 of the 23 GoF patterns are unnecessary in languages like Lisp.
+ 
 </div>
 
 h1. Object-Oriented Programming (Specifics)
@@ -330,11 +332,24 @@ h1. Functional Programming (Specifics)
 
 h1. OOP vs. Functional Programming
 
+<div class='small'>
+
 * Brian McNamara, "How does functional programming affect the structure of your code?":http://lorgonblog.wordpress.com/2008/09/22/how-does-functional-programming-affect-the-structure-of-your-code/. Argues that FP makes code better at all levels of the architecture.
 * Matthew Podwysocki, "Which Is More Beautiful Architecture - FP or OOP":http://codebetter.com/blogs/matthew.podwysocki/archive/2009/03/09/which-is-more-beautiful-architecture-fp-or-oop.aspx. Argues that the paper by Bertrand Meyer, which claims that OOP is superior to FP, is flawed. Matt also discusses Brian McNamara's blog post.
 
+</div>
+
+h1. Aspect-Oriented Programming
+
 <div class='small'>
 
+* "Aspect-Oriented Software Development":http://aosd.net.
+* "AspectJ":http://www.eclipse.org/aspectj/.
+* "Spring AOP":http://static.springsource.org/spring/docs/2.5.x/reference/aop.html.
+* Ramnivas Laddad, "AspectJ in Action, Second Edition", Manning, 2010, ISBN 1933988053.
+* "Multidimensional Separation of Concerns":http://www.research.ibm.com/hyperspace/.
+* "Aquarium":http://aquarium.rubyforge.org. An AOP framework for Ruby.
+* "Contract4J":http://contract4j.org. A _Design by Contract_ tool for Java, written in AspectJ.
 
 </div>
 
@@ -370,6 +385,16 @@ h1. Business
 </div>
 
 h1. Miscellaneous
+
+<div class='small'>
+
+* Christopher Alexander and co-authors wrote several books on design patterns in (building) architecture, which inspired a similar movement in software development. Here are two of them.
+** "The Timeless Way of Building", Oxford, 1979, ISBN 0195024028.
+** "A Pattern Language", Oxford, 1977, ISBN 0195019199.
+
+</div>
+
+h1. Off Topic: Career Advice
 
 <div class='small'>
 
