@@ -222,7 +222,7 @@ Department of Computer Science,<br/>Loyola University Chicago</p>
 	</tr>
 	<tr>
 		<td> 11/30 </td>
-		<td> Complexity vs. Simplicity Part <span class="caps">III</span>: Simple Systems </td>
+		<td> Complexity vs. Simplicity Part II: Simple Systems </td>
 	</tr>
 	<tr>
 		<td> 12/07 </td>
@@ -261,19 +261,19 @@ Department of Computer Science,<br/>Loyola University Chicago</p>
 <div class="slide">
 <h1>Course Components: Project Exercises</h1>
 <ul>
-	<li>Start with a &#8220;running&#8221; 3-tier Scala application</li>
-	<li>Hosted on <a href="http://github.com">GitHub.com</a> at <a href="http://github.com/deanwampler/AkkaWebSampleExercise">github.com/deanwampler/AkkaWebSampleExercise</a>.</li>
-	<li>Uses <em>actors</em> to scale computation over a <span class="caps">NYSE</span> data set.</li>
-	<li>Add features during the semester.</li>
-	<li><em>Refactor</em> the code to improve it and accommodate new features.</li>
+	<li>Start with a &#8220;running&#8221; 3-tier Scala application<br />
+ * Hosted on <a href="http://github.com">GitHub.com</a> at <a href="http://github.com/deanwampler/AkkaWebSampleExercise">github.com/deanwampler/AkkaWebSampleExercise</a>. <br />
+ * Uses <em>actors</em> to scale computation over a <span class="caps">NYSE</span> data set.<br />
+ * Add features during the semester.<br />
+ * <em>Refactor</em> the code to improve it and accommodate new features.</li>
 </ul>
 </div>
 <div class="slide">
 <h1>Course Components: Project Exercises (cont.)</h1>
 <ul>
-	<li><em>You are encouraged to work together.</em></li>
-	<li>Like you would in an industrial setting&#8230;</li>
-	<li>I expect the solutions to look &#8220;similar&#8221;.</li>
+	<li><em>You are encouraged to work together.</em><br />
+ * Like you would in an industrial setting&#8230;<br />
+ * I expect the solutions to look &#8220;similar&#8221;.</li>
 </ul>
 </div>
 <div class="slide">
@@ -287,16 +287,17 @@ h1. Course Components: Project Exercises (cont.)
 <ul>
 	<li>5% will be based on an <strong>oral presentation</strong> on 12/7.</li>
 	<li>15 minutes or so, with time for questions and discussion.</li>
-	<li>Topics to be worked out with me.</li>
+	<li>Topics to be worked out with me.<br />
+  <br />
+</div><br />
+<div class="slide"></li>
 </ul>
-</div>
-<div class="slide">
 <h1>Midterm and Final Exam</h1>
 <ul>
 	<li>Will cover the reading, lecture material, and concepts learned in the exercises.</li>
-	<li>Final exam content weighted:</li>
-	<li>2/3 of the material since the midterm</li>
-	<li>1/3 material before the midterm.</li>
+	<li>Final exam content weighted:<br />
+ * 2/3 of the material since the midterm <br />
+ * 1/3 material before the midterm.</li>
 	<li>Midterm: 10/19 (first half of that evening&#8217;s session).</li>
 	<li>Final exam: 12/14 (usual class time).</li>
 </ul>
@@ -314,9 +315,9 @@ h1. Course Components: Project Exercises (cont.)
 <div class="slide">
 <h1>Scaling Computation, Part I</h1>
 <ul>
-	<li>Two models of concurrency compared:</li>
-	<li>Multithreaded Programming.</li>
-	<li>The Actor Model of concurrency.</li>
+	<li>Two models of concurrency compared: <br />
+  * Multithreaded Programming.<br />
+  * The Actor Model of concurrency.</li>
 </ul>
 </div>
 <div class="slide">
@@ -348,7 +349,7 @@ public class UnsafeSequence {
   public int getNext() {
     return value++;
   }
-}</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/deanwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/UnsafeSequence.java">code/UnsafeSequence.java</a></div></p>
+}</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/dwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/UnsafeSequence.java">code/UnsafeSequence.java</a></div></p>
 <p>(credit: all Multithreading examples adapted from &#8220;Java Concurrency in Practice&#8221;)</p>
 </div>
 <div class="slide">
@@ -362,7 +363,7 @@ public class Sequence {
   public synchronized int getNext() {
     return value++;
   }
-}</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/deanwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/SafeSequence.java">code/SafeSequence.java</a></div></p>
+}</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/dwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/SafeSequence.java">code/SafeSequence.java</a></div></p>
 </div>
 <div class="slide">
 <h1>Things Can Go Wrong</h1>
@@ -394,7 +395,7 @@ public class LeftRightDeadlock {
     synchronized (right) {
       synchronized (left) { doSomethingElse(); }
   }
-}</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/deanwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/LeftRightDeadlock.java">code/LeftRightDeadlock.java</a></div></p>
+}</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/dwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/LeftRightDeadlock.java">code/LeftRightDeadlock.java</a></div></p>
 </div>
 <div class="slide">
 <h1>Other Deadlock Hazards</h1>
@@ -416,10 +417,11 @@ public class LeftRightDeadlock {
 <p>A thread is not blocked, but it can&#8217;t complete work because of trying operations always fails.</p>
 <ul>
 	<li>A common example is repeated execution of a transaction that never succeeds.</li>
-	<li>One scenario is two contenders with identical strategies for trying again, often colliding in the same way. If one is <em>greedy</em>, both may succeed.</li>
+	<li>One scenario is two contenders with identical strategies for trying again, often colliding in the same way. If one is <em>greedy</em>, both may succeed.<br />
+ <br />
+</div><br />
+<div class="slide"></li>
 </ul>
-</div>
-<div class="slide">
 <h1>The Importance of Immutability</h1>
 <p>What about access to <em>immutable</em> state? All the synchronization issues go away. Immutable objects have these virtues:</p>
 <ul>
@@ -455,7 +457,7 @@ class Manager {
     case Start =&gt; managedActors foreach (_ ! Start)
   }
 }
-</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/deanwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/manager-actor.scala">code/manager-actor.scala</a></div></p>
+</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/dwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/manager-actor.scala">code/manager-actor.scala</a></div></p>
 </div>
 <div class="slide">
 <h1>Actors in Scala (Akka)</h1>
@@ -504,7 +506,7 @@ class Manager {
 import se.scalablesolutions.akka.actor.Actor_
 // Creating an actor (one way...) and starting
 val manager = Actor.actorOf[Manager]
-manager.start</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/deanwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/manager-actor2.scala">code/manager-actor2.scala</a></div></p>
+manager.start</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/dwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/manager-actor2.scala">code/manager-actor2.scala</a></div></p>
 </div>
 <div class="slide">
 <h1>Actor vs. ActorRef</h1>
@@ -524,7 +526,7 @@ case class  Register(actor: ActorRef)
 case class  Unregister(actor: ActorRef)
 case object Stop
 case object Start
-</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/deanwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/actor-messages.scala">code/actor-messages.scala</a></div></p>
+</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/dwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/actor-messages.scala">code/actor-messages.scala</a></div></p>
 </div>
 <div class="slide">
 <h1>An Asynchronous (Fire and Forget) Message</h1>
@@ -537,7 +539,7 @@ case object Start
     case Start =&gt; managedActors foreach (_ ! Start)
   }
 }
-</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/deanwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/actor-asynch-message.scala">code/actor-asynch-message.scala</a></div></p>
+</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/dwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/actor-asynch-message.scala">code/actor-asynch-message.scala</a></div></p>
 <p>If a response is required, the receiver can send a message to the sender.</p>
 </div>
 <div class="slide">
@@ -554,7 +556,7 @@ case object Start
     }
   }
 }
-</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/deanwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/actor-synch-message.scala">code/actor-synch-message.scala</a></div></p>
+</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/dwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/actor-synch-message.scala">code/actor-synch-message.scala</a></div></p>
 </div>
 <div class="slide">
 <h1>An Synchronous (Wait) Message (cont.)</h1>
@@ -577,7 +579,7 @@ case object Start
       case None =&gt; "Error!"
     }
 }
-</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/deanwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/actor-future-message.scala">code/actor-future-message.scala</a></div></p>
+</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/dwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/actor-future-message.scala">code/actor-future-message.scala</a></div></p>
 </div>
 <div class="slide">
 <h1>An Asynchronous with a Future Message (cont.)</h1>
@@ -601,7 +603,7 @@ case object Start
       case None =&gt; "Error!"
     }
 }
-</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/deanwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/actor-future-message2.scala">code/actor-future-message2.scala</a></div></p>
+</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/dwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/actor-future-message2.scala">code/actor-future-message2.scala</a></div></p>
 </div>
 <div class="slide">
 <h1>Achieving Immutability</h1>
@@ -761,8 +763,9 @@ case object Start
 <h1>Add New Functionality (cont &#8211; sort of&#8230;)</h1>
 <p>How could we modify <code>filter</code> to filter by instruments? (To make it easier, assume there is only one instrument in the list, as in the test.)</p>
 <p>This is not easy, as we really need to parse the <span class="caps">JSON</span> into some representation, filter out the records (which are of the form <code>{"timestamp": 1283233404995, "symbol": "A", "price", "40.0"}</code>) using the <code>symbol</code>, then convert back to a string.</p>
-<p>Can you figure out how to do this with the Lift <span class="caps">JSON</span> APIs used in the application and <span class="caps">JSON</span> helper types provided, or using other 3rd-party <span class="caps">JSON</span> libraries?</p>
-<p>Actually, the right way to implement this feature is to support this filtering at the database level, which we will learn how to do with MongoDB.</p>
+<p>Can you figure out how to do this with the Lift <span class="caps">JSON</span> APIs used in the application and <span class="caps">JSON</span> helper types provided, or using other 3rd-party <span class="caps">JSON</span> libraries?<br />
+ <br />
+Actually, the right way to implement this feature is to support this filtering at the database level, which we will learn how to do with MongoDB.</p>
 </div>
 <div class="title slide">
 <h1>Lecture 2: Scaling Computation, Part II, and Course Project Rebooted</h1>
@@ -1001,7 +1004,7 @@ def counter = atomic {  // demarcate "atomic" block
  
 counter  // -&gt; 1
 counter  // -&gt; 2
-ref.get  // -&gt; 2 (retrieve the value explicitly)</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/deanwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/akka-stm-example1.scala">code/akka-stm-example1.scala</a></div></p>
+ref.get  // -&gt; 2 (retrieve the value explicitly)</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/dwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/akka-stm-example1.scala">code/akka-stm-example1.scala</a></div></p>
 </div>
 <div class="slide">
 <h1>Symantics (cont.)</h1>
@@ -1016,7 +1019,7 @@ val ref = Ref(1) // initialize with 1
 atomic {  
   ref set 10     // set new value
 }                // (actually returns old value)
-ref.get          // -&gt; 10</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/deanwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/akka-stm-example2.scala">code/akka-stm-example2.scala</a></div></p>
+ref.get          // -&gt; 10</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/dwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/akka-stm-example2.scala">code/akka-stm-example2.scala</a></div></p>
 </div>
 <div class="slide">
 <h1>Symantics: Blocking (&#8220;Retry&#8221;)</h1>
@@ -1037,7 +1040,7 @@ def receive = {
       to alter (_ + amount)
     }
 }
-</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/deanwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/akka-stm-example3.scala">code/akka-stm-example3.scala</a></div></p>
+</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/dwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/akka-stm-example3.scala">code/akka-stm-example3.scala</a></div></p>
 <p>(See <strong>Blocking Transactions</strong> on the <a href="http://doc.akkasource.org/stm-scala">Akka <span class="caps">STM</span> page</a> for the full example.)</p>
 </div>
 <div class="slide">
@@ -1062,7 +1065,7 @@ def receive = {
       }
     }
 }
-</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/deanwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/akka-stm-example4.scala">code/akka-stm-example4.scala</a></div></p>
+</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/dwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/akka-stm-example4.scala">code/akka-stm-example4.scala</a></div></p>
 </div>
 <div class="slide">
 <h1>Composability and Modularity</h1>
@@ -1185,7 +1188,7 @@ def receive = {
 <div class="code-tiny">
 <pre name="code" id="code" class="brush: scala;">[error] Test Failed: calculateStatistics returns a JSON string containing all data that matches the instrument criteria
 org.scalatest.TestFailedException: JObject(List(JField(criteria,JObject(List(JField(instruments,JArray(List(JString(A)))), JField(statistics,JArray(List(JString(price[$])))), JField(start,JInt(0)), JField(end,JInt(1283824964864))))), JField(results,JArray(List(JObject(List(JField(timestamp,JInt(1283824954864)), JField(symbol,JString(A)), JField(price,JDouble(0.0)))), JObject(List(JField(timestamp,JInt(1283824955864)), JField(symbol,JString(C)), JField(price,JDouble(10.0)))), JObject(List(JField(timestamp,JInt(1283824956864)), JField(symbol,JString(A)), JField(price,JDouble(20.0)))), JObject(List(JField(timestamp,JInt(1283824957864)), JField(symbol,JString(B)), JField(price,JDouble(30.0)))), JObject(List(JField(timestamp,JInt(1283824958864)), JField(symbol,JString(A)), JField(price,JDouble(40.0))))))))) did not equal JObject(List(JField(criteria,JObject(List(JField(instruments,JArray(List(JString(A)))), JField(statistics,JArray(List(JString(price[$])))), JField(start,JInt(0)), JField(end,JInt(1283824964864))))), JField(results,JArray(List(JObject(List(JField(timestamp,JInt(1283824954864)), JField(symbol,JString(A)), JField(price,JDouble(0.0)))), JObject(List(JField(timestamp,JInt(1283824958864)), JField(symbol,JString(A)), JField(price,JDouble(40.0)))), JObject(List(JField(timestamp,JInt(1283824956864)), JField(symbol,JString(A)), JField(price,JDouble(20.0)))))))))
-</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/deanwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/exercise1-test-failure.scala">code/exercise1-test-failure.scala</a></div></p>
+</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/dwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/exercise1-test-failure.scala">code/exercise1-test-failure.scala</a></div></p>
 <p>(Yeah!)</p>
 </div>
 <div class="slide">
@@ -1215,10 +1218,11 @@ analysisServer.calculateStatistics(criteria) should equal (expected)
 <p><code>~test-only org.chicagoscala.awse.server.finance.InstrumentAnalysisServerTest</code></p>
 <ul>
 	<li>Note that it will wait (no prompt is returned) and every time you save code changes, this test will run.</li>
-	<li>Using the <code>~test-only</code> &#8220;action&#8221; saves time, running in a few seconds, while running all the tests takes longer.</li>
+	<li>Using the <code>~test-only</code> &#8220;action&#8221; saves time, running in a few seconds, while running all the tests takes longer.<br />
+ <br />
+</div><br />
+<div class="slide"></li>
 </ul>
-</div>
-<div class="slide">
 <h1>Add New Functionality (cont.)</h1>
 <ul>
 	<li>Now, in your editor of choice, open the file <code>main/scala/server/finance/InstrumentAnalysisServer.scala</code> (the file being tested&#8230;)</li>
@@ -1681,8 +1685,9 @@ formatPriceResults(filter(result), instruments, statistics, startMillis, endMill
 <div class="slide">
 <h1>Tightly Coupled (Clustered)</h1>
 <p>Usually refers to a cluster of servers or services that collaborate closely, perhaps to solve a problem with <em>divide and conquer</em> after which the individual contributions are combined to produce the final result.</p>
-<p>Tight coupling may imply that failure of one element causes the work of all elements to fail. An exception is typical <em>map-reduce</em> systems (which we&#8217;ll discuss in a subsequent lecture), like <em>Hadoop</em>, which handle single node failures.</p>
-<p>Example:</p>
+<p>Tight coupling may imply that failure of one element causes the work of all elements to fail. An exception is typical <em>map-reduce</em> systems (which we&#8217;ll discuss in a subsequent lecture), like <em>Hadoop</em>, which handle single node failures.<br />
+ <br />
+Example:</p>
 <ul>
 	<li>Multicore Processor</li>
 	<li>Map-Reduce</li>
@@ -1780,10 +1785,11 @@ git checkout exercise2           # change to the "exercise2" branch
 	<li>Edit <code>RestfulDataPublisher.scala</code>. We need to do a little <em>refactoring</em> first.</li>
 	<li>Change <code>getStatsFromInstrumentAnalysisServerSupervisors</code> to take this argument: <code>message: InstrumentCalculationMessages</code>.</li>
 	<li>Change <code>supervisor !! CalculateStatistics(allCriteria)</code> to <code>supervisor !! message</code>.</li>
-	<li>Now this method is more general to meet our needs.</li>
+	<li>Now this method is more general to meet our needs.<br />
+ <br />
+</div><br />
+<div class="slide"></li>
 </ul>
-</div>
-<div class="slide">
 <h1>Add New Functionality (step 6)</h1>
 <ul>
 	<li>Also in <code>RestfulDataPublisher.scala</code>, in method <code>getAllDataFor</code>, change:</li>
@@ -2365,8 +2371,9 @@ or split <em>functionality</em> across servers:</li>
 </div>
 <div class="slide">
 <h1>Key-Value Stores</h1>
-<p>E.g., <em>Amazon SimpleDB, Riak, Redis, Tokyo Cabinet, Scalaris, MemcacheDB, BerkeleyDB, MNesia.</em></p>
-<p>Think of hash maps on <em>steroids</em>.</p>
+<p>E.g., <em>Amazon SimpleDB, Riak, Redis, Tokyo Cabinet, Scalaris, MemcacheDB, BerkeleyDB, MNesia.</em><br />
+ <br />
+Think of hash maps on <em>steroids</em>.</p>
 <ul>
 	<li>May be purely in-memory (with optional flushing to disk) and resident on one machine.</li>
 	<li>Excellent for &#8220;persisting&#8221; semi-structured data with shorter lifespans (e.g., web sessions).</li>
@@ -2400,9 +2407,9 @@ or split <em>functionality</em> across servers:</li>
 </div>
 <div class="slide">
 <h1>&#8220;Polyglot Persistence&#8221;</h1>
-<p>A big trend today is that non-trivial systems mix different programming languages, libraries and tools. Do we use just one language to write all parts of a standard web application? No.<sup class="footnote" id="fnr1"><a href="#fn1">1</a></sup></p>
+<p>A big trend today is that non-trivial systems mix different programming languages, libraries and tools. Do we use just one language to write all parts of a standard web application? No.<sup class="footnote"><a href="#fn1">1</a></sup></p>
 <p>The same phenomenon is now happening at the persistence level. Often, one persistence strategy doesn&#8217;t fit all needs in complex, distributed systems. You might use a fast, key-value store for user sessions, then persist key &#8220;events&#8221; to an <span class="caps">RDBMS</span>, for example.</p>
-<p><sup class="footnote" id="fnr1"><a href="#fn1">1</a></sup> Well, maybe we could with JavaScript&#8230;</p>
+<p><sup class="footnote"><a href="#fn1">1</a></sup> Well, maybe we could with JavaScript&#8230;</p>
 </div>
 <div class="slide">
 <h1>Some Techniques We&#8217;ll Discuss</h1>
@@ -2596,8 +2603,9 @@ or split <em>functionality</em> across servers:</li>
 </div>
 <div class="slide">
 <h1>Key-Value Stores</h1>
-<p>E.g., <em>Amazon SimpleDB, Riak, Redis, Tokyo Cabinet, Scalaris, MemcacheDB, BerkeleyDB, Mnesia.</em></p>
-<p>Think of hash maps on <em>steroids</em>.</p>
+<p>E.g., <em>Amazon SimpleDB, Riak, Redis, Tokyo Cabinet, Scalaris, MemcacheDB, BerkeleyDB, Mnesia.</em><br />
+ <br />
+Think of hash maps on <em>steroids</em>.</p>
 <ul>
 	<li>May be purely in-memory (with optional flushing to disk) and resident on one machine.</li>
 	<li>Excellent for &#8220;persisting&#8221; semi-structured data with shorter lifespans (e.g., web sessions).</li>
@@ -3004,9 +3012,10 @@ DTT
 	<li>To hard to do this manually.</li>
 	<li>Keys are hashed, using consistent hashing.</li>
 	<li>The range of possible hash values is treated as a &#8220;ring&#8221; that wraps.</li>
-	<li>Each node is assigned a random position on the ring.</li>
+	<li>Each node is assigned a random position on the ring.<br />
+ <br />
+When a row&#8217;s key is hashed, the node with the closest key <em>greater than</em> the row&#8217;s key is assigned the responsibility for coordinating reads and writes.</li>
 </ul>
-<p>When a row&#8217;s key is hashed, the node with the closest key <em>greater than</em> the row&#8217;s key is assigned the responsibility for coordinating reads and writes.</p>
 </div>
 <div class="slide">
 <h1>Reads and Writes</h1>
@@ -4006,15 +4015,15 @@ package gui.windowing {
 <ul>
 	<li>Once a constructor completes, the object should be in a <em>known-good state</em>.</li>
 	<li><em>Every</em> method should transition the object from one known-good state to another (possibly the same) known-good state.</li>
-	<li>Clean up resources when the object becomes garbage.<sup class="footnote" id="fnr1"><a href="#fn1">1</a></sup> <sup class="footnote" id="fnr2"><a href="#fn2">2</a></sup></li>
+	<li>Clean up resources when the object becomes garbage.<sup class="footnote"><a href="#fn1">1</a></sup> <sup class="footnote"><a href="#fn2">2</a></sup></li>
 </ul>
-<p><sup class="footnote" id="fnr1"><a href="#fn1">1</a></sup> C++ and C# have <em>destructors</em> for this purpose (but they may be invoked too late for some resources, like database connections).<br />
-<sup class="footnote" id="fnr2"><a href="#fn2">2</a></sup> Java has finalizers, but they are effectively useless, maybe even harmful.</p>
+<p><sup class="footnote"><a href="#fn1">1</a></sup> C++ and C# have <em>destructors</em> for this purpose (but they may be invoked too late for some resources, like database connections).<br />
+<sup class="footnote"><a href="#fn2">2</a></sup> Java has finalizers, but they are effectively useless, maybe even harmful.</p>
 </div>
 <div class="slide">
-<h1>Design by Contract<sup class="footnote" id="fnr1"><a href="#fn1">1</a></sup></h1>
+<h1>Design by Contract<sup class="footnote"><a href="#fn1">1</a></sup></h1>
 <p><a href="http://en.wikipedia.org/wiki/Design_by_contract">Design by Contract</a> (DbC) is a programming discipline where you specify assertions about program behavior that the language infrastructure can enforce during testing, but disable in production deployments, for performance reasons.</p>
-<p><sup class="footnote" id="fnr1"><a href="#fn1">1</a></sup> A registered trademark of Eiffel Software</p>
+<p><sup class="footnote"><a href="#fn1">1</a></sup> A registered trademark of Eiffel Software</p>
 </div>
 <div class="slide">
 <h1>Design by Contract (cont.)</h1>
@@ -4029,8 +4038,9 @@ package gui.windowing {
 <div class="slide">
 <h1>Preconditions</h1>
 <p><strong>Preconditions</strong> are what must be true in order for the function to do its job. A trivial example: there must be enough free memory for the function to allocate the objects it creates.</p>
-<p>Hence, these are requirements on the runtime environment and the clients using the function. Here is an example using our Windowing <span class="caps">API</span> and a &#8220;mythical&#8221; DbC framework that uses annotations.</p>
-<div class="code-small">
+<p>Hence, these are requirements on the runtime environment and the clients using the function. Here is an example using our Windowing <span class="caps">API</span> and a &#8220;mythical&#8221; DbC framework that uses annotations.<br />
+ <br />
+<div class="code-small"></p>
 <pre name="code" id="code" class="brush: scala,;">
 
 package gui.windowing {
@@ -4046,8 +4056,9 @@ package gui.windowing {
 <div class="slide">
 <h1>Postconditions</h1>
 <p><strong>Postconditions</strong> are what the function guarantees to satisfy when it finishes its job, <em>if</em> the preconditions are true. A trivial example: a function might promise to never return <code>null</code>.</p>
-<p>Hence, these are requirements on the function itself, constituting promises to clients. Here is an example using our Windowing <span class="caps">API</span>.</p>
-<div class="code-small">
+<p>Hence, these are requirements on the function itself, constituting promises to clients. Here is an example using our Windowing <span class="caps">API</span>.<br />
+ <br />
+<div class="code-small"></p>
 <pre name="code" id="code" class="brush: scala,;">
 
 package gui.windowing {
@@ -4063,8 +4074,9 @@ package gui.windowing {
 </div>
 <div class="slide">
 <h1>Invariants</h1>
-<p><strong>Invariants</strong> must be true before and after function invocation. They may specify some object (or global) property that doesn&#8217;t change. They may specify a logical constraint that must remain true, etc. Invariants can be requirements on the function, the environment, or both.</p>
-<div class="code-small">
+<p><strong>Invariants</strong> must be true before and after function invocation. They may specify some object (or global) property that doesn&#8217;t change. They may specify a logical constraint that must remain true, etc. Invariants can be requirements on the function, the environment, or both.<br />
+ <br />
+<div class="code-small"></p>
 <pre name="code" id="code" class="brush: scala,;">
 
 package gui.windowing {
@@ -4103,7 +4115,6 @@ package gui.windowing {
 <h1>Scala Has Classes (for Example)</h1>
 <p>Scala example, patterned after Java&#8217;s <code>Exception</code> Hierarchy:<br />
 <div class="code-small"></p>
-
 <pre name="code" id="code" class="brush: scala,;">
 
 class Exception(
@@ -4274,7 +4285,6 @@ assert (s.height == 4)  // True???
 <p><em>Prototype-based languages</em> don&#8217;t have classes. (Hence they are also called <em>classless</em> languages.) Instead, you just build up objects &#8220;from scratch&#8221;.</p>
 <p>JavaScript object-literal notation (essentially, a hash map):<br />
 <div class="code-small"></p>
-
 <pre name="code" id="code" class="brush: scala,;">
 
 var exception = {
@@ -4299,8 +4309,8 @@ exception.name = "ExceptionFormerlyRepresentingANetworkException";
 <div class="slide">
 <h1>Aside: <em>Open Classes</em></h1>
 <p>Note that many <em>dynamically-typed, class-based</em> languages, e.g., Ruby, allow this kind of object modification, too. They are said to have <em>open classes</em>.</p>
-<p>Most <em>statically-typed</em> languages, like Scala, Java, C#, and C++, have closed classes. You can&#8217;t add or remove members in objects.<sup class="footnote" id="fnr1"><a href="#fn1">1</a></sup></p>
-<p><sup class="footnote" id="fnr1"><a href="#fn1">1</a></sup> There are some workarounds, both byte-code level hacks and some language features, like Scala&#8217;s <em>implicits</em>.</p>
+<p>Most <em>statically-typed</em> languages, like Scala, Java, C#, and C++, have closed classes. You can&#8217;t add or remove members in objects.<sup class="footnote"><a href="#fn1">1</a></sup></p>
+<p><sup class="footnote"><a href="#fn1">1</a></sup> There are some workarounds, both byte-code level hacks and some language features, like Scala&#8217;s <em>implicits</em>.</p>
 </div>
 <div class="slide">
 <h1>Prototype-Based Languages (cont.)</h1>
@@ -4486,7 +4496,6 @@ oddMap.get("two") match {
 <h1><code>Option[+A]</code>: <code>case</code> class (cont.)</h1>
 <p>So, adding <code>case</code> to the declaration is equivalent to this:<br />
 <div class="code-small"></p>
-
 <pre name="code" id="code" class="brush: scala,;">
 
 final class Some[+A](val x: A) extends Option[+A] {
@@ -4521,7 +4530,6 @@ case object None extends Option[Nothing] {
 <p><strong>Nothing</strong>: A subtype of <em>all</em> other types, with <em>no</em> instances.</p>
 <p>Used for proper type safety.<br />
 <div class="code-small"></p>
-
 <pre name="code" id="code" class="brush: scala,;">
 
 case object None extends Option[Nothing] {...}
@@ -4755,8 +4763,9 @@ println(dean.name)
 </div>
 <div class="slide">
 <h1>Uniform-Access Principle (cont.)</h1>
-<p>The <em>caller</em> doesn&#8217;t care whether a method is invoked or a bare field is accessed.</p>
-<p>The <em>implementer</em> might want to start with a simple bare field access, then eventually replace it with a method call (e.g., to do lazy initialization, etc.).</p>
+<p>The <em>caller</em> doesn&#8217;t care whether a method is invoked or a bare field is accessed.<br />
+ <br />
+The <em>implementer</em> might want to start with a simple bare field access, then eventually replace it with a method call (e.g., to do lazy initialization, etc.).</p>
 <p>The <em>uniform-access principle</em> means the caller&#8217;s code doesn&#8217;t have to change, because the syntax is identical. (The code might need a recompile).</p>
 </div>
 <div class="slide">
@@ -4863,7 +4872,6 @@ package gui.windowing {
 <h1>Other Modules</h1>
 <p><span class="caps">BAD</span>:<br />
 <div class="code-small"></p>
-
 <pre name="code" id="code" class="brush: scala,;">
 
 object MyApp {
@@ -4875,7 +4883,6 @@ object MyApp {
 </pre></div>
 <p><span class="caps">GOOD</span>:<br />
 <div class="code-small"></p>
-
 <pre name="code" id="code" class="brush: scala,;">
 
 object MyApp {
@@ -5537,8 +5544,8 @@ val outputs: List[Output] = toOutputs(List("A", "B"), a2o)
 <div class="slide">
 <h1>What Is Functional Programming?</h1>
 <p>FP treats computation as the <em>application of functions</em> rather than the direct <em>mutation of state</em>.</p>
-<p>FP has its roots in mathematics, specifically <em>lambda calculus</em><sup class="footnote" id="fnr1"><a href="#fn1">1</a></sup>, a formal system developed in the 1930s to investigate function definition, function application,  recursion, etc. (Yes, before the invention of electronic computers.) Many functional programming languages can be viewed as elaborations on the lambda calculus.</p>
-<p><sup class="footnote" id="fnr1"><a href="#fn1">1</a></sup> For this reason, anonymous functions in many languages are called <em>lambdas</em>.</p>
+<p>FP has its roots in mathematics, specifically <em>lambda calculus</em><sup class="footnote"><a href="#fn1">1</a></sup>, a formal system developed in the 1930s to investigate function definition, function application,  recursion, etc. (Yes, before the invention of electronic computers.) Many functional programming languages can be viewed as elaborations on the lambda calculus.</p>
+<p><sup class="footnote"><a href="#fn1">1</a></sup> For this reason, anonymous functions in many languages are called <em>lambdas</em>.</p>
 <p>(Adapted from <a href="http://en.wikipedia.org/wiki/Functional_programming">Wikipedia</a>.)</p>
 </div>
 <div class="slide">
@@ -5570,9 +5577,9 @@ val outputs: List[Output] = toOutputs(List("A", "B"), a2o)
 <h1>No Side Effects</h1>
 <p>Just as <code>x</code> is not mutable, so to is the rest of the world. So, by definition, immutability means there can be no <em>side effects</em>. This also has important implications for functions:</p>
 <p>x = cos(y)<sup>2</sup></p>
-<p><strong>All</strong> work done by <code>cos(y)</code> (for example) is returned and assigned to <code>x</code>. there is no global state that is updated.<sup class="footnote" id="fnr1"><a href="#fn1">1</a></sup></p>
+<p><strong>All</strong> work done by <code>cos(y)</code> (for example) is returned and assigned to <code>x</code>. there is no global state that is updated.<sup class="footnote"><a href="#fn1">1</a></sup></p>
 <p>Functions without side effects are called <em>pure.</em></p>
-<p><sup class="footnote" id="fnr1"><a href="#fn1">1</a></sup> However, a real implementation might update &#8220;invisible&#8221; state like a cache of previously-calculated values.</p>
+<p><sup class="footnote"><a href="#fn1">1</a></sup> However, a real implementation might update &#8220;invisible&#8221; state like a cache of previously-calculated values.</p>
 </div>
 <div class="slide">
 <h1>Benefits of No Side Effects</h1>
@@ -5692,8 +5699,8 @@ printList(List(1, "two", 3.3))
 // =&gt; two
 // =&gt; 3.3
 </pre></div>
-<p>Note that we use the wildcard <code>_</code> for the <code>List[_]</code> parameter, because we don&#8217;t care what it is.<sup class="footnote" id="fnr1"><a href="#fn1">1</a></sup></p>
-<p><sup class="footnote" id="fnr1"><a href="#fn1">1</a></sup> Actually, on the <span class="caps">JVM</span> we have no choice, because this type information is <em>erased</em> in the byte code.</p>
+<p>Note that we use the wildcard <code>_</code> for the <code>List[_]</code> parameter, because we don&#8217;t care what it is.<sup class="footnote"><a href="#fn1">1</a></sup></p>
+<p><sup class="footnote"><a href="#fn1">1</a></sup> Actually, on the <span class="caps">JVM</span> we have no choice, because this type information is <em>erased</em> in the byte code.</p>
 </div>
 <div class="slide">
 <h1>Higher-Kinded Types (cont.)</h1>
@@ -5895,8 +5902,8 @@ def printList(list: List[_]) = list map println
 <div class="slide">
 <h1><span class="caps">OCP</span> and The Expression Problem (cont.)</h1>
 <p>The object-oriented approach is to use <em>inheritance</em>, where clients depend only on a <em>well-defined abstraction</em>, which is implemented by <em>concrete subtypes</em>. New &#8220;behaviors&#8221; can be added by defining new concrete subtypes for the same abstraction.</p>
-<p>As long as the abstraction is sufficiently expressive and clients don&#8217;t depend on the concrete subtypes, we can add new behaviors to the code base without modifying existing code.<sup class="footnote" id="fnr1"><a href="#fn1">1</a></sup></p>
-<p><sup class="footnote" id="fnr1"><a href="#fn1">1</a></sup> Recall that, every now and then, the abstraction won&#8217;t be general enough to support a new behavior, so the abstraction and possibly all the subtypes will require modification.</p>
+<p>As long as the abstraction is sufficiently expressive and clients don&#8217;t depend on the concrete subtypes, we can add new behaviors to the code base without modifying existing code.<sup class="footnote"><a href="#fn1">1</a></sup></p>
+<p><sup class="footnote"><a href="#fn1">1</a></sup> Recall that, every now and then, the abstraction won&#8217;t be general enough to support a new behavior, so the abstraction and possibly all the subtypes will require modification.</p>
 </div>
 <div class="slide">
 <h1><span class="caps">OCP</span> and The Expression Problem (cont.)</h1>
@@ -6377,7 +6384,7 @@ fib.take(100).print
 <div class='tiny'>
 <table>
 	<tr>
-		<th></th>
+		<th> </th>
 		<th>Pre-Internet </th>
 		<th>Internet </th>
 		<th>Big Data </th>
@@ -6424,7 +6431,7 @@ fib.take(100).print
 <div class='tiny'>
 <table>
 	<tr>
-		<th></th>
+		<th> </th>
 		<th>Pre-Internet </th>
 		<th>Internet </th>
 		<th>Big Data </th>
@@ -6445,7 +6452,7 @@ fib.take(100).print
 <div class='tiny'>
 <table>
 	<tr>
-		<th></th>
+		<th> </th>
 		<th>Pre-Internet </th>
 		<th>Internet </th>
 		<th>Big Data </th>
@@ -6472,7 +6479,7 @@ fib.take(100).print
 <div class='tiny'>
 <table>
 	<tr>
-		<th></th>
+		<th> </th>
 		<th>Pre-Internet </th>
 		<th>Internet </th>
 		<th>Big Data </th>
@@ -6505,7 +6512,7 @@ fib.take(100).print
 <div class='tiny'>
 <table>
 	<tr>
-		<th></th>
+		<th> </th>
 		<th>Pre-Internet </th>
 		<th>Internet </th>
 		<th>Big Data </th>
@@ -6544,7 +6551,7 @@ fib.take(100).print
 <div class='tiny'>
 <table>
 	<tr>
-		<th></th>
+		<th> </th>
 		<th>Pre-Internet </th>
 		<th>Internet </th>
 		<th>Big Data </th>
@@ -6612,13 +6619,13 @@ fib.take(100).print
 <div class="slide">
 <h1>Software Reuse</h1>
 <p>I&#8217;ll show an example later that compares modeling domain concepts with <em>classes</em> vs. representing objects as <em>maps</em> (which is how objects <em>are</em> represented in languages like JavaScript and Perl).</p>
-<p>There are some significant benefits for <em>reuse</em> when using such functional data structures<sup class="footnote" id="fnr1"><a href="#fn1">1</a></sup>.</p>
+<p>There are some significant benefits for <em>reuse</em> when using such functional data structures<sup class="footnote"><a href="#fn1">1</a></sup>.</p>
 <ul>
 	<li>These types are very well tested.</li>
 	<li>They provide a variety of functions for computations over the collections.</li>
 	<li>They define a few usage <em>protocols</em> that are flexible and powerful.</li>
 </ul>
-<p><sup class="footnote" id="fnr1"><a href="#fn1">1</a></sup> As opposed to the dumbed-down versions found in Java, etc.</p>
+<p><sup class="footnote"><a href="#fn1">1</a></sup> As opposed to the dumbed-down versions found in Java, etc.</p>
 </div>
 <div class="slide">
 <h1>Software Reuse (cont.)</h1>
@@ -6805,7 +6812,7 @@ trait Account {
 case class CheckingAccount(customer: Customer, var balance: Money) extends Account 
 case class SavingsAccount(customer: Customer, var balance: Money, 
   var interestRate: Double) extends Account 
-</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/deanwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/bank-account.scala">code/bank-account.scala</a></div></p>
+</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/dwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/bank-account.scala">code/bank-account.scala</a></div></p>
 </div>
 <div class="slide">
 <h1><span class="caps">AOP</span>: An Example Problem (cont.)</h1>
@@ -6828,7 +6835,7 @@ println("Checking: final account: " + sa)
 // Checking: initial account: CheckingAccount(Customer(Dean),Money(1000.0))
 // Checking: final account: CheckingAccount(Customer(Dean),Money(1500.0))
 // Savings: initial account: SavingsAccount(Customer(Dean),Money(2000.0),0.02)
-// Checking: final account: SavingsAccount(Customer(Dean),Money(900.0),0.3)</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/deanwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/bank-account-usage.scala">code/bank-account-usage.scala</a></div></p>
+// Checking: final account: SavingsAccount(Customer(Dean),Money(900.0),0.3)</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/dwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/bank-account-usage.scala">code/bank-account-usage.scala</a></div></p>
 </div>
 <div class="slide">
 <h1><span class="caps">AOP</span> and Modularity</h1>
@@ -6850,7 +6857,7 @@ case class Customer(initialName: String) extends Persister{
     _name = newName
     putToDatabase("name", _name)
   }
-}</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/deanwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/bank-account-bad-persistence.scala">code/bank-account-bad-persistence.scala</a></div></p>
+}</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/dwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/bank-account-bad-persistence.scala">code/bank-account-bad-persistence.scala</a></div></p>
 </div>
 <div class="slide">
 <h1>Modularity Breakdown</h1>
@@ -6876,10 +6883,10 @@ case class Customer(var name: String)
 </div>
 <div class="slide">
 <h1>Enterprise Java Beans</h1>
-<p><em>Enterprise Java Beans</em> (EJBs) where a flawed attempt to address this problem (the flaws were mostly fixed in the v3.0 redo<sup class="footnote" id="fnr1"><a href="#fn1">1</a></sup>). This model let you specify some data for persistence, transactions, security, etc. in <span class="caps">XML</span> configuration files, but you still had very invasive code in your domain objects.</p>
+<p><em>Enterprise Java Beans</em> (EJBs) where a flawed attempt to address this problem (the flaws were mostly fixed in the v3.0 redo<sup class="footnote"><a href="#fn1">1</a></sup>). This model let you specify some data for persistence, transactions, security, etc. in <span class="caps">XML</span> configuration files, but you still had very invasive code in your domain objects.</p>
 <p>Specifically, while the model &#8220;separated concerns&#8221; such as persistence from the domain model, the model objects needed to subclass <span class="caps">EJB</span> container types, implement methods to support lifecycle management, etc.</p>
 <p>That is, EJBs traded one set of problems for another set.</p>
-<p><sup class="footnote" id="fnr1"><a href="#fn1">1</a></sup> But only after the Spring Framework and the <span class="caps">AOP</span> community showed a better way.</p>
+<p><sup class="footnote"><a href="#fn1">1</a></sup> But only after the Spring Framework and the <span class="caps">AOP</span> community showed a better way.</p>
 </div>
 <div class="slide">
 <h1>Aspect-Oriented Programming</h1>
@@ -6907,9 +6914,9 @@ case class Customer(var name: String)
 <p>An aspect framework has two parts.</p>
 <ul>
 	<li><strong>Quantification:</strong> The ability to specify, in a succinct way (programmatically or declaratively), which &#8220;points of execution&#8221; to observe or modify. It&#8217;s analogous to a query language over the set of execution points.</li>
-	<li><strong>Behavior Modification</strong>: Once the set of execution points is identified, you need ways to observe or modify the behavior, <em>without modifying the original code</em><sup class="footnote" id="fnr1"><a href="#fn1">1</a></sup>.</li>
+	<li><strong>Behavior Modification</strong>: Once the set of execution points is identified, you need ways to observe or modify the behavior, <em>without modifying the original code</em><sup class="footnote"><a href="#fn1">1</a></sup>.</li>
 </ul>
-<p><sup class="footnote" id="fnr1"><a href="#fn1">1</a></sup> I.e., this a special case of the Expression Problem, a.k.a Open-Closed Principle.</p>
+<p><sup class="footnote"><a href="#fn1">1</a></sup> I.e., this a special case of the Expression Problem, a.k.a Open-Closed Principle.</p>
 </div>
 <div class="slide">
 <h1><span class="caps">AOP</span> Terminology</h1>
@@ -6943,7 +6950,7 @@ class InstrumentedCustomer(customer: Customer)
     customer.name = newName
     putToDatabase("name", newName)
   }
-}</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/deanwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/bank-account-instrumented.scala">code/bank-account-instrumented.scala</a></div></p>
+}</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/dwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/bank-account-instrumented.scala">code/bank-account-instrumented.scala</a></div></p>
 </div>
 <div class="slide">
 <h1><span class="caps">AOP</span> Tools</h1>
@@ -6979,13 +6986,13 @@ public aspect PersisentCustomer {
       case None =&gt;
     }
   }
-}</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/deanwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/bank-account-aspect.scala">code/bank-account-aspect.scala</a></div></p>
+}</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/dwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/bank-account-aspect.scala">code/bank-account-aspect.scala</a></div></p>
 </div>
 <div class="slide">
 <h1>Aspects Beyond Cross-Cutting Concerns</h1>
-<p>Note that the cross-cutting concerns that we mentioned, persistence, transactions, security, and logging, are sometimes called <em>non-functional requirements</em>, because they mostly relate to implementation concerns, rather than business requirements.<sup class="footnote" id="fnr1"><a href="#fn1">1</a></sup></p>
+<p>Note that the cross-cutting concerns that we mentioned, persistence, transactions, security, and logging, are sometimes called <em>non-functional requirements</em>, because they mostly relate to implementation concerns, rather than business requirements.<sup class="footnote"><a href="#fn1">1</a></sup></p>
 <p>Is this the only use for aspects?</p>
-<p><sup class="footnote" id="fnr1"><a href="#fn1">1</a></sup> This is not really an accurate distinction; everything we do is ultimately tied in some way to business requirements.</p>
+<p><sup class="footnote"><a href="#fn1">1</a></sup> This is not really an accurate distinction; everything we do is ultimately tied in some way to business requirements.</p>
 </div>
 <div class="slide">
 <h1>Aspects Beyond Cross-Cutting Concerns</h1>
@@ -7047,15 +7054,15 @@ trait PersistentName extends Named with Persister {
 
 case class Customer(var name: String) extends Named
 
-val dean = new Customer("Dean") with PersistentName</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/deanwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/bank-account-mixin.scala">code/bank-account-mixin.scala</a></div></p>
+val dean = new Customer("Dean") with PersistentName</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/dwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/bank-account-mixin.scala">code/bank-account-mixin.scala</a></div></p>
 </div>
 <div class="slide">
 <h1>Why Isn&#8217;t <span class="caps">AOP</span> Pervasive? (cont.)</h1>
 <p>So we can get <em>advice</em> without aspects, although it&#8217;s still tedious to write all these special cases. However, we still don&#8217;t have <em>quantification</em>.</p>
 <p>Functional data structures can address both limitations.</p>
 <p>Objects are just ad hoc groupings of collections and &#8220;atoms&#8221; (numbers, strings, etc.), recursively. More specifically, they work like <em>maps</em> and in languages like JavaScript, they <em>are</em> maps!</p>
-<p>So, if we create a <code>PersistentMap</code><sup class="footnote" id="fnr1"><a href="#fn1">1</a></sup>, in this case, and represent our objects as maps, we&#8217;ve solved the quantification problem!</p>
-<p><sup class="footnote" id="fnr1"><a href="#fn1">1</a></sup> In this case, meaning persistent to a database, not as in the <em><span class="caps">STM</span></em> case.</p>
+<p>So, if we create a <code>PersistentMap</code><sup class="footnote"><a href="#fn1">1</a></sup>, in this case, and represent our objects as maps, we&#8217;ve solved the quantification problem!</p>
+<p><sup class="footnote"><a href="#fn1">1</a></sup> In this case, meaning persistent to a database, not as in the <em><span class="caps">STM</span></em> case.</p>
 </div>
 <div class="slide">
 <h1>Why Isn&#8217;t <span class="caps">AOP</span> Pervasive? (cont.)</h1>
@@ -7082,13 +7089,13 @@ trait PersistentMap[K,V] extends Map[K,V] with KeyValuePersister[K,V] {
 }
 
 val dean = new HashMap[String,Any] with PersistentMap[String,Any]
-dean.put("name", "Dean")</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/deanwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/persistent-map.scala">code/persistent-map.scala</a></div></p>
+dean.put("name", "Dean")</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/dwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/persistent-map.scala">code/persistent-map.scala</a></div></p>
 </div>
 <div class="slide">
 <h1>Why Isn&#8217;t <span class="caps">AOP</span> Pervasive? (cont.)</h1>
 <p>What this means is that if we just use <code>Maps</code> (and perhaps a few other fundamental collections), we can instrument them as needed with less effort than instrumenting lots of ad-hoc classes. The quantification problem is reduced.</p>
-<p>The key point here is that working with more &#8220;primitive&#8221; building blocks; functions, and core data structures, it is actually easier to <em>generate</em> the variations of behavior we need.<sup class="footnote" id="fnr1"><a href="#fn1">1</a></sup> We&#8217;ll return to this point in a few weeks when we talk about <em>simplicity</em> in systems, etc.</p>
-<p><sup class="footnote" id="fnr1"><a href="#fn1">1</a></sup> We can make the behaviors more <em>composable</em> using advanced techniques like <em>monads</em>.</p>
+<p>The key point here is that working with more &#8220;primitive&#8221; building blocks; functions, and core data structures, it is actually easier to <em>generate</em> the variations of behavior we need.<sup class="footnote"><a href="#fn1">1</a></sup> We&#8217;ll return to this point in a few weeks when we talk about <em>simplicity</em> in systems, etc.</p>
+<p><sup class="footnote"><a href="#fn1">1</a></sup> We can make the behaviors more <em>composable</em> using advanced techniques like <em>monads</em>.</p>
 </div>
 <div class="slide">
 <h1>Conclusions: <span class="caps">OOP</span> vs. FP (vs. <span class="caps">AOP</span>)</h1>
@@ -7142,8 +7149,18 @@ dean.put("name", "Dean")</pre><p></div><div class="codeurl"><a href="txmt://open
 </ol>
 <p>Based on your answers, write down as many benefits of using <code>CriteriaMap</code> that you can think of.</p>
 </div>
-<div class="title slide">
-<h1>Lecture 12: Complexity vs. Simplicity Part I: Effective Software Development Processes, Scrum, XP, and Lean</h1>
+<div class="slide">
+<h1>Mini-Project</h1>
+<p>Your &#8220;non-reading&#8221; homework after this week will be the project. Our last class in three weeks, when you&#8217;ll present your results and turn in your work. Here are the milestones I want you to meet.</p>
+<ul>
+	<li>11/23: Turn in an outline of the specific items you will research and write up (for research projects) or implement (for coding projects). Also briefly describe what you have completed so far.</li>
+	<li>11/30: Turn in an refined outline and a summary of your progress so far.</li>
+	<li>12/5 (Sunday): Turn in a draft of your presentation slides for the 15-minute talk. (You can still work on them until Tuesday.)</li>
+	<li>12/7: Last class &#8211; presentations and turn in your writeup or code (GitHub preferred).<br />
+</div><br />
+<div class="slide"></li>
+</ul>
+<h1 class="slide0">Lecture 12: Complexity vs. Simplicity Part I: Effective Software Development Processes, Scrum, XP, and Lean</h1>
 </div>
 <div class="slide">
 <h1>Project Planning</h1>
@@ -7153,15 +7170,16 @@ dean.put("name", "Dean")</pre><p></div><div class="codeurl"><a href="txmt://open
 <ul>
 	<li>Fundamental requirements for any process.</li>
 	<li>Waterfall, Agile Methodologies, and others.</li>
-	<li>Why many approaches fail:</li>
-	<li>Excess complexity.</li>
-	<li>Poor mapping to the real &#8220;nature&#8221; of software development.</li>
+	<li>Why many approaches fail: <br />
+  * Excess complexity.<br />
+  * Poor mapping to the real &#8220;nature&#8221; of software development.</li>
 	<li>What should a process do?</li>
 </ul>
 </div>
 <div class="slide">
-<h1>Complexity vs. Simplicity Part II: Scrum, XP, and Lean</h1>
-<p>Agile software processes</p>
+<h1>Complexity vs. Simplicity Part II: Scrum, XP, and Lean<br />
+  <br />
+Agile software processes</h1>
 <ul>
 	<li>Scrum &#8211; arguably the first?</li>
 	<li>XP &#8211; a complete, small-team process</li>
@@ -7174,7 +7192,7 @@ dean.put("name", "Dean")</pre><p></div><div class="codeurl"><a href="txmt://open
 <h1>Reading Assignment</h1>
 <p>last week, I had you read some general introductions to Agile. This week, I want you read about the three main Agile methodologies that we discussed today.</p>
 <ul>
-	<li><a href="http://en.wikipedia.org/wiki/Scrum_(development)">Scrum</a></li>
+	<li><a href="http://en.wikipedia.org/wiki/Scrum_(development">Scrum</a>)</li>
 	<li><a href="http://en.wikipedia.org/wiki/Extreme_Programming">Extreme Programming</a></li>
 	<li>Lean</li>
 </ul>
@@ -7298,7 +7316,7 @@ dean.put("name", "Dean")</pre><p></div><div class="codeurl"><a href="txmt://open
 	<li><a href="http://dbmsmusings.blogspot.com/2010/04/problems-with-cap-and-yahoos-little.html">My Problem with <span class="caps">CAP</span> and Yahoo&#8217;s Little Known NoSQL System</a>.</li>
 	<li>Werner Vogels, <a href="http://portal.acm.org/ft_gateway.cfm?id=1466448&amp;type=pdf">Eventually Consistent</a>. (Also <a href="http://www.allthingsdistributed.com/2008/12/eventually_consistent.html">here</a>) A specific look at different kinds of eventual consistency and how they informed the design of several Amazon technologies.</li>
 	<li>Haifeng Yu and Amin Vahdat, <a href="http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.34.7743&amp;rep=rep1&amp;type=pdf">Design and Evaluation of a Continuous Consistency Model for Replicated Services</a></li>
-	<li>Guy Pardon, <a href="http://guysblogspot.blogspot.com/2008/09/cap-solution-proving-brewer-wrong.html" title="Proving Brewer Wrong">A <span class="caps">CAP</span> Solution</a>. An argument that if you don&#8217;t require all three properties at the same time, you can work around the <span class="caps">CAP</span> theorem.<br />
+	<li>Guy Pardon, <a href="http://guysblogspot.blogspot.com/2008/09/cap-solution-proving-brewer-wrong.html" title="Proving Brewer Wrong">>CAP</span> Solution</a>. An argument that if you don&#8217;t require all three properties at the same time, you can work around the <span class="caps">CAP</span> theorem.<br />
 </div></li>
 </ul>
 </div>
@@ -7513,9 +7531,10 @@ dean.put("name", "Dean")</pre><p></div><div class="codeurl"><a href="txmt://open
 	<li><a href="http://en.wikipedia.org/wiki/Singleton_pattern">Singleton Design Pattern</a> (Wikipedia).</li>
 	<li><a href="http://en.wikipedia.org/wiki/Visitor_pattern">Visitor Pattern</a> (Wikipedia). A truly ugly pattern. A good illustration of forcing a &#8220;pure&#8221; OO solution when a much more elegant approach should be used instead, i.e., <em>type classes</em> (see the FP section below.)</li>
 	<li><a href="http://www.c2.com/cgi/wiki?AreDesignPatternsMissingLanguageFeatures">Are Design Patterns Missing Language Features</a>. A starting place for criticisms of patterns.</li>
-	<li>Peter Norvig, <a href="http://www.norvig.com/design-patterns">Design Patterns</a>. Argues that 16 of the 23 GoF patterns are unnecessary in languages like Lisp.</li>
+	<li>Peter Norvig, <a href="http://www.norvig.com/design-patterns">Design Patterns</a>. Argues that 16 of the 23 GoF patterns are unnecessary in languages like Lisp.<br />
+ <br />
+</div></li>
 </ul>
-</div>
 </div>
 <div class="slide">
 <h1>Object-Oriented Programming (Specifics)</h1>

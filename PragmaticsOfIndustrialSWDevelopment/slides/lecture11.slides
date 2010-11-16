@@ -487,3 +487,12 @@ However, it also has advantages. Read the implementation of this type and find w
 # What mistakes might I make if the code just used a plain map that @CriteriaMap@ helps prevent?
 
 Based on your answers, write down as many benefits of using @CriteriaMap@ that you can think of.
+
+h1. Mini-Project
+
+Your "non-reading" homework after this week will be the project. Our last class in three weeks, when you'll present your results and turn in your work. Here are the milestones I want you to meet.
+
+* 11/23: Turn in an outline of the specific items you will research and write up (for research projects) or implement (for coding projects). Also briefly describe what you have completed so far.
+* 11/30: Turn in an refined outline and a summary of your progress so far.
+* 12/5 (Sunday): Turn in a draft of your presentation slides for the 15-minute talk. (You can still work on them until Tuesday.)
+* 12/7: Last class - presentations and turn in your writeup or code (GitHub preferred).
