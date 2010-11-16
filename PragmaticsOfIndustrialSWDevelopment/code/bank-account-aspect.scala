@@ -1,4 +1,5 @@
-// Schematic AspectJ with mixed Scala syntax:
+// Pseudo-AspectJ and Scala syntax. (AspectJ only understands Java.)
+// (I don't expect you to fully understand this code...)
 public aspect PersisentCustomer {
   public pointcut setName(Customer c, String newName) :
     call(Customer.name_=(*)) && this(c) && args(newName);

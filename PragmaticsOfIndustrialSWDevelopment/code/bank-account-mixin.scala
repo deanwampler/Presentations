@@ -1,6 +1,6 @@
 trait Persister {
-  def getFromDataBase[A](propertyName: String): Option[A] =  { /* nasty */ }
-  def putToDatabase[A](propertyName: String, newValue: A): Option[A] =  { /* nasty */ }
+  def getFromDataBase[A](key: String): Option[A] =  { /* nasty */ }
+  def putToDatabase[A](key: String, value: A): Option[A] =  { /* nasty */ }
 }
 
 trait Named { 

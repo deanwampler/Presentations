@@ -1,7 +1,7 @@
 trait Persister {
-  def getFromDataBase[A](propertyName: String): Option[A] =  { /* nasty */ }
-  // returns optional previous value (like Scala's mutable map.put())
-  def putToDatabase[A](propertyName: String, newValue: A): Option[A] =  { /* nasty */ }
+  def getFromDataBase[A](key: String): Option[A] =  { /* nasty */ }
+  // Returns optional previous value (like Scala's mutable map.put())
+  def putToDatabase[A](key: String, value: A): Option[A] =  { /* nasty */ }
 }
 ...
 case class Customer(initialName: String) extends Persister{

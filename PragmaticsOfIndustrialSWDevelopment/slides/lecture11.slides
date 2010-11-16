@@ -192,8 +192,8 @@ h1. Other Modularity Ideas
 
 Let's conclude by examining two other important trends in software development in the last few decades.
 
-* Design Patterns
-* Aspect-Oriented Programming (AOP)
+* *Design Patterns*: Does FP make them obsolete?
+* *Aspect-Oriented Programming (AOP)*: Addressing _cross-cutting concerns_.
 
 h1. Design Patterns
 
@@ -213,7 +213,7 @@ h1. Criticisms of Patterns
 
 Not everyone thinks patterns are a good idea. "Are Design Patterns Missing Language Features":http://www.c2.com/cgi/wiki?AreDesignPatternsMissingLanguageFeatures is a good starting place for the discussion.
 
-Peter Norvig argues that dynamic languages like Lisp are so powerful that most of the patterns aren't needed. In particular, he claims that 16 of the 23 GoF patterns are unnecessary in Lisp.
+Peter Norvig "argues":http://www.norvig.com/design-patterns that dynamic languages like Lisp are so powerful that most of the patterns aren't needed. In particular, he claims that 16 of the 23 GoF patterns are unnecessary in Lisp.
 
 For example, I mentioned last week that _Visitor_ is very ugly and invasive, where a functional approach, like type classes, is much more elegant.
 
@@ -222,33 +222,42 @@ h1. Criticisms of Patterns (cont.)
 Here is a list of "unnecessary" patterns, adapted from "AreDesignPatternsMissingLanguageFeatures":http://www.c2.com/cgi/wiki?AreDesignPatternsMissingLanguageFeatures on the "c2 wiki":http://www.c2.com.
 
 <div class='tiny'>
-| Visitor  | Generic functions (multiple dispatch), type classes | |
-| Factory  | Meta classes, closures, companion objects (Scala) | |
-| Singleton | Meta classes, object declarations (Scala) | |
-| Iterator | Anonymous functions | used with higher order functions, like map, filter, etc.) |
-| Interpreter | Macros (extending the language), @eval@ functions, meta-circular interpreters, support for parser generation (for differing syntax) | |
-| Command | Closures, anonymous functions, first-class functions, lexical scope | |
-| Adapter | Delegation, macros, meta classes | a.k.a. Handle-Body |
+|_.Visitor  | Generic functions (multiple dispatch), type classes | |
+|_.Factory  | Meta classes, closures, companion objects (Scala) | |
+|_.Singleton | Meta classes, object declarations (Scala) | |
+|_.Iterator | Anonymous functions | used with higher order functions, like map, filter, etc.) |
+|_.Interpreter | Macros (extending the language), @eval@ functions, meta-circular interpreters, support for parser generation (for differing syntax) | |
+|_.Command | Closures, anonymous functions, first-class functions, lexical scope | |
+|_.Adapter | Delegation, macros, meta classes | a.k.a. Handle-Body |
 </div>
 
 h1. Table (cont.)
 
 <div class='tiny'>
-| Run and return successor | Tail-call optimization | |
-| Abstract factory, flyweight, factory-method, state, proxy, chain-of-responsibility | First-class types | |
-| Mediator, Observer | Method combination | |
-| Builder Pattern | Multi Methods | |
-| Facade Pattern | Modules | |
-| Strategy Pattern | higher-order functions | |
+|_.Run and return successor | Tail-call optimization | |
+|_.Abstract factory | First-class types | |
+|_.Flyweight | First-class types | |
+|_.Factory method | First-class types | |
+|_.State | First-class types | |
+|_.Proxy | First-class types | |
+|_.Chain of responsibility | First-class types | |
+|_.Mediator, Observer | Method combination | |
+|_.Builder Pattern | Multi Methods | |
+|_.Facade Pattern | Modules | |
+|_.Strategy Pattern | higher-order functions | |
 </div>
 
 The patterns and their functional replacements go by numerous names in different languages and contexts.
 
 h1. Criticisms of Patterns (cont.)
 
-The problem with the criticisms of design patterns, in my view, is that they tend to confuse the concepts with how they are implemented. Some patterns are clearly of dubious value, like _Visitor_, and should be used only as a last resort. Other patterns, like _Observer_, are far more useful and powerful. Different languages make these "good" patterns easier or harder to implement. Sometimes a pattern is just a built-in feature (like _Singleton_ in Scala).
+The problem with the criticisms of design patterns, in my view, is that they tend to confuse the concepts with how they are implemented. Some patterns are clearly of dubious value, like _Visitor_, and should be used only as a last resort. Other patterns, like _Observer_, are far more useful and powerful. Different languages make these "good" patterns easier or harder to implement. Sometimes a pattern is just a built-in feature, like _Singleton_ in Scala, and _Command_ in any language with closures.
 
 Some of the OO patterns are redundant with functional concepts. Others aren't. Functional programming has its own patterns, although the community has not adopted the patterns terminology.
+
+h1. Aspect-Oriented Programming
+
+AOP is an approach for certain modularity problems that became evident in the latter half of the 1990s.
 
 h1. AOP: An Example Problem
 
@@ -262,7 +271,7 @@ h1. AOP: An Example Problem (cont.)
 
 h1. AOP and Modularity
 
-_Aspect-Oriented Programming_ was invented in the mid-nineties to address a particular kind of modularity problem. Imagine I need to have all state changes to @Customers@ and @Accounts@ persisted? I could do this:
+_Aspect-Oriented Programming_ addresses a particular kind of modularity problem. Imagine I need to have all state changes to @Customers@ and @Accounts@ persisted? I could do this:
 
 :code code/bank-account-bad-persistence.scala[class=code-tiny]
 
@@ -276,11 +285,11 @@ case class Customer(var name: String)
 
 The code is now _significantly_ more complicated, making it much harder to develop, test, maintain, etc., etc. 
 
-Worse, I would require similar code for _every_ class that was backed by a datastore. 
+Worse, I would require similar code for _every_ class that was backed by a datastore. (I just showed only one of the classes, @Customer@.)
 
 h1. Cross-Cutting Concerns
 
-Because the persistence code is basically the same in every class that uses it, we say it is a _cross-cutting concern_. It cuts right across the modularity (class) boundaries of the domain model. Modularity is severely compromised.
+Because the persistence code is basically the same in every class that uses it, we say it is a _cross-cutting concern_. It cuts right across the modularity (class) boundaries of the domain model. _System_ modularity is compromised.
 
 There are other kinds of cross-cutting concerns: 
 
@@ -291,17 +300,19 @@ There are other kinds of cross-cutting concerns:
 
 h1. Enterprise Java Beans
 
-_Enterprise Java Beans_ (EJBs) where a flawed attempt to address this problem (the flaws were mostly fixed in the v3.0 redo). This model let you specify some data for persistence, transactions, security, etc. in XML configuration files, but you still had very invasive code in your domain objects.
+_Enterprise Java Beans_ (EJBs) where a flawed attempt to address this problem (the flaws were mostly fixed in the v3.0 redo[1]). This model let you specify some data for persistence, transactions, security, etc. in XML configuration files, but you still had very invasive code in your domain objects.
 
 Specifically, while the model "separated concerns" such as persistence from the domain model, the model objects needed to subclass EJB container types, implement methods to support lifecycle management, etc. 
 
 That is, EJBs traded one set of problems for another set.
 
+[1] But only after the Spring Framework and the AOP community showed a better way.
+
 h1. Aspect-Oriented Programming
 
 The idea behind aspects is that the domain model shouldn't need to know the details of persistence, transactions, etc. _and_ it shouldn't be necessary to introduce framework code, either. 
 
-Instead, you should be able to inject the behavior where needed through tools, language support, etc.
+Instead, you should be able to _inject_ the behavior where needed through tools or even language support.
 
 h1. AOP Schematic View: Before
 
@@ -321,27 +332,33 @@ h1. AOP Schematic View: After
 
 h1. Characteristics of AOP Solutions
 
-An aspect solution has two parts.
+An aspect framework has two parts.
 
-* *Quantification:* You need to specify in a succinct way (code or declarations) which "points of execution" to observe or modify in the code base.
-* *Behavior Modification*: Once identified, you need ways to modify the behavior.
+* *Quantification:* The ability to specify, in a succinct way (programmatically or declaratively), which "points of execution" to observe or modify. It's analogous to a query language over the set of execution points.
+* *Behavior Modification*: Once the set of execution points is identified, you need ways to observe or modify the behavior, _without modifying the original code_[1].
+
+[1] I.e., this a special case of the Expression Problem, a.k.a Open-Closed Principle.
 
 h1. AOP Terminology
 
-* *Join Points:* The points of execution where observation or modification might be needed.
-* *Pointcuts:* (yes, one word.) A set of join points, like a result set for a query over all _join points_.
-* *Advice:* The behavior modification inserted by an _aspect_.
-* *Aspect:* A class-like type that combines _pointcuts_ and _advice_.
+* *Join Point:* A point of execution where observation or modification might be needed.
+* *Pointcut:* (yes, one word.) A set of join points, like a result set for a query over all _join points_.
+* *Advice:* The behavior modification inserted by an _aspect_. (Think: "I'm advising this class to persist its state changes.")
+* *Aspect:* A class-like type that encapsulates related _pointcuts_ and _advice_.
 
 h1. Code for AOP
 
-The code might look something like this:
+Conceptually, the code might look something like this (Pseudo-Scala):
 
 :code code/bank-account-instrumented.scala[class=code-tiny]
 
 h1. AOP Tools
 
-To minimize writing this kind of code and to inject the behavior in "normal" objects (as opposed to instantiating special wrapper objects), several techniques are available:
+But this code isn't much better than the original hack. So, we want to minimize writing this kind of code. 
+
+Also, we don't want to require that objects must be created with special factories, in order to return "wrapped" objects, as illustrated. Instead, we want to inject the behavior in objects that are constructed "normally". 
+
+Several techniques are available:
 
 * *AspectJ:* Superset of Java with declarative aspects.
 * *Byte Code Instrumentation:* e.g., Spring (early versions), JBoss, etc.
@@ -352,22 +369,23 @@ Here is a "schematic" AspectJ aspect:
 
 :code code/bank-account-aspect.scala[class=code-tiny]
 
-(I don't expect you to fully understand this code...)
+h1. Aspects Beyond Cross-Cutting Concerns
 
+Note that the cross-cutting concerns that we mentioned, persistence, transactions, security, and logging, are sometimes called _non-functional requirements_, because they mostly relate to implementation concerns, rather than business requirements.[1] 
+
+Is this the only use for aspects? 
+
+[1] This is not really an accurate distinction; everything we do is ultimately tied in some way to business requirements.
 
 h1. Aspects Beyond Cross-Cutting Concerns
 
-Is this all there is for aspects? Note that the cross-cutting concerns that we mentioned, persistence, transactions, security, and logging, are sometimes called _non-functional requirements_, because they mostly relate to implementation concerns, rather than business requirements. (This is not really an accurate distinction; everything we do is ultimately tied in some way to business requirements...)
-
-h1. Aspects Beyond Cross-Cutting Concerns
-
-We could imagine implementing "functional" requirements:
+We could imagine implementing "functional" requirements, too:
 
 * Treat interest calculations as a feature that is mixed into the basic account type. Note that we didn't show @CheckingAccount@ with interest, but often checking accounts do pay interest. 
-* Mixin overdraft handling, perhaps on a per-account basis. (That is, "premium" account holders get better overdraft protection than others.)
+* Mix-in overdraft handling, perhaps on a per-account basis. (That is, "premium" account holders get better overdraft protection than others.)
 <br/><br/>
 
-(Notice that I used the term "mixin" a few times. Hmm...)
+(Notice that I used the terms "mixed" and "mix-in". Hmm...)
 
 h1. Do We Really Need Aspects?
 
@@ -377,13 +395,13 @@ However, broader applicability never materialized. Why?
 
 h1. Why Isn't AOP Pervasive?
 
-First, while the vision of feature composition is attractive, attempts to make it work proved difficult (e.g., "Multidimensional Separation of Concerns":http://www.research.ibm.com/hyperspace/). 
+First, while the vision of feature composition is attractive, attempts to make it work proved difficult. One ambitious approach, "Multidimensional Separation of Concerns":http://www.research.ibm.com/hyperspace/, tried to compose software from individual feature "dimensions". It even attempted to merge overlaps (e.g., fields that effectively supported state in both features). It never proved practical, though.
 
-Also, most of the time, developers don't really need feature composition. Traditional coding approaches, i.e., regular classes, are good enough.
+It wasn't a _killer app_, either. Most of the time, developers don't really need feature composition. Traditional coding approaches, i.e., regular classes, are good enough.
 
 h1. Why Isn't AOP Pervasive? (cont.)
 
-Second, AOP was originally invented by people look at problems in Java and it really only gained traction in the Java community, with some penetration in .NET. 
+Second, AOP was originally invented by people seeing modularity problems due to cross-cutting concerns in large-scale, Internet and enterprise Java applications. In the end, AOP really only gained traction in the Java community, with some penetration in .NET.
 
 In dynamically-typed languages with open classes, like Ruby, it's quite easy to implement "advice-like" behavior, using the _metaprogramming_ features of the languages. 
 
@@ -391,23 +409,25 @@ A good example is the @ActiveRecord@ persistence framework in Ruby on Rails.
 
 h1. Why Isn't AOP Pervasive? (cont.)
 
-Third, the _advice_ feature of AOP can be implemented by mixins.
+Third, the _advice_ feature of AOP can be implemented by _mixins_.
 
-Languages like Scala, Ruby, Python, JavaScript, and many others let you create and use mixins (@traits@ in Scala).
+Languages like Scala, Ruby, Python, JavaScript, and many others let you create and use mixins (@traits@ in Scala, @modules@ in ruby).
 
-h1. Why Isn't AOP Pervasive? (cont.)
+h1. "Advice" in Scala, Using Traits
 
 :code code/bank-account-mixin.scala[class=code-tiny]
 
 h1. Why Isn't AOP Pervasive? (cont.)
 
-So we can get _advice_ without aspects, although it's still tedious to write all these special cases. We also still don't have _quantification_.
+So we can get _advice_ without aspects, although it's still tedious to write all these special cases. However, we still don't have _quantification_.
 
 Functional data structures can address both limitations.
 
 Objects are just ad hoc groupings of collections and "atoms" (numbers, strings, etc.), recursively. More specifically, they work like _maps_ and in languages like JavaScript, they _are_ maps!
 
-So, if you create a @PersistentMap@ (in this case, meaning persistent to a database, not as in the _software transactional memory_ case.) and represent our objects as maps, we've solved the quantification problem!
+So, if we create a @PersistentMap@[1], in this case, and represent our objects as maps, we've solved the quantification problem!
+
+[1] In this case, meaning persistent to a database, not as in the _STM_ case.
 
 h1. Why Isn't AOP Pervasive? (cont.)
 
@@ -417,12 +437,22 @@ h1. Why Isn't AOP Pervasive? (cont.)
 
 What this means is that if we just use @Maps@ (and perhaps a few other fundamental collections), we can instrument them as needed with less effort than instrumenting lots of ad-hoc classes. The quantification problem is reduced.
 
-The key point here is that working with more "primitive" building blocks; functions, and core data structures, it is actually easier to _generate_ the variations of behavior we need. We'll return to this point in a few weeks when we talk about _simplicity_ in systems, etc.
+The key point here is that working with more "primitive" building blocks; functions, and core data structures, it is actually easier to _generate_ the variations of behavior we need.[1] We'll return to this point in a few weeks when we talk about _simplicity_ in systems, etc.
 
+[1] We can make the behaviors more _composable_ using advanced techniques like _monads_.
+
+h1. Conclusions: OOP vs. FP (vs. AOP)
+
+* Types of applications have changed.
+* The "business" side of development has changed.
+* Rich object models make less sense today.
+* Functional programming actually fits todays problems better.
+* ... and there's still the concurrency problem.
 
 h1. Reading Assignment 
 
 Brian McNamara, "How does functional programming affect the structure of your code?":http://lorgonblog.wordpress.com/2008/09/22/how-does-functional-programming-affect-the-structure-of-your-code/.
+
 
 
 h1. Reusability that Works

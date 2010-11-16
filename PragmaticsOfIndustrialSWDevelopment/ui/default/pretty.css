@@ -94,7 +94,10 @@ img.incremental {visibility: hidden;}
 .slide .current {color: #B02;}
 
 table {
-  border: 1px solid gray;
+  border: 1px solid #888;
+}
+td, th {
+  border: 1px solid #CCC;
 }
 table, td {
   background-color: #F0EEE8;
