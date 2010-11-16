@@ -142,7 +142,7 @@ h1. Trends (cont.)
 For OOP vs. FP, the smaller components and faster cycles means there is less incentive for building object models and more incentive for exploiting the collections and other types we already have.
 
 * Time to implement new features is _shrinking_.
-** Large object models require more modifications for new features.
+** Large object models require more modifications for new features, while functional code is very succinct and expressive.
 * Smaller services only care about a _thin slice_ of each "object".
 * Scaling for _massive_ numbers of slices requires that we _minimize_ overhead.
 
@@ -451,26 +451,25 @@ h1. Conclusions: OOP vs. FP (vs. AOP)
 
 h1. Reading Assignment 
 
-Brian McNamara, "How does functional programming affect the structure of your code?":http://lorgonblog.wordpress.com/2008/09/22/how-does-functional-programming-affect-the-structure-of-your-code/.
+Brian McNamara, "How does functional programming affect the structure of your code?":http://lorgonblog.wordpress.com/2008/09/22/how-does-functional-programming-affect-the-structure-of-your-code/
 
+h1. Reading Assignment: Agile Methods
 
+Next week we'll talk about software process, focusing on _Agile Methods_.
 
-h1. Reusability that Works
+* "Agile Software Development":http://en.wikipedia.org/wiki/Agile_software_development (Wikipedia). Provides a good overview and history.
+* "The New Methodology":http://martinfowler.com/articles/newMethodology.html. Fowler is the Chief Scientist at Thoughtworks. He's written several influential books on patterns, refactoring, DSLs, etc.
+* "Manifesto for Agile Software Development":http://agilemanifesto.org/. Very short read ;)
 
-Notes from Jason Zaugg's Intro to Scalaz at the NYC Scala group: 
+h1. Optional Reading: Functional Javascript
 
-http://vimeo.com/15264203
+Since JavaScript is becoming an essential language to know, at least for web developers, here are some links for functional programming in JavaScript, a language more like Scheme than Java.
 
+* "Functional Javascript":http://bayfp.org/talks/slides/douglas_crockford_15_oct_08_bayfp.pdf. A talk by Douglas Crockford, who wrote the valuable "JavaScript: The Good Parts" and also defined the JSON standard.
+* "Functional Javascript":http://www.hunlock.com/blogs/Functional_Javascript.
+* "Use functional programming techniques to write elegant JavaScript":http://www.ibm.com/developerworks/library/wa-javascript.html. This one has some ASCII characters that are incorrectly rendered in the source listings.
 
-h1. Questions
+h1. Optional Reading: Functional Javascript
 
-* Why is industry adopting FP now?
+* "Underscore.js": http://documentcloud.github.com/underscore/. Provides many of the functions expected in a functional language that are missing in JavaScript. Nice complement to the indispensable "JQuery":http://jquery.com library.
 
-* Contrasting OOP and FP:
-  * Is the software of the future likely to be more FP or more OOP (or perhaps something else)?
-  * Why is FP more interesting and OOP less interesting today? 
-
-h1. Notes
-point free style and composition.
-
-** Representing domain models in code - how far to go?
