@@ -419,8 +419,9 @@
 <div class="slide">
 <h1>Tightly Coupled (Clustered)</h1>
 <p>Usually refers to a cluster of servers or services that collaborate closely, perhaps to solve a problem with <em>divide and conquer</em> after which the individual contributions are combined to produce the final result.</p>
-<p>Tight coupling may imply that failure of one element causes the work of all elements to fail. An exception is typical <em>map-reduce</em> systems (which we&#8217;ll discuss in a subsequent lecture), like <em>Hadoop</em>, which handle single node failures.</p>
-<p>Example:</p>
+<p>Tight coupling may imply that failure of one element causes the work of all elements to fail. An exception is typical <em>map-reduce</em> systems (which we&#8217;ll discuss in a subsequent lecture), like <em>Hadoop</em>, which handle single node failures.<br />
+ <br />
+Example:</p>
 <ul>
 	<li>Multicore Processor</li>
 	<li>Map-Reduce</li>
@@ -518,10 +519,11 @@ git checkout exercise2           # change to the "exercise2" branch
 	<li>Edit <code>RestfulDataPublisher.scala</code>. We need to do a little <em>refactoring</em> first.</li>
 	<li>Change <code>getStatsFromInstrumentAnalysisServerSupervisors</code> to take this argument: <code>message: InstrumentCalculationMessages</code>.</li>
 	<li>Change <code>supervisor !! CalculateStatistics(allCriteria)</code> to <code>supervisor !! message</code>.</li>
-	<li>Now this method is more general to meet our needs.</li>
+	<li>Now this method is more general to meet our needs.<br />
+ <br />
+</div><br />
+<div class="slide"></li>
 </ul>
-</div>
-<div class="slide">
 <h1>Add New Functionality (step 6)</h1>
 <ul>
 	<li>Also in <code>RestfulDataPublisher.scala</code>, in method <code>getAllDataFor</code>, change:</li>
