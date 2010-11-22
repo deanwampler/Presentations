@@ -98,7 +98,7 @@ Department of Computer Science,<br/>Loyola University Chicago</p>
 	<li>Lecture 11: <span class="caps">OOP</span> vs. FP: a Critique of Pure Programming</li>
 </ul>
 <ul>
-	<li>Lecture 12: Complexity vs. Simplicity Part I: Effective Software Development Processes, Scrum, XP, and Lean</li>
+	<li>Lecture 12: Complexity vs. Simplicity Part I: Effective Software Development Processes &#8211; Scrum, XP, and Lean</li>
 </ul>
 <ul>
 	<li>Lecture 13: Complexity vs. Simplicity Part <span class="caps">III</span>: Simple Systems</li>
@@ -261,19 +261,19 @@ Department of Computer Science,<br/>Loyola University Chicago</p>
 <div class="slide">
 <h1>Course Components: Project Exercises</h1>
 <ul>
-	<li>Start with a &#8220;running&#8221; 3-tier Scala application<br />
- * Hosted on <a href="http://github.com">GitHub.com</a> at <a href="http://github.com/deanwampler/AkkaWebSampleExercise">github.com/deanwampler/AkkaWebSampleExercise</a>. <br />
- * Uses <em>actors</em> to scale computation over a <span class="caps">NYSE</span> data set.<br />
- * Add features during the semester.<br />
- * <em>Refactor</em> the code to improve it and accommodate new features.</li>
+	<li>Start with a &#8220;running&#8221; 3-tier Scala application</li>
+	<li>Hosted on <a href="http://github.com">GitHub.com</a> at <a href="http://github.com/deanwampler/AkkaWebSampleExercise">github.com/deanwampler/AkkaWebSampleExercise</a>.</li>
+	<li>Uses <em>actors</em> to scale computation over a <span class="caps">NYSE</span> data set.</li>
+	<li>Add features during the semester.</li>
+	<li><em>Refactor</em> the code to improve it and accommodate new features.</li>
 </ul>
 </div>
 <div class="slide">
 <h1>Course Components: Project Exercises (cont.)</h1>
 <ul>
-	<li><em>You are encouraged to work together.</em><br />
- * Like you would in an industrial setting&#8230;<br />
- * I expect the solutions to look &#8220;similar&#8221;.</li>
+	<li><em>You are encouraged to work together.</em></li>
+	<li>Like you would in an industrial setting&#8230;</li>
+	<li>I expect the solutions to look &#8220;similar&#8221;.</li>
 </ul>
 </div>
 <div class="slide">
@@ -287,17 +287,16 @@ h1. Course Components: Project Exercises (cont.)
 <ul>
 	<li>5% will be based on an <strong>oral presentation</strong> on 12/7.</li>
 	<li>15 minutes or so, with time for questions and discussion.</li>
-	<li>Topics to be worked out with me.<br />
-  <br />
-</div><br />
-<div class="slide"></li>
+	<li>Topics to be worked out with me.</li>
 </ul>
+</div>
+<div class="slide">
 <h1>Midterm and Final Exam</h1>
 <ul>
 	<li>Will cover the reading, lecture material, and concepts learned in the exercises.</li>
-	<li>Final exam content weighted:<br />
- * 2/3 of the material since the midterm <br />
- * 1/3 material before the midterm.</li>
+	<li>Final exam content weighted:</li>
+	<li>2/3 of the material since the midterm</li>
+	<li>1/3 material before the midterm.</li>
 	<li>Midterm: 10/19 (first half of that evening&#8217;s session).</li>
 	<li>Final exam: 12/14 (usual class time).</li>
 </ul>
@@ -315,9 +314,9 @@ h1. Course Components: Project Exercises (cont.)
 <div class="slide">
 <h1>Scaling Computation, Part I</h1>
 <ul>
-	<li>Two models of concurrency compared: <br />
-  * Multithreaded Programming.<br />
-  * The Actor Model of concurrency.</li>
+	<li>Two models of concurrency compared:</li>
+	<li>Multithreaded Programming.</li>
+	<li>The Actor Model of concurrency.</li>
 </ul>
 </div>
 <div class="slide">
@@ -349,7 +348,7 @@ public class UnsafeSequence {
   public int getNext() {
     return value++;
   }
-}</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/dwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/UnsafeSequence.java">code/UnsafeSequence.java</a></div></p>
+}</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/deanwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/UnsafeSequence.java">code/UnsafeSequence.java</a></div></p>
 <p>(credit: all Multithreading examples adapted from &#8220;Java Concurrency in Practice&#8221;)</p>
 </div>
 <div class="slide">
@@ -363,7 +362,7 @@ public class Sequence {
   public synchronized int getNext() {
     return value++;
   }
-}</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/dwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/SafeSequence.java">code/SafeSequence.java</a></div></p>
+}</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/deanwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/SafeSequence.java">code/SafeSequence.java</a></div></p>
 </div>
 <div class="slide">
 <h1>Things Can Go Wrong</h1>
@@ -395,7 +394,7 @@ public class LeftRightDeadlock {
     synchronized (right) {
       synchronized (left) { doSomethingElse(); }
   }
-}</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/dwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/LeftRightDeadlock.java">code/LeftRightDeadlock.java</a></div></p>
+}</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/deanwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/LeftRightDeadlock.java">code/LeftRightDeadlock.java</a></div></p>
 </div>
 <div class="slide">
 <h1>Other Deadlock Hazards</h1>
@@ -417,11 +416,10 @@ public class LeftRightDeadlock {
 <p>A thread is not blocked, but it can&#8217;t complete work because of trying operations always fails.</p>
 <ul>
 	<li>A common example is repeated execution of a transaction that never succeeds.</li>
-	<li>One scenario is two contenders with identical strategies for trying again, often colliding in the same way. If one is <em>greedy</em>, both may succeed.<br />
- <br />
-</div><br />
-<div class="slide"></li>
+	<li>One scenario is two contenders with identical strategies for trying again, often colliding in the same way. If one is <em>greedy</em>, both may succeed.</li>
 </ul>
+</div>
+<div class="slide">
 <h1>The Importance of Immutability</h1>
 <p>What about access to <em>immutable</em> state? All the synchronization issues go away. Immutable objects have these virtues:</p>
 <ul>
@@ -457,7 +455,7 @@ class Manager {
     case Start =&gt; managedActors foreach (_ ! Start)
   }
 }
-</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/dwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/manager-actor.scala">code/manager-actor.scala</a></div></p>
+</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/deanwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/manager-actor.scala">code/manager-actor.scala</a></div></p>
 </div>
 <div class="slide">
 <h1>Actors in Scala (Akka)</h1>
@@ -506,7 +504,7 @@ class Manager {
 import se.scalablesolutions.akka.actor.Actor_
 // Creating an actor (one way...) and starting
 val manager = Actor.actorOf[Manager]
-manager.start</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/dwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/manager-actor2.scala">code/manager-actor2.scala</a></div></p>
+manager.start</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/deanwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/manager-actor2.scala">code/manager-actor2.scala</a></div></p>
 </div>
 <div class="slide">
 <h1>Actor vs. ActorRef</h1>
@@ -526,7 +524,7 @@ case class  Register(actor: ActorRef)
 case class  Unregister(actor: ActorRef)
 case object Stop
 case object Start
-</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/dwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/actor-messages.scala">code/actor-messages.scala</a></div></p>
+</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/deanwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/actor-messages.scala">code/actor-messages.scala</a></div></p>
 </div>
 <div class="slide">
 <h1>An Asynchronous (Fire and Forget) Message</h1>
@@ -539,7 +537,7 @@ case object Start
     case Start =&gt; managedActors foreach (_ ! Start)
   }
 }
-</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/dwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/actor-asynch-message.scala">code/actor-asynch-message.scala</a></div></p>
+</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/deanwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/actor-asynch-message.scala">code/actor-asynch-message.scala</a></div></p>
 <p>If a response is required, the receiver can send a message to the sender.</p>
 </div>
 <div class="slide">
@@ -556,7 +554,7 @@ case object Start
     }
   }
 }
-</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/dwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/actor-synch-message.scala">code/actor-synch-message.scala</a></div></p>
+</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/deanwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/actor-synch-message.scala">code/actor-synch-message.scala</a></div></p>
 </div>
 <div class="slide">
 <h1>An Synchronous (Wait) Message (cont.)</h1>
@@ -579,7 +577,7 @@ case object Start
       case None =&gt; "Error!"
     }
 }
-</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/dwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/actor-future-message.scala">code/actor-future-message.scala</a></div></p>
+</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/deanwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/actor-future-message.scala">code/actor-future-message.scala</a></div></p>
 </div>
 <div class="slide">
 <h1>An Asynchronous with a Future Message (cont.)</h1>
@@ -603,7 +601,7 @@ case object Start
       case None =&gt; "Error!"
     }
 }
-</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/dwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/actor-future-message2.scala">code/actor-future-message2.scala</a></div></p>
+</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/deanwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/actor-future-message2.scala">code/actor-future-message2.scala</a></div></p>
 </div>
 <div class="slide">
 <h1>Achieving Immutability</h1>
@@ -763,9 +761,8 @@ case object Start
 <h1>Add New Functionality (cont &#8211; sort of&#8230;)</h1>
 <p>How could we modify <code>filter</code> to filter by instruments? (To make it easier, assume there is only one instrument in the list, as in the test.)</p>
 <p>This is not easy, as we really need to parse the <span class="caps">JSON</span> into some representation, filter out the records (which are of the form <code>{"timestamp": 1283233404995, "symbol": "A", "price", "40.0"}</code>) using the <code>symbol</code>, then convert back to a string.</p>
-<p>Can you figure out how to do this with the Lift <span class="caps">JSON</span> APIs used in the application and <span class="caps">JSON</span> helper types provided, or using other 3rd-party <span class="caps">JSON</span> libraries?<br />
- <br />
-Actually, the right way to implement this feature is to support this filtering at the database level, which we will learn how to do with MongoDB.</p>
+<p>Can you figure out how to do this with the Lift <span class="caps">JSON</span> APIs used in the application and <span class="caps">JSON</span> helper types provided, or using other 3rd-party <span class="caps">JSON</span> libraries?</p>
+<p>Actually, the right way to implement this feature is to support this filtering at the database level, which we will learn how to do with MongoDB.</p>
 </div>
 <div class="title slide">
 <h1>Lecture 2: Scaling Computation, Part II, and Course Project Rebooted</h1>
@@ -1004,7 +1001,7 @@ def counter = atomic {  // demarcate "atomic" block
  
 counter  // -&gt; 1
 counter  // -&gt; 2
-ref.get  // -&gt; 2 (retrieve the value explicitly)</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/dwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/akka-stm-example1.scala">code/akka-stm-example1.scala</a></div></p>
+ref.get  // -&gt; 2 (retrieve the value explicitly)</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/deanwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/akka-stm-example1.scala">code/akka-stm-example1.scala</a></div></p>
 </div>
 <div class="slide">
 <h1>Symantics (cont.)</h1>
@@ -1019,7 +1016,7 @@ val ref = Ref(1) // initialize with 1
 atomic {  
   ref set 10     // set new value
 }                // (actually returns old value)
-ref.get          // -&gt; 10</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/dwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/akka-stm-example2.scala">code/akka-stm-example2.scala</a></div></p>
+ref.get          // -&gt; 10</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/deanwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/akka-stm-example2.scala">code/akka-stm-example2.scala</a></div></p>
 </div>
 <div class="slide">
 <h1>Symantics: Blocking (&#8220;Retry&#8221;)</h1>
@@ -1040,7 +1037,7 @@ def receive = {
       to alter (_ + amount)
     }
 }
-</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/dwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/akka-stm-example3.scala">code/akka-stm-example3.scala</a></div></p>
+</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/deanwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/akka-stm-example3.scala">code/akka-stm-example3.scala</a></div></p>
 <p>(See <strong>Blocking Transactions</strong> on the <a href="http://doc.akkasource.org/stm-scala">Akka <span class="caps">STM</span> page</a> for the full example.)</p>
 </div>
 <div class="slide">
@@ -1065,7 +1062,7 @@ def receive = {
       }
     }
 }
-</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/dwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/akka-stm-example4.scala">code/akka-stm-example4.scala</a></div></p>
+</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/deanwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/akka-stm-example4.scala">code/akka-stm-example4.scala</a></div></p>
 </div>
 <div class="slide">
 <h1>Composability and Modularity</h1>
@@ -1188,7 +1185,7 @@ def receive = {
 <div class="code-tiny">
 <pre name="code" id="code" class="brush: scala;">[error] Test Failed: calculateStatistics returns a JSON string containing all data that matches the instrument criteria
 org.scalatest.TestFailedException: JObject(List(JField(criteria,JObject(List(JField(instruments,JArray(List(JString(A)))), JField(statistics,JArray(List(JString(price[$])))), JField(start,JInt(0)), JField(end,JInt(1283824964864))))), JField(results,JArray(List(JObject(List(JField(timestamp,JInt(1283824954864)), JField(symbol,JString(A)), JField(price,JDouble(0.0)))), JObject(List(JField(timestamp,JInt(1283824955864)), JField(symbol,JString(C)), JField(price,JDouble(10.0)))), JObject(List(JField(timestamp,JInt(1283824956864)), JField(symbol,JString(A)), JField(price,JDouble(20.0)))), JObject(List(JField(timestamp,JInt(1283824957864)), JField(symbol,JString(B)), JField(price,JDouble(30.0)))), JObject(List(JField(timestamp,JInt(1283824958864)), JField(symbol,JString(A)), JField(price,JDouble(40.0))))))))) did not equal JObject(List(JField(criteria,JObject(List(JField(instruments,JArray(List(JString(A)))), JField(statistics,JArray(List(JString(price[$])))), JField(start,JInt(0)), JField(end,JInt(1283824964864))))), JField(results,JArray(List(JObject(List(JField(timestamp,JInt(1283824954864)), JField(symbol,JString(A)), JField(price,JDouble(0.0)))), JObject(List(JField(timestamp,JInt(1283824958864)), JField(symbol,JString(A)), JField(price,JDouble(40.0)))), JObject(List(JField(timestamp,JInt(1283824956864)), JField(symbol,JString(A)), JField(price,JDouble(20.0)))))))))
-</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/dwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/exercise1-test-failure.scala">code/exercise1-test-failure.scala</a></div></p>
+</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/deanwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/exercise1-test-failure.scala">code/exercise1-test-failure.scala</a></div></p>
 <p>(Yeah!)</p>
 </div>
 <div class="slide">
@@ -1218,11 +1215,10 @@ analysisServer.calculateStatistics(criteria) should equal (expected)
 <p><code>~test-only org.chicagoscala.awse.server.finance.InstrumentAnalysisServerTest</code></p>
 <ul>
 	<li>Note that it will wait (no prompt is returned) and every time you save code changes, this test will run.</li>
-	<li>Using the <code>~test-only</code> &#8220;action&#8221; saves time, running in a few seconds, while running all the tests takes longer.<br />
- <br />
-</div><br />
-<div class="slide"></li>
+	<li>Using the <code>~test-only</code> &#8220;action&#8221; saves time, running in a few seconds, while running all the tests takes longer.</li>
 </ul>
+</div>
+<div class="slide">
 <h1>Add New Functionality (cont.)</h1>
 <ul>
 	<li>Now, in your editor of choice, open the file <code>main/scala/server/finance/InstrumentAnalysisServer.scala</code> (the file being tested&#8230;)</li>
@@ -1685,9 +1681,8 @@ formatPriceResults(filter(result), instruments, statistics, startMillis, endMill
 <div class="slide">
 <h1>Tightly Coupled (Clustered)</h1>
 <p>Usually refers to a cluster of servers or services that collaborate closely, perhaps to solve a problem with <em>divide and conquer</em> after which the individual contributions are combined to produce the final result.</p>
-<p>Tight coupling may imply that failure of one element causes the work of all elements to fail. An exception is typical <em>map-reduce</em> systems (which we&#8217;ll discuss in a subsequent lecture), like <em>Hadoop</em>, which handle single node failures.<br />
- <br />
-Example:</p>
+<p>Tight coupling may imply that failure of one element causes the work of all elements to fail. An exception is typical <em>map-reduce</em> systems (which we&#8217;ll discuss in a subsequent lecture), like <em>Hadoop</em>, which handle single node failures.</p>
+<p>Example:</p>
 <ul>
 	<li>Multicore Processor</li>
 	<li>Map-Reduce</li>
@@ -1785,11 +1780,10 @@ git checkout exercise2           # change to the "exercise2" branch
 	<li>Edit <code>RestfulDataPublisher.scala</code>. We need to do a little <em>refactoring</em> first.</li>
 	<li>Change <code>getStatsFromInstrumentAnalysisServerSupervisors</code> to take this argument: <code>message: InstrumentCalculationMessages</code>.</li>
 	<li>Change <code>supervisor !! CalculateStatistics(allCriteria)</code> to <code>supervisor !! message</code>.</li>
-	<li>Now this method is more general to meet our needs.<br />
- <br />
-</div><br />
-<div class="slide"></li>
+	<li>Now this method is more general to meet our needs.</li>
 </ul>
+</div>
+<div class="slide">
 <h1>Add New Functionality (step 6)</h1>
 <ul>
 	<li>Also in <code>RestfulDataPublisher.scala</code>, in method <code>getAllDataFor</code>, change:</li>
@@ -2371,9 +2365,8 @@ or split <em>functionality</em> across servers:</li>
 </div>
 <div class="slide">
 <h1>Key-Value Stores</h1>
-<p>E.g., <em>Amazon SimpleDB, Riak, Redis, Tokyo Cabinet, Scalaris, MemcacheDB, BerkeleyDB, MNesia.</em><br />
- <br />
-Think of hash maps on <em>steroids</em>.</p>
+<p>E.g., <em>Amazon SimpleDB, Riak, Redis, Tokyo Cabinet, Scalaris, MemcacheDB, BerkeleyDB, MNesia.</em></p>
+<p>Think of hash maps on <em>steroids</em>.</p>
 <ul>
 	<li>May be purely in-memory (with optional flushing to disk) and resident on one machine.</li>
 	<li>Excellent for &#8220;persisting&#8221; semi-structured data with shorter lifespans (e.g., web sessions).</li>
@@ -2407,9 +2400,9 @@ Think of hash maps on <em>steroids</em>.</p>
 </div>
 <div class="slide">
 <h1>&#8220;Polyglot Persistence&#8221;</h1>
-<p>A big trend today is that non-trivial systems mix different programming languages, libraries and tools. Do we use just one language to write all parts of a standard web application? No.<sup class="footnote"><a href="#fn1">1</a></sup></p>
+<p>A big trend today is that non-trivial systems mix different programming languages, libraries and tools. Do we use just one language to write all parts of a standard web application? No.<sup class="footnote" id="fnr1"><a href="#fn1">1</a></sup></p>
 <p>The same phenomenon is now happening at the persistence level. Often, one persistence strategy doesn&#8217;t fit all needs in complex, distributed systems. You might use a fast, key-value store for user sessions, then persist key &#8220;events&#8221; to an <span class="caps">RDBMS</span>, for example.</p>
-<p><sup class="footnote"><a href="#fn1">1</a></sup> Well, maybe we could with JavaScript&#8230;</p>
+<p><sup class="footnote" id="fnr1"><a href="#fn1">1</a></sup> Well, maybe we could with JavaScript&#8230;</p>
 </div>
 <div class="slide">
 <h1>Some Techniques We&#8217;ll Discuss</h1>
@@ -2603,9 +2596,8 @@ Think of hash maps on <em>steroids</em>.</p>
 </div>
 <div class="slide">
 <h1>Key-Value Stores</h1>
-<p>E.g., <em>Amazon SimpleDB, Riak, Redis, Tokyo Cabinet, Scalaris, MemcacheDB, BerkeleyDB, Mnesia.</em><br />
- <br />
-Think of hash maps on <em>steroids</em>.</p>
+<p>E.g., <em>Amazon SimpleDB, Riak, Redis, Tokyo Cabinet, Scalaris, MemcacheDB, BerkeleyDB, Mnesia.</em></p>
+<p>Think of hash maps on <em>steroids</em>.</p>
 <ul>
 	<li>May be purely in-memory (with optional flushing to disk) and resident on one machine.</li>
 	<li>Excellent for &#8220;persisting&#8221; semi-structured data with shorter lifespans (e.g., web sessions).</li>
@@ -3012,10 +3004,9 @@ DTT
 	<li>To hard to do this manually.</li>
 	<li>Keys are hashed, using consistent hashing.</li>
 	<li>The range of possible hash values is treated as a &#8220;ring&#8221; that wraps.</li>
-	<li>Each node is assigned a random position on the ring.<br />
- <br />
-When a row&#8217;s key is hashed, the node with the closest key <em>greater than</em> the row&#8217;s key is assigned the responsibility for coordinating reads and writes.</li>
+	<li>Each node is assigned a random position on the ring.</li>
 </ul>
+<p>When a row&#8217;s key is hashed, the node with the closest key <em>greater than</em> the row&#8217;s key is assigned the responsibility for coordinating reads and writes.</p>
 </div>
 <div class="slide">
 <h1>Reads and Writes</h1>
@@ -4015,15 +4006,15 @@ package gui.windowing {
 <ul>
 	<li>Once a constructor completes, the object should be in a <em>known-good state</em>.</li>
 	<li><em>Every</em> method should transition the object from one known-good state to another (possibly the same) known-good state.</li>
-	<li>Clean up resources when the object becomes garbage.<sup class="footnote"><a href="#fn1">1</a></sup> <sup class="footnote"><a href="#fn2">2</a></sup></li>
+	<li>Clean up resources when the object becomes garbage.<sup class="footnote" id="fnr1"><a href="#fn1">1</a></sup> <sup class="footnote" id="fnr2"><a href="#fn2">2</a></sup></li>
 </ul>
-<p><sup class="footnote"><a href="#fn1">1</a></sup> C++ and C# have <em>destructors</em> for this purpose (but they may be invoked too late for some resources, like database connections).<br />
-<sup class="footnote"><a href="#fn2">2</a></sup> Java has finalizers, but they are effectively useless, maybe even harmful.</p>
+<p><sup class="footnote" id="fnr1"><a href="#fn1">1</a></sup> C++ and C# have <em>destructors</em> for this purpose (but they may be invoked too late for some resources, like database connections).<br />
+<sup class="footnote" id="fnr2"><a href="#fn2">2</a></sup> Java has finalizers, but they are effectively useless, maybe even harmful.</p>
 </div>
 <div class="slide">
-<h1>Design by Contract<sup class="footnote"><a href="#fn1">1</a></sup></h1>
+<h1>Design by Contract<sup class="footnote" id="fnr1"><a href="#fn1">1</a></sup></h1>
 <p><a href="http://en.wikipedia.org/wiki/Design_by_contract">Design by Contract</a> (DbC) is a programming discipline where you specify assertions about program behavior that the language infrastructure can enforce during testing, but disable in production deployments, for performance reasons.</p>
-<p><sup class="footnote"><a href="#fn1">1</a></sup> A registered trademark of Eiffel Software</p>
+<p><sup class="footnote" id="fnr1"><a href="#fn1">1</a></sup> A registered trademark of Eiffel Software</p>
 </div>
 <div class="slide">
 <h1>Design by Contract (cont.)</h1>
@@ -4038,9 +4029,8 @@ package gui.windowing {
 <div class="slide">
 <h1>Preconditions</h1>
 <p><strong>Preconditions</strong> are what must be true in order for the function to do its job. A trivial example: there must be enough free memory for the function to allocate the objects it creates.</p>
-<p>Hence, these are requirements on the runtime environment and the clients using the function. Here is an example using our Windowing <span class="caps">API</span> and a &#8220;mythical&#8221; DbC framework that uses annotations.<br />
- <br />
-<div class="code-small"></p>
+<p>Hence, these are requirements on the runtime environment and the clients using the function. Here is an example using our Windowing <span class="caps">API</span> and a &#8220;mythical&#8221; DbC framework that uses annotations.</p>
+<div class="code-small">
 <pre name="code" id="code" class="brush: scala,;">
 
 package gui.windowing {
@@ -4056,9 +4046,8 @@ package gui.windowing {
 <div class="slide">
 <h1>Postconditions</h1>
 <p><strong>Postconditions</strong> are what the function guarantees to satisfy when it finishes its job, <em>if</em> the preconditions are true. A trivial example: a function might promise to never return <code>null</code>.</p>
-<p>Hence, these are requirements on the function itself, constituting promises to clients. Here is an example using our Windowing <span class="caps">API</span>.<br />
- <br />
-<div class="code-small"></p>
+<p>Hence, these are requirements on the function itself, constituting promises to clients. Here is an example using our Windowing <span class="caps">API</span>.</p>
+<div class="code-small">
 <pre name="code" id="code" class="brush: scala,;">
 
 package gui.windowing {
@@ -4074,9 +4063,8 @@ package gui.windowing {
 </div>
 <div class="slide">
 <h1>Invariants</h1>
-<p><strong>Invariants</strong> must be true before and after function invocation. They may specify some object (or global) property that doesn&#8217;t change. They may specify a logical constraint that must remain true, etc. Invariants can be requirements on the function, the environment, or both.<br />
- <br />
-<div class="code-small"></p>
+<p><strong>Invariants</strong> must be true before and after function invocation. They may specify some object (or global) property that doesn&#8217;t change. They may specify a logical constraint that must remain true, etc. Invariants can be requirements on the function, the environment, or both.</p>
+<div class="code-small">
 <pre name="code" id="code" class="brush: scala,;">
 
 package gui.windowing {
@@ -4115,6 +4103,7 @@ package gui.windowing {
 <h1>Scala Has Classes (for Example)</h1>
 <p>Scala example, patterned after Java&#8217;s <code>Exception</code> Hierarchy:<br />
 <div class="code-small"></p>
+
 <pre name="code" id="code" class="brush: scala,;">
 
 class Exception(
@@ -4285,6 +4274,7 @@ assert (s.height == 4)  // True???
 <p><em>Prototype-based languages</em> don&#8217;t have classes. (Hence they are also called <em>classless</em> languages.) Instead, you just build up objects &#8220;from scratch&#8221;.</p>
 <p>JavaScript object-literal notation (essentially, a hash map):<br />
 <div class="code-small"></p>
+
 <pre name="code" id="code" class="brush: scala,;">
 
 var exception = {
@@ -4309,8 +4299,8 @@ exception.name = "ExceptionFormerlyRepresentingANetworkException";
 <div class="slide">
 <h1>Aside: <em>Open Classes</em></h1>
 <p>Note that many <em>dynamically-typed, class-based</em> languages, e.g., Ruby, allow this kind of object modification, too. They are said to have <em>open classes</em>.</p>
-<p>Most <em>statically-typed</em> languages, like Scala, Java, C#, and C++, have closed classes. You can&#8217;t add or remove members in objects.<sup class="footnote"><a href="#fn1">1</a></sup></p>
-<p><sup class="footnote"><a href="#fn1">1</a></sup> There are some workarounds, both byte-code level hacks and some language features, like Scala&#8217;s <em>implicits</em>.</p>
+<p>Most <em>statically-typed</em> languages, like Scala, Java, C#, and C++, have closed classes. You can&#8217;t add or remove members in objects.<sup class="footnote" id="fnr1"><a href="#fn1">1</a></sup></p>
+<p><sup class="footnote" id="fnr1"><a href="#fn1">1</a></sup> There are some workarounds, both byte-code level hacks and some language features, like Scala&#8217;s <em>implicits</em>.</p>
 </div>
 <div class="slide">
 <h1>Prototype-Based Languages (cont.)</h1>
@@ -4496,6 +4486,7 @@ oddMap.get("two") match {
 <h1><code>Option[+A]</code>: <code>case</code> class (cont.)</h1>
 <p>So, adding <code>case</code> to the declaration is equivalent to this:<br />
 <div class="code-small"></p>
+
 <pre name="code" id="code" class="brush: scala,;">
 
 final class Some[+A](val x: A) extends Option[+A] {
@@ -4530,6 +4521,7 @@ case object None extends Option[Nothing] {
 <p><strong>Nothing</strong>: A subtype of <em>all</em> other types, with <em>no</em> instances.</p>
 <p>Used for proper type safety.<br />
 <div class="code-small"></p>
+
 <pre name="code" id="code" class="brush: scala,;">
 
 case object None extends Option[Nothing] {...}
@@ -4763,9 +4755,8 @@ println(dean.name)
 </div>
 <div class="slide">
 <h1>Uniform-Access Principle (cont.)</h1>
-<p>The <em>caller</em> doesn&#8217;t care whether a method is invoked or a bare field is accessed.<br />
- <br />
-The <em>implementer</em> might want to start with a simple bare field access, then eventually replace it with a method call (e.g., to do lazy initialization, etc.).</p>
+<p>The <em>caller</em> doesn&#8217;t care whether a method is invoked or a bare field is accessed.</p>
+<p>The <em>implementer</em> might want to start with a simple bare field access, then eventually replace it with a method call (e.g., to do lazy initialization, etc.).</p>
 <p>The <em>uniform-access principle</em> means the caller&#8217;s code doesn&#8217;t have to change, because the syntax is identical. (The code might need a recompile).</p>
 </div>
 <div class="slide">
@@ -4872,6 +4863,7 @@ package gui.windowing {
 <h1>Other Modules</h1>
 <p><span class="caps">BAD</span>:<br />
 <div class="code-small"></p>
+
 <pre name="code" id="code" class="brush: scala,;">
 
 object MyApp {
@@ -4883,6 +4875,7 @@ object MyApp {
 </pre></div>
 <p><span class="caps">GOOD</span>:<br />
 <div class="code-small"></p>
+
 <pre name="code" id="code" class="brush: scala,;">
 
 object MyApp {
@@ -5544,8 +5537,8 @@ val outputs: List[Output] = toOutputs(List("A", "B"), a2o)
 <div class="slide">
 <h1>What Is Functional Programming?</h1>
 <p>FP treats computation as the <em>application of functions</em> rather than the direct <em>mutation of state</em>.</p>
-<p>FP has its roots in mathematics, specifically <em>lambda calculus</em><sup class="footnote"><a href="#fn1">1</a></sup>, a formal system developed in the 1930s to investigate function definition, function application,  recursion, etc. (Yes, before the invention of electronic computers.) Many functional programming languages can be viewed as elaborations on the lambda calculus.</p>
-<p><sup class="footnote"><a href="#fn1">1</a></sup> For this reason, anonymous functions in many languages are called <em>lambdas</em>.</p>
+<p>FP has its roots in mathematics, specifically <em>lambda calculus</em><sup class="footnote" id="fnr1"><a href="#fn1">1</a></sup>, a formal system developed in the 1930s to investigate function definition, function application,  recursion, etc. (Yes, before the invention of electronic computers.) Many functional programming languages can be viewed as elaborations on the lambda calculus.</p>
+<p><sup class="footnote" id="fnr1"><a href="#fn1">1</a></sup> For this reason, anonymous functions in many languages are called <em>lambdas</em>.</p>
 <p>(Adapted from <a href="http://en.wikipedia.org/wiki/Functional_programming">Wikipedia</a>.)</p>
 </div>
 <div class="slide">
@@ -5577,9 +5570,9 @@ val outputs: List[Output] = toOutputs(List("A", "B"), a2o)
 <h1>No Side Effects</h1>
 <p>Just as <code>x</code> is not mutable, so to is the rest of the world. So, by definition, immutability means there can be no <em>side effects</em>. This also has important implications for functions:</p>
 <p>x = cos(y)<sup>2</sup></p>
-<p><strong>All</strong> work done by <code>cos(y)</code> (for example) is returned and assigned to <code>x</code>. there is no global state that is updated.<sup class="footnote"><a href="#fn1">1</a></sup></p>
+<p><strong>All</strong> work done by <code>cos(y)</code> (for example) is returned and assigned to <code>x</code>. there is no global state that is updated.<sup class="footnote" id="fnr1"><a href="#fn1">1</a></sup></p>
 <p>Functions without side effects are called <em>pure.</em></p>
-<p><sup class="footnote"><a href="#fn1">1</a></sup> However, a real implementation might update &#8220;invisible&#8221; state like a cache of previously-calculated values.</p>
+<p><sup class="footnote" id="fnr1"><a href="#fn1">1</a></sup> However, a real implementation might update &#8220;invisible&#8221; state like a cache of previously-calculated values.</p>
 </div>
 <div class="slide">
 <h1>Benefits of No Side Effects</h1>
@@ -5699,8 +5692,8 @@ printList(List(1, "two", 3.3))
 // =&gt; two
 // =&gt; 3.3
 </pre></div>
-<p>Note that we use the wildcard <code>_</code> for the <code>List[_]</code> parameter, because we don&#8217;t care what it is.<sup class="footnote"><a href="#fn1">1</a></sup></p>
-<p><sup class="footnote"><a href="#fn1">1</a></sup> Actually, on the <span class="caps">JVM</span> we have no choice, because this type information is <em>erased</em> in the byte code.</p>
+<p>Note that we use the wildcard <code>_</code> for the <code>List[_]</code> parameter, because we don&#8217;t care what it is.<sup class="footnote" id="fnr1"><a href="#fn1">1</a></sup></p>
+<p><sup class="footnote" id="fnr1"><a href="#fn1">1</a></sup> Actually, on the <span class="caps">JVM</span> we have no choice, because this type information is <em>erased</em> in the byte code.</p>
 </div>
 <div class="slide">
 <h1>Higher-Kinded Types (cont.)</h1>
@@ -5902,8 +5895,8 @@ def printList(list: List[_]) = list map println
 <div class="slide">
 <h1><span class="caps">OCP</span> and The Expression Problem (cont.)</h1>
 <p>The object-oriented approach is to use <em>inheritance</em>, where clients depend only on a <em>well-defined abstraction</em>, which is implemented by <em>concrete subtypes</em>. New &#8220;behaviors&#8221; can be added by defining new concrete subtypes for the same abstraction.</p>
-<p>As long as the abstraction is sufficiently expressive and clients don&#8217;t depend on the concrete subtypes, we can add new behaviors to the code base without modifying existing code.<sup class="footnote"><a href="#fn1">1</a></sup></p>
-<p><sup class="footnote"><a href="#fn1">1</a></sup> Recall that, every now and then, the abstraction won&#8217;t be general enough to support a new behavior, so the abstraction and possibly all the subtypes will require modification.</p>
+<p>As long as the abstraction is sufficiently expressive and clients don&#8217;t depend on the concrete subtypes, we can add new behaviors to the code base without modifying existing code.<sup class="footnote" id="fnr1"><a href="#fn1">1</a></sup></p>
+<p><sup class="footnote" id="fnr1"><a href="#fn1">1</a></sup> Recall that, every now and then, the abstraction won&#8217;t be general enough to support a new behavior, so the abstraction and possibly all the subtypes will require modification.</p>
 </div>
 <div class="slide">
 <h1><span class="caps">OCP</span> and The Expression Problem (cont.)</h1>
@@ -6384,7 +6377,7 @@ fib.take(100).print
 <div class='tiny'>
 <table>
 	<tr>
-		<th> </th>
+		<th></th>
 		<th>Pre-Internet </th>
 		<th>Internet </th>
 		<th>Big Data </th>
@@ -6431,7 +6424,7 @@ fib.take(100).print
 <div class='tiny'>
 <table>
 	<tr>
-		<th> </th>
+		<th></th>
 		<th>Pre-Internet </th>
 		<th>Internet </th>
 		<th>Big Data </th>
@@ -6452,7 +6445,7 @@ fib.take(100).print
 <div class='tiny'>
 <table>
 	<tr>
-		<th> </th>
+		<th></th>
 		<th>Pre-Internet </th>
 		<th>Internet </th>
 		<th>Big Data </th>
@@ -6479,7 +6472,7 @@ fib.take(100).print
 <div class='tiny'>
 <table>
 	<tr>
-		<th> </th>
+		<th></th>
 		<th>Pre-Internet </th>
 		<th>Internet </th>
 		<th>Big Data </th>
@@ -6512,7 +6505,7 @@ fib.take(100).print
 <div class='tiny'>
 <table>
 	<tr>
-		<th> </th>
+		<th></th>
 		<th>Pre-Internet </th>
 		<th>Internet </th>
 		<th>Big Data </th>
@@ -6551,7 +6544,7 @@ fib.take(100).print
 <div class='tiny'>
 <table>
 	<tr>
-		<th> </th>
+		<th></th>
 		<th>Pre-Internet </th>
 		<th>Internet </th>
 		<th>Big Data </th>
@@ -6619,13 +6612,13 @@ fib.take(100).print
 <div class="slide">
 <h1>Software Reuse</h1>
 <p>I&#8217;ll show an example later that compares modeling domain concepts with <em>classes</em> vs. representing objects as <em>maps</em> (which is how objects <em>are</em> represented in languages like JavaScript and Perl).</p>
-<p>There are some significant benefits for <em>reuse</em> when using such functional data structures<sup class="footnote"><a href="#fn1">1</a></sup>.</p>
+<p>There are some significant benefits for <em>reuse</em> when using such functional data structures<sup class="footnote" id="fnr1"><a href="#fn1">1</a></sup>.</p>
 <ul>
 	<li>These types are very well tested.</li>
 	<li>They provide a variety of functions for computations over the collections.</li>
 	<li>They define a few usage <em>protocols</em> that are flexible and powerful.</li>
 </ul>
-<p><sup class="footnote"><a href="#fn1">1</a></sup> As opposed to the dumbed-down versions found in Java, etc.</p>
+<p><sup class="footnote" id="fnr1"><a href="#fn1">1</a></sup> As opposed to the dumbed-down versions found in Java, etc.</p>
 </div>
 <div class="slide">
 <h1>Software Reuse (cont.)</h1>
@@ -6812,7 +6805,7 @@ trait Account {
 case class CheckingAccount(customer: Customer, var balance: Money) extends Account 
 case class SavingsAccount(customer: Customer, var balance: Money, 
   var interestRate: Double) extends Account 
-</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/dwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/bank-account.scala">code/bank-account.scala</a></div></p>
+</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/deanwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/bank-account.scala">code/bank-account.scala</a></div></p>
 </div>
 <div class="slide">
 <h1><span class="caps">AOP</span>: An Example Problem (cont.)</h1>
@@ -6835,7 +6828,7 @@ println("Checking: final account: " + sa)
 // Checking: initial account: CheckingAccount(Customer(Dean),Money(1000.0))
 // Checking: final account: CheckingAccount(Customer(Dean),Money(1500.0))
 // Savings: initial account: SavingsAccount(Customer(Dean),Money(2000.0),0.02)
-// Checking: final account: SavingsAccount(Customer(Dean),Money(900.0),0.3)</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/dwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/bank-account-usage.scala">code/bank-account-usage.scala</a></div></p>
+// Checking: final account: SavingsAccount(Customer(Dean),Money(900.0),0.3)</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/deanwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/bank-account-usage.scala">code/bank-account-usage.scala</a></div></p>
 </div>
 <div class="slide">
 <h1><span class="caps">AOP</span> and Modularity</h1>
@@ -6857,7 +6850,7 @@ case class Customer(initialName: String) extends Persister{
     _name = newName
     putToDatabase("name", _name)
   }
-}</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/dwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/bank-account-bad-persistence.scala">code/bank-account-bad-persistence.scala</a></div></p>
+}</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/deanwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/bank-account-bad-persistence.scala">code/bank-account-bad-persistence.scala</a></div></p>
 </div>
 <div class="slide">
 <h1>Modularity Breakdown</h1>
@@ -6883,10 +6876,10 @@ case class Customer(var name: String)
 </div>
 <div class="slide">
 <h1>Enterprise Java Beans</h1>
-<p><em>Enterprise Java Beans</em> (EJBs) where a flawed attempt to address this problem (the flaws were mostly fixed in the v3.0 redo<sup class="footnote"><a href="#fn1">1</a></sup>). This model let you specify some data for persistence, transactions, security, etc. in <span class="caps">XML</span> configuration files, but you still had very invasive code in your domain objects.</p>
+<p><em>Enterprise Java Beans</em> (EJBs) where a flawed attempt to address this problem (the flaws were mostly fixed in the v3.0 redo<sup class="footnote" id="fnr1"><a href="#fn1">1</a></sup>). This model let you specify some data for persistence, transactions, security, etc. in <span class="caps">XML</span> configuration files, but you still had very invasive code in your domain objects.</p>
 <p>Specifically, while the model &#8220;separated concerns&#8221; such as persistence from the domain model, the model objects needed to subclass <span class="caps">EJB</span> container types, implement methods to support lifecycle management, etc.</p>
 <p>That is, EJBs traded one set of problems for another set.</p>
-<p><sup class="footnote"><a href="#fn1">1</a></sup> But only after the Spring Framework and the <span class="caps">AOP</span> community showed a better way.</p>
+<p><sup class="footnote" id="fnr1"><a href="#fn1">1</a></sup> But only after the Spring Framework and the <span class="caps">AOP</span> community showed a better way.</p>
 </div>
 <div class="slide">
 <h1>Aspect-Oriented Programming</h1>
@@ -6914,9 +6907,9 @@ case class Customer(var name: String)
 <p>An aspect framework has two parts.</p>
 <ul>
 	<li><strong>Quantification:</strong> The ability to specify, in a succinct way (programmatically or declaratively), which &#8220;points of execution&#8221; to observe or modify. It&#8217;s analogous to a query language over the set of execution points.</li>
-	<li><strong>Behavior Modification</strong>: Once the set of execution points is identified, you need ways to observe or modify the behavior, <em>without modifying the original code</em><sup class="footnote"><a href="#fn1">1</a></sup>.</li>
+	<li><strong>Behavior Modification</strong>: Once the set of execution points is identified, you need ways to observe or modify the behavior, <em>without modifying the original code</em><sup class="footnote" id="fnr1"><a href="#fn1">1</a></sup>.</li>
 </ul>
-<p><sup class="footnote"><a href="#fn1">1</a></sup> I.e., this a special case of the Expression Problem, a.k.a Open-Closed Principle.</p>
+<p><sup class="footnote" id="fnr1"><a href="#fn1">1</a></sup> I.e., this a special case of the Expression Problem, a.k.a Open-Closed Principle.</p>
 </div>
 <div class="slide">
 <h1><span class="caps">AOP</span> Terminology</h1>
@@ -6950,7 +6943,7 @@ class InstrumentedCustomer(customer: Customer)
     customer.name = newName
     putToDatabase("name", newName)
   }
-}</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/dwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/bank-account-instrumented.scala">code/bank-account-instrumented.scala</a></div></p>
+}</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/deanwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/bank-account-instrumented.scala">code/bank-account-instrumented.scala</a></div></p>
 </div>
 <div class="slide">
 <h1><span class="caps">AOP</span> Tools</h1>
@@ -6986,13 +6979,13 @@ public aspect PersisentCustomer {
       case None =&gt;
     }
   }
-}</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/dwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/bank-account-aspect.scala">code/bank-account-aspect.scala</a></div></p>
+}</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/deanwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/bank-account-aspect.scala">code/bank-account-aspect.scala</a></div></p>
 </div>
 <div class="slide">
 <h1>Aspects Beyond Cross-Cutting Concerns</h1>
-<p>Note that the cross-cutting concerns that we mentioned, persistence, transactions, security, and logging, are sometimes called <em>non-functional requirements</em>, because they mostly relate to implementation concerns, rather than business requirements.<sup class="footnote"><a href="#fn1">1</a></sup></p>
+<p>Note that the cross-cutting concerns that we mentioned, persistence, transactions, security, and logging, are sometimes called <em>non-functional requirements</em>, because they mostly relate to implementation concerns, rather than business requirements.<sup class="footnote" id="fnr1"><a href="#fn1">1</a></sup></p>
 <p>Is this the only use for aspects?</p>
-<p><sup class="footnote"><a href="#fn1">1</a></sup> This is not really an accurate distinction; everything we do is ultimately tied in some way to business requirements.</p>
+<p><sup class="footnote" id="fnr1"><a href="#fn1">1</a></sup> This is not really an accurate distinction; everything we do is ultimately tied in some way to business requirements.</p>
 </div>
 <div class="slide">
 <h1>Aspects Beyond Cross-Cutting Concerns</h1>
@@ -7054,15 +7047,15 @@ trait PersistentName extends Named with Persister {
 
 case class Customer(var name: String) extends Named
 
-val dean = new Customer("Dean") with PersistentName</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/dwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/bank-account-mixin.scala">code/bank-account-mixin.scala</a></div></p>
+val dean = new Customer("Dean") with PersistentName</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/deanwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/bank-account-mixin.scala">code/bank-account-mixin.scala</a></div></p>
 </div>
 <div class="slide">
 <h1>Why Isn&#8217;t <span class="caps">AOP</span> Pervasive? (cont.)</h1>
 <p>So we can get <em>advice</em> without aspects, although it&#8217;s still tedious to write all these special cases. However, we still don&#8217;t have <em>quantification</em>.</p>
 <p>Functional data structures can address both limitations.</p>
 <p>Objects are just ad hoc groupings of collections and &#8220;atoms&#8221; (numbers, strings, etc.), recursively. More specifically, they work like <em>maps</em> and in languages like JavaScript, they <em>are</em> maps!</p>
-<p>So, if we create a <code>PersistentMap</code><sup class="footnote"><a href="#fn1">1</a></sup>, in this case, and represent our objects as maps, we&#8217;ve solved the quantification problem!</p>
-<p><sup class="footnote"><a href="#fn1">1</a></sup> In this case, meaning persistent to a database, not as in the <em><span class="caps">STM</span></em> case.</p>
+<p>So, if we create a <code>PersistentMap</code><sup class="footnote" id="fnr1"><a href="#fn1">1</a></sup>, in this case, and represent our objects as maps, we&#8217;ve solved the quantification problem!</p>
+<p><sup class="footnote" id="fnr1"><a href="#fn1">1</a></sup> In this case, meaning persistent to a database, not as in the <em><span class="caps">STM</span></em> case.</p>
 </div>
 <div class="slide">
 <h1>Why Isn&#8217;t <span class="caps">AOP</span> Pervasive? (cont.)</h1>
@@ -7089,13 +7082,13 @@ trait PersistentMap[K,V] extends Map[K,V] with KeyValuePersister[K,V] {
 }
 
 val dean = new HashMap[String,Any] with PersistentMap[String,Any]
-dean.put("name", "Dean")</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/dwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/persistent-map.scala">code/persistent-map.scala</a></div></p>
+dean.put("name", "Dean")</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/deanwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/persistent-map.scala">code/persistent-map.scala</a></div></p>
 </div>
 <div class="slide">
 <h1>Why Isn&#8217;t <span class="caps">AOP</span> Pervasive? (cont.)</h1>
 <p>What this means is that if we just use <code>Maps</code> (and perhaps a few other fundamental collections), we can instrument them as needed with less effort than instrumenting lots of ad-hoc classes. The quantification problem is reduced.</p>
-<p>The key point here is that working with more &#8220;primitive&#8221; building blocks; functions, and core data structures, it is actually easier to <em>generate</em> the variations of behavior we need.<sup class="footnote"><a href="#fn1">1</a></sup> We&#8217;ll return to this point in a few weeks when we talk about <em>simplicity</em> in systems, etc.</p>
-<p><sup class="footnote"><a href="#fn1">1</a></sup> We can make the behaviors more <em>composable</em> using advanced techniques like <em>monads</em>.</p>
+<p>The key point here is that working with more &#8220;primitive&#8221; building blocks; functions, and core data structures, it is actually easier to <em>generate</em> the variations of behavior we need.<sup class="footnote" id="fnr1"><a href="#fn1">1</a></sup> We&#8217;ll return to this point in a few weeks when we talk about <em>simplicity</em> in systems, etc.</p>
+<p><sup class="footnote" id="fnr1"><a href="#fn1">1</a></sup> We can make the behaviors more <em>composable</em> using advanced techniques like <em>monads</em>.</p>
 </div>
 <div class="slide">
 <h1>Conclusions: <span class="caps">OOP</span> vs. FP (vs. <span class="caps">AOP</span>)</h1>
@@ -7160,47 +7153,568 @@ dean.put("name", "Dean")</pre><p></div><div class="codeurl"><a href="txmt://open
 </div><br />
 <div class="slide"></li>
 </ul>
-<h1 class="slide0">Lecture 12: Complexity vs. Simplicity Part I: Effective Software Development Processes, Scrum, XP, and Lean</h1>
+<h1 class="slide0">Lecture 12: Complexity vs. Simplicity Part I: Effective Software Development Processes &#8211; Scrum, XP, and Lean</h1>
 </div>
 <div class="slide">
-<h1>Project Planning</h1>
-<p>“If a project is truly innovative, you cannot possibly know its exact cost and exact schedule at the beginning.”</p>
-<p>John Gavin, Director of the Lunar Module Program, in an article in M.I.T.&#8217;s Technology Review, 1994, and quoted in his obituary on November 4, 2010 in the <a href="http://nyti.ms/a2yPRN">New York Times</a>.</p>
-<p>The pervasive principle that successful systems, processes, tools, etc. avoid unnecessary complexity. We start by looking at the evolution of software processes.</p>
+<h1>Software Development Process</h1>
+<p>Ideally, a software development process helps us:</p>
 <ul>
-	<li>Fundamental requirements for any process.</li>
-	<li>Waterfall, Agile Methodologies, and others.</li>
-	<li>Why many approaches fail: <br />
-  * Excess complexity.<br />
-  * Poor mapping to the real &#8220;nature&#8221; of software development.</li>
-	<li>What should a process do?</li>
+	<li>Plan the project,
+	<ul>
+		<li>Timeline, including the delivery schedule.</li>
+		<li>Resources required.</li>
+		<li>Itemize and prioritize the deliverables that will be created.</li>
+	</ul></li>
+	<li>Execute on the plan.</li>
+	<li>Deliver on time and under budget.</li>
 </ul>
 </div>
 <div class="slide">
-<h1>Complexity vs. Simplicity Part II: Scrum, XP, and Lean<br />
-  <br />
-Agile software processes</h1>
+<h1>Project Planning</h1>
+<blockquote>
+<p>If a project is truly innovative, you cannot possibly know its exact cost and exact schedule at the beginning.</p>
+</blockquote>
+<div class='cite'>&#8212; John Gavin, Director of the Lunar Module Program, in an article in M.I.T.&#8217;s Technology Review, 1994, and quoted in his obituary on November 4, 2010 in the <a href="http://nyti.ms/a2yPRN">New York Times</a>.</div>
+</div>
+<div class="slide">
+<h1>Why Do We Plan?</h1>
+<p>We <em>really</em> want to predict the future:</p>
 <ul>
-	<li>Scrum &#8211; arguably the first?</li>
-	<li>XP &#8211; a complete, small-team process</li>
-	<li>Lean &#8211; Toyota Manufacturing</li>
-	<li>Scaling Agile</li>
-	<li>Is there one &#8220;true&#8221; software process for industrial development?</li>
+	<li>Is the project feasible?</li>
+	<li>What is the <em>real</em> cost of a project?
+	<ul>
+		<li>Will the <em>benefits</em> outweigh the <em>costs</em>?</li>
+	</ul></li>
+	<li>Will the project finish on time to meet market needs and/or deadlines?</li>
+</ul>
+</div>
+<div class="slide">
+<h1>Central Dilemma of Project Management</h1>
+<p>We can never have <em>perfect knowledge</em> at the beginning of a project to know these answers.</p>
+<ul>
+	<li>We can never think of every possible <em>contingency</em>.</li>
+	<li>Events outside our control can upset our careful plans.</li>
+	<li>We are <em>learning</em> about the project as we do it.</li>
+</ul>
+</div>
+<div class="slide">
+<h1>Plans vs. Reality, I</h1>
+<blockquote>
+<p>No plan of operations extends with certainty beyond the first encounter with the enemy&#8217;s main strength.</p>
+</blockquote>
+<p>Or put more simply,</p>
+<blockquote>
+<p>No plan survives contact with the enemy.</p>
+</blockquote>
+<div class='cite'>&#8212; Helmuth von Moltke the Elder, Chief of Staff of the Prussian Army for 30 years.</div>
+</div>
+<div class="slide">
+<h1>Plans vs. Reality, II</h1>
+<blockquote>
+<p>Plans are nothing; planning is everything.</p>
+</blockquote>
+<div class='cite'>&#8212; General Dwight D. Eisenhower, Supreme Commander of Allied Forces, World War II.</div>
+</div>
+<div class="slide">
+<h1>Then, Why Bother With Planning?</h1>
+<p>Because we still need to get as close to the ideal goals as possible. So, project planning and processes have to address:</p>
+<ul>
+	<li>Prioritizing features.</li>
+	<li>Risk reduction strategies.</li>
+	<li>Learning as you go.</li>
+	<li>Feedback loops and iterations.</li>
+</ul>
+</div>
+<div class="slide">
+<h1>Prioritizing Features</h1>
+<p>For every project, some features (requirements) are more important than others. Think about the evolution of mobile phones. While we love having email and web browsing on &#8220;smart&#8221; phones, it was important first for phones to make and receive calls! Voice mail and lists of phone numbers came next, etc.</p>
+<p>A common mistake: <em>work on the stuff that&#8217;s easiest or most fun first, rather than the stuff that&#8217;s most important.</em></p>
+</div>
+<div class="slide">
+<h1>Risk Reduction Strategies</h1>
+<p><em>Contingency planning</em> is a venerable technique for trying to anticipate every possible contingency and decide how it will be handled.</p>
+<p>That usually translates to identification of potential risks and responses to them.</p>
+</div>
+<div class="slide">
+<h1>Some Potential Risk</h1>
+<ul>
+	<li>Market changes.</li>
+	<li>Technical aspects of the project are not yet understood.</li>
+	<li>Technical aspects of the project prove not feasible.</li>
+	<li>The pace of development is slower than anticipated.</li>
+	<li>The cost of development is slower than anticipated.</li>
+</ul>
+</div>
+<div class="slide">
+<h1>Risk Reduction</h1>
+<p>But no amount of &#8220;thinking&#8221; and planning can remove all risk. As the war quotes imply, you have to adapt as circumstances change. Perhaps the most important benefit of contingency planning is the way it prepares you to adapt as needed.</p>
+</div>
+<div class="slide">
+<h1>Project Execution</h1>
+<ul>
+	<li>How do we get to working, delivered software that <em>meets the requirements</em>?</li>
+	<li>How do we stay within budget and quality goals?</li>
+	<li>What artifacts must be delivered?</li>
+	<li>What techniques help us achieve these goals?</li>
+</ul>
+</div>
+<div class="slide">
+<h1>Delivery on Time and Under Budget</h1>
+<p>Suppose you&#8217;re building the main stadium for the next Olympic games. You have an obvious hard deadline for completion.</p>
+<p>Still, what actually gets finished is somewhat flexible. You might cut back on the amenities and ornamentation, while you can&#8217;t cut back on safety and facilities, like adequate rest rooms!</p>
+<p>Similarly, even when there are hard deadlines for a software project, often the secondary features can be deferred until later.</p>
+</div>
+<div class="slide">
+<h1>Qualities of an Effective Process</h1>
+<p>The need for feedback and &#8220;course correction&#8221; means that any successful software development process must embrace <em>iterative and incremental development</em> (<span class="caps">IID</span>).</p>
+<ul>
+	<li><strong>Iterative</strong> &#8211; The process is divided into time increments (usually of fixed duration).</li>
+	<li><strong>Incremental</strong> &#8211; The features are implemented to completion one at a time, not all at once.</li>
+</ul>
+<p><span class="caps">IID</span> lets you</p>
+<ul>
+	<li>Solicit feedback from &#8220;stakeholders&#8221;.</li>
+	<li>Deliver limited functionality earlier rather than later!</li>
+</ul>
+</div>
+<div class="slide">
+<h1>Software Processes and Complexity</h1>
+<p>All successful products (not just software) release as early as possible with minimal, but essential features. Later, they expand (and sometimes grow bloated).</p>
+<p>A universal principle, repeated over and over again, is that successful systems, processes, tools, etc. avoid <em>unnecessary</em> complexity.</p>
+</div>
+<div class="slide">
+<h1>Kinds of Complexity</h1>
+<p>There are two kinds of complexity:</p>
+<ul>
+	<li><strong>Essential</strong> &#8211; Inherent in the problem domain. Unavoidable.</li>
+	<li><strong>Accidental</strong> &#8211; Complexity added to the implementation that is not necessary and is detrimental.<br />
+<br/><br/></li>
+</ul>
+<blockquote>
+<p>Make everything as simple as possible,<br/>but not simpler.</p>
+</blockquote>
+<div class='cite'>&#8212; Albert Einstein</cite></div>
+<div class="slide">
+<h1>Software Processes: A History</h1>
+<p>Let&#8217;s look at two of the most influential concepts in the history of software process thinking.</p>
+<ul>
+	<li>Waterfall Model of Software Development</li>
+	<li>Rational Unified Process</li>
+	<li>Agile Methodologies</li>
+</ul>
+</div>
+<div class="slide">
+<h1>Waterfall Model of Software Development</h1>
+<center>
+<img src="images/Waterfall.png"></img>
+</center>
+</div>
+<div class="slide">
+<h1>Waterfall Model of Software Development</h1>
+<p>This process looks orderly, controlled, predictable. Real projects posses none of those qualities! Real projects require feedback, iteration, and incremental delivery of features.</p>
+<p>The Waterfall Process resulted with a historical accident!<sup class="footnote" id="fnr1"><a href="#fn1">1</a></sup> During the 60s, many researches recognized the importance of iterative development. One paper was &#8220;Managing the Development of Large Software Systems&#8221;, by Winston Royce, in Proceedings of <span class="caps">IEEE</span> Westcon.</p>
+<p>This paper started with an image similar to the one on the previous slide, but it went on to argue that such a process can&#8217;t work, because feedback is required.</p>
+<p><sup class="footnote" id="fnr1"><a href="#fn1">1</a></sup> Craig Larman, &#8220;Agile and Iterative Development: A Manager&#8217;s Guide&#8221;, pp 102-107.</p>
+</div>
+<div class="slide">
+<h1>Waterfall Model of Software Development</h1>
+<p>Tragically, when the DoD decided to draft a standard for software development based on this paper, the author ignored the feedback aspects and focused on the top-down discussion. In part, this decision reflected other influential trends of the time. (Larman discusses this in detail.)</p>
+<p>The result was a deeply flawed approach to development that became an influential standard around the world. It caused a lot of damage before it was overturned.</p>
+</div>
+<div class="slide">
+<h1>Waterfall: What Was Missing</h1>
+<center>
+<img src="images/WaterfallWithFeedback.png"></img>
+</center>
+</div>
+<div class="slide">
+<h1>Process Science</h1>
+<p>In fact, feedback loops are a &#8220;Process 101&#8221; requirement. Pick any <em>other</em> process or similar &#8220;throughput-oriented&#8221; sequence of events, such as manufacturing, chemical engineering, electrical circuits. All would <em>fail</em> without feedback loops.</p>
+<p>There are stories that software process experts were laughed at when they described waterfall to process experts in other fields.</p>
+</div>
+<div class="slide">
+<h1>Successors to Waterfall</h1>
+<p>In the late 80s and 90s, successors emerged that restored the important roll of iterations and feedback. Most were also tied to <span class="caps">OOP</span>.</p>
+<p>Perhaps the most interesting and influential was the <em>Rational Unified Process</em> (<span class="caps">RUP</span>).</p>
+</div>
+<div class="slide">
+<h1>Rational Unified Process (<span class="caps">RUP</span>)</h1>
+<p>Many considered Rational Corporation to be the leading expert in software development through much of the 80s and 90s. The term <em>Unified</em> was tied to the their <em>Unified Modeling Language</em> (<span class="caps">UML</span>) that they created by merging the separate approaches of the <em>Three Amigos</em>: Grady Booch, James Rumbaugh, and Ivar Jacobson.</p>
+<p>(Booch was one of the original employees. Rumbaugh and Jacobson joined in the mid-90s, after establishing their reputations independently.)</p>
+</div>
+<div class="slide">
+<h1>Rational Unified Process (<span class="caps">RUP</span>)</h1>
+<p>While <span class="caps">RUP</span> embraced <span class="caps">IID</span>, it treated each iteration as a mini Waterfall, with some requirements gathering, some design, and more implementation and testing.</p>
+<p>This approach reflected concerns about the <em>cost of change</em>.</p>
+</div>
+<div class="slide">
+<h1>Drawbacks of <span class="caps">RUP</span> &#8211; Cost of Change</h1>
+<p>A <em>cardinal rule</em> at the time; the longer a defect (requirement error, design flaw, bug) goes undetected in a project, the more expensive it is to fix, because the cost of <em>rework</em> goes up, the later in a project the defect is detected. In the most severe cases, such defects can even kill projects!</p>
+</div>
+<div class="slide">
+<h1>Drawbacks of <span class="caps">RUP</span> &#8211; Cost of Change</h1>
+<p>While true to an extent, it had the practical affect of encouraging <em>waterfall thinking</em> to persist:</p>
+<ul>
+	<li>We <em>must</em> get the requirements right first!</li>
+	<li>We <em>must</em> design the code before implementing it!</li>
+	<li>If we do the above, the implementation will be <em>mechanical</em>, predictable, and (mostly) bug free!</li>
+</ul>
+<p>(<span class="caps">RUP</span> wasn&#8217;t alone in this thinking.)</p>
+</div>
+<div class="slide">
+<h1>Drawbacks of <span class="caps">RUP</span> &#8211; Cost of Change</h1>
+<p>So, in practice, organizations following <span class="caps">RUP</span> (and similar approaches) were often actually doing waterfall development, while paying lip service to incremental and iterative development. For example, since Rational was a big advocate of modeling with <span class="caps">UML</span>, <span class="caps">RUP</span> strongly recommended design by modeling&#8230;</p>
+<p>Another symptom of this was the belief that long-range plans can and should be followed. When they weren&#8217;t followed, it was considered a failure of the process.</p>
+</div>
+<div class="slide">
+<h1>Drawbacks of <span class="caps">RUP</span> &#8211; Too Prescriptive</h1>
+<p>Because of this fear of defects (and let&#8217;s face it, because it was a commercial product and they needed stuff to sell), <span class="caps">RUP</span> became a very prescriptive process with way too many <em>roles</em> and <em>responsibilities</em> identified for all kinds of minutiae.</p>
+<p>You were supposed to <em>instantiate</em> <span class="caps">RUP</span> for your situation, that is pick the roles and responsibilities that made sense for you.</p>
+<p>Rational (and independent consultants) made a lot of money on training and <em>instantiating</em> <span class="caps">RUP</span>.</p>
+</div>
+<div class="slide">
+<h1>Drawbacks of <span class="caps">RUP</span> &#8211; Too Prescriptive</h1>
+<p>Also, there is a subset of the population that <em>likes</em> the world to be prescriptive, to tell them what to believe, what to do, and when.</p>
+<p>However, remember our generals? While armies have lots of roles and responsibilities, <em>successful</em> armies also understand the need to be flexible, not rigid, to break out of the artificial boxes when needed.</p>
+</div>
+<div class="slide">
+<h1>Strengths and Weaknesses of <span class="caps">RUP</span></h1>
+<p>+ Recognized the importance of feedback and <span class="caps">IID</span>.<br />
+- Too prescriptive.<br />
+- Based on an incorrect understanding of the cost of change.</p>
+</div>
+<div class="slide">
+<h1>Birth of the Agile Movement</h1>
+<p>At the end of the 90s, during the Internet bubble, it quickly became apparent to many people that the &#8220;state of the art&#8221; for software development was too bloated and inefficient.</p>
+</div>
+<div class="slide">
+<h1>Birth of the Agile Movement</h1>
+<p>I worked for a few tech startups in that era that tried to use variations of <span class="caps">RUP</span>, because &#8220;that&#8217;s what you&#8217;re supposed to do&#8221;. For example, we still tried to model what we were doing, which was stupid, in retrospect, given the rapidly changing marketplace and our attempts to find a successful niche&#8230;</p>
+</div>
+<div class="slide">
+<h1>Birth of the Agile Movement</h1>
+<p>I worked for a few other organizations that knew enough to abandon <span class="caps">UML</span> modeling, etc., but they had no alternatives in mind. They simply adopted ad hoc techniques, like hiring QA departments to test the code after it was written.</p>
+<p>The result? Lots of end-of-project overtime to fix serious flaws; crises 24&#215;7 as the poor quality code caused problems in production.</p>
+</div>
+<div class="slide">
+<h1>Birth of the Agile Movement</h1>
+<p>But other practitioners explored <em>principled</em>, yet <em>efficient</em> and <em>effective</em> approaches to the inherent problems of software development.</p>
+<p>That is, just because we were &#8220;on Internet time&#8221;, it didn&#8217;t mean all the old challenges mysteriously vanished!</p>
+</div>
+<div class="slide">
+<h1>Agile Manifesto</h1>
+<p>In February, 2001, 17 leaders from various <em>lightweight methodology</em> camps meet at the Snowbird Ski Resort. They wanted to look for and document shared principles and practices. Some later expressed surprise that they achieved what they did, given the tendency for people to cling to their own ideas.</p>
+<p>They adopted the term <em>agile</em> as an umbrella term for their shared philosophy of effective software development. They drafted a simple <em>agile manifesto</em> to express that philosophy&#8230;</p>
+</div>
+<div class="slide">
+<h1>Agile Manifesto</h1>
+<p>&#8220;We are uncovering better ways of developing software by doing it and helping others do it. Through this work we have come to value:</p>
+<ul>
+	<li><strong>Individuals</strong> and <strong>interactions</strong> <em>over</em> <strong>processes</strong> and <strong>tools</strong></li>
+	<li><strong>Working software</strong> <em>over</em> <strong>comprehensive documentation</strong></li>
+	<li><strong>Customer collaboration</strong> <em>over</em> <strong>contract negotiation</strong></li>
+	<li><strong>Responding to change</strong> <em>over</em> <strong>following a plan</strong></li>
+</ul>
+<p>That is, while there is value in the items on the <em>right</em>, we value the items on the <em>left more</em>.&quot;</p>
+</div>
+<div class="slide">
+<h1>Authors: The Agile Manifesto</h1>
+<div class="tiny">
+<table>
+	<tr>
+		<th>Name </th>
+		<th>Agile &#8220;School&#8221;<sup class="footnote" id="fnr1"><a href="#fn1">1</a></sup> </th>
+	</tr>
+	<tr>
+		<td> Kent Beck </td>
+		<td> XP </td>
+	</tr>
+	<tr>
+		<td> Mike Beedle </td>
+		<td> Scrum </td>
+	</tr>
+	<tr>
+		<td> Arie van Bennekum</td>
+		<td> Dynamic Systems Development Method (<span class="caps">DSDM</span>) </td>
+	</tr>
+	<tr>
+		<td> Alistair Cockburn </td>
+		<td> Crystal </td>
+	</tr>
+	<tr>
+		<td> Ward Cunningham </td>
+		<td> Extreme Programming (XP) </td>
+	</tr>
+	<tr>
+		<td> Martin Fowler </td>
+		<td> Consultant<sup class="footnote" id="fnr2"><a href="#fn2">2</a></sup> </td>
+	</tr>
+	<tr>
+		<td> James Grenning </td>
+		<td> XP </td>
+	</tr>
+	<tr>
+		<td> Jim Highsmith </td>
+		<td> Adaptive Software Development </td>
+	</tr>
+</table>
+<p><sup class="footnote" id="fnr1"><a href="#fn1">1</a></sup> The &#8220;named&#8221; Agile methodology this person is most associated with, at least at the time the manifesto was drafted.<br />
+<sup class="footnote" id="fnr2"><a href="#fn2">2</a></sup> Not involved in the invention of any particular &#8220;named&#8221; Agile methodology.</p>
+</div>
+</div>
+<div class="slide">
+<h1>Authors: The Agile Manifesto (cont.)</h1>
+<div class="tiny">
+<table>
+	<tr>
+		<th>Name </th>
+		<th>Agile &#8220;School&#8221;<sup class="footnote" id="fnr1"><a href="#fn1">1</a></sup> </th>
+	</tr>
+	<tr>
+		<td> Andrew Hunt </td>
+		<td> Consultant, co-owner of the Pragmatic Programmers<sup class="footnote" id="fnr2"><a href="#fn2">2</a></sup> </td>
+	</tr>
+	<tr>
+		<td> Ron Jeffries </td>
+		<td> XP </td>
+	</tr>
+	<tr>
+		<td> Jon Kern </td>
+		<td> Feature Driven Development (<span class="caps">FDD</span>) </td>
+	</tr>
+	<tr>
+		<td> Brian Marick </td>
+		<td> Consultant focused on software testing </td>
+	</tr>
+	<tr>
+		<td> Robert C. Martin </td>
+		<td> XP </td>
+	</tr>
+	<tr>
+		<td> Steve Mellor </td>
+		<td> Consultant<sup class="footnote" id="fnr2"><a href="#fn2">2</a></sup> </td>
+	</tr>
+	<tr>
+		<td> Ken Schwaber </td>
+		<td> Scrum </td>
+	</tr>
+	<tr>
+		<td> Jeff Sutherland </td>
+		<td> Scrum </td>
+	</tr>
+	<tr>
+		<td> Dave Thomas </td>
+		<td> Consultant, co-owner of the Pragmatic Programmers<sup class="footnote" id="fnr2"><a href="#fn2">2</a></sup> </td>
+	</tr>
+</table>
+<p><sup class="footnote" id="fnr1"><a href="#fn1">1</a></sup> The &#8220;named&#8221; Agile methodology this person is most associated with, at least at the time the manifesto was drafted.<br />
+<sup class="footnote" id="fnr2"><a href="#fn2">2</a></sup> Not involved in the invention of any particular &#8220;named&#8221; Agile methodology.</p>
+</div>
+</div>
+<div class="slide">
+<h1>Three Agile Methods: Scrum, XP, and Lean</h1>
+<p>While there are several different agile methods, we&#8217;ll discuss the three most popular.<sup class="footnote" id="fnr1"><a href="#fn1">1</a></sup></p>
+<ul>
+	<li><strong>Scrum</strong> &#8211; focuses on project management.</li>
+	<li><strong>XP</strong> &#8211; a complete, small-team approach, addressing project management and developer practices.</li>
+	<li><strong>Lean</strong> &#8211; inspired by Toyota Lean, &#8220;Just-in-Time&#8221; Manufacturing.</li>
+</ul>
+<p><sup class="footnote" id="fnr1"><a href="#fn1">1</a></sup> See Highsmith&#8217;s &#8220;Agile Software Development Ecosystems&#8221; for an excellent survey of all the agile methods as of 2002 ().</p>
+</div>
+<div class="slide">
+<h1>Three Agile Methods: Scrum, XP, and Lean</h1>
+<p>I&#8217;ll describe these three processes as they were originally conceived, using original terminology. Today, they have borrowed heavily from each other, so you&#8217;ll encounter hybrid processes in most organizations.</p>
+</div>
+<div class="slide">
+<h1>Scrum</h1>
+<p>Developed in the mid-90s. First public presentation at <span class="caps">OOPSLA</span> &#8217;95.</p>
+<p>Named after the <em>scrum</em> in Rugby, where a team huddle&#8217;s together to move the ball down the field. It is used as a metaphor for the frequent, quick, daily <em>standup</em> meetings done by teams and the philosophy that the whole team works together to deliver the software.</p>
+<p>Why have meetings standing up? Because you get tired quickly, so you get them over with quickly!</p>
+</div>
+<div class="slide">
+<h1>Scrum&#8217;s Process</h1>
+<center>
+<img src="images/800px-Scrum_process.png"></img>
+</center>
+</div>
+<div class="slide">
+<h1>Scrum Terms and Concepts</h1>
+<div class="small">
+<table>
+	<tr>
+		<th>Term </th>
+		<th>Definition</th>
+	</tr>
+	<tr>
+		<td> <strong>Sprint</strong> </td>
+		<td> A 30-day iteration, resulting in some increment of working software. </td>
+	</tr>
+	<tr>
+		<td> <strong>Backlog</strong> </td>
+		<td> A prioritized list of tasks, requirements, etc. to do. </td>
+	</tr>
+	<tr>
+		<td> <strong>Product Backlog</strong> </td>
+		<td> The full backlog for the whole project. </td>
+	</tr>
+	<tr>
+		<td> <strong>Sprint Backlog</strong> </td>
+		<td> The backlog just for the current <strong>sprint</strong>. </td>
+	</tr>
+	<tr>
+		<td> <strong>Daily Scrum</strong> </td>
+		<td> Daily stand up, each working day at the same time. Time boxed to <em>15 minutes</em>! </td>
+	</tr>
+	<tr>
+		<td> <strong>Burn-down Chart</strong> </td>
+		<td> Chart of finished tasks vs. time, trending to zero tasks left for the <strong>sprint</strong>. </td>
+	</tr>
+</table>
+</div>
+</div>
+<div class="slide">
+<h1>Burn-down Chart</h1>
+<center>
+<img src="images/800px-SampleBurndownChart.png"></img>
+</center>
+</div>
+<div class="slide">
+<h1>Variation: Burn-up Chart</h1>
+<center>
+<img src="images/iteration_burn_up.png"></img>
+</center>
+</div>
+<div class="slide">
+<h1>Variation: Burn-up Chart</h1>
+<p>Better for showing project-wide statistics, since the &#8220;remaining&#8221; tasks may be increasing (feature creep!).</p>
+<p>(We&#8217;ll discuss <em>story points</em> shortly.)</p>
+</div>
+<div class="slide">
+<h1>Scrum Terms and Concepts (cont.)</h1>
+<div class="small">
+<table>
+	<tr>
+		<th>Term </th>
+		<th>Definition</th>
+	</tr>
+	<tr>
+		<td> <strong>Scrum Master</strong> </td>
+		<td> Maintains the process, e.g., the backlogs. Also functions as the process coach, as needed. </td>
+	</tr>
+	<tr>
+		<td> <strong>Product Owner</strong> </td>
+		<td> The <em>stakeholder</em> representative. Helps define and prioritize the work and reviews the results at the end of each <strong>sprint</strong>. </td>
+	</tr>
+	<tr>
+		<td> <strong>Team</strong> </td>
+		<td> A cross functional group, ideally under 10 people, who do everything from analysis to testing. </td>
+	</tr>
+</table>
+</div>
+</div>
+<div class="slide">
+<h1>Life of a Sprint</h1>
+<p>A <strong>sprint</strong> starts with a <strong>sprint planning meeting</strong>, where the <strong>scrum master</strong> and <strong>product owner</strong> present the highest priority work left on the <strong>project backlog</strong> to the team. The team decides <em>for itself</em> how much of the backlog it can complete in the next sprint. It usually captures this information in hour estimates. This meeting should not last more than 1/2 day.</p>
+<p>Once the team as agreed on the <strong>sprint backlog</strong>, i.e., the work to be done in the sprint, the <strong>sprint backlog</strong> is <em>frozen</em> for the whole sprint (except for extraordinary circumstances). This minimizes churn for the developers.</p>
+</div>
+<div class="slide">
+<h1>Life of a Sprint</h1>
+<p>The team members decide amongst themselves who will do what work.</p>
+<p>Each day, at the same time and place, they have a <strong>daily scrum</strong>, lasting no more than 15 minutes. Each team member answers three questions:</p>
+<ol>
+	<li>What have you done since yesterday?</li>
+	<li>What are you planning to do today?</li>
+	<li>Do you have any problems preventing you from accomplishing your goal?</li>
+</ol>
+<p>All other discussions are deferred until after the scrum.</p>
+</div>
+<div class="slide">
+<h1>Life of a Sprint</h1>
+<p>The sprint ends with two meetings (often combined into one).</p>
+<ul>
+	<li><strong>Sprint Review</strong> &#8211; What was accomplished? Demo for <strong>product owner</strong>. Time boxed to 4 hours.</li>
+	<li><strong>Sprint Retrospective</strong> &#8211; What worked and didn&#8217;t work in the last sprint? What can we do to improve going forward? Time boxed to 3 hours.</li>
+</ul>
+</div>
+<div class="slide">
+<h1>Life of a Sprint</h1>
+<p><em>Wash, rinse, repeat&#8230;</em></p>
+</div>
+<div class="slide">
+<h1>Reading Assignment</h1>
+<ul>
+	<li><a href="http://junit.sourceforge.net/doc/testinfected/testing.htm">JUnit Test Infected: Programmers Love Writing Tests</a>. An early and highly influential essay on <span class="caps">TDD</span>, written by Kent Beck, the creator of JUnit.</li>
+</ul>
+</div>
+<div class="slide">
+<h1>A &#8220;Retrospective&#8221; on Scrum</h1>
+<p>Scrum has been the first agile process adopted by many organizations &#8211; the <em>gateway drug</em>, if you will.</p>
+<p>+ Focuses on program management issues &#8211; a good place to start.<br />
++ Easy to grasp.<br />
+- 30 day sprints are now seen as too long (in most organizations).<br />
+- Ignored developer activities &#8211; which eventually undermine successes (e.g., due to lack of testing and poor quality).<br />
+- <em>Certified Scrum Master</em> training became a &#8220;degree-mill&#8221; kind of embarrassment. The false sense of &#8220;achieved expertise&#8221; has led to many failed projects.</p>
+</div>
+<div class="slide">
+<h1>Extreme Programming (XP)</h1>
+<p>Started with a now-famous project, a payroll system at Chrysler, written in Smalltalk, that began in 1996. Kent Beck brought on to do Smalltalk performance consulting, but he quickly introduced process improvements based on his prior work with Ward Cunningham. Ron Jeffries was also brought in as a consultant.</p>
+<p>Beck wrote perhaps the most influential book on software process in the last decade, &#8220;Extreme Programming Explained: Embrace Change&#8221;, 2nd Edition (2005). (This was a significant rewrite. If you can find it, it&#8217;s worth reading the original edition, published in 2000.)</p>
+</div>
+<div class="slide">
+<h1>Why Extreme?</h1>
+<blockquote>
+<p>The first time I was asked to lead a team, I asked them to do a little bit of the things I thought were sensible, like testing and reviews. The second time there was a lot more on the line. I thought, &#8220;Damn the torpedoes, at least this will make a good article,&#8221; [and] asked the team to crank up all the knobs to 10 on the things I thought were essential and leave out everything else.</p>
+</blockquote>
+<div class='cite'>&#8212; Kent Beck in an interview he and Martin Fowler did with  <a href="http://www.informit.com/articles/article.aspx?p=20972">informit.com</a>.</div>
+</div>
+<div class="slide">
+<h1>Why Extreme? (cont.)</h1>
+<p>XP Tries to push ideas to their logical extreme.</p>
+<ul>
+	<li>Hard to gather requirements? Put the customer in the same room.</li>
+	<li>Is quality an issue? Push testing to <em>before</em> coding.</li>
+	<li>Designs hard to keep consistent with code? Design as you code.</li>
+	<li>Documentation grows obsolete? Make the code, including the tests, be the documentation.</li>
+</ul>
+</div>
+<div class="slide">
+<h1>Universal Themes</h1>
+<ul>
+	<li>Short, time-boxed iterations and incremental releases.</li>
+	<li>Continuous customer feedback.</li>
+	<li>Developer testing to virtually eliminate bugs.</li>
+	<li>Whole-team collaboration and responsibility.</li>
 </ul>
 </div>
 <div class="slide">
 <h1>Reading Assignment</h1>
-<p>last week, I had you read some general introductions to Agile. This week, I want you read about the three main Agile methodologies that we discussed today.</p>
 <ul>
-	<li><a href="http://en.wikipedia.org/wiki/Scrum_(development">Scrum</a>)</li>
-	<li><a href="http://en.wikipedia.org/wiki/Extreme_Programming">Extreme Programming</a></li>
-	<li>Lean</li>
+	<li>&#8220;JUnit Test Infected: Programmers Love Writing Tests.&#8221;http://junit.sourceforge.net/doc/testinfected/testing.htm. An early and highly-influential essay on <span class="caps">TDD</span>, written by Kent Beck, who created JUnit.</li>
+	<li>Kent Beck and Martin Fowler interview about XP with  <a href="http://www.informit.com/articles/article.aspx?p=20972">informit.com</a>.</li>
 </ul>
 </div>
 <div class="slide">
-<h1>Reading for Next Week&#8217;s Lecture</h1>
+<h1>Reading Assignment (cont.)</h1>
+<p>last week, I had you read some general introductions to Agile. This week, I want you read about the three main Agile methodologies that we discussed today.</p>
 <ul>
-	<li>Eric Brewer, <a href="http://www.cs.berkeley.edu/~brewer/cs262b-2004/PODC-keynote.pdf">Toward Robust, Distributed Systems</a>. The keynote at the <a href="http://www.podc.org/podc2000/"><span class="caps">ACM</span> Symposium on Principles of Distributed Computing</a> that introduced Brewer&#8217;s <span class="caps">CAP</span> theorem. Focus on the first 2/3^rd^s of the presentation (up to <em>The DQ Principle</em>.)<br />
+	<li><a href="http://en.wikipedia.org/wiki/Scrum_(development)">Scrum</a>.</li>
+	<li><a href="http://en.wikipedia.org/wiki/Extreme_Programming">Extreme Programming</a>.</li>
+	<li><a href="http://en.wikipedia.org/wiki/Lean_software_development">Lean Software Development</a>.</li>
+</ul>
+</div>
+<div class="slide">
+<h1>For Next Week: Simplicity and Systems.</h1>
+<ul>
+	<li>Eric Brewer, <a href="http://www.cs.berkeley.edu/~brewer/cs262b-2004/PODC-keynote.pdf">Toward Robust, Distributed Systems</a>. The keynote at the <a href="http://www.podc.org/podc2000/"><span class="caps">ACM</span> Symposium on Principles of Distributed Computing</a> that introduced Brewer&#8217;s <span class="caps">CAP</span> theorem. Focus on the first 2/3rds of the presentation (up to <em>The DQ Principle</em>.)</li>
+</ul>
+</div>
+<div class="slide">
+<h1>Mini-Project</h1>
+<ul>
+	<li>Today: Turn in an outline of the specific items you will research and write up (for research projects) or implement (for coding projects). Also briefly describe what you have completed so far.</li>
+	<li>11/30: Turn in an refined outline and a summary of your progress so far.</li>
+	<li>12/5 (Sunday): Turn in a draft of your presentation slides for the 15-minute talk. (You can still work on them until Tuesday.)</li>
+	<li>12/7: Last class &#8211; presentations and turn in your writeup or code (GitHub preferred).<br />
 </div><br />
 <div class="slide"></li>
 </ul>
@@ -7316,7 +7830,7 @@ Agile software processes</h1>
 	<li><a href="http://dbmsmusings.blogspot.com/2010/04/problems-with-cap-and-yahoos-little.html">My Problem with <span class="caps">CAP</span> and Yahoo&#8217;s Little Known NoSQL System</a>.</li>
 	<li>Werner Vogels, <a href="http://portal.acm.org/ft_gateway.cfm?id=1466448&amp;type=pdf">Eventually Consistent</a>. (Also <a href="http://www.allthingsdistributed.com/2008/12/eventually_consistent.html">here</a>) A specific look at different kinds of eventual consistency and how they informed the design of several Amazon technologies.</li>
 	<li>Haifeng Yu and Amin Vahdat, <a href="http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.34.7743&amp;rep=rep1&amp;type=pdf">Design and Evaluation of a Continuous Consistency Model for Replicated Services</a></li>
-	<li>Guy Pardon, <a href="http://guysblogspot.blogspot.com/2008/09/cap-solution-proving-brewer-wrong.html" title="Proving Brewer Wrong">>CAP</span> Solution</a>. An argument that if you don&#8217;t require all three properties at the same time, you can work around the <span class="caps">CAP</span> theorem.<br />
+	<li>Guy Pardon, <a href="http://guysblogspot.blogspot.com/2008/09/cap-solution-proving-brewer-wrong.html" title="Proving Brewer Wrong">A <span class="caps">CAP</span> Solution</a>. An argument that if you don&#8217;t require all three properties at the same time, you can work around the <span class="caps">CAP</span> theorem.<br />
 </div></li>
 </ul>
 </div>
@@ -7531,10 +8045,9 @@ Agile software processes</h1>
 	<li><a href="http://en.wikipedia.org/wiki/Singleton_pattern">Singleton Design Pattern</a> (Wikipedia).</li>
 	<li><a href="http://en.wikipedia.org/wiki/Visitor_pattern">Visitor Pattern</a> (Wikipedia). A truly ugly pattern. A good illustration of forcing a &#8220;pure&#8221; OO solution when a much more elegant approach should be used instead, i.e., <em>type classes</em> (see the FP section below.)</li>
 	<li><a href="http://www.c2.com/cgi/wiki?AreDesignPatternsMissingLanguageFeatures">Are Design Patterns Missing Language Features</a>. A starting place for criticisms of patterns.</li>
-	<li>Peter Norvig, <a href="http://www.norvig.com/design-patterns">Design Patterns</a>. Argues that 16 of the 23 GoF patterns are unnecessary in languages like Lisp.<br />
- <br />
-</div></li>
+	<li>Peter Norvig, <a href="http://www.norvig.com/design-patterns">Design Patterns</a>. Argues that 16 of the 23 GoF patterns are unnecessary in languages like Lisp.</li>
 </ul>
+</div>
 </div>
 <div class="slide">
 <h1>Object-Oriented Programming (Specifics)</h1>
@@ -7615,26 +8128,54 @@ Agile software processes</h1>
 </ul>
 </div>
 <div class="slide">
-<h1>Software Process</h1>
-<div class='small'>
-<ul>
-	<li>Kent Beck, &#8220;Extreme Programming Explained: Embrace Change&#8221;, 2nd Edition, Addison-Wesley, 2005. <span class="caps">ISBN</span>: 0321278658.</li>
-	<li>Mary and Tom Poppendieck, &#8220;Implementing Lean Software Development&#8221;, Addison-Wesley, 2007. <span class="caps">ISBN</span>: 0321437381.</li>
-	<li>Mike Cohn, &#8220;User Stories Applied&#8221;, Addison-Wesley, 2004. <span class="caps">ISBN</span>: 0321205685.</li>
-	<li>Mike Cohn, &#8220;Agile Estimating and Planning&#8221;, Addison-Wesley, 2006. <span class="caps">ISBN</span>: 0131479415.</li>
-	<li>Scott Berkun, &#8220;The Art of Project Management&#8221;, O&#8217;Reilly, 2005. <span class="caps">ISBN</span>: 0596007868.<br />
-</div></li>
-</ul>
-</div>
-<div class="slide">
-<h1>Agile Methods</h1>
+<h1>Agile Methods: General</h1>
 <div class='small'>
 <ul>
 	<li><a href="http://en.wikipedia.org/wiki/Agile_software_development">Agile Software Development</a> (Wikipedia). Provides a good overview and history.</li>
 	<li><a href="http://martinfowler.com/articles/newMethodology.html">The New Methodology</a>. Fowler is the Chief Scientist at Thoughtworks. He&#8217;s written several influential books on patterns, refactoring, DSLs, etc.</li>
 	<li><a href="http://agilemanifesto.org/">Manifesto for Agile Software Development</a>. Very short read ;)</li>
+	<li>Jim Highsmith, &#8220;Agile Software Development Ecosystems&#8221;, Addison-Wesley, 2002. <span class="caps">ISBN</span>: 0201760436.</li>
+	<li>Craig Larman, &#8220;Agile and Iterative Development: A Manager&#8217;s Guide&#8221;, Addison-Wesley, 2004. <span class="caps">ISBN</span>: 0131111558.<br />
+</div></li>
 </ul>
 </div>
+<div class="slide">
+<h1>XP, Scrum and Lean</h1>
+<div class='small'>
+<ul>
+	<li>Kent Beck, &#8220;Extreme Programming Explained: Embrace Change&#8221;, 2nd Edition, Addison-Wesley, 2005. <span class="caps">ISBN</span>: 0321278658.</li>
+	<li>Ken Schwaber,  &#8220;Agile Project Management with Scrum&#8221;, Microsoft Press, 2004. <span class="caps">ISBN</span> 978-0-735-61993-7.</li>
+	<li>Ken Schwaber,  &#8220;Agile Project Management with Scrum&#8221;, Microsoft Press, 2004. <span class="caps">ISBN</span> 978-0-735-61993-7.</li>
+	<li>Mary and Tom Poppendieck, &#8220;Implementing Lean Software Development&#8221;, Addison-Wesley, 2007. <span class="caps">ISBN</span>: 0321437381.</li>
+	<li><a href="http://en.wikipedia.org/wiki/Extreme_Programming">Extreme Programming</a> (Wikipedia).</li>
+	<li>Kent Beck and Martin Fowler interview about XP with  <a href="http://www.informit.com/articles/article.aspx?p=20972">informit.com</a>.</li>
+	<li><a href="http://c2.com/cgi/wiki?ExtremeProgramming">Extreme Programming</a> The discussion on the c2 wiki is interesting because it is more of a discussion than an encyclopedia entry, like on Wikipedia.</li>
+	<li><a href="http://en.wikipedia.org/wiki/Scrum_(development)">Scrum Development</a> (Wikipedia).</li>
+	<li><a href="http://en.wikipedia.org/wiki/Lean_software_development">Lean Software Development</a> (Wikipedia).<br />
+</div></li>
+</ul>
+</div>
+<div class="slide">
+<h1>Test-Driven Development and Refactoring</h1>
+<div class='small'>
+<ul>
+	<li><a href="http://junit.sourceforge.net/doc/testinfected/testing.htm">JUnit Test Infected: Programmers Love Writing Tests</a>.</li>
+	<li><a href="http://en.wikipedia.org/wiki/Test-driven_development">Test-Driven Development</a> (Wikipedia).</li>
+	<li>Kent Beck. &#8220;Test Driven Development: By Example&#8221;, Addison-Wesley, 2002. <span class="caps">ISBN</span>: 0321146530.</li>
+	<li>Michael Feathers, &#8220;Working Effectively with Legacy Code&#8221;, Prentice Hall, 2004. <span class="caps">ISBN</span> 0131177052.</li>
+	<li>Martin Fowler, &#8220;Refactoring &#8211; Improving the design of existing code&#8221;, Addison Wesley Longman, Inc, 1999. <span class="caps">ISBN</span> 0-201-48567-2.<br />
+</div></li>
+</ul>
+</div>
+<div class="slide">
+<h1>Software Process: General</h1>
+<div class='small'>
+<ul>
+	<li>Mike Cohn, &#8220;User Stories Applied&#8221;, Addison-Wesley, 2004. <span class="caps">ISBN</span>: 0321205685.</li>
+	<li>Mike Cohn, &#8220;Agile Estimating and Planning&#8221;, Addison-Wesley, 2006. <span class="caps">ISBN</span>: 0131479415.</li>
+	<li>Scott Berkun, &#8220;The Art of Project Management&#8221;, O&#8217;Reilly, 2005. <span class="caps">ISBN</span>: 0596007868.<br />
+</div></li>
+</ul>
 </div>
 <div class="slide">
 <h1>Simplicity</h1>

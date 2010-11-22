@@ -149,7 +149,7 @@
 	<li><a href="http://dbmsmusings.blogspot.com/2010/04/problems-with-cap-and-yahoos-little.html">My Problem with <span class="caps">CAP</span> and Yahoo&#8217;s Little Known NoSQL System</a>.</li>
 	<li>Werner Vogels, <a href="http://portal.acm.org/ft_gateway.cfm?id=1466448&amp;type=pdf">Eventually Consistent</a>. (Also <a href="http://www.allthingsdistributed.com/2008/12/eventually_consistent.html">here</a>) A specific look at different kinds of eventual consistency and how they informed the design of several Amazon technologies.</li>
 	<li>Haifeng Yu and Amin Vahdat, <a href="http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.34.7743&amp;rep=rep1&amp;type=pdf">Design and Evaluation of a Continuous Consistency Model for Replicated Services</a></li>
-	<li>Guy Pardon, <a href="http://guysblogspot.blogspot.com/2008/09/cap-solution-proving-brewer-wrong.html" title="Proving Brewer Wrong">>CAP</span> Solution</a>. An argument that if you don&#8217;t require all three properties at the same time, you can work around the <span class="caps">CAP</span> theorem.<br />
+	<li>Guy Pardon, <a href="http://guysblogspot.blogspot.com/2008/09/cap-solution-proving-brewer-wrong.html" title="Proving Brewer Wrong">A <span class="caps">CAP</span> Solution</a>. An argument that if you don&#8217;t require all three properties at the same time, you can work around the <span class="caps">CAP</span> theorem.<br />
 </div></li>
 </ul>
 </div>
@@ -364,10 +364,9 @@
 	<li><a href="http://en.wikipedia.org/wiki/Singleton_pattern">Singleton Design Pattern</a> (Wikipedia).</li>
 	<li><a href="http://en.wikipedia.org/wiki/Visitor_pattern">Visitor Pattern</a> (Wikipedia). A truly ugly pattern. A good illustration of forcing a &#8220;pure&#8221; OO solution when a much more elegant approach should be used instead, i.e., <em>type classes</em> (see the FP section below.)</li>
 	<li><a href="http://www.c2.com/cgi/wiki?AreDesignPatternsMissingLanguageFeatures">Are Design Patterns Missing Language Features</a>. A starting place for criticisms of patterns.</li>
-	<li>Peter Norvig, <a href="http://www.norvig.com/design-patterns">Design Patterns</a>. Argues that 16 of the 23 GoF patterns are unnecessary in languages like Lisp.<br />
- <br />
-</div></li>
+	<li>Peter Norvig, <a href="http://www.norvig.com/design-patterns">Design Patterns</a>. Argues that 16 of the 23 GoF patterns are unnecessary in languages like Lisp.</li>
 </ul>
+</div>
 </div>
 <div class="slide">
 <h1>Object-Oriented Programming (Specifics)</h1>
@@ -448,26 +447,54 @@
 </ul>
 </div>
 <div class="slide">
-<h1>Software Process</h1>
-<div class='small'>
-<ul>
-	<li>Kent Beck, &#8220;Extreme Programming Explained: Embrace Change&#8221;, 2nd Edition, Addison-Wesley, 2005. <span class="caps">ISBN</span>: 0321278658.</li>
-	<li>Mary and Tom Poppendieck, &#8220;Implementing Lean Software Development&#8221;, Addison-Wesley, 2007. <span class="caps">ISBN</span>: 0321437381.</li>
-	<li>Mike Cohn, &#8220;User Stories Applied&#8221;, Addison-Wesley, 2004. <span class="caps">ISBN</span>: 0321205685.</li>
-	<li>Mike Cohn, &#8220;Agile Estimating and Planning&#8221;, Addison-Wesley, 2006. <span class="caps">ISBN</span>: 0131479415.</li>
-	<li>Scott Berkun, &#8220;The Art of Project Management&#8221;, O&#8217;Reilly, 2005. <span class="caps">ISBN</span>: 0596007868.<br />
-</div></li>
-</ul>
-</div>
-<div class="slide">
-<h1>Agile Methods</h1>
+<h1>Agile Methods: General</h1>
 <div class='small'>
 <ul>
 	<li><a href="http://en.wikipedia.org/wiki/Agile_software_development">Agile Software Development</a> (Wikipedia). Provides a good overview and history.</li>
 	<li><a href="http://martinfowler.com/articles/newMethodology.html">The New Methodology</a>. Fowler is the Chief Scientist at Thoughtworks. He&#8217;s written several influential books on patterns, refactoring, DSLs, etc.</li>
 	<li><a href="http://agilemanifesto.org/">Manifesto for Agile Software Development</a>. Very short read ;)</li>
+	<li>Jim Highsmith, &#8220;Agile Software Development Ecosystems&#8221;, Addison-Wesley, 2002. <span class="caps">ISBN</span>: 0201760436.</li>
+	<li>Craig Larman, &#8220;Agile and Iterative Development: A Manager&#8217;s Guide&#8221;, Addison-Wesley, 2004. <span class="caps">ISBN</span>: 0131111558.<br />
+</div></li>
 </ul>
 </div>
+<div class="slide">
+<h1>XP, Scrum and Lean</h1>
+<div class='small'>
+<ul>
+	<li>Kent Beck, &#8220;Extreme Programming Explained: Embrace Change&#8221;, 2nd Edition, Addison-Wesley, 2005. <span class="caps">ISBN</span>: 0321278658.</li>
+	<li>Ken Schwaber,  &#8220;Agile Project Management with Scrum&#8221;, Microsoft Press, 2004. <span class="caps">ISBN</span> 978-0-735-61993-7.</li>
+	<li>Ken Schwaber,  &#8220;Agile Project Management with Scrum&#8221;, Microsoft Press, 2004. <span class="caps">ISBN</span> 978-0-735-61993-7.</li>
+	<li>Mary and Tom Poppendieck, &#8220;Implementing Lean Software Development&#8221;, Addison-Wesley, 2007. <span class="caps">ISBN</span>: 0321437381.</li>
+	<li><a href="http://en.wikipedia.org/wiki/Extreme_Programming">Extreme Programming</a> (Wikipedia).</li>
+	<li>Kent Beck and Martin Fowler interview about XP with  <a href="http://www.informit.com/articles/article.aspx?p=20972">informit.com</a>.</li>
+	<li><a href="http://c2.com/cgi/wiki?ExtremeProgramming">Extreme Programming</a> The discussion on the c2 wiki is interesting because it is more of a discussion than an encyclopedia entry, like on Wikipedia.</li>
+	<li><a href="http://en.wikipedia.org/wiki/Scrum_(development)">Scrum Development</a> (Wikipedia).</li>
+	<li><a href="http://en.wikipedia.org/wiki/Lean_software_development">Lean Software Development</a> (Wikipedia).<br />
+</div></li>
+</ul>
+</div>
+<div class="slide">
+<h1>Test-Driven Development and Refactoring</h1>
+<div class='small'>
+<ul>
+	<li><a href="http://junit.sourceforge.net/doc/testinfected/testing.htm">JUnit Test Infected: Programmers Love Writing Tests</a>.</li>
+	<li><a href="http://en.wikipedia.org/wiki/Test-driven_development">Test-Driven Development</a> (Wikipedia).</li>
+	<li>Kent Beck. &#8220;Test Driven Development: By Example&#8221;, Addison-Wesley, 2002. <span class="caps">ISBN</span>: 0321146530.</li>
+	<li>Michael Feathers, &#8220;Working Effectively with Legacy Code&#8221;, Prentice Hall, 2004. <span class="caps">ISBN</span> 0131177052.</li>
+	<li>Martin Fowler, &#8220;Refactoring &#8211; Improving the design of existing code&#8221;, Addison Wesley Longman, Inc, 1999. <span class="caps">ISBN</span> 0-201-48567-2.<br />
+</div></li>
+</ul>
+</div>
+<div class="slide">
+<h1>Software Process: General</h1>
+<div class='small'>
+<ul>
+	<li>Mike Cohn, &#8220;User Stories Applied&#8221;, Addison-Wesley, 2004. <span class="caps">ISBN</span>: 0321205685.</li>
+	<li>Mike Cohn, &#8220;Agile Estimating and Planning&#8221;, Addison-Wesley, 2006. <span class="caps">ISBN</span>: 0131479415.</li>
+	<li>Scott Berkun, &#8220;The Art of Project Management&#8221;, O&#8217;Reilly, 2005. <span class="caps">ISBN</span>: 0596007868.<br />
+</div></li>
+</ul>
 </div>
 <div class="slide">
 <h1>Simplicity</h1>
