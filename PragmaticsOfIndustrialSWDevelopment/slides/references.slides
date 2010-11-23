@@ -361,6 +361,7 @@ h1. Aspect-Oriented Programming
 * "Multidimensional Separation of Concerns":http://www.research.ibm.com/hyperspace/.
 * "Aquarium":http://aquarium.rubyforge.org. An AOP framework for Ruby.
 * "Contract4J":http://contract4j.org. A _Design by Contract_ tool for Java, written in AspectJ.
+* "AOPLib4J":http://aoplib4j.org/. A library of AspectJ aspects.
 
 </div>
 
