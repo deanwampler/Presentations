@@ -373,25 +373,51 @@ h1. General Programming
 * Federico Biancuzzi and Chromatic, "Masterminds of Programming", O'Reilly, 2009. ISBN: 9780596515171.
 </div>
 
-h1. Software Process
-
-<div class='small'>
-
-* Kent Beck, "Extreme Programming Explained: Embrace Change", 2nd Edition, Addison-Wesley, 2005. ISBN: 0321278658.
-* Mary and Tom Poppendieck, "Implementing Lean Software Development", Addison-Wesley, 2007. ISBN: 0321437381.
-* Mike Cohn, "User Stories Applied", Addison-Wesley, 2004. ISBN: 0321205685.
-* Mike Cohn, "Agile Estimating and Planning", Addison-Wesley, 2006. ISBN: 0131479415.
-* Scott Berkun, "The Art of Project Management", O'Reilly, 2005. ISBN: 0596007868.
-</div>
-
-h1. Agile Methods
+h1. Agile Methods: General
 
 <div class='small'>
 
 * "Agile Software Development":http://en.wikipedia.org/wiki/Agile_software_development (Wikipedia). Provides a good overview and history.
 * "The New Methodology":http://martinfowler.com/articles/newMethodology.html. Fowler is the Chief Scientist at Thoughtworks. He's written several influential books on patterns, refactoring, DSLs, etc.
 * "Manifesto for Agile Software Development":http://agilemanifesto.org/. Very short read ;)
+* Jim Highsmith, "Agile Software Development Ecosystems", Addison-Wesley, 2002. ISBN: 0201760436.
+* Craig Larman, "Agile and Iterative Development: A Manager's Guide", Addison-Wesley, 2004. ISBN: 0131111558.
+</div>
 
+h1. XP, Scrum and Lean
+
+<div class='small'>
+
+* Kent Beck, "Extreme Programming Explained: Embrace Change", 2nd Edition, Addison-Wesley, 2005. ISBN: 0321278658.
+* Ken Schwaber,  "Agile Project Management with Scrum", Microsoft Press, 2004. ISBN 978-0-735-61993-7.
+* Ken Schwaber,  "Agile Project Management with Scrum", Microsoft Press, 2004. ISBN 978-0-735-61993-7.
+* Mary and Tom Poppendieck, "Implementing Lean Software Development", Addison-Wesley, 2007. ISBN: 0321437381.
+* "Extreme Programming":http://en.wikipedia.org/wiki/Extreme_Programming (Wikipedia).
+* "extremeprogramming.org":http://extremeprogramming.org.
+* Kent Beck and Martin Fowler interview about XP with  "informit.com":http://www.informit.com/articles/article.aspx?p=20972.
+* "Extreme Programming":http://c2.com/cgi/wiki?ExtremeProgramming The discussion on the c2 wiki is interesting because it is more of a discussion than an encyclopedia entry, like on Wikipedia.
+* "Scrum Development":http://en.wikipedia.org/wiki/Scrum_(development) (Wikipedia).
+* "Lean Software Development":http://en.wikipedia.org/wiki/Lean_software_development (Wikipedia).
+</div>
+
+h1. Test-Driven Development and Refactoring
+
+<div class='small'>
+* "JUnit Test Infected: Programmers Love Writing Tests":http://junit.sourceforge.net/doc/testinfected/testing.htm.
+* "Test-Driven Development":http://en.wikipedia.org/wiki/Test-driven_development (Wikipedia).
+* Kent Beck. "Test Driven Development: By Example", Addison-Wesley, 2002. ISBN: 0321146530.
+* Michael Feathers, "Working Effectively with Legacy Code", Prentice Hall, 2004. ISBN 0131177052.
+* Gerard Meszaros, "xUnit Test Patterns", Addison-Wesley, 2007. ISBN - 0131495054.
+* Martin Fowler, "Refactoring - Improving the design of existing code", Addison Wesley Longman, Inc, 1999. ISBN 0-201-48567-2.
+</div>
+
+h1. Software Process: General
+
+<div class='small'>
+
+* Mike Cohn, "User Stories Applied", Addison-Wesley, 2004. ISBN: 0321205685.
+* Mike Cohn, "Agile Estimating and Planning", Addison-Wesley, 2006. ISBN: 0131479415.
+* Scott Berkun, "The Art of Project Management", O'Reilly, 2005. ISBN: 0596007868.
 </div>
 
 h1. Simplicity

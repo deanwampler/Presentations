@@ -1,37 +1,642 @@
-h1. Lecture 12: Complexity vs. Simplicity Part I: Effective Software Development Processes, Scrum, XP, and Lean
+h1. Lecture 12: Complexity vs. Simplicity Part I: Effective Software Development Processes - Scrum, XP, and Lean
+
+h1. Software Development Process
+
+Ideally, a software development process helps us:
+
+* Plan the project,
+** Timeline, including the delivery schedule.
+** Resources required.
+** Itemize and prioritize the deliverables that will be created.
+* Execute on the plan.
+* Deliver on time and under budget.
+* Meet quality objectives.
 
 h1. Project Planning
 
-“If a project is truly innovative, you cannot possibly know its exact cost and exact schedule at the beginning.” 
+bq. If a project is truly innovative, you cannot possibly know its exact cost and exact schedule at the beginning.
 
-John Gavin, Director of the Lunar Module Program, in an article in M.I.T.'s Technology Review, 1994, and quoted in his obituary on November 4, 2010 in the "New York Times":http://nyti.ms/a2yPRN.
+<div class='cite'>-- John Gavin, Director of the Lunar Module Program, in an article in M.I.T.'s Technology Review, 1994, and quoted in his obituary on November 4, 2010 in the "New York Times":http://nyti.ms/a2yPRN.</div>
 
-The pervasive principle that successful systems, processes, tools, etc. avoid unnecessary complexity. We start by looking at the evolution of software processes.
+h1. Why Do We Plan?
 
-* Fundamental requirements for any process.
-* Waterfall, Agile Methodologies, and others.
-* Why many approaches fail: 
-  * Excess complexity.
-  * Poor mapping to the real "nature" of software development.
-* What should a process do?
+We _really_ want to predict the future:
 
-h1. Complexity vs. Simplicity Part II: Scrum, XP, and Lean
+* Is the project feasible?
+* What is the _real_ cost of a project?
+** Will the _benefits_ outweigh the _costs_?
+* Will the project finish on time to meet market needs and/or deadlines?
+
+h1. Central Dilemma of Project Management
+
+We can never have _perfect knowledge_ at the beginning of a project to know these answers.
+
+* We can never think of every possible _contingency_.
+* Events outside our control can upset our careful plans.
+* We are _learning_ about the project as we do it.
+** Sometimes we learn answers to questions we couldn't answer at the beginning.
+** Other times we gain new perspectives from our long engagement with the project.
+
+h1. Plans vs. Reality, I
+
+bq. No plan of operations extends with certainty beyond the first encounter with the enemy's main strength.
+
+Or put more simply,
+
+bq. No plan survives contact with the enemy.
+
+<div class='cite'>-- Helmuth von Moltke the Elder, Chief of Staff of the Prussian Army for 30 years.</div>
+
+h1. Plans vs. Reality, II
+
+bq. Plans are nothing; planning is everything. 
+
+<div class='cite'>-- General Dwight D. Eisenhower, Supreme Commander of Allied Forces, World War II.</div>
+
+h1. Then, Why Bother With Planning?
+
+Because it's the start of our learning process.
+
+Because we still need to sign contracts, plan strategies, etc.
+
+So, we need to get as close to the ideal goals as possible, just not _delude_ ourselves! Hence, project planning and processes address:
+
+* Risk reduction strategies.
+* Iterations and prioritizing features.
+* Feedback loops, for learning and "course correction".
+
+h1. Risk Reduction Strategies
+
+_Contingency planning_ is a venerable technique for trying to anticipate every possible contingency and deciding how each will be handled.
+
+That usually means identifying a list of risks and who you will respond to them.
+
+h1. Some Potential Risks
+
+* Changes in the marketplace.
+* Technical aspects of the project are not yet understood.
+* Technical aspects of the project might prove impossible.
+* The pace and/or cost of development might be slower than anticipated.
+
+h1. Risk Reduction
+
+But no amount of "thinking" and planning can remove all risk. As the war quotes imply, you have to adapt as circumstances change. 
+
+Perhaps the most important benefit of contingency planning is the way it prepares you to be on your guard and to be adaptable.
+
+h1. Iterations and Prioritizing Features
+
+For every project, some features (requirements) are more important than others. Think about the evolution of mobile phones. While we love having email and web browsing on "smart" phones, it was important first for phones to make and receive calls! Voice mail and lists of phone numbers came next, etc.
+
+A common mistake: _work on the stuff that's easiest or most fun first, rather than the stuff that's most important._
+
+In general, it's far better to get minimal features released sooner.
+
+h1. Feedback Loops
+
+Releasing _early and often_ means you can get feedback from your _stakeholders_ early and often. 
+
+Hence, you learn and adapt. Some "must have", but unimplemented features might become less important, while new features grow in importance. 
+
+Sometimes projects, even companies, change completely!
+
+h1. Project Execution
+
+* How do we get to working, delivered software that _meets the requirements_?
+* How do we stay within budget and quality goals? 
+* What artifacts must be delivered?
+* What techniques help us achieve these goals?
+
+h1. Delivery on Time and Under Budget
+
+Suppose you are building the main stadium for the next Olympic games. You have an obvious hard deadline for completion. 
+
+Still, what actually gets finished is somewhat flexible. You might cut back on the amenities and ornamentation, while you can't cut back on safety and facilities, like adequate rest rooms ;)
+
+Similarly, even when there are hard deadlines for a software project, often the secondary features can be deferred until later.
+
+h1. Qualities of an Effective Process
+
+The need for feedback and "course correction" means that any successful software development process must embrace _iterative and incremental development_ (IID).
+
+* *Iterative* - The process is divided into time increments (usually of fixed duration).
+* *Incremental* - The features are implemented to completion one at a time, not all at once.
+
+h1. Software Processes and Complexity
+
+All successful products (not just software) release as early as possible with minimal, but essential features. Later, they expand (and sometimes grow bloated).
+
+A universal principle, repeated over and over again, is that successful systems, avoid _unnecessary complexity_. 
+
+h1. Kinds of Complexity
+
+There are two kinds of complexity:
+
+* *Essential* - Inherent in the problem domain. Unavoidable.
+* *Accidental* - Complexity added to the implementation that is not necessary and is detrimental.
+<br/><br/>
+
+bq. Make everything as simple as possible,<br/>but not simpler. 
+
+<div class='cite'>-- Albert Einstein</cite>
+
+h1. Software Processes: A History
+
+Let's look at few of the most influential development models in the history of software process thinking.
+
+* Waterfall Model of Software Development
+* Rational Unified Process
+* Agile Methodologies
+
+h1. Waterfall Model of Software Development
+
+<center>
+  <img src="images/Waterfall.png"></img>
+</center>
+
+h1. Waterfall Model of Software Development
+
+This process looks orderly, controlled, predictable. Real projects posses none of those qualities! Real projects require feedback, iteration, and incremental delivery of features.
+
+h1. Waterfall Model of Software Development
+
+The Waterfall Process resulted from a historical accident.[1] During the 60s, many researches recognized the importance of iterative development. One paper was "Managing the Development of Large Software Systems", by Winston Royce, in Proceedings of IEEE Westcon. 
+
+This paper started with an image similar to the one two slides ago, _but_ it went on to argue that such a process _can't work_, because feedback is required.
+
+[1] Craig Larman, "Agile and Iterative Development: A Manager's Guide", pp 102-107.
+
+h1. Waterfall Model of Software Development
+
+Tragically, when the DoD decided to draft a standard for software development based on this paper, the standard's author ignored the feedback aspects and focused on the top-down discussion. In part, this decision reflected other influential trends of the time. (Larman discusses this in detail.)
+
+The result was a deeply flawed approach to development that became an influential standard around the world. It caused a lot of failed projects before it was overturned.
+
+h1. Waterfall: What Was Missing
+
+<center>
+  <img src="images/WaterfallWithFeedback.png"></img>
+</center>
+
+h1. Process Science
+
+In fact, feedback loops are a "Process 101" requirement. Pick any _other_ process or similar "throughput-oriented" sequence of events, such as manufacturing, chemical engineering, electrical circuits. All would _fail_ without feedback loops.
+
+There are stories that software process experts were laughed at when they described waterfall to process experts in other fields.
+
+h1. Successors to Waterfall
+
+In the late 80s and 90s, successors emerged that restored the important roll of iterations and feedback. Most were also tied to OOP. 
+
+Perhaps the most interesting and influential was the _Rational Unified Process_ (RUP).
+
+h1. Rational Unified Process (RUP)
+
+Many considered Rational Corporation to be the leading expert in software development through much of the 80s and 90s. The term _Unified_ was tied to the their _Unified Modeling Language_ (UML) that they created by merging the separate approaches of the _Three Amigos_: Grady Booch, James Rumbaugh, and Ivar Jacobson.
+
+(Booch was one of the original employees. Rumbaugh and Jacobson joined in the mid-90s, after establishing their reputations independently.) 
+
+h1. Rational Unified Process (RUP)
+
+While RUP embraced IID, it treated each iteration as a mini Waterfall, with some requirements gathering, some design, and more implementation and testing.
+
+This approach reflected concerns about the _cost of change_.
+
+h1. Drawbacks of RUP - Cost of Change
+
+A _cardinal rule_ at the time; the longer a defect (requirement error, design flaw, bug) goes undetected in a project, the more expensive it is to fix, because the cost of _rework_ goes up, the later in a project the defect is detected. In the most severe cases, such defects can even kill projects!
+
+h1. Drawbacks of RUP - Cost of Change
+
+While true, this concern had the practical affect of encouraging _waterfall thinking_ to persist:
+
+* We _must_ get the requirements right first!
+* We _must_ design the code before implementing it!
+* If we do the above, the implementation will be _mechanical_, predictable, and (mostly) bug free!
+
+(RUP wasn't alone in this thinking.) We'll see that XP solved this problem in a more effective way.
+
+h1. Drawbacks of RUP - Cost of Change
+
+So, in practice, organizations following RUP (and similar approaches) were often doing waterfall development anyway, while paying lip service to incremental and iterative development. For example, since Rational was a big advocate of modeling with UML, RUP strongly recommended design by modeling... 
+
+h1. Long Range Planning
+
+Another problem was the tenacious belief that long-range plans can and should be followed. When they weren't followed, it was considered a failure of the _users_ of the process, rather than the process itself.
+
+h1. Drawbacks of RUP - Too Prescriptive
+
+Because of this fear of defects (and let's face it, because it was a commercial product and they needed stuff to sell), RUP became a very _prescriptive_ process that defined a huge number of _roles_ and _responsibilities_ for every little aspect a project might encounter.
+
+You were supposed to _instantiate_ RUP for your situation, meaning pick the roles and responsibilities that made sense for your needs.
+
+Rational (and independent consultants) made a lot of money on training and _instantiating_ RUP.
+
+h1. Drawbacks of RUP - Too Prescriptive
+
+Also, there is a subset of the population that _likes_ the world to be prescriptive, to tell them what to believe, what to do, and when.
+
+However, remember our generals? While armies have lots of roles and responsibilities, _successful_ armies also understand the need to be flexible, not rigid, to break out of the artificial boxes when circumstances demand it.
+
+h1. Strengths and Weaknesses of RUP
+
++ Recognized the importance of feedback and IID.
+- Too prescriptive.
+- It didn't eliminate waterfall thinking.
+- Based on an inadequate solution to the cost of change problem.
+
+h1. Birth of the Agile Movement
+
+At the end of the 90s, during the Internet bubble, it quickly became apparent to many people that the "state of the art" for software development was too bloated and inefficient for _Internet time_.
+
+h1. Birth of the Agile Movement
+
+The first tech startup I worked for then tried to use RUP, because "that's what you're supposed to do". For example, we still tried to model what we were doing, and we even hired a guy whose sole job was to model the requirements and the system we were building.
+
+This was stupid, in retrospect, given the rapidly changing marketplace and our attempts to find a successful niche.
+
+h1. Birth of the Agile Movement
+
+Other companies I worked for later on knew enough to abandon UML modeling, etc., but they had no alternatives in mind. They simply adopted ad hoc techniques, like hiring QA departments to test the "heck" out of our code after it was written. 
+
+The result? Lots of end-of-project overtime to fix serious flaws and production failures at inopportune times as the poor quality code failed frequently.
+
+It wasn't actually all that fun to write software...
+
+h1. Birth of the Agile Movement
+
+But other practitioners explored _principled_, yet _efficient_ and _effective_ approaches to the inherent problems of software development.
+
+That is, just because we were on _Internet time_, it didn't mean all the old development challenges mysteriously vanished, but they could be addressed in ways that fit the times.
+
+h1. Agile Manifesto
+
+In February, 2001, 17 leaders from various _lightweight methodology_ camps meet at the Snowbird Ski Resort. They wanted to look for and document shared principles and practices. Some in attendance later expressed surprise that they achieved what they did, given the tendency for people to cling to their own ideas.
+
+They adopted the term _agile_ as an umbrella term for their shared philosophy of effective software development. They drafted a simple _agile manifesto_ to express that philosophy...
+
+h1. Agile Manifesto
+
+"We are uncovering better ways of developing software by doing it and helping others do it. Through this work we have come to value:
+
+* *Individuals* and *interactions* _over_ *processes* and *tools*
+* *Working software* _over_ *comprehensive documentation*
+* *Customer collaboration* _over_ *contract negotiation*
+* *Responding to change* _over_ *following a plan*
+
+That is, while there is value in the items on the _right_, we value the items on the _left more_."
+
+h1. Authors: The Agile Manifesto
+
+<div class="tiny">
+|_.Name |_.Agile "School"[1] |
+| Kent Beck | XP |
+| Mike Beedle | Scrum |
+| Arie van Bennekum| Dynamic Systems Development Method (DSDM) |
+| Alistair Cockburn | Crystal |
+| Ward Cunningham | Extreme Programming (XP) |
+| Martin Fowler | Consultant[2] |
+| James Grenning | XP |
+| Jim Highsmith | Adaptive Software Development |
+
+[1] The "named" Agile methodology this person is most associated with, at least at the time the manifesto was drafted.
+[2] Not involved in the invention of any particular "named" Agile methodology.
+</div>
+
+h1. Authors: The Agile Manifesto (cont.)
+
+<div class="tiny">
+|_.Name |_.Agile "School"[1] |
+| Andrew Hunt | Consultant, co-owner of the Pragmatic Programmers[2] |
+| Ron Jeffries | XP |
+| Jon Kern | Feature Driven Development (FDD) |
+| Brian Marick | Consultant focused on software testing |
+| Robert C. Martin | XP |
+| Steve Mellor | Consultant |
+| Ken Schwaber | Scrum |
+| Jeff Sutherland | Scrum |
+| Dave Thomas | Consultant, co-owner of the Pragmatic Programmers[2] |
+
+[1] The "named" Agile methodology this person is most associated with, at least at the time the manifesto was drafted.
+[2] Not involved in the invention of any particular "named" Agile methodology.
+</div>
+
+h1. Three Agile Methods: Scrum, XP, and Lean
   
-Agile software processes
-* Scrum - arguably the first?
-* XP - a complete, small-team process
-* Lean - Toyota Manufacturing
-* Scaling Agile
-* Is there one "true" software process for industrial development?
+While there are several different agile methods mentioned, we'll discuss the three most popular.[1]
+
+* *Scrum* - focuses on project management.
+* *XP* - a complete, small-team approach, addressing project management and developer practices.
+* *Lean* - inspired by Toyota Lean, "Just-in-Time" Manufacturing.
+
+[1] See Highsmith's "Agile Software Development Ecosystems" for an excellent survey of the major agile methods (in 2002).
+
+h1. Three Agile Methods: Scrum, XP, and Lean
+
+I'll describe these Scrum and XP, then mention Lean, as they were originally conceived, using original terminology. Today, they have borrowed heavily from each other, so you'll encounter hybrid terms and processes in most organizations.
+
+h1. Scrum
+
+Developed in the mid-90s. First public presentation at OOPSLA '95.
+
+Named after the _scrum_ in Rugby, where a team huddle's together to move the ball down the field. It is used as a metaphor for the frequent, quick, daily _standup_ meetings done by teams and the philosophy that the whole team works together to deliver the software.
+
+Why have meetings standing up? Because you get tired quickly, so you get them over with quickly!
+
+h1. Scrum's Process
+
+<center>
+  <img src="images/800px-Scrum_process.png"></img>
+</center>
+<div class='small cite'>
+(source: "Wikipedia":http://en.wikipedia.org/wiki/Scrum_(development))
+</div>
+
+h1. Scrum Terms and Concepts
+
+<div class="small">
+|_.Term |_.Definition|
+| *Sprint* | A 30-day iteration, resulting in some increment of working software. |
+| *Backlog* | A prioritized list of tasks, requirements, etc. to do. |
+| *Product Backlog* | The full backlog for the whole project. |
+| *Sprint Backlog* | The backlog just for the current *sprint*. |
+| *Daily Scrum* | Daily stand up, each working day at the same time. Time boxed to _15 minutes_! |
+| *Burn-down Chart* | Chart of finished tasks vs. time, trending to zero tasks left for the *sprint*. |
+</div>
+
+h1. Burn-down Chart
+
+<center>
+  <img src="images/800px-SampleBurndownChart.png"></img>
+</center>
+<div class='small cite'>
+(source: "Wikipedia":http://en.wikipedia.org/wiki/Burn_down_chart)
+</div>
+
+
+
+h1. Variation: Burn-up Chart
+
+<center>
+  <img src="images/iteration_burn_up.png"></img>
+</center>
+<div class='small cite'>
+(source: "ThoughtWorks Mingle":http://community.thoughtworks.com/posts/773957d293)
+</div>
+
+h1. Variation: Burn-up Chart
+
+Better for showing project-wide statistics, since the "remaining" tasks may be increasing (feature creep!).
+
+(We'll discuss _story points_ shortly.)
+
+h1. Scrum Terms and Concepts (cont.)
+
+<div class="small">
+|_.Term |_.Definition|
+| *Scrum Master* | Maintains the process, e.g., the backlogs. Also functions as the process coach, as needed. |
+| *Product Owner* | The _stakeholder_ representative. Helps define and prioritize the work and reviews the results at the end of each *sprint*. |
+| *Team* | A cross functional group, ideally under 10 people, who do everything from analysis to testing. |
+</div>
+
+h1. Life of a Sprint
+
+A *sprint* starts with a *sprint planning meeting*, where the *scrum master* and *product owner* present the highest priority work left on the *project backlog* to the team. The team decides _for itself_ how much of the backlog it can complete in the next sprint. It usually captures this information in hour estimates. (This meeting lasts at most 1/2 day.)
+
+h1. Life of a Sprint
+
+Once the team has agreed on the *sprint backlog*, i.e., the work to be done in the sprint, the *sprint backlog* is _frozen_ for the whole sprint. This has a few benefits:
+
+* It minimizes churn for the team.
+* It makes it easier to gather reliable metrics of how much work the team completes per sprint, on average.
+
+h1. Daily Scrum
+
+Each day, at the same time and place, they have a *daily scrum*, lasting no more than 15 minutes. Each team member answers three questions:
+
+# What have you done since yesterday?
+# What are you planning to do today?
+# Do you have any problems preventing you from accomplishing your goal?
+
+All other discussions are deferred until after the scrum.
+
+h1. Life of a Sprint
+
+The sprint ends with two meetings (often combined into one).
+
+* *Sprint Review* - What was accomplished? Demo for the product owner. Time boxed to 4 hours.
+* *Sprint Retrospective* - What worked and didn't work in the last sprint? What can we do to improve going forward? Time boxed to 3 hours. 
+
+h1. Life of a Sprint
+
+_Wash, rinse, repeat..._
+
+h1. A "Retrospective" on Scrum 
+
+Scrum has been the first agile process adopted by many organizations - the _gateway drug_, if you will.
+
++ Largely drove mainstream adoption of Agile.
++ Focused on program management issues - a good place to start for improving teams.
++ It's easy to learn.
+
+h1. A "Retrospective" on Scrum 
+
+- 30 day sprints are now seen as too long in most organizations.
+- It ignored developer activities, which eventually undermine successes, e.g., due to lack of testing and poor quality, leading to _technical debt_.
+- _Certified Scrum Master_ training became a "degree-mill" kind of embarrassment. The false sense of "expertise" led to many failed projects.
+
+h1. Extreme Programming (XP)
+
+Started with the now-famous _C3 Project_ started in '96, a payroll system at _Chrysler_, written in Smalltalk. _Kent Beck_ was brought on to do Smalltalk performance consulting, but he quickly introduced process improvements based on his prior work with _Ward Cunningham_. _Ron Jeffries_ was also brought in as a consultant.
+
+h1. Extreme Programming (XP)
+
+The lessons learned from this experience led Beck to write perhaps the most influential book on software process in the last few decades, "Extreme Programming Explained: Embrace Change", in 2000.
+
+(A significantly rewritten 2nd Edition was published in 2005. If you can find the first edition, it's worth reading, too. Many people felt the first edition was better.)
+
+h1. Why Extreme?
+
+bq. The first time I was asked to lead a team, I asked them to do a little bit of the things I thought were sensible, like testing and reviews. The second time there was a lot more on the line. I thought, "Damn the torpedoes, at least this will make a good article," [and] asked the team to crank up all the knobs to 10 on the things I thought were essential and leave out everything else.
+
+<div class='cite'>-- Kent Beck in an interview he and Martin Fowler did with  "informit.com":http://www.informit.com/articles/article.aspx?p=20972.</div>
+
+h1. Why Extreme? (cont.)
+
+XP pushes ideas to their logical _extremes_.
+
+* Hard to gather requirements? Put the customer _in the same room_.
+* Is quality an issue? Write your tests _before_ your code.
+* Are designs hard to keep consistent with code? Design _while_ you code.
+* Documentation grows obsolete? Make the _code and tests_ the documentation.
+
+h1. Values, Principles, Practices
+
+One of the beauties of XP is the emphasis on "first principles", namely a set of _values_ that drive a set of _principles_ that are realized through a set of _practices_. A benefit of this foundation is the way it encourages teams to adapt the practices to their needs, subject to the values and principles.
+
+I'll summarize the _values_ and _principles_, then highlight a few of the _practices_.  Note that these sets have evolved somewhat over the last decade.
+
+h1. XP Values
+
+The word _value_ implies a measure of importance, merit, etc. The XP values are designed to maintain focus on the long-term objectives.
+<div class='small'>
+* *Communication* - Direct communication is more effective than documentation.
+* *Simplicity* - Start simple and add features as needed.
+* *Feedback* - Several forms of feedback effectively guide the project.
+* *Courage* - Aggressively make any kind of change that directs the project towards its goals.
+* *Respect* - Show respect for the rest of the team in several tangible ways.
+</div>
+
+h1. XP Principles
+
+_Principles_ are foundational truths that guide actions. They are more concrete than the values.
+<div class='small'>
+* *Rapid Feedback* - Learning is faster and cost of change is lower if feedback is sooner.
+* *Assume Simplicity* - Don't build needlessly for the future.
+** _What is the simplest thing that could possibly work?_
+** _You ain't gonna need it._ (YAGNI)
+* *Incremental Change* - It's easier make progress incrementally.
+* *Embrace Change* - Strict control and predictability is a myth.
+* *Quality Work* - Be proud of your work ...
+* Other less central principles...
+</div>
+
+h1. XP Practices
+
+XP started with a well-defined set of _required_ practices, required because they are _synergistic_. Picking some (usually the easiest ones) and skipping others is a recipe for failure! 
+
+Today, the practices are often stated in less concrete terms, recognizing that the ideal specifics can vary from one organization to another.
+
+Here are some of the most important (and sometimes controversial) practices.
+
+h1. On-site Customer
+
+If communication is key, e.g., to gather and refine requirements, you can reduce barriers to communication by having the customer sit next to you. 
+
+Communication through documents is a _low bandwidth_ form of communication.
+
+Communication through meetings doesn't provide rapid feedback.
+
+h1. Planning Game and Small Releases
+
+Various techniques are used to spend the minimum amount of time possible actually planning, especially for the next _iteration_ (_sprint_ in Scrum terms).
+
+Standup meetings, as described for _Scrum_ are used in XP, too.
+
+Small releases promote rapid feedback, force simplicity, and promote incremental change.
+
+h1. Testing and Simple Design
+
+In _Test-Driven Development_ (TDD), you write _automated_ tests _before_ the code required to make the tests pass! 
+
+The automated tests:
+* help you think through design first.
+* keep you focused on the task at hand.
+* catch regressions in the future...
+** ... which gives you _courage_ to _refactor_.
+
+In fact, the _design_ part is the _most important benefit_ of TDD.
+
+h1. Refactoring
+
+Restructuring the system in a way that _preserves the existing behavior_, but 
+
+* removes _duplication_ and other code _smells_,
+* _improves_ the structure for implementing the _next feature_.
+
+h1. The TDD Cycle
+
+<center>
+  <img src="images/TDDCycle.png"></img>
+</center>
+<div class='small cite'> (adapted from various sources)</div>
+
+h1. TDD Demo
+
+_*Demo* - A TDD session using Eclipse_
+
+h1. Pair Programming
+
+"Two heads are better than one". 
+
+When two people work together on the code:
+
+* They review and improve the design as they go (automatic code reviews).
+* They minimize dead ends.
+* When one gets blocked, the other takes over.
+
+This is the most controversial TDD technique. Some hate it. However, it does tend to improve overall quality considerably.
+
+h1. Collective Ownership
+
+Anyone can change any part of the code at any time. There are no compartmentalized sections. Everyone is responsible for the quality of the code.
+
+h1. Continuous Integration
+
+Every time code is committed to source control, the full suite of automated tests are run to detect any _integration_ breakages. This goes a long ways towards keeping the code _always read to ship_.
+
+h1. 40-Hour Work Week
+
+Mentally tired and frustrated developers do substandard work...
+
+h1. A Few Other Points About XP
+
+* User Stories
+* Story Points
+
+h1. User Stories in XP
+
+Requirements are documented using _user stories_, how a user would use the system to do an activity. (They are somewhat similar to the older _Use Cases_ and _Scenarios_, just less formal.) Framed this way keeps requirements focused on delivering user value and helps avoid wasting time on bells and whistles.
+
+h1. Story Points
+
+How do you estimate the time it will take to implement a story? Using hours or days is difficult, because no one actually works 8-hour days. 
+
+Also, _absolute_ estimates are very hard for us to get right.
+
+But, people are naturally good at _relative_ estimates. So, use an arbitrary metric, _points_, and as a team, develop an intuitive feel for which stories are 1 point, which are twice as hard (2 points), etc.
+
+h1. Lean Software Development
+
+We'll only mention this, due to time limitations. It is the newest approach that is gaining traction. It addresses some of the limitations of XP for larger organizations, and refines several ideas about agility.
+
+h1. Push vs. Pull
+
+_Lean_ is a _pull model_ rather than a _push model_. 
+
+Scrum and XP have fixed-length iterations, where stories (or tasks) are _pushed_ into the sprint/iteration backlog.
+
+Lean doesn't use iterations. Rather, as the team finishes one story, it _pulls_ a new story from the backlog, providing a more continuous flow. (This is more the way assembly lines actually work...)
+
+For many teams, this model is more natural than fixed-length iterations.
+
+h1. Summary: Universal Themes
+
+* Short, time-boxed iterations and incremental releases.
+* Continuous customer feedback.
+* Developer testing to virtually eliminate bugs.
+* Whole-team collaboration and responsibility.
 
 h1. Reading Assignment
 
-last week, I had you read some general introductions to Agile. This week, I want you read about the three main Agile methodologies that we discussed today.
+* "JUnit Test Infected: Programmers Love Writing Tests":http://junit.sourceforge.net/doc/testinfected/testing.htm. An early and highly-influential essay on TDD, written by Kent Beck, who created JUnit.
+* Kent Beck and Martin Fowler interview about XP with  "informit.com":http://www.informit.com/articles/article.aspx?p=20972.
 
-* "Scrum":http://en.wikipedia.org/wiki/Scrum_(development)
-* "Extreme Programming":http://en.wikipedia.org/wiki/Extreme_Programming
-* Lean
+h1. Reading Assignment (cont.)
 
-h1. Reading for Next Week's Lecture
+Last week, I had you read some general introductions to Agile. This week, I want you read about the three main Agile methodologies that we discussed today.
 
-* Eric Brewer, "Toward Robust, Distributed Systems":http://www.cs.berkeley.edu/~brewer/cs262b-2004/PODC-keynote.pdf. The keynote at the "ACM Symposium on Principles of Distributed Computing":http://www.podc.org/podc2000/ that introduced Brewer's CAP theorem. Focus on the first 2/3^rd^s of the presentation (up to _The DQ Principle_.)
+* "Scrum":http://en.wikipedia.org/wiki/Scrum_(development).
+* "Extreme Programming":http://en.wikipedia.org/wiki/Extreme_Programming. Focus especially on the sections that describe the Values, Principles, and Practices.
+* "Lean Software Development":http://en.wikipedia.org/wiki/Lean_software_development.
+
+h1. For Next Week: Simplicity and Systems.
+
+* Eric Brewer, "Toward Robust, Distributed Systems":http://www.cs.berkeley.edu/~brewer/cs262b-2004/PODC-keynote.pdf. The keynote at the "ACM Symposium on Principles of Distributed Computing":http://www.podc.org/podc2000/ that introduced Brewer's CAP theorem. Focus on the first 2/3rds of the presentation (up to _The DQ Principle_.)
+
+h1. Mini-Project
+
+* _Today_: Turn in an outline of the specific items you will research and write up (for research projects) or implement (for coding projects). Also briefly describe what you have completed so far.
+* _11/30_: Turn in an refined outline and a summary of your progress so far.
+* _12/5 (Sunday)_: Turn in a draft of your presentation slides for the 15-minute talk. (You can still work on them until Tuesday.)
+* _12/7_: Last class - presentations and turn in your writeup or code (GitHub preferred).

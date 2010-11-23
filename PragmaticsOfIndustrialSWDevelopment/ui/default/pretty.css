@@ -1,6 +1,6 @@
 /* Following are the presentation styles -- edit away! */
 
-body {background: #E3FAEF url(bodybg.gif) -16px 0 no-repeat; color: #000; font-size: 1.6em;}
+body {background: #E3FAEF url(bodybg.gif) -16px 0 no-repeat; color: #000; font-family: Geneva; font-size: 1.6em;}
 :link, :visited {text-decoration: none; color: #00C;}
 #controls :active {color: #88A !important;}
 #controls :focus {outline: 1px dotted #227;}
@@ -14,6 +14,7 @@ blockquote p {margin: 0;}
 blockquote i {font-style: normal;}
 blockquote b {display: block; margin-top: 0.5em; font-weight: normal; font-size: smaller; font-style: normal;}
 blockquote b i {font-style: italic;}
+.cite, cite {font-style: normal; text-align: right;  font-size: 0.8em;}
 
 kbd {font-weight: bold; font-size: 1em;}
 sup {font-size: smaller; line-height: 1px;}
