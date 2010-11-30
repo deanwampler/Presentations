@@ -218,9 +218,8 @@ println(dean.name)
 </div>
 <div class="slide">
 <h1>Uniform-Access Principle (cont.)</h1>
-<p>The <em>caller</em> doesn&#8217;t care whether a method is invoked or a bare field is accessed.<br />
- <br />
-The <em>implementer</em> might want to start with a simple bare field access, then eventually replace it with a method call (e.g., to do lazy initialization, etc.).</p>
+<p>The <em>caller</em> doesn&#8217;t care whether a method is invoked or a bare field is accessed.</p>
+<p>The <em>implementer</em> might want to start with a simple bare field access, then eventually replace it with a method call (e.g., to do lazy initialization, etc.).</p>
 <p>The <em>uniform-access principle</em> means the caller&#8217;s code doesn&#8217;t have to change, because the syntax is identical. (The code might need a recompile).</p>
 </div>
 <div class="slide">
@@ -327,6 +326,7 @@ package gui.windowing {
 <h1>Other Modules</h1>
 <p><span class="caps">BAD</span>:<br />
 <div class="code-small"></p>
+
 <pre name="code" id="code" class="brush: scala,;">
 
 object MyApp {
@@ -338,6 +338,7 @@ object MyApp {
 </pre></div>
 <p><span class="caps">GOOD</span>:<br />
 <div class="code-small"></p>
+
 <pre name="code" id="code" class="brush: scala,;">
 
 object MyApp {
