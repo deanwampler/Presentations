@@ -177,12 +177,15 @@ div.code-small {
 div.code-small li {
 	margin-top: 0.6em;
 }
+div.code-tiny li {
+	margin-top: 0.4em;
+}
 
 .tiny {
 	font-size: 60% !important;
 }
 div.code-tiny {
-	font-size: 60% !important;
+	font-size: 50% !important;
 	line-height: 2em !important;
 }
 

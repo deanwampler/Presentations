@@ -383,20 +383,30 @@ h1. Agile Methods: General
 * Craig Larman, "Agile and Iterative Development: A Manager's Guide", Addison-Wesley, 2004. ISBN: 0131111558.
 </div>
 
-h1. XP, Scrum and Lean
+h1. Extreme Programming
 
 <div class='small'>
-
 * Kent Beck, "Extreme Programming Explained: Embrace Change", 2nd Edition, Addison-Wesley, 2005. ISBN: 0321278658.
-* Ken Schwaber,  "Agile Project Management with Scrum", Microsoft Press, 2004. ISBN 978-0-735-61993-7.
-* Ken Schwaber,  "Agile Project Management with Scrum", Microsoft Press, 2004. ISBN 978-0-735-61993-7.
-* Mary and Tom Poppendieck, "Implementing Lean Software Development", Addison-Wesley, 2007. ISBN: 0321437381.
 * "Extreme Programming":http://en.wikipedia.org/wiki/Extreme_Programming (Wikipedia).
 * "extremeprogramming.org":http://extremeprogramming.org.
 * Kent Beck and Martin Fowler interview about XP with  "informit.com":http://www.informit.com/articles/article.aspx?p=20972.
 * "Extreme Programming":http://c2.com/cgi/wiki?ExtremeProgramming The discussion on the c2 wiki is interesting because it is more of a discussion than an encyclopedia entry, like on Wikipedia.
+</div>
+
+h1. Scrum
+
+<div class='small'>
+* Ken Schwaber,  "Agile Project Management with Scrum", Microsoft Press, 2004. ISBN 978-0-735-61993-7.
+* Ken Schwaber,  "Agile Project Management with Scrum", Microsoft Press, 2004. ISBN 978-0-735-61993-7.
 * "Scrum Development":http://en.wikipedia.org/wiki/Scrum_(development) (Wikipedia).
+</div>
+
+h1. Lean
+
+<div class='small'>
+* Mary and Tom Poppendieck, "Implementing Lean Software Development", Addison-Wesley, 2007. ISBN: 0321437381.
 * "Lean Software Development":http://en.wikipedia.org/wiki/Lean_software_development (Wikipedia).
+* "Kanban":http://en.wikipedia.org/wiki/Kanban
 </div>
 
 h1. Test-Driven Development and Refactoring
@@ -419,9 +429,12 @@ h1. Software Process: General
 * Scott Berkun, "The Art of Project Management", O'Reilly, 2005. ISBN: 0596007868.
 </div>
 
-h1. Simplicity
+h1. Simplicity and Modularity
 
 * "Simplicity: a New Model":http://www.noop.nl/2010/09/simplicity-a-new-model.html.
+* "Simplicity, the Way of the Unusual Architect":http://www.infoq.com/presentations/Simplicity-Architect. A presentation given by Dan North, a DRW colleague of mine, discussing simplicity and architecture.
+* Carliss Y. Baldwin and Kim B. Clark, "Design Rules", MIT Press, 1999. ISBN: 0262024667.
+* A "timelapse video":http://gizmodo.com/5687521/chinese-build-15+story-hotel-in-just-six-days-rest-on-seventh of Chinese construction workers building a 15 story building _in just 6 days._
 
 h1. Business
 

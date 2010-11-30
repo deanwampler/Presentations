@@ -138,7 +138,7 @@ There are two kinds of complexity:
 
 bq. Make everything as simple as possible,<br/>but not simpler. 
 
-<div class='cite'>-- Albert Einstein</cite>
+<div class='cite'>-- Albert Einstein</div>
 
 h1. Software Processes: A History
 
@@ -598,7 +598,13 @@ But, people are naturally good at _relative_ estimates. So, use an arbitrary met
 
 h1. Lean Software Development
 
-We'll only mention this, due to time limitations. It is the newest approach that is gaining traction. It addresses some of the limitations of XP for larger organizations, and refines several ideas about agility.
+We'll only mention this, due to time limitations. It is the approach that has gained traction most recently. It addresses some of the limitations of XP for larger organizations, and refines several ideas about agility.
+
+While all agile methods are inspired to one degree or another by Toyota's _Lean_ or _Just-In-Time_ manufacturing, _Lean Software Development_ tries to push the concepts as far as possible.
+
+h1. Lean Software Development
+
+There's one important _risk_ that has to be _avoided_. It's tempting to treat software development as a _manufacturing process_, to exploit the successes of the latter. But this analogy is flawed, because the "manufacturing" stage for software is the _build process_, which is (or should be) straightforward and fully automated. Rather, software development is more like the _creative engineering process_ that went into designing the product in the first place and figuring out how to build it, before it reaches the manufacturing floor.
 
 h1. Push vs. Pull
 
@@ -606,7 +612,7 @@ _Lean_ is a _pull model_ rather than a _push model_.
 
 Scrum and XP have fixed-length iterations, where stories (or tasks) are _pushed_ into the sprint/iteration backlog.
 
-Lean doesn't use iterations. Rather, as the team finishes one story, it _pulls_ a new story from the backlog, providing a more continuous flow. (This is more the way assembly lines actually work...)
+Lean doesn't use iterations. Rather, as the team finishes one story, it _pulls_ a new story from the backlog, providing a more continuous flow. In Toyota manufacturing, this is related to the concept of "Kanban":http://en.wikipedia.org/wiki/Kanban.
 
 For many teams, this model is more natural than fixed-length iterations.
 
