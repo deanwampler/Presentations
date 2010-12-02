@@ -37,9 +37,8 @@ h1. Course _Administrivia_
 | twitter: | "@deanwampler":http://twitter.com/deanwampler |
 | office hours: | Tuesday, 6:45 - ? and by appointment |
 
-h1. Schedule
+h1. Schedule (Revised 10/26)
 
-(Revised 10/26)
 |  8/31 | Course Intro and Scaling Computation, Part I (Multithreaded Programming, Actor Concurrency) |
 |  9/07 | Scaling Computation, Part II (Agents, Software Transactional Memory, Memory is the New Disk) |
 |  9/14 | Scaling Systems, Part I (Vertical vs. Horizontal Scaling, Distributed Systems like HTTP, etc.) _Last day to withdraw without a W grade._ |
@@ -74,10 +73,10 @@ h1. Course Components: Grading
 <table>
   <tr><td colspan='2'>Midterm</td><td>30%</td></tr>
   <tr><td colspan='2'>Final Exam</td><td>30%</td></tr>
-  <tr><td colspan='2'>Project</td><td>40%</td></tr>
-  <tr><td>20%</td><td>Code quality, correctness</td><td>&nbsp;</td></tr>
-  <tr><td>15%</td><td>Individual contributions</td><td>&nbsp;</td></tr>
-  <tr><td>5%</td><td>Final oral presentation</td><td>&nbsp;</td></tr>
+  <tr><td colspan='2'>Homework:</td><td>40%</td></tr>
+  <tr><td>15%</td><td>"Akka" Course Project</td><td>&nbsp;</td></tr>
+  <tr><td>10%</td><td>Weekly Exercises</td><td>&nbsp;</td></tr>
+  <tr><td>15%</td><td>"Mini Project" and Oral Presentation</td><td>&nbsp;</td></tr>
   <tr><td colspan='2'>&nbsp;</td><td>100%</td></tr>
 </table>
 
@@ -86,33 +85,35 @@ h1. Course Components: Readings and Lecture
 * *Readings:*  Expand on the current week's topics and preview next week's topics. Please read them before coming to class.
 * *Lecture:*  Summarize and expand upon the readings, discuss the current project assignment. There will also be group discussions. The lecture notes will be posted to blackboard and "GitHub.com":http://github.com/deanwampler/Presentations/tree/master/PragmaticsOfIndustrialSWDevelopment/ before each class.
 
-h1. Course Components: Project Exercises
+h1. Course Components: "Akka" Course Project
 
-* Start with a "running" 3-tier Scala application
+* Start with a "running" 3-tier Scala application based on the "Akka":http://akkasource.org framework.
  * Hosted on "GitHub.com":http://github.com at "github.com/deanwampler/AkkaWebSampleExercise":http://github.com/deanwampler/AkkaWebSampleExercise. 
  * Uses _actors_ to scale computation over a NYSE data set.
  * Add features during the semester.
  * _Refactor_ the code to improve it and accommodate new features.
 
-h1. Course Components: Project Exercises (cont.)
+h1. Course Components: "Akka" Course Project (cont.)
 
 * _You are encouraged to work together._
  * Like you would in an industrial setting...
  * I expect the solutions to look "similar".
 
-h1. Course Components: Project Exercises (cont.)
+h1. Course Components: "Akka" Course Project (cont.)
 
 ... but 
 
 * 1/2 the grade differences will be based on GitHub checkin logs and the quality of those checkins.
 * *If you _pair program_, include _both_ names in the commit comments!*
 
-  h1. Course Components: Project Exercises (cont.)
+h1. Course Components: Weekly Exercises
 
-* 5% will be based on an *oral presentation* on 12/7.
-* 15 minutes or so, with time for questions and discussion.
-* Topics to be worked out with me.
-  
+The weekly exercises will be "normal" homework problems assigned occasionally that will be due the following week. You can also work on them together, if you like.
+
+h1. Course Components: Mini Project and Presentation (cont.)
+
+For approximately the last 3rd of course, you will work on a "mini project", a coding and/or research topic related to the course content and agreed upon with me. The project will culminate with a 15-minute presentation that you will give on the last day of class.
+   
 h1. Midterm and Final Exam
 
 * Will cover the reading, lecture material, and concepts learned in the exercises. 
