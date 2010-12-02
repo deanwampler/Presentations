@@ -37,9 +37,8 @@ h1. Course _Administrivia_
 | twitter: | "@deanwampler":http://twitter.com/deanwampler |
 | office hours: | Tuesday, 6:45 - ? and by appointment |
 
-h1. Schedule
+h1. Schedule (Revised 10/26)
 
-(Revised 10/26)
 |  8/31 | Course Intro and Scaling Computation, Part I (Multithreaded Programming, Actor Concurrency) |
 |  9/07 | Scaling Computation, Part II (Agents, Software Transactional Memory, Memory is the New Disk) |
 |  9/14 | Scaling Systems, Part I (Vertical vs. Horizontal Scaling, Distributed Systems like HTTP, etc.) _Last day to withdraw without a W grade._ |
@@ -60,7 +59,7 @@ h1. Schedule (cont.)
 
 | 11/23 | Complexity vs. Simplicity Part I: Effective Software Development Processes, including Scrum, XP, and Lean |
 | 11/30 | Complexity vs. Simplicity Part II: Simple Systems |
-| 12/07 | Student Presentations on the Code Project, Course Review |
+| 12/07 | Student Presentations on the Code Project |
 | 12/14 | Final Exam (regular class time) |
 
 h1. Readings
@@ -107,7 +106,7 @@ h1. Course Components: Project Exercises (cont.)
 * 1/2 the grade differences will be based on GitHub checkin logs and the quality of those checkins.
 * *If you _pair program_, include _both_ names in the commit comments!*
 
-  h1. Course Components: Project Exercises (cont.)
+h1. Course Components: Project Exercises (cont.)
 
 * 5% will be based on an *oral presentation* on 12/7.
 * 15 minutes or so, with time for questions and discussion.

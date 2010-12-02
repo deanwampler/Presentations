@@ -106,13 +106,29 @@
 </table>
 </div>
 <div class="slide">
-<h1>Schedule</h1>
-<p>(Revised 10/26)<br />
-|  8/31 | Course Intro and Scaling Computation, Part I (Multithreaded Programming, Actor Concurrency) |<br />
-|  9/07 | Scaling Computation, Part II (Agents, Software Transactional Memory, Memory is the New Disk) |<br />
-|  9/14 | Scaling Systems, Part I (Vertical vs. Horizontal Scaling, Distributed Systems like <span class="caps">HTTP</span>, etc.) <em>Last day to withdraw without a W grade.</em> |<br />
-|  9/21 | Scaling Data, Part I (<span class="caps">SQL</span> vs. NoSQL databases) |<br />
-|  9/28 | Scaling Data, Part II (Example NoSQL databases) |</p>
+<h1>Schedule (Revised 10/26)</h1>
+<table>
+	<tr>
+		<td>  8/31 </td>
+		<td> Course Intro and Scaling Computation, Part I (Multithreaded Programming, Actor Concurrency) </td>
+	</tr>
+	<tr>
+		<td>  9/07 </td>
+		<td> Scaling Computation, Part II (Agents, Software Transactional Memory, Memory is the New Disk) </td>
+	</tr>
+	<tr>
+		<td>  9/14 </td>
+		<td> Scaling Systems, Part I (Vertical vs. Horizontal Scaling, Distributed Systems like <span class="caps">HTTP</span>, etc.) <em>Last day to withdraw without a W grade.</em> </td>
+	</tr>
+	<tr>
+		<td>  9/21 </td>
+		<td> Scaling Data, Part I (<span class="caps">SQL</span> vs. NoSQL databases) </td>
+	</tr>
+	<tr>
+		<td>  9/28 </td>
+		<td> Scaling Data, Part II (Example NoSQL databases) </td>
+	</tr>
+</table>
 </div>
 <div class="slide">
 <h1>Schedule (cont.)</h1>
@@ -160,7 +176,7 @@
 	</tr>
 	<tr>
 		<td> 12/07 </td>
-		<td> Student Presentations on the Code Project, Course Review </td>
+		<td> Student Presentations on the Code Project </td>
 	</tr>
 	<tr>
 		<td> 12/14 </td>
@@ -195,19 +211,19 @@
 <div class="slide">
 <h1>Course Components: Project Exercises</h1>
 <ul>
-	<li>Start with a &#8220;running&#8221; 3-tier Scala application<br />
- * Hosted on <a href="http://github.com">GitHub.com</a> at <a href="http://github.com/deanwampler/AkkaWebSampleExercise">github.com/deanwampler/AkkaWebSampleExercise</a>. <br />
- * Uses <em>actors</em> to scale computation over a <span class="caps">NYSE</span> data set.<br />
- * Add features during the semester.<br />
- * <em>Refactor</em> the code to improve it and accommodate new features.</li>
+	<li>Start with a &#8220;running&#8221; 3-tier Scala application</li>
+	<li>Hosted on <a href="http://github.com">GitHub.com</a> at <a href="http://github.com/deanwampler/AkkaWebSampleExercise">github.com/deanwampler/AkkaWebSampleExercise</a>.</li>
+	<li>Uses <em>actors</em> to scale computation over a <span class="caps">NYSE</span> data set.</li>
+	<li>Add features during the semester.</li>
+	<li><em>Refactor</em> the code to improve it and accommodate new features.</li>
 </ul>
 </div>
 <div class="slide">
 <h1>Course Components: Project Exercises (cont.)</h1>
 <ul>
-	<li><em>You are encouraged to work together.</em><br />
- * Like you would in an industrial setting&#8230;<br />
- * I expect the solutions to look &#8220;similar&#8221;.</li>
+	<li><em>You are encouraged to work together.</em></li>
+	<li>Like you would in an industrial setting&#8230;</li>
+	<li>I expect the solutions to look &#8220;similar&#8221;.</li>
 </ul>
 </div>
 <div class="slide">
@@ -217,21 +233,22 @@
 	<li>1/2 the grade differences will be based on GitHub checkin logs and the quality of those checkins.</li>
 	<li><strong>If you <em>pair program</em>, include <em>both</em> names in the commit comments!</strong></li>
 </ul>
-h1. Course Components: Project Exercises (cont.)
+</div>
+<div class="slide">
+<h1>Course Components: Project Exercises (cont.)</h1>
 <ul>
 	<li>5% will be based on an <strong>oral presentation</strong> on 12/7.</li>
 	<li>15 minutes or so, with time for questions and discussion.</li>
-	<li>Topics to be worked out with me.<br />
-  <br />
-</div><br />
-<div class="slide"></li>
+	<li>Topics to be worked out with me.</li>
 </ul>
+</div>
+<div class="slide">
 <h1>Midterm and Final Exam</h1>
 <ul>
 	<li>Will cover the reading, lecture material, and concepts learned in the exercises.</li>
-	<li>Final exam content weighted:<br />
- * 2/3 of the material since the midterm <br />
- * 1/3 material before the midterm.</li>
+	<li>Final exam content weighted:</li>
+	<li>2/3 of the material since the midterm</li>
+	<li>1/3 material before the midterm.</li>
 	<li>Midterm: 10/19 (first half of that evening&#8217;s session).</li>
 	<li>Final exam: 12/14 (usual class time).</li>
 </ul>
@@ -249,9 +266,9 @@ h1. Course Components: Project Exercises (cont.)
 <div class="slide">
 <h1>Scaling Computation, Part I</h1>
 <ul>
-	<li>Two models of concurrency compared: <br />
-  * Multithreaded Programming.<br />
-  * The Actor Model of concurrency.</li>
+	<li>Two models of concurrency compared:</li>
+	<li>Multithreaded Programming.</li>
+	<li>The Actor Model of concurrency.</li>
 </ul>
 </div>
 <div class="slide">
@@ -283,7 +300,7 @@ public class UnsafeSequence {
   public int getNext() {
     return value++;
   }
-}</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/dwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/UnsafeSequence.java">code/UnsafeSequence.java</a></div></p>
+}</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/deanwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/UnsafeSequence.java">code/UnsafeSequence.java</a></div></p>
 <p>(credit: all Multithreading examples adapted from &#8220;Java Concurrency in Practice&#8221;)</p>
 </div>
 <div class="slide">
@@ -297,7 +314,7 @@ public class Sequence {
   public synchronized int getNext() {
     return value++;
   }
-}</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/dwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/SafeSequence.java">code/SafeSequence.java</a></div></p>
+}</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/deanwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/SafeSequence.java">code/SafeSequence.java</a></div></p>
 </div>
 <div class="slide">
 <h1>Things Can Go Wrong</h1>
@@ -329,7 +346,7 @@ public class LeftRightDeadlock {
     synchronized (right) {
       synchronized (left) { doSomethingElse(); }
   }
-}</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/dwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/LeftRightDeadlock.java">code/LeftRightDeadlock.java</a></div></p>
+}</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/deanwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/LeftRightDeadlock.java">code/LeftRightDeadlock.java</a></div></p>
 </div>
 <div class="slide">
 <h1>Other Deadlock Hazards</h1>
@@ -351,11 +368,10 @@ public class LeftRightDeadlock {
 <p>A thread is not blocked, but it can&#8217;t complete work because of trying operations always fails.</p>
 <ul>
 	<li>A common example is repeated execution of a transaction that never succeeds.</li>
-	<li>One scenario is two contenders with identical strategies for trying again, often colliding in the same way. If one is <em>greedy</em>, both may succeed.<br />
- <br />
-</div><br />
-<div class="slide"></li>
+	<li>One scenario is two contenders with identical strategies for trying again, often colliding in the same way. If one is <em>greedy</em>, both may succeed.</li>
 </ul>
+</div>
+<div class="slide">
 <h1>The Importance of Immutability</h1>
 <p>What about access to <em>immutable</em> state? All the synchronization issues go away. Immutable objects have these virtues:</p>
 <ul>
@@ -391,7 +407,7 @@ class Manager {
     case Start =&gt; managedActors foreach (_ ! Start)
   }
 }
-</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/dwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/manager-actor.scala">code/manager-actor.scala</a></div></p>
+</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/deanwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/manager-actor.scala">code/manager-actor.scala</a></div></p>
 </div>
 <div class="slide">
 <h1>Actors in Scala (Akka)</h1>
@@ -440,7 +456,7 @@ class Manager {
 import se.scalablesolutions.akka.actor.Actor_
 // Creating an actor (one way...) and starting
 val manager = Actor.actorOf[Manager]
-manager.start</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/dwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/manager-actor2.scala">code/manager-actor2.scala</a></div></p>
+manager.start</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/deanwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/manager-actor2.scala">code/manager-actor2.scala</a></div></p>
 </div>
 <div class="slide">
 <h1>Actor vs. ActorRef</h1>
@@ -460,7 +476,7 @@ case class  Register(actor: ActorRef)
 case class  Unregister(actor: ActorRef)
 case object Stop
 case object Start
-</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/dwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/actor-messages.scala">code/actor-messages.scala</a></div></p>
+</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/deanwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/actor-messages.scala">code/actor-messages.scala</a></div></p>
 </div>
 <div class="slide">
 <h1>An Asynchronous (Fire and Forget) Message</h1>
@@ -473,7 +489,7 @@ case object Start
     case Start =&gt; managedActors foreach (_ ! Start)
   }
 }
-</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/dwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/actor-asynch-message.scala">code/actor-asynch-message.scala</a></div></p>
+</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/deanwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/actor-asynch-message.scala">code/actor-asynch-message.scala</a></div></p>
 <p>If a response is required, the receiver can send a message to the sender.</p>
 </div>
 <div class="slide">
@@ -490,7 +506,7 @@ case object Start
     }
   }
 }
-</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/dwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/actor-synch-message.scala">code/actor-synch-message.scala</a></div></p>
+</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/deanwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/actor-synch-message.scala">code/actor-synch-message.scala</a></div></p>
 </div>
 <div class="slide">
 <h1>An Synchronous (Wait) Message (cont.)</h1>
@@ -513,7 +529,7 @@ case object Start
       case None =&gt; "Error!"
     }
 }
-</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/dwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/actor-future-message.scala">code/actor-future-message.scala</a></div></p>
+</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/deanwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/actor-future-message.scala">code/actor-future-message.scala</a></div></p>
 </div>
 <div class="slide">
 <h1>An Asynchronous with a Future Message (cont.)</h1>
@@ -537,7 +553,7 @@ case object Start
       case None =&gt; "Error!"
     }
 }
-</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/dwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/actor-future-message2.scala">code/actor-future-message2.scala</a></div></p>
+</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/deanwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/actor-future-message2.scala">code/actor-future-message2.scala</a></div></p>
 </div>
 <div class="slide">
 <h1>Achieving Immutability</h1>
@@ -697,9 +713,8 @@ case object Start
 <h1>Add New Functionality (cont &#8211; sort of&#8230;)</h1>
 <p>How could we modify <code>filter</code> to filter by instruments? (To make it easier, assume there is only one instrument in the list, as in the test.)</p>
 <p>This is not easy, as we really need to parse the <span class="caps">JSON</span> into some representation, filter out the records (which are of the form <code>{"timestamp": 1283233404995, "symbol": "A", "price", "40.0"}</code>) using the <code>symbol</code>, then convert back to a string.</p>
-<p>Can you figure out how to do this with the Lift <span class="caps">JSON</span> APIs used in the application and <span class="caps">JSON</span> helper types provided, or using other 3rd-party <span class="caps">JSON</span> libraries?<br />
- <br />
-Actually, the right way to implement this feature is to support this filtering at the database level, which we will learn how to do with MongoDB.</div></p>
+<p>Can you figure out how to do this with the Lift <span class="caps">JSON</span> APIs used in the application and <span class="caps">JSON</span> helper types provided, or using other 3rd-party <span class="caps">JSON</span> libraries?</p>
+<p>Actually, the right way to implement this feature is to support this filtering at the database level, which we will learn how to do with MongoDB.</div></p>
 
   <!-- Syntax Highlighter -->
   <script language="javascript" type="text/javascript" src="../lib/scripts/shCore.js"></script>
