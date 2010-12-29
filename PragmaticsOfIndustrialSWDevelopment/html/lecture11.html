@@ -158,7 +158,7 @@
 <div class='tiny'>
 <table>
 	<tr>
-		<th></th>
+		<th> </th>
 		<th>Pre-Internet </th>
 		<th>Internet </th>
 		<th>Big Data </th>
@@ -205,7 +205,7 @@
 <div class='tiny'>
 <table>
 	<tr>
-		<th></th>
+		<th> </th>
 		<th>Pre-Internet </th>
 		<th>Internet </th>
 		<th>Big Data </th>
@@ -226,7 +226,7 @@
 <div class='tiny'>
 <table>
 	<tr>
-		<th></th>
+		<th> </th>
 		<th>Pre-Internet </th>
 		<th>Internet </th>
 		<th>Big Data </th>
@@ -253,7 +253,7 @@
 <div class='tiny'>
 <table>
 	<tr>
-		<th></th>
+		<th> </th>
 		<th>Pre-Internet </th>
 		<th>Internet </th>
 		<th>Big Data </th>
@@ -286,7 +286,7 @@
 <div class='tiny'>
 <table>
 	<tr>
-		<th></th>
+		<th> </th>
 		<th>Pre-Internet </th>
 		<th>Internet </th>
 		<th>Big Data </th>
@@ -325,7 +325,7 @@
 <div class='tiny'>
 <table>
 	<tr>
-		<th></th>
+		<th> </th>
 		<th>Pre-Internet </th>
 		<th>Internet </th>
 		<th>Big Data </th>
@@ -393,13 +393,13 @@
 <div class="slide">
 <h1>Software Reuse</h1>
 <p>I&#8217;ll show an example later that compares modeling domain concepts with <em>classes</em> vs. representing objects as <em>maps</em> (which is how objects <em>are</em> represented in languages like JavaScript and Perl).</p>
-<p>There are some significant benefits for <em>reuse</em> when using such functional data structures<sup class="footnote" id="fnr1"><a href="#fn1">1</a></sup>.</p>
+<p>There are some significant benefits for <em>reuse</em> when using such functional data structures<sup class="footnote"><a href="#fn1">1</a></sup>.</p>
 <ul>
 	<li>These types are very well tested.</li>
 	<li>They provide a variety of functions for computations over the collections.</li>
 	<li>They define a few usage <em>protocols</em> that are flexible and powerful.</li>
 </ul>
-<p><sup class="footnote" id="fnr1"><a href="#fn1">1</a></sup> As opposed to the dumbed-down versions found in Java, etc.</p>
+<p><sup class="footnote"><a href="#fn1">1</a></sup> As opposed to the dumbed-down versions found in Java, etc.</p>
 </div>
 <div class="slide">
 <h1>Software Reuse (cont.)</h1>
@@ -586,7 +586,7 @@ trait Account {
 case class CheckingAccount(customer: Customer, var balance: Money) extends Account 
 case class SavingsAccount(customer: Customer, var balance: Money, 
   var interestRate: Double) extends Account 
-</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/deanwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/bank-account.scala">code/bank-account.scala</a></div></p>
+</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/dwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/bank-account.scala">code/bank-account.scala</a></div></p>
 </div>
 <div class="slide">
 <h1><span class="caps">AOP</span>: An Example Problem (cont.)</h1>
@@ -609,7 +609,7 @@ println("Checking: final account: " + sa)
 // Checking: initial account: CheckingAccount(Customer(Dean),Money(1000.0))
 // Checking: final account: CheckingAccount(Customer(Dean),Money(1500.0))
 // Savings: initial account: SavingsAccount(Customer(Dean),Money(2000.0),0.02)
-// Checking: final account: SavingsAccount(Customer(Dean),Money(900.0),0.3)</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/deanwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/bank-account-usage.scala">code/bank-account-usage.scala</a></div></p>
+// Checking: final account: SavingsAccount(Customer(Dean),Money(900.0),0.3)</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/dwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/bank-account-usage.scala">code/bank-account-usage.scala</a></div></p>
 </div>
 <div class="slide">
 <h1><span class="caps">AOP</span> and Modularity</h1>
@@ -631,7 +631,7 @@ case class Customer(initialName: String) extends Persister{
     _name = newName
     putToDatabase("name", _name)
   }
-}</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/deanwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/bank-account-bad-persistence.scala">code/bank-account-bad-persistence.scala</a></div></p>
+}</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/dwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/bank-account-bad-persistence.scala">code/bank-account-bad-persistence.scala</a></div></p>
 </div>
 <div class="slide">
 <h1>Modularity Breakdown</h1>
@@ -657,10 +657,10 @@ case class Customer(var name: String)
 </div>
 <div class="slide">
 <h1>Enterprise Java Beans</h1>
-<p><em>Enterprise Java Beans</em> (EJBs) where a flawed attempt to address this problem (the flaws were mostly fixed in the v3.0 redo<sup class="footnote" id="fnr1"><a href="#fn1">1</a></sup>). This model let you specify some data for persistence, transactions, security, etc. in <span class="caps">XML</span> configuration files, but you still had very invasive code in your domain objects.</p>
+<p><em>Enterprise Java Beans</em> (EJBs) where a flawed attempt to address this problem (the flaws were mostly fixed in the v3.0 redo<sup class="footnote"><a href="#fn1">1</a></sup>). This model let you specify some data for persistence, transactions, security, etc. in <span class="caps">XML</span> configuration files, but you still had very invasive code in your domain objects.</p>
 <p>Specifically, while the model &#8220;separated concerns&#8221; such as persistence from the domain model, the model objects needed to subclass <span class="caps">EJB</span> container types, implement methods to support lifecycle management, etc.</p>
 <p>That is, EJBs traded one set of problems for another set.</p>
-<p><sup class="footnote" id="fnr1"><a href="#fn1">1</a></sup> But only after the Spring Framework and the <span class="caps">AOP</span> community showed a better way.</p>
+<p><sup class="footnote"><a href="#fn1">1</a></sup> But only after the Spring Framework and the <span class="caps">AOP</span> community showed a better way.</p>
 </div>
 <div class="slide">
 <h1>Aspect-Oriented Programming</h1>
@@ -688,9 +688,9 @@ case class Customer(var name: String)
 <p>An aspect framework has two parts.</p>
 <ul>
 	<li><strong>Quantification:</strong> The ability to specify, in a succinct way (programmatically or declaratively), which &#8220;points of execution&#8221; to observe or modify. It&#8217;s analogous to a query language over the set of execution points.</li>
-	<li><strong>Behavior Modification</strong>: Once the set of execution points is identified, you need ways to observe or modify the behavior, <em>without modifying the original code</em><sup class="footnote" id="fnr1"><a href="#fn1">1</a></sup>.</li>
+	<li><strong>Behavior Modification</strong>: Once the set of execution points is identified, you need ways to observe or modify the behavior, <em>without modifying the original code</em><sup class="footnote"><a href="#fn1">1</a></sup>.</li>
 </ul>
-<p><sup class="footnote" id="fnr1"><a href="#fn1">1</a></sup> I.e., this a special case of the Expression Problem, a.k.a Open-Closed Principle.</p>
+<p><sup class="footnote"><a href="#fn1">1</a></sup> I.e., this a special case of the Expression Problem, a.k.a Open-Closed Principle.</p>
 </div>
 <div class="slide">
 <h1><span class="caps">AOP</span> Terminology</h1>
@@ -724,7 +724,7 @@ class InstrumentedCustomer(customer: Customer)
     customer.name = newName
     putToDatabase("name", newName)
   }
-}</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/deanwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/bank-account-instrumented.scala">code/bank-account-instrumented.scala</a></div></p>
+}</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/dwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/bank-account-instrumented.scala">code/bank-account-instrumented.scala</a></div></p>
 </div>
 <div class="slide">
 <h1><span class="caps">AOP</span> Tools</h1>
@@ -760,13 +760,13 @@ public aspect PersisentCustomer {
       case None =&gt;
     }
   }
-}</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/deanwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/bank-account-aspect.scala">code/bank-account-aspect.scala</a></div></p>
+}</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/dwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/bank-account-aspect.scala">code/bank-account-aspect.scala</a></div></p>
 </div>
 <div class="slide">
 <h1>Aspects Beyond Cross-Cutting Concerns</h1>
-<p>Note that the cross-cutting concerns that we mentioned, persistence, transactions, security, and logging, are sometimes called <em>non-functional requirements</em>, because they mostly relate to implementation concerns, rather than business requirements.<sup class="footnote" id="fnr1"><a href="#fn1">1</a></sup></p>
+<p>Note that the cross-cutting concerns that we mentioned, persistence, transactions, security, and logging, are sometimes called <em>non-functional requirements</em>, because they mostly relate to implementation concerns, rather than business requirements.<sup class="footnote"><a href="#fn1">1</a></sup></p>
 <p>Is this the only use for aspects?</p>
-<p><sup class="footnote" id="fnr1"><a href="#fn1">1</a></sup> This is not really an accurate distinction; everything we do is ultimately tied in some way to business requirements.</p>
+<p><sup class="footnote"><a href="#fn1">1</a></sup> This is not really an accurate distinction; everything we do is ultimately tied in some way to business requirements.</p>
 </div>
 <div class="slide">
 <h1>Aspects Beyond Cross-Cutting Concerns</h1>
@@ -828,15 +828,15 @@ trait PersistentName extends Named with Persister {
 
 case class Customer(var name: String) extends Named
 
-val dean = new Customer("Dean") with PersistentName</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/deanwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/bank-account-mixin.scala">code/bank-account-mixin.scala</a></div></p>
+val dean = new Customer("Dean") with PersistentName</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/dwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/bank-account-mixin.scala">code/bank-account-mixin.scala</a></div></p>
 </div>
 <div class="slide">
 <h1>Why Isn&#8217;t <span class="caps">AOP</span> Pervasive? (cont.)</h1>
 <p>So we can get <em>advice</em> without aspects, although it&#8217;s still tedious to write all these special cases. However, we still don&#8217;t have <em>quantification</em>.</p>
 <p>Functional data structures can address both limitations.</p>
 <p>Objects are just ad hoc groupings of collections and &#8220;atoms&#8221; (numbers, strings, etc.), recursively. More specifically, they work like <em>maps</em> and in languages like JavaScript, they <em>are</em> maps!</p>
-<p>So, if we create a <code>PersistentMap</code><sup class="footnote" id="fnr1"><a href="#fn1">1</a></sup>, in this case, and represent our objects as maps, we&#8217;ve solved the quantification problem!</p>
-<p><sup class="footnote" id="fnr1"><a href="#fn1">1</a></sup> In this case, meaning persistent to a database, not as in the <em><span class="caps">STM</span></em> case.</p>
+<p>So, if we create a <code>PersistentMap</code><sup class="footnote"><a href="#fn1">1</a></sup>, in this case, and represent our objects as maps, we&#8217;ve solved the quantification problem!</p>
+<p><sup class="footnote"><a href="#fn1">1</a></sup> In this case, meaning persistent to a database, not as in the <em><span class="caps">STM</span></em> case.</p>
 </div>
 <div class="slide">
 <h1>Why Isn&#8217;t <span class="caps">AOP</span> Pervasive? (cont.)</h1>
@@ -863,13 +863,13 @@ trait PersistentMap[K,V] extends Map[K,V] with KeyValuePersister[K,V] {
 }
 
 val dean = new HashMap[String,Any] with PersistentMap[String,Any]
-dean.put("name", "Dean")</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/deanwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/persistent-map.scala">code/persistent-map.scala</a></div></p>
+dean.put("name", "Dean")</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/dwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/persistent-map.scala">code/persistent-map.scala</a></div></p>
 </div>
 <div class="slide">
 <h1>Why Isn&#8217;t <span class="caps">AOP</span> Pervasive? (cont.)</h1>
 <p>What this means is that if we just use <code>Maps</code> (and perhaps a few other fundamental collections), we can instrument them as needed with less effort than instrumenting lots of ad-hoc classes. The quantification problem is reduced.</p>
-<p>The key point here is that working with more &#8220;primitive&#8221; building blocks; functions, and core data structures, it is actually easier to <em>generate</em> the variations of behavior we need.<sup class="footnote" id="fnr1"><a href="#fn1">1</a></sup> We&#8217;ll return to this point in a few weeks when we talk about <em>simplicity</em> in systems, etc.</p>
-<p><sup class="footnote" id="fnr1"><a href="#fn1">1</a></sup> We can make the behaviors more <em>composable</em> using advanced techniques like <em>monads</em>.</p>
+<p>The key point here is that working with more &#8220;primitive&#8221; building blocks; functions, and core data structures, it is actually easier to <em>generate</em> the variations of behavior we need.<sup class="footnote"><a href="#fn1">1</a></sup> We&#8217;ll return to this point in a few weeks when we talk about <em>simplicity</em> in systems, etc.</p>
+<p><sup class="footnote"><a href="#fn1">1</a></sup> We can make the behaviors more <em>composable</em> using advanced techniques like <em>monads</em>.</p>
 </div>
 <div class="slide">
 <h1>Conclusions: <span class="caps">OOP</span> vs. FP (vs. <span class="caps">AOP</span>)</h1>
