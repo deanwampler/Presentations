@@ -106,7 +106,7 @@
 </table>
 </div>
 <div class="slide">
-<h1>Schedule</h1>
+<h1>Schedule (Revised 10/26)</h1>
 <table>
 	<tr>
 		<td>  8/31 </td>
@@ -143,19 +143,23 @@
 	</tr>
 	<tr>
 		<td> 10/19 </td>
-		<td> Midterm, Scaling Systems, Part II (Map/Reduce and Their Kin) </td>
+		<td> Midterm, Scaling Systems, Part II (MapReduce) </td>
 	</tr>
 	<tr>
 		<td> 10/26 </td>
-		<td> Recent Advances in Object-Oriented Programming </td>
+		<td> Effective Object-Oriented Programming, Part I </td>
 	</tr>
 	<tr>
 		<td> 11/02 </td>
-		<td> Functional Programming: Into the Real World </td>
+		<td> Effective Object-Oriented Programming, Part II </td>
 	</tr>
 	<tr>
 		<td> 11/09 </td>
-		<td>Object-Oriented Programming vs. Functional Programming: a Critique of Pure Programming </td>
+		<td> Functional Programming: Into the Real World </td>
+	</tr>
+	<tr>
+		<td> 11/16 </td>
+		<td> Object-Oriented Programming vs. Functional Programming: a Critique of Pure Programming </td>
 	</tr>
 </table>
 </div>
@@ -163,24 +167,20 @@
 <h1>Schedule (cont.)</h1>
 <table>
 	<tr>
-		<td> 11/16 </td>
-		<td> Complexity vs. Simplicity Part I: Effective Software Development Processes </td>
-	</tr>
-	<tr>
 		<td> 11/23 </td>
-		<td> Complexity vs. Simplicity Part II: Scrum, XP, and Lean </td>
+		<td> Complexity vs. Simplicity Part I: Effective Software Development Processes, including Scrum, XP, and Lean </td>
 	</tr>
 	<tr>
 		<td> 11/30 </td>
-		<td> Complexity vs. Simplicity Part <span class="caps">III</span>: Simple Systems </td>
+		<td> Complexity vs. Simplicity Part II: Simple Systems </td>
 	</tr>
 	<tr>
 		<td> 12/07 </td>
-		<td> Student Presentations on the Code Project, Course Review </td>
+		<td> Student Presentations on the Code Project </td>
 	</tr>
 	<tr>
 		<td> 12/14 </td>
-		<td> Final Example (regular class time) </td>
+		<td> Final Exam (regular class time) </td>
 	</tr>
 </table>
 </div>
@@ -205,17 +205,17 @@
 <h1>Course Components: Readings and Lecture</h1>
 <ul>
 	<li><strong>Readings:</strong>  Expand on the current week&#8217;s topics and preview next week&#8217;s topics. Please read them before coming to class.</li>
-	<li><strong>Lecture:</strong>  Summarize and expand upon the readings, discuss the current project assignment. There will also be group discussions. The lecture notes will be posted to blackboard and <a href="http://github.com">GitHub.com</a> before each class.</li>
+	<li><strong>Lecture:</strong>  Summarize and expand upon the readings, discuss the current project assignment. There will also be group discussions. The lecture notes will be posted to blackboard and <a href="http://github.com/deanwampler/Presentations/tree/master/PragmaticsOfIndustrialSWDevelopment/">GitHub.com</a> before each class.</li>
 </ul>
 </div>
 <div class="slide">
 <h1>Course Components: Project Exercises</h1>
 <ul>
 	<li>Start with a &#8220;running&#8221; 3-tier Scala application</li>
-	<li>Hosted on GitHub (http://github.com).</li>
+	<li>Hosted on <a href="http://github.com">GitHub.com</a> at <a href="http://github.com/deanwampler/AkkaWebSampleExercise">github.com/deanwampler/AkkaWebSampleExercise</a>.</li>
 	<li>Uses <em>actors</em> to scale computation over a <span class="caps">NYSE</span> data set.</li>
 	<li>Add features during the semester.</li>
-	<li><em>Refactor</em> the code to improve it and accomodate new features.</li>
+	<li><em>Refactor</em> the code to improve it and accommodate new features.</li>
 </ul>
 </div>
 <div class="slide">
@@ -233,7 +233,9 @@
 	<li>1/2 the grade differences will be based on GitHub checkin logs and the quality of those checkins.</li>
 	<li><strong>If you <em>pair program</em>, include <em>both</em> names in the commit comments!</strong></li>
 </ul>
-h1. Course Components: Project Exercises (cont.)
+</div>
+<div class="slide">
+<h1>Course Components: Project Exercises (cont.)</h1>
 <ul>
 	<li>5% will be based on an <strong>oral presentation</strong> on 12/7.</li>
 	<li>15 minutes or so, with time for questions and discussion.</li>
@@ -262,13 +264,6 @@ h1. Course Components: Project Exercises (cont.)
 </ul>
 </div>
 <div class="slide">
-<h1>Introduction to the semester project</h1>
-<ul>
-	<li>Installing, building, and running the project skeleton.</li>
-	<li>Walkthrough of major components and features.</li>
-</ul>
-</div>
-<div class="slide">
 <h1>Scaling Computation, Part I</h1>
 <ul>
 	<li>Two models of concurrency compared:</li>
@@ -291,28 +286,378 @@ h1. Course Components: Project Exercises (cont.)
 </ul>
 </div>
 <div class="slide">
-<h1>The importance of immutability</h1>
+<h1>&#8220;Java Concurrency in Practice&#8221;</h1>
+<p>Brian Goetz, et al.</p>
+<p><img src="images/javaconcurrencyinpracticebook.jpg"><img></div>
+<div class="slide">
+<h1>Is This Safe?</h1>
+<div class="code-normal">
+<pre name="code" id="code" class="brush: scala;">@NotThreadSafe
+public class UnsafeSequence {
+  private int value;
+  
+  /** Returns a unique value. */
+  public int getNext() {
+    return value++;
+  }
+}</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/deanwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/UnsafeSequence.java">code/UnsafeSequence.java</a></div></p>
+<p>(credit: all Multithreading examples adapted from &#8220;Java Concurrency in Practice&#8221;)</p>
 </div>
 <div class="slide">
-<h1>This Week&#8217;s Assignment: Reading:</h1>
+<h1>This Is Safe</h1>
+<div class="code-normal">
+<pre name="code" id="code" class="brush: scala;">@ThreadSafe
+public class Sequence {
+  @GuardedBy("this") private int value;
+  
+  /** Returns a unique value. */
+  public synchronized int getNext() {
+    return value++;
+  }
+}</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/deanwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/SafeSequence.java">code/SafeSequence.java</a></div></p>
+</div>
+<div class="slide">
+<h1>Things Can Go Wrong</h1>
+<ul>
+	<li><strong>Safety</strong> &#8211; Nothing Bad Should Happen</li>
+	<li><strong>Liveness</strong> &#8211; Something Good Should Eventually Happen</li>
+</ul>
+</div>
+<div class="slide">
+<h1>Ways to Lose Liveness</h1>
+<ul>
+	<li><strong>Deadlock</strong></li>
+</ul>
+<p><em>You have a lock I want and I have a lock you want.</em></p>
+</div>
+<div class="slide">
+<h1>Deadlock Example</h1>
+<div class="code-normal">
+<pre name="code" id="code" class="brush: scala;">@NotThreadSafe
+public class LeftRightDeadlock {
+  private final Object left  = new Object();
+  private final Object right = new Object();
+  
+  public void leftRight() {
+    synchronized (left) {
+      synchronized (right) { doSomething(); }
+  }
+  public void rightLeft() {
+    synchronized (right) {
+      synchronized (left) { doSomethingElse(); }
+  }
+}</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/deanwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/LeftRightDeadlock.java">code/LeftRightDeadlock.java</a></div></p>
+</div>
+<div class="slide">
+<h1>Other Deadlock Hazards</h1>
+<ul>
+	<li>Don&#8217;t call an external resource from a synchronized method, as it might try to acquire a lock&#8230; Make only <em>open calls.</em></li>
+	<li>Similarly, avoid resource acquisition during locks.</li>
+	<li>Don&#8217;t lock on a mutable object from different locations. Localize the locking to one place, where it&#8217;s easier to manage the policy for that object.</li>
+</ul>
+</div>
+<div class="slide">
+<h1>Starvation</h1>
+<p>One thread can never get the resources it needs because other threads, often with inverted priorities, get too much access.</p>
+<ul>
+	<li>Avoid setting thread priorities. Operating Systems are already very good at this.</li>
+</ul>
+</div>
+<div class="slide">
+<h1>Livelock</h1>
+<p>A thread is not blocked, but it can&#8217;t complete work because of trying operations always fails.</p>
+<ul>
+	<li>A common example is repeated execution of a transaction that never succeeds.</li>
+	<li>One scenario is two contenders with identical strategies for trying again, often colliding in the same way. If one is <em>greedy</em>, both may succeed.</li>
+</ul>
+</div>
+<div class="slide">
+<h1>The Importance of Immutability</h1>
+<p>What about access to <em>immutable</em> state? All the synchronization issues go away. Immutable objects have these virtues:</p>
+<ul>
+	<li>No synchronized access is required.</li>
+	<li>They are automatically thread safe.</li>
+</ul>
+</div>
+<div class="slide">
+<h1>The Actor Model of Concurrency</h1>
+<p>Autonomous &#8220;actors&#8221; receive messages, performing <em>local</em> computations, and sending new messages.</p>
+<ul>
+	<li>Coordinates and localizes state transitions.</li>
+	<li>A higher-level abstraction than lock-based concurrency.</li>
+	<li>Successful practical implementations in Erlang, Scala, and other languages.</li>
+	<li>Mathematical model of concurrency going back to 1973.</li>
+</ul>
+</div>
+<div class="slide">
+<h1>Actors in Scala (Akka)</h1>
+<div class="code-normal">
+<pre name="code" id="code" class="brush: scala;">package management
+import se.scalablesolutions.akka.actor._
+
+class Manager {
+  private var managedActors: List[ActorRef] = Nil
+  
+  def receive = {
+    case Register(actor: ActorRef) =&gt; 
+      managedActors ::= actor
+    case Unregister(actor: ActorRef) =&gt; 
+      managedActors -= actor
+    case Stop  =&gt; managedActors foreach (_ ! Stop)
+    case Start =&gt; managedActors foreach (_ ! Start)
+  }
+}
+</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/deanwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/manager-actor.scala">code/manager-actor.scala</a></div></p>
+</div>
+<div class="slide">
+<h1>Actors in Scala (Akka)</h1>
+<ul>
+	<li>This is an example using the Akka Framework (<a href="http://akkasource.org">akkasource.org</a>) (used in the project).</li>
+	<li>Scala also comes with its own Actor library.</li>
+</ul>
+</div>
+<div class="slide">
+<h1>Actors in Scala (Akka)</h1>
+<ul>
+	<li>Our example was contrived; Akka has a rich <code>Supervisor</code> mechanism.</li>
+	<li>Inspired by Erlang&#8217;s <span class="caps">OTP</span> (<em>Open Telecom Platform</em>).</li>
+	<li>A supervisor manages the lifecycle of N actors.</li>
+</ul>
+</div>
+<div class="slide">
+<h1>Supervisors and Lifecycle Management</h1>
+<p>The Supervisor can</p>
+<ul>
+	<li>restart a failed actor (<em>One for One</em>).</li>
+	<li>restart a group of coordinated actors, if one fails (<em>All for One</em>).</li>
+	<li>itself be supervised (hierarchy)</li>
+</ul>
+</div>
+<div class="slide">
+<h1>&#8220;Let It Crash&#8221;</h1>
+<p>For many systems, which is better?</p>
+<ul>
+	<li>A few, large processes that attempt error recovery, or</li>
+	<li>Many, small processes where if one has an error, it can just die and be restarted?</li>
+</ul>
+<p>Complex processes require complex error handling and recovery. The actor model makes <em>modules</em> simpler and more robust, so the system is more robust.</p>
+</div>
+<div class="slide">
+<h1>Starting an Akka Actor</h1>
+<div class="code-normal">
+<pre name="code" id="code" class="brush: scala;">class Manager {
+  private var managedActors: List[ActorRef] = Nil
+  
+  def receive = { ... }
+  }
+}
+
+...
+import se.scalablesolutions.akka.actor.Actor_
+// Creating an actor (one way...) and starting
+val manager = Actor.actorOf[Manager]
+manager.start</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/deanwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/manager-actor2.scala">code/manager-actor2.scala</a></div></p>
+</div>
+<div class="slide">
+<h1>Actor vs. ActorRef</h1>
+<p>The <code>ActorRef</code> returned by <code>actorOf</code> is a <em>handle</em> that separates clients from the actual Actor <em>body</em>.</p>
+<p>This allows the supervisor to restart the <em>body</em> without disrupting client connections!</p>
+</div>
+<div class="slide">
+<h1>Sending a Message to an Akka Actor</h1>
+<p>First, define a <em>sealed</em> collection of messages.</p>
+<div class="code-normal">
+<pre name="code" id="code" class="brush: scala;">package management
+import se.scalablesolutions.akka.actor._
+
+sealed trait ManagementMessage
+
+case class  Register(actor: ActorRef)
+case class  Unregister(actor: ActorRef)
+case object Stop
+case object Start
+</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/deanwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/actor-messages.scala">code/actor-messages.scala</a></div></p>
+</div>
+<div class="slide">
+<h1>An Asynchronous (Fire and Forget) Message</h1>
+<div class="code-normal">
+<pre name="code" id="code" class="brush: scala;">class Manager {
+  ...  
+  def receive = {
+    ...
+    case Stop  =&gt; managedActors foreach (_ ! Stop)
+    case Start =&gt; managedActors foreach (_ ! Start)
+  }
+}
+</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/deanwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/actor-asynch-message.scala">code/actor-asynch-message.scala</a></div></p>
+<p>If a response is required, the receiver can send a message to the sender.</p>
+</div>
+<div class="slide">
+<h1>An Synchronous (Wait) Message</h1>
+<div class="code-normal">
+<pre name="code" id="code" class="brush: scala;">class Manager {
+  ...  
+  def receive = {
+    ...
+    case Stop  =&gt; managedActors foreach (_ ! Stop)
+    case Start =&gt; managedActors foreach (_ ! Start)
+    case Ping  =&gt; managedActors map { _ =&gt;
+      (_ !! Ping).getOrElse(error(...))
+    }
+  }
+}
+</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/deanwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/actor-synch-message.scala">code/actor-synch-message.scala</a></div></p>
+</div>
+<div class="slide">
+<h1>An Synchronous (Wait) Message (cont.)</h1>
+<p>Has the disadvantage of blocking!</p>
+</div>
+<div class="slide">
+<h1>An Asynchronous with a Future Message</h1>
+<div class="code-normal">
+<pre name="code" id="code" class="brush: scala;">def receive = {
+  ...
+  case Stop  =&gt; managedActors foreach (_ ! Stop)
+  case Start =&gt; managedActors foreach (_ ! Start)
+  case Ping =&gt; 
+    val futures = managedActors map {actor =&gt;
+      actor !!! Ping
+    }
+    Futures.awaitAll(futures)
+    futures map { _.result match 
+      case Some(x) =&gt; x
+      case None =&gt; "Error!"
+    }
+}
+</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/deanwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/actor-future-message.scala">code/actor-future-message.scala</a></div></p>
+</div>
+<div class="slide">
+<h1>An Asynchronous with a Future Message (cont.)</h1>
+<p>Actor can keep doing work (like firing off simultaneous pings).</p>
+<p>Eventually, it waits for the <code>Futures</code> to complete and then proceeds. (It could also do work as each one finishes.)</p>
+</div>
+<div class="slide">
+<h1>Another Way to Write the Last Example</h1>
+<div class="code-normal">
+<pre name="code" id="code" class="brush: scala;">def receive = {
+  ...
+  case Stop  =&gt; managedActors foreach (_ ! Stop)
+  case Start =&gt; managedActors foreach (_ ! Start)
+  case Ping =&gt; 
+    val futures = for {     // alternative syntax
+      actor &lt;- managedActors
+    } yield(actor !!! Ping)
+    Futures.awaitAll(futures)
+    futures map { _.result match 
+      case Some(x) =&gt; x
+      case None =&gt; "Error!"
+    }
+}
+</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/deanwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/actor-future-message2.scala">code/actor-future-message2.scala</a></div></p>
+</div>
+<div class="slide">
+<h1>Achieving Immutability</h1>
+<ul>
+	<li><em>Functional languages</em> emphasize immutability.</li>
+	<li>Scala encourages immutability, but also allows mutability, when needed.</li>
+	<li>Declare variables as constants when possible (<code>val</code> in Scala, <code>const</code> in C/C++/C#, <code>final</code> in Java, etc.)</li>
+</ul>
+</div>
+<div class="slide">
+<h1>Introduction to the semester project</h1>
+<ul>
+	<li>Installing, building, and running the project skeleton.</li>
+	<li>Walkthrough of major components and features.</li>
+</ul>
+</div>
+<div class="slide">
+<h1>This Week&#8217;s Assignment: Reading</h1>
+<ul>
+	<li>Brian Goetz, et al., Chapters 1 and 10 in &#8220;Java Concurrency in Practice&#8221; (see references &#8211; available through <a href="http://proquestcombo.safaribooksonline.com.flagship.luc.edu/">Loyola&#8217;s access to Safari Online Books</a>).</li>
+	<li><em>Actor Model</em> on Wikipedia <a href="http://en.wikipedia.org/wiki/Actor_model">wikipedia.org/wiki/Actor_model</a></li>
+	<li>Browse the Scala resources listed in the <a href="references.html">References</a> to learn more about Scala.</li>
+	<li>Browse the Akka framework documentation at <a href="http://docs.akkasource.org">docs.akkasource.org</a>, to learn more about Akka, which is the foundation for the project code.</li>
+</ul>
+</div>
+<div class="slide">
+<h1>This Week&#8217;s Assignment: Reading (cont.)</h1>
+<p>For Next Week&#8217;s Lecture:</p>
 <ul>
 	<li>Simon Peyton Jones, &#8220;Beautiful Concurrency&#8221;, Chapter 24 in <em>Beautiful Code</em>, pgs. 385-406. Online:  <a href="http://research.microsoft.com/en-us/um/people/simonpj/papers/stm/#beautiful">http://research.microsoft.com/en-us/um/people/simonpj/papers/stm/#beautiful</a></li>
 	<li><em>Software Transactional Memory</em> (<span class="caps">STM</span>) on Wikipedia <a href="http://en.wikipedia.org/wiki/Software_transactional_memory">wikipedia.org/wiki/Software_transactional_memory</a>.</li>
 </ul>
-<p>Browse the following Scala resources listed in the <a href="references.html">References</a> to learn more about Scala.</p>
-<p>Browse the Akka framework documentation at <a href="http://docs.akkasource.org">docs.akkasource.org</a>, to learn more about Akka, which is the foundation for the project code.</p>
 </div>
 <div class="slide">
 <h1>This Week&#8217;s Assignment: Project</h1>
-<p>The main goal is to get the project code and get it running, and begin to understand how it works. It&#8217;s not a trivial project to understand, especially if you&#8217;re new to Scala, but don&#8217;t be intimidated.</p>
+<p>The main goal is to get the project code from GitHub, get it running, and begin to understand how it works. It&#8217;s not a trivial project to understand, especially if you&#8217;re new to Scala, but don&#8217;t be intimidated.</p>
 <p>Although you won&#8217;t be asked to turn anything in next week, you should still go through the steps as far as you can, even if you don&#8217;t finish, as they will set the stage for subsequent work.</p>
 </div>
 <div class="slide">
-<h1>Get the project code:</h1>
+<h1>Get the Project Code</h1>
 <ul>
 	<li>Create a personal <a href="http://github.com">GitHub</a> account, if you don&#8217;t already have one.</li>
-	<li>&#8220;Fork&#8221; the project code.</li>
-	<li>&#8220;Clone&#8221; the code locally (on your computer), following the instructions provided by GitHub.</li>
+	<li>&#8220;Fork&#8221; the project code at <a href="http://github.com/deanwampler/AkkaWebSampleExercise">github.com/deanwampler/AkkaWebSampleExercise</a></li>
+	<li>Follow the instructions provided by GitHub to &#8220;clone&#8221; the code locally on your computer. For example, at your local terminal prompt, you might be asked to run the following command (in a suitable directory of your choosing):</li>
+</ul>
+<p><code>git clone git@github.com:myAwesomeUserName/AkkaWebSampleExercise.git</code></p>
+</div>
+<div class="slide">
+<h1>Get the Project Code (cont.)</h1>
+<ul>
+	<li>We will actually do our work on &#8220;branch&#8221; called <code>COMP-388-488</code>, not the <code>master</code> branch:</li>
+</ul>
+<p><code>git checkout COMP-388-488</code></p>
+<ul>
+	<li>Type the following command to confirm you are on the correct branch:</li>
+</ul>
+<p><code>git branch</code></p>
+<ul>
+	<li>It should show the following:</li>
+</ul>
+<pre>
+* COMP-388-488
+  master
+</pre>
+<ul>
+	<li>The <code>*</code> shows the current branch.</li>
+</ul>
+</div>
+<div class="slide">
+<h1>(Update) These steps were added after Lecture 2</h1>
+<ul>
+	<li>Add the following 3 lines to the end of the project&#8217;s <code>.git/config</code> file.</li>
+</ul>
+<div class="code-tiny">
+<pre name="code" id="code" class="brush: scala,;">
+
+[branch "COMP-388-488"]
+        remote = origin
+        merge = refs/heads/COMP-388-488
+</pre></div>
+<ul>
+	<li>Run this command</li>
+</ul>
+<p><code>git checkout origin COMP-388-488</code></p>
+</div>
+<div class="slide">
+<h1>(Get the Lecture Notes!)</h1>
+<p>I&#8217;m also keeping the lecture notes on GitHub. Unless you want to contribute patches ;) there&#8217;s no need to fork this project.</p>
+<ul>
+	<li>Clone <a href="http://github.com/deanwampler/Presentations">github.com/deanwampler/Presentations</a></li>
+</ul>
+<p><code>git clone http://github.com/deanwampler/Presentations</code></p>
+<p>You&#8217;ll see two directories:</p>
+<ul>
+	<li><code>akka-intro</code>: an introduction to the Akka Framework, which you might find useful since we&#8217;re using Akka for the project.</li>
+	<li><code>PragmaticsOfIndustrialSWDevelopment</code>: The class notes.</li>
+</ul>
+</div>
+<div class="slide">
+<h1>(Get the Lecture Notes! &#8211; cont)</h1>
+<ul>
+	<li>I will update the notes in the <code>PragmaticsOfIndustrialSWDevelopment</code> directory before each class, and also upload the latest version to blackboard.</li>
+	<li>See the <code>README</code> for instructions on building the presentation, or just</li>
+	<li>Open <code>html/all.html</code> in your browser.</li>
 </ul>
 </div>
 <div class="slide">
@@ -325,47 +670,55 @@ h1. Course Components: Project Exercises (cont.)
 </div>
 <div class="slide">
 <h1>Add New Functionality</h1>
+<p><strong>The instructions after this point are repeated with modifications as the homework exercise for Lecture 2, since we deferred the assignment until then. So, please go to the Lecture 2 notes, &#8220;This Week&#8217;s Assignment: Project&#8221; and proceed from there.</strong></p>
+</div>
+<div class="slide">
+<h1>Add New Functionality</h1>
 <ul>
 	<li>In an editor, open the file <code>test/scala/server/finance/InstrumentAnalysisServerTest.scala</code>.</li>
 	<li>Find the two <code>TODO</code> comments, one each before a <code>test</code>.</li>
-	<li>In the <em>first</em> of those tests, comment out the line <code>pending</code> (like Java, you can put a <code>//</code> before the work <code>pending</code>).</li>
+	<li>In the <em>first</em> of those tests, comment out the line <code>pending</code> (like Java, you can put a <code>//</code> before the word <code>pending</code>).</li>
 </ul>
 </div>
 <div class="slide">
-<h1>Add New Functionality (cont)</h1>
+<h1>Add New Functionality (cont.)</h1>
 <ul>
 	<li>Run the <code>test</code> action in sbt. The two tests should now fail. You should see the following near the end of the output.</li>
 </ul>
-[error] Failed: : Total 96, Failed 1, Errors 0, Passed 91, Skipped 4
+<p><code>[error] Failed: : Total 96, Failed 1, Errors 0, Passed 91, Skipped 4</code></p>
+<p>Try to understand the error messages:</p>
 <ul>
-	<li>Try to understand the error messages:</li>
-	<li>Look for the stack traces.</li>
-	<li>Ignore the verbose server messages (hint: most of those contain <code>akk</code> and <code>thread</code>), but notice the <code>org.scalatest.TestFailedException</code> messages.</li>
-	<li>Looking at the stack traces:</li>
-	<li>on what line <em>in the test file</em> did the failure occur? (That is, not a line in the ScalaTest <span class="caps">API</span>.)</li>
-	<li>what did the server return and what was the expected value in those two cases? (a <span class="caps">JSON</span> string&#8230;)</li>
+	<li>Look for the stack trace.</li>
+	<li>Ignore the verbose server messages (hint: most of those contain the words <code>akka</code> and <code>thread</code>), but notice the <code>org.scalatest.TestFailedException</code> messages.</li>
 </ul>
 </div>
 <div class="slide">
-<h1>Add New Functionality (cont)</h1>
+<h1>Add New Functionality (cont.)</h1>
+<p>Looking at the stack trace:</p>
+<ul>
+	<li>On what line <em>in the test file</em> did the failure occur? (That is, not a line in the <em>ScalaTest</em> <span class="caps">API</span>.)</li>
+	<li>What did the server return and what was the expected value in those two cases? (hint: it&#8217;s a <span class="caps">JSON</span> string&#8230;)</li>
+</ul>
+</div>
+<div class="slide">
+<h1>Add New Functionality (cont.)</h1>
 <ul>
 	<li>In your editor, open the file <code>main/scala/server/finance/InstrumentAnalysisServer.scala</code> (the file being tested&#8230;)</li>
 	<li>Find the <code>TODO</code> before the method named <code>fetchPrices</code>.</li>
 	<li>This method already has the &#8220;instruments&#8221; (i.e., stocks) and statistics information.</li>
-	<li>In the line <code>Some(x) =&gt; filter(instruments, statistics, x)</code>, note that the <code>filter</code> method below it simply returns the <span class="caps">JSON</span> string that was passed in to it.</li>
+	<li>The line <code>Some(x) =&gt; filter(instruments, statistics, x)</code> takes the result from the <code>DataStorageServer</code> and passes it to a final <code>filter</code> method. Note that <code>filter</code> simply returns the <span class="caps">JSON</span> string that was passed in to it.</li>
 </ul>
 </div>
 <div class="slide">
-<h1>Add New Functionality (cont)</h1>
-<ul>
-	<li>How could we modify <code>filter</code> to filter by instruments? (To make it easier, assume there is only one instrument in the list, as in the test.)</li>
-</ul>
-<p>This is not easy, as we really need to parse the <span class="caps">JSON</span> into some representation, filter out the records (of the form <code>{"timestamp": 1283233404995, "symbol": "A", "price", "40.0"}</code>) using the <code>symbol</code>, then convert back to a string.</p>
+<h1>Add New Functionality (cont &#8211; sort of&#8230;)</h1>
+<p>How could we modify <code>filter</code> to filter by instruments? (To make it easier, assume there is only one instrument in the list, as in the test.)</p>
+<p>This is not easy, as we really need to parse the <span class="caps">JSON</span> into some representation, filter out the records (which are of the form <code>{"timestamp": 1283233404995, "symbol": "A", "price", "40.0"}</code>) using the <code>symbol</code>, then convert back to a string.</p>
 <p>Can you figure out how to do this with the Lift <span class="caps">JSON</span> APIs used in the application and <span class="caps">JSON</span> helper types provided, or using other 3rd-party <span class="caps">JSON</span> libraries?</p>
 <p>Actually, the right way to implement this feature is to support this filtering at the database level, which we will learn how to do with MongoDB.</div></p>
 
   <!-- Syntax Highlighter -->
   <script language="javascript" type="text/javascript" src="../lib/scripts/shCore.js"></script>
+  <script language="javascript" type="text/javascript" src="../lib/scripts/shBrushBash.js"></script>
   <script language="javascript" type="text/javascript" src="../lib/scripts/shBrushCpp.js"></script>
   <script language="javascript" type="text/javascript" src="../lib/scripts/shBrushCSharp.js"></script>
   <script language="javascript" type="text/javascript" src="../lib/scripts/shBrushCss.js"></script>
@@ -373,6 +726,7 @@ h1. Course Components: Project Exercises (cont.)
   <script language="javascript" type="text/javascript" src="../lib/scripts/shBrushJava.js"></script>
   <script language="javascript" type="text/javascript" src="../lib/scripts/shBrushJScript.js"></script>
   <script language="javascript" type="text/javascript" src="../lib/scripts/shBrushPhp.js"></script>
+  <script language="javascript" type="text/javascript" src="../lib/scripts/shBrushPlain.js"></script>
   <script language="javascript" type="text/javascript" src="../lib/scripts/shBrushPython.js"></script>
   <script language="javascript" type="text/javascript" src="../lib/scripts/shBrushRuby.js"></script>
   <script language="javascript" type="text/javascript" src="../lib/scripts/shBrushScala.js"></script>

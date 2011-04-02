@@ -1,6 +1,6 @@
 /* Following are the presentation styles -- edit away! */
 
-body {background: #D2E7DB url(bodybg.gif) -16px 0 no-repeat; color: #000; font-size: 2em;}
+body {background: #E3FAEF url(bodybg.gif) -16px 0 no-repeat; color: #000; font-family: Geneva; font-size: 1.6em;}
 :link, :visited {text-decoration: none; color: #00C;}
 #controls :active {color: #88A !important;}
 #controls :focus {outline: 1px dotted #227;}
@@ -14,6 +14,7 @@ blockquote p {margin: 0;}
 blockquote i {font-style: normal;}
 blockquote b {display: block; margin-top: 0.5em; font-weight: normal; font-size: smaller; font-style: normal;}
 blockquote b i {font-style: italic;}
+.cite, cite {font-style: normal; text-align: right;  font-size: 0.8em;}
 
 kbd {font-weight: bold; font-size: 1em;}
 sup {font-size: smaller; line-height: 1px;}
@@ -31,6 +32,17 @@ sup {font-size: smaller; line-height: 1px;}
 .slide ul ul {line-height: 1;}
 .slide ul ul li {margin: .2em; font-size: 85%; list-style: square;}
 .slide img.leader {display: block; margin: 0 auto;}
+.slide em {color: #804703;}
+
+/* Sigh: the following don't work :(  DeanW */
+slide ul.plus { 
+  list-style: none  !important;
+  list-style-image: url(images/24px-Nuvola_action_edit_plus.png)  !important; 
+}
+slide ul.minus { 
+  list-style: none  !important;
+  list-style-image: url(images/24px-Nuvola_action_edit_minus.png) !important; 
+}
 
 div#header, div#footer {background: #005; color: #AAB;
   font-family: Verdana, Helvetica, sans-serif;}
@@ -82,11 +94,41 @@ html>body .external {border-bottom: none;}
 img.incremental {visibility: hidden;}
 .slide .current {color: #B02;}
 
+table {
+  border: 1px solid #888;
+}
+td, th {
+  border: 1px solid #CCC;
+}
 table, td {
-  border: 1px solid gray;
   background-color: #F0EEE8;
 }
+th {
+  padding: 5px;
+}
 
+.rounded-corners {
+  -webkit-border-radius: 5px;  
+}
+.top-left-rounded-corners {
+  -webkit-border-top-left-radius:  5px;
+}
+.top-right-rounded-corners {
+  -webkit-border-top-right-radius: 5px;
+}
+.bottom-left-rounded-corners {
+  -webkit-border-bottom-left-radius:  5px;
+}
+.bottom-right-rounded-corners {
+  -webkit-border-bottom-right-radius: 5px;
+}
+
+.opacity_50 {
+	filter:alpha(opacity=50);
+	-moz-opacity:0.5;
+	-khtml-opacity: 0.5;
+	opacity: 0.5;
+}
 /* diagnostics
 
 li:after {content: " [" attr(class) "]"; color: #F88;}

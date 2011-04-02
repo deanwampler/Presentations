@@ -1,48 +1,467 @@
 h1. References
 
-Some of the books listed below are available through Loyola's account on Safari Books Online.
+<div class='small'>
+
+Some of the books listed below are available through "Loyola's account on Safari Books Online":http://proquestcombo.safaribooksonline.com.flagship.luc.edu/.
+</div>
 
 h1. Required Texts
 
+<div class='small'>
+
 Various papers, blog posts, etc. will be assigned for each lecture.
+</div>
 
 h1. Recommended Reading
 
-* Dean Wampler and Alex Payne, "Programming Scala", O'Reilly, 2009. ISBN: 0596155957. You can read it for free by following the links on "http://programmingscala.com":http://programmingscala.com or on "Loyola's Safari Books Online":http://proquestcombo.safaribooksonline.com.flagship.luc.edu/.
-* Harold Abelson and Gerald Jay Sussman, "Structure and Interpretation of Computer Programs", MIT Press, 1996. ISBN: 0262011530. "Online access":http://mitpress.mit.edu/sicp/.
-* Andrew Hunt and David Thomas, "The Pragmatic Programmer: From Journeyman to Master", Addison-Wesley, 1999. ISBN: 020161622X.
+<div class='small'>
 
-h1. Recommended Reading: Scala and Git Resources
+I don't expect you to read all these references! Some will be assigned as homework reading. All are listed here for further investigation, as you see fit.
 
-* "scala-lang.org":http://scala-lang.org: Downloads, tutorials, _Scaladocs_, etc.
-* "docs.akkasource.org":http://docs.akkasource.org: Documentation for the "Akka Framework":http://akkasource.org.
-* "git-scm.com":http://git-scm.com for downloads and documentation.   
-* "github.com":http://github.com (where the project code will be hosted) also has helpful documentation. 
-* "Pro Git":http://progit.org/. A well regarded book.
+* Dean Wampler and Alex Payne, "Programming Scala", O'Reilly, 2009. ISBN: 0596155957. My comprehensive introduction to Scala. You can read it for free by following the links on "http://programmingscala.com":http://programmingscala.com or on "Loyola's Safari Books Online":http://proquestcombo.safaribooksonline.com.flagship.luc.edu/.
+* Harold Abelson and Gerald Jay Sussman, "Structure and Interpretation of Computer Programs", MIT Press, 1996. ISBN: 0262011530. "Online access":http://mitpress.mit.edu/sicp/. A one-volume survey of computer science. Master this book and you'll be well ahead of most software developers!
+* Erich Gamma, Richard Helm, Ralph Johnson, John M. Vlissides, "Design Patterns: Elements of Reusable Object-Oriented Software", Addison-Wesley, 1994, ISBN 0201633612. Possibly the most important software development book of the last 20 years (and still a best seller). Because there are four authors and this book was published not long after the infamous trial in China of the _Gang of Four_ (including Mao's widow), the authors are affectionately known as the "Gang of Four" and this book is informally called the "Gang of Four book".
+* Andrew Hunt and David Thomas, "The Pragmatic Programmer: From Journeyman to Master", Addison-Wesley, 1999. ISBN: 020161622X. Very good advice for growing your professional career.
+</div>
 
-h1. Additional References: Programming
+h1. References
 
-* Andy Oram and Greg Wilson, "Beautiful Code", O'Reilly, 2009. ISBN: 0596510046.
-* Diomidis Spinellis and Georgios Gousios, "Beautiful Architecture", O'Reilly, 2009. ISBN: 0596517984.
+<div class='small'>
+
+The rest of theses resources are for your further research. Some will be assigned as readings for particular lectures.
+</div>
+
+h1. Scala, Akka, JavaScript
+
+<div class='small'>
+
+* "Learning Scala":http://www.scala-lang.org/node/1305 on the "Scala Language Website":http://scala-lang.org, where you'll also find information about downloads, tutorials, _Scaladocs_, etc.
+* "Another Tour of Scala":http://www.naildrivin5.com/scalatour/wiki_pages/MainPage. Concise guide to Scala.
+* The "Akka Framework":http://akkasource.org and the "documentation":http://docs.akkasource.org for it. The course project and many examples in the lectures use Akka.
+* "Jonas Bon&#233;r's presentation on Akka at OSCON 2010":http://www.slideshare.net/jboner/akka-scala-summit-oscon-2010, which is also shown on the home page for the Akka Framework documentation: "doc.akkasource.org":http://doc.akkasource.org
+* "The Seductions of Scala":http://polyglotprogramming.com/papers/SeductionsOfScala.pdf a presentation I occasionally give at conferences and user groups.
+* Douglas Crockford, "JavaScript: The Good Parts", O'Reilly, 2008. ISBN: 9780596517748.
+</div>
+
+h1. Lock-Based Concurrency
+
+<div class='small'>
+
+* Brian Goetz, Tim Peierls, Joshua Bloch, Joseph Bowbeer, David Holmes, Doug Lea, "Java Concurrency in Practice", Addison-Wesley, 2006. ISBN: 0321349601. The _definitive_ guide to lock-based concurrency on the JVM and related important topics like how Java's memory model affects program behavior and correctness. Most of the concepts apply to any programming language.
+* Edward A. Lee. _The problem with threads_. IEEE Computer, 39(5):33–42, May 2006. An essay on why threads aren't as beneficial as once thought.
+</div>
+
+h1. Actor-Based Concurrency
+
+<div class='small'>
+
+* "Actor Model":http://en.wikipedia.org/wiki/Actor_model (Wikipedia).
+* Akka's Actor "documentation":http://doc.akkasource.org/actors-scala.
+* "Resolve common concurrency problems with GPars":http://www.ibm.com/developerworks/java/library/j-gpars/index.html. Discusses a Groovy concurrency library that wraps several models, including Executors and Fork/Join from the Java Concurrency API, Actors, Agents and Dataflow Variables (the last two we won't cover in the course).--
+</div>
+
+h1. Software Transactional Memory
+
+<div class='small'>
+
+* Simon Peyton Jones, _Beautiful Concurrency_, in "Beautiful Code", Chapter 24, pgs. 385-406. Online:  "http://research.microsoft.com/en-us/um/people/simonpj/papers/stm/#beautiful":http://research.microsoft.com/en-us/um/people/simonpj/papers/stm/#beautiful.
+* Simon Peyton Jones, QCon 2007 Keynote on STM, "slides":http://research.microsoft.com/~simonpj/papers/stm/STM-OSCON.pdf, "video":http://blip.tv/file/get/OSCON-OSCON2007SimonPeytonJones914.mov.
+* "Software Transactional Memory":http://en.wikipedia.org/wiki/Software_transactional_memory (Wikipedia).
+* R. Mark Volkmann, "Software Transactional Memory":http://java.ociweb.com/mark/stm/article.html (OCI web site).
+* R. Mark Volkmann, "Tackling Concurrency with STM":http://java.ociweb.com/mark/stm/STM_1up.pdf
+* Michael L. Scott, et al. "Lowering the Overhead of Nonblocking Software Transactional Memory":http://www.cs.rochester.edu/u/scott/papers/2006_TRANSACT_RSTM.pdf.
+* "Clojure STM":http://clojure.org/refs.
+* Rich Hickey's QCon presentation on "Persistent Data Structures and Managed References":http://www.google.com/url?sa=t&source=web&cd=3&sqi=2&ved=0CCsQFjAC&url=http%3A%2F%2Fqconlondon.com%2Flondon-2009%2Ffile%3Fpath%3D%2Fqcon-london-2009%2Fslides%2FRichHickey_PersistentDataStructuresAndManagedReferences.pdf&rct=j&q=clojure%20persistent%20data%20structures&ei=xkyNTO_iGYSjnQfY19j5Cg&usg=AFQjCNFpIFm5FOItUjTne013vOEwAnYGZQ&cad=rja. "Video":http://www.infoq.com/presentations/Value-Identity-State-Rich-Hickey of the same presentation.
+* "Understanding Clojures PersistentVector Implementation":http://blog.higher-order.net/2009/02/01/understanding-clojures-persistentvector-implementation/
+* Excellent blog post comparing "Persistent Trees in Git, Clojure, and CouchDB":http://eclipsesource.com/blogs/2009/12/13/persistent-trees-in-git-clojure-and-couchdb-data-structure-convergence/
+(See also the links on _Multiversion Concurrency Control_ in the section on _SQL and NoSQL Databases_.)
+</div>
+
+h1. ACID, CAP, and BASE (1/2)
+
+<div class='small'>
+
+* "ACID":http://en.wikipedia.org/wiki/ACID (Wikipedia).
+* Eric Brewer, "Toward Robust, Distributed Systems":http://www.cs.berkeley.edu/~brewer/cs262b-2004/PODC-keynote.pdf. The keynote at the "ACM Symposium on Principles of Distributed Computing":http://www.podc.org/podc2000/ that introduced Brewer's CAP theorem.
+* Julian Brown, "Brewer's CAP Theorem: The kool aid Amazon and Ebay have been drinking":http://www.julianbrowne.com/article/viewer/brewers-cap-theorem. A sometimes humorous summary of Brewer's CAP theorem. Also has a good list of references for more information.
+* Coda Hale, "You Can't Sacrifice Partition Tolerance":http://codahale.com/you-cant-sacrifice-partition-tolerance/. A good discussion of CAP that clears up some common misunderstandings. Also mentions Brewer's other work on the concepts of _yield_ and _harvest_.
+* Seth Gilbert and Nancy Lynch, "The CAP Theorem":http://nosqlsummer.org/paper/cap-theorem. Proves Brewer's conjecture (hence, it's now called Brewer's Theorem) and elaborated on solutions, etc.
+</div>
+
+h1. ACID, CAP, and BASE (2/2)
+
+<div class='small'>
+
+* Dan Pritchett, "BASE: An Acid Alternative":http://queue.acm.org/detail.cfm?id=1394128. Excellent discussion of the limitations of ACID for large-scale, distributed systems, and the alternative, BASE. Provides specific examples of techniques for relaxing consistency. (The PDF version - click the PDF icon under the title - has a nicer format than the online article.)
+* Dan Pritchett, "The Challenges of Latency":http://www.infoq.com/articles/pritchett-latency.
+* "My Problem with CAP and Yahoo's Little Known NoSQL System":http://dbmsmusings.blogspot.com/2010/04/problems-with-cap-and-yahoos-little.html.
+* Werner Vogels, "Eventually Consistent":http://portal.acm.org/ft_gateway.cfm?id=1466448&type=pdf. (Also "here":http://www.allthingsdistributed.com/2008/12/eventually_consistent.html) A specific look at different kinds of eventual consistency and how they informed the design of several Amazon technologies.
+* Haifeng Yu and Amin Vahdat, "Design and Evaluation of a Continuous Consistency Model for Replicated Services":http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.34.7743&rep=rep1&type=pdf
+* Guy Pardon, "A CAP Solution (Proving Brewer Wrong)":http://guysblogspot.blogspot.com/2008/09/cap-solution-proving-brewer-wrong.html. An argument that if you don't require all three properties at the same time, you can work around the CAP theorem.
+</div>
+
+h1. SQL and NoSQL Databases
+
+<div class='small'>
+
+* Billy Newport, "Enterprise NoSQL: Silver Bullet or Poison Pill?":http://strangeloop2010.com/talk/presentation_file/14447/Newport-EnterpriseNoSQL.pdf. Keynote given at the "Strangeloop 2010 Conference":http://strangeloop2010.com. Provides practical guidance on the tradeoffs of SQL vs. NoSQL databases.
+* "NoSQL-Database.org":http://nosql-database.org/. Lists of NoSQL categories and implementations.
+* "MyNoSQL":http://nosql.mypopescu.com/. Good running blog on all things NoSQL.
+* "Multiversion Concurrency Control":http://en.wikipedia.org/wiki/Multiversion_concurrency_control (Wikipedia). Unfortunately, the text can be a little confusing.
+* "NoSQL, Heroku, and You":http://blog.heroku.com/archives/2010/7/20/nosql/. Good discussion of why NoSQL is important.
+* "NoSQL Summer":http://nosqlsummer.org/papers.
+* E.F. Codd, "A Relational Model of Data for Large Shared Data Banks":http://nosqlsummer.org/paper/codd-relational-model
+* "Column-oriented DBMS":http://en.wikipedia.org/wiki/Column-oriented_DBMS
+</div>
+
+h1. Document-Oriented Databases: MongoDB, CouchDB
+
+<div class='small'>
+
+* "MongoDB":http://mongodb.org. "Language APIs":http://http://api.mongodb.org/.
+* "CouchDB":http://couchdb.org
+* J. Chris Anderson, Jan Lehnardt, and Noah Slater, "CouchDB, The Definitive Guide", O'Reilly, 2010. ISBN: 9780596155896. Also available to read "online":http://guide.couchdb.org/.
+* "Comparing Mongo DB and Couch DB":http://www.mongodb.org/display/DOCS/Comparing+Mongo+DB+and+Couch+DB. The differences from MongoDB's perspective.
+* Mikeal Rogers, "MongoDB Performance and Durability":http://www.mikealrogers.com/2010/07/mongodb-performance-durability/. A controversial, but generally objective analysis of the tradeoffs of using CouchDB vs. MongoDB from the perspective of one of CouchDB's developers. See also this discussion of the blog post on "Hacker News":http://news.ycombinator.com/item?id=1495620.
+* "MongoDB Performance and Durability":http://www.mikealrogers.com/2010/07/mongodb-performance-durability/
+* Ethan Gunderson, "Two Reasons to not Use MongoDB":http://ethangunderson.com/blog/two-reasons-to-not-use-mongodb/. Not the flame bait that it may appear, Gunderson, who is a Chicago-based developer at Obtiva, describes a few of the tradeoffs about MongoDB that you should understand before choosing it. He covers some of the same territory as Mikeal Rogers' blog post.
+* "MongoDB Single Server Data Durability Guide":http://www.thebuzzmedia.com/mongodb-single-server-data-durability-guide/. A guide to setting up MongoDB for durability (might be slightly dated).
+</div>
+
+h1. Key-Value Stores
+
+<div class='small'>
+* Giuseppe DeCandia, Deniz Hastorun, Madan Jampani, Gunavardhan Kakulapati, Avinash Lakshman, Alex Pilchin, Swami Sivasubramanian, Peter Vosshall and Werner Vogels, "Dynamo: Amazon's Highly Available Key-Value Store", in the Proceedings of the 21st ACM Symposium on Operating Systems Principles, Stevenson, WA, October 2007. Available online: "PDF":http://www.allthingsdistributed.com/files/amazon-dynamo-sosp2007.pdf and "online":http://www.allthingsdistributed.com/2007/10/amazons_dynamo.html.
+* "MemcacheDB":http://memcachedb.org/, based on "Memcached":http://memcached.org/.
+* "BerkeleyDB":http://www.oracle.com/technetwork/database/berkeleydb/index.html.
+* "SimpleDB":http://aws.amazon.com/simpledb/.
+* "Redis":http://code.google.com/p/redis/.
+* "Riak":http://wiki.basho.com/display/RIAK/Riak.
+* "Tokyo Cabinet":http://fallabs.com/tokyocabinet/.
+* "Mnesia":http://www.erlang.org/doc/apps/mnesia/.
+</div>
+
+h1. Column-Oriented Databases
+
+* "Apache Cassandra":http://en.wikipedia.org/wiki/Apache_Cassandra.
+* Avinash Lakshman and Prashant Malik, "Cassandra - A Decentralized, Structured Storage System":http://www.cs.cornell.edu/projects/ladis2009/papers/lakshman-ladis2009.pdf.
+
+h1. Graph Databases (1/2)
+
+<div class='small'>
+* <a href="http://en.wikipedia.org/wiki/Graph_(data_structure)">Graph (data structure)</a> (Wikipedia).
+* "Gephi":http://gephi.org. A graph visualization tool kit. The download page has a link to the "gephi wiki":http://wiki.gephi.org/ with "sample datasets":http://wiki.gephi.org/index.php?title=Datasets. (WARNING: requires a lot of memory!)
+* "Graph Database":http://en.wikipedia.org/wiki/Graph_database (Wikipedia).
+* "Neo4J":http://neo4j.org and on "Wikipedia":http://en.wikipedia.org/wiki/Neo4j.
+* "FlockDB":http://en.wikipedia.org/wiki/FlockDB (Wikipedia) and on "GitHub":http://github.com/twitter/flockdb.
+* "InfoGrid":http://infogrid.org/ and a "tutorial":http://infogrid.org/blog/2010/02/operations-on-a-graph-database-part-1/.
+</div>
+
+h1. Graph Databases (2/2)
+
+<div class='small'>
+* "Gremlin: a graph based programming language":http://www.nosqldatabases.com/main/2010/8/23/gremlin-a-graph-based-programming-language.html.
+* Marko A. Rodriguez and Peter Neubauer, "The Graph Traversal Pattern":http://nosqlsummer.org/paper/graph-traversal-pattern.
+* Renzo Angles, Claudio Gutierrez, "Survey of Graph Database Models":http://portal.acm.org/citation.cfm?id=1322433 (requires ACM online access).
+</div>
+
+h1. Miscellaneous Database References
+
+* <a href="http://en.wikipedia.org/wiki/Gizzard_(scala_framework)">Gizzard</a> is a database-neutral sharding framework that supports different backends.
+
+h1. Distributed Systems - General (1/2)
+
+<div class='small'>
+
+* Arnon Rotem-Gal-Ozhttp, "Fallacies of Distributed Computing Explained"://www.rgoarchitects.com/Files/fallacies.pdf
+* "Distributed Computing":http://en.wikipedia.org/wiki/Distributed_computing (Wikipedia).
+* "A Primer on Distributed Computing":http://www.bacchae.co.uk/docs/dist.html. A basic discussion of the issues and techniques involved in building a distributed system, like "SETI@home":http://setiathome.berkeley.edu/.
+* George Reese, "Cloud Application Architectures", O'Reilly, 2009. ISBN: 9780596156367.
+* Diomidis Spinellis and Georgios Gousios, "Beautiful Architecture", O'Reilly, 2009. ISBN: 0596517984. Good essays on architecture.
+</div>
+
+h1. Distributed Systems - General (2/2)
+
+<div class='small'>
+
+* <a href="http://en.wikipedia.org/wiki/Consensus_(computer_science)">Consensus</a>.
+* "Self Stabilization":http://en.wikipedia.org/wiki/Self-stabilisation.
+* "Byzantine fault tolerance":http://en.wikipedia.org/wiki/Byzantine_fault_tolerance.
+* Martin Fowler, et al., "Patterns of Enterprise Application Architecture", Addison-Wesley, 2003. ISBN: 0321127420. Conventional, object-oriented approach. Does not cover the latest thinking on highly-distributed architectures.
+* "highscalability.com":http://highscalability.com/. A web site devoted to general topics related to scalability.
+* "Werner Vogels' blog":http://www.allthingsdistributed.com/. Werner is the CTO of Amazon.
+</div>
+
+h1. Distributed Systems - Examples
+
+<div class='small'>
+
+* "SETI@home":http://setiathome.berkeley.edu/.
+* "Boinc":http://boinc.berkeley.edu/. The software used by many distributed projects, like "SETI@home":http://setiathome.berkeley.edu/, to use idle computer resources available in a wide network, for computing challenges that are too big for single, powerful computers, but are easily distributed to large numbers of more ordinary computers.
+* "Tuple Space":http://en.wikipedia.org/wiki/Tuple_space (Wikipedia).
+* "Terracotta":http://www.terracotta.org/. A toolkit that "virtualizes" a single JVM instance across multiple systems.
+* "Spark":http://github.com/mesos/spark. A framework for iterative and interactive cluster computing.
+* "Swarm: a true distributed programming language":http://blog.locut.us/main/2008/10/6/swarm-a-true-distributed-programming-language.html
+</div>
+
+h1. Distributed Systems - MapReduce Frameworks (1/2)
+
+<div class='small'>
+
+* "MapReduce":http://en.wikipedia.org/wiki/MapReduce (Wikipedia).
+* Jeffrey Dean and Sanjay Ghemawat, "MapReduce: Simplified Data Processing on Large Clusters":http://labs.google.com/papers/mapreduce.html. Also linked to "here":http://nosqlsummer.org/paper/google-mapreduce.
+* Jeffrey Dean and Sanjay Ghemawat, _Distributed Programming with Mapreduce_, in "Beautiful Code", Chapter 23, pgs. 371-382. 
+* "Hadoop":http://hadoop.apache.org/. An open source map-reduce framework, originally developed at Yahoo!
+* Tom White, "Hadoop: The Definitive Guide, Second Edition", O'Reilly, 2010, ISBN: 9781449389734. Available on Loyola's "Safari Online":http://proquestcombo.safaribooksonline.com.flagship.luc.edu/9781449398644.
+* Google's new MapReduce replacement, "Caffeine":http://googleblog.blogspot.com/2010/06/our-new-search-index-caffeine.html.
+</div>
+
+h1. Distributed Systems - MapReduce Frameworks (2/2)
+
+<div class='small'>
+
+* "Pig":http://pig.apache.org/
+* "Pig: Making Hadoop Easy":http://www.slideshare.net/xefyr/pig-making-hadoop-easy.
+* "Cascalog":http://github.com/nathanmarz/cascalog.
+* "Google Percolator – global search jolt sans MapReduce comedown":http://www.theregister.co.uk/2010/09/24/google_percolator/. Google's just-announced replacement for their MapReduce-based search indexing infrastructure.
+* "Twitter Analytics Lead, Kevin Weil, and a Presenter at Hadoop World Interviewed":http://www.cloudera.com/blog/2010/09/twitter-analytics-lead-kevin-weil-and-a-presenter-at-hadoop-world-interviewed/. How Hadoop and related tools are used by Twitter.
+* "MongoDB's MapReduce":http://www.mongodb.org/display/DOCS/MapReduce.
+</div>
+
+h1. Data and Analytics
+
+<div class='small'>
+
+* Edd Dumbill, "The SMAQ stack for big data":http://radar.oreilly.com/2010/09/the-smaq-stack-for-big-data.html. Nice summary of some of the leading open-source technologies used for data processing.
 * Toby Segaran and Jeff Hammerbacher, "Beautiful Data", O'Reilly, 2009. ISBN: 0596157118.
 * Julie Steele and Noah Ilinsky, "Beautiful Visualization", O'Reilly, 2010. ISBN: 1449379869.
+* A "list of data blogs":http://www.quora.com/What-are-the-best-blogs-about-data posted on "Quora":http://www.quora.com.
+</div>
+
+h1. Data Sources
+
+<div class='small'>
+
+* "infochimps.org":http://infochimps.org/
+* "freebase.com":http://www.freebase.com/
+* "trendingtopics.org":http://www.trendingtopics.org/
+* "Free Data Sets":http://developer.amazonwebservices.com/connect/kbcategory.jspa?categoryID=243 on Amazon Web Services.
+</div>
+
+h1. Git Resources
+
+<div class='small'>
+
+* "gitref.org":http://gitref.org. Very good quick reference on git commands and concepts.
+* "Pro Git":http://progit.org/. A well regarded book, available free online.
+* "git-scm.com":http://git-scm.com for downloads and documentation.   
+* "github.com":http://github.com (where the project code will be hosted) also has helpful documentation. 
+* "Why aren't you using git-flow?":http://jeffkreeftmeijer.com/2010/why-arent-you-using-git-flow/.
+</div>
+
+h1. Object-Oriented Programming (General)
+
+<div class='small'>
+
+* "Object-oriented programming":http://en.wikipedia.org/wiki/Object-oriented_programming (Wikipedia). Good overview of the history and "flavors" of OOP.
+* Bertrand Meyer, "Object-Oriented Software Construction, 2nd Edition", Prentice Hall, 2000, ISBN 0-13-629155-4.
+* Rebecca Wirfs-Brock  and Alan McKean, "Object Design: Roles, Responsibilities, and Collaboration", Addison-Wesley, 2003, ISBN 0201379430.
+* James Rumbaugh, et al., "Object-Oriented Modeling and Design", Prentice Hall, 1991, ISBN 0-13-629841-9.
+* Grady Booch, "Object-Oriented Analysis and Design with Applications, 3rd Edition", Addison-Wesley, 2007, ISBN 020189551X.
+
+</div>
+
+h1. Design by Contract
+
+<div class='small'>
+
+* "Design by Contract":http://en.wikipedia.org/wiki/Design_by_contract.
+* "Contract4J":http://contract4j.org.
+
+</div>
+
+h1. Object-Oriented Programming (Specifics)
+
+<div class='small'>
+
+* Erich Gamma, Richard Helm, Ralph Johnson, John M. Vlissides, "Design Patterns: Elements of Reusable Object-Oriented Software", Addison-Wesley, 1994, ISBN 0201633612. See the longer discussion in the first *Recommended Reading* section.
+* <a href="http://en.wikipedia.org/wiki/Design_pattern_(computer_science)">Design Pattern</a>. This page doesn't provide a great discussion of what a design pattern *is*, but it does offer a nice catalog of known (or alleged) patterns.
+* "Design Patterns":http://sourcemaking.com/design_patterns. A succinct description of patterns and details on the 
+* "Abstract Factory Design Pattern":http://en.wikipedia.org/wiki/Abstract_factory_pattern (Wikipedia).
+* "Singleton Design Pattern":http://en.wikipedia.org/wiki/Singleton_pattern (Wikipedia).
+* "Visitor Pattern":http://en.wikipedia.org/wiki/Visitor_pattern (Wikipedia). A truly ugly pattern. A good illustration of forcing a "pure" OO solution when a much more elegant approach should be used instead, i.e., _type classes_ (see the FP section below.)
+* "Are Design Patterns Missing Language Features":http://www.c2.com/cgi/wiki?AreDesignPatternsMissingLanguageFeatures. A starting place for criticisms of patterns.
+* Peter Norvig, "Design Patterns":http://www.norvig.com/design-patterns. Argues that 16 of the 23 GoF patterns are unnecessary in languages like Lisp.
+ 
+</div>
+
+h1. Object-Oriented Programming (Specifics)
+
+<div class='small'>
+
+* Martin Odersky, Lex Spoon, and Bill Venners, "How to Write an Equality Method in Java":http://www.artima.com/lejava/articles/equality.html.
+* Joshua Bloch, "Effective Java, Second Edition", Addison-Wesley, 2008, ISBN 0321356683.
+* <a href="http://en.wikipedia.org/wiki/Solid_(object-oriented_design)">SOLID Principles of Object-Oriented Design</a> (Wikipedia).
+* "Principles of OOD":http://butunclebob.com/ArticleS.UncleBob.PrinciplesOfOod. An older, but more complete blog post and accompanying articles (PDFs) that describe the SOLID principles.
+* Eric Evans, "Domain-Driven Design - Tackling Complexity in the Heart of Software", Addison-Wesley, 2004, ISBN 0321125215.
+
+</div>
+
+h1. Functional Programming
+
+<div class='small'>
+
+* "Functional Programming":http://en.wikipedia.org/wiki/Functional_programming (Wikipedia).
+* John Hughes, "Why Functional Programming Matters":http://www.cs.kent.ac.uk/people/staff/dat/miranda/whyfp90.pdf. A seminal paper making the case for FP. This "paper":http://day-to-day-stuff.blogspot.com/2010/09/why-functional-programming-matters.html ports the examples to Scala.
+* "Functional Programming for the Rest of Us":http://www.defmacro.org/ramblings/fp.html.
+
+</div>
+
+h1. Functional Programming (Specifics)
+
+<div class='small'>
+
+* Erik Meier, "Asynchronous and Event-Driven Programming":http://ecn.channel9.msdn.com/o9/mix/10/mp4/FTL01.mp4 (video).
+* "Type classes":* "Visitor Pattern":http://en.wikipedia.org/wiki/Visitor_pattern (Wikipedia).
+* Type classes in Scala; two blog posts: "first":http://debasishg.blogspot.com/2010/06/scala-implicits-type-classes-here-i.html, "second":http://debasishg.blogspot.com/2010/07/refactoring-into-scala-type-classes.html.
+* Daniel Spiewak "The Magic Behind Parser Combinators":http://www.codecommit.com/blog/scala/the-magic-behind-parser-combinators. Lucid introduction to building parsers using Scala's parser combinator library, which I also discuss in "my book":http://programming-scala.labs.oreilly.com/ch11.html as a tool for building _Domain Specific Languages_ (DSLs).
+* Daniel Spiewak, "Linguistic Programming":http://dl.dropbox.com/u/1679797/CME%20Conf/Linguistic%20Programming%20v1.pdf. A talk that Daniel is giving _next week_ at a CME conference here in Chicago. The example code is "here":https://github.com/djspiewak/linguistic-programming.
+* Jorge Ortiz "Project Euler Fun In Scala":http://www.scala-blogs.org/2007/12/project-euler-fun-in-scala.html). Shows the Stream-based Fibonacci Sequence.
+
+</div>
+
+h1. Functional JavaScript
+
+<div class='small'>
+
+* "Underscore.js":http://documentcloud.github.com/underscore/. Provides many of the functions expected in a functional language that are missing in JavaScript. Nice complement to the indispensable "JQuery":http://jquery.com library.
+* "Functional Javascript":http://bayfp.org/talks/slides/douglas_crockford_15_oct_08_bayfp.pdf. A talk by Douglas Crockford, who wrote the valuable "JavaScript: The Good Parts" and also defined the JSON standard.
+* "Functional Javascript":http://www.hunlock.com/blogs/Functional_Javascript.
+* "Use functional programming techniques to write elegant JavaScript":http://www.ibm.com/developerworks/library/wa-javascript.html. This one has some ASCII characters that are incorrectly rendered in the source listings.
+
+</div>
+
+h1. OOP vs. Functional Programming
+
+<div class='small'>
+
+* Brian McNamara, "How does functional programming affect the structure of your code?":http://lorgonblog.wordpress.com/2008/09/22/how-does-functional-programming-affect-the-structure-of-your-code/. Argues that FP makes code better at all levels of the architecture.
+* Matthew Podwysocki, "Which Is More Beautiful Architecture - FP or OOP":http://codebetter.com/blogs/matthew.podwysocki/archive/2009/03/09/which-is-more-beautiful-architecture-fp-or-oop.aspx. Argues that the paper by Bertrand Meyer, which claims that OOP is superior to FP, is flawed. Matt also discusses Brian McNamara's blog post.
+
+</div>
+
+h1. Aspect-Oriented Programming
+
+<div class='small'>
+
+* "Aspect-Oriented Software Development":http://aosd.net.
+* "AspectJ":http://www.eclipse.org/aspectj/.
+* "Spring AOP":http://static.springsource.org/spring/docs/2.5.x/reference/aop.html.
+* Ramnivas Laddad, "AspectJ in Action, Second Edition", Manning, 2010, ISBN 1933988053.
+* "Multidimensional Separation of Concerns":http://www.research.ibm.com/hyperspace/.
+* "Aquarium":http://aquarium.rubyforge.org. An AOP framework for Ruby.
+* "Contract4J":http://contract4j.org. A _Design by Contract_ tool for Java, written in AspectJ.
+* "AOPLib4J":http://aoplib4j.org/. A library of AspectJ aspects.
+
+</div>
+
+h1. General Programming
+
+<div class='small'>
+
+* Andy Oram and Greg Wilson, "Beautiful Code", O'Reilly, 2009. ISBN: 0596510046.
 * Federico Biancuzzi and Chromatic, "Masterminds of Programming", O'Reilly, 2009. ISBN: 9780596515171.
-* Brian Goetz, Tim Peierls, Joshua Bloch, Joseph Bowbeer, David Holmes, Doug Lea, "Java Concurrency in Practice", Addison-Wesley, 2006. ISBN: 0321349601.
+</div>
 
-h1. Additional References: Software Process
+h1. Agile Methods: General
 
+<div class='small'>
+
+* "Agile Software Development":http://en.wikipedia.org/wiki/Agile_software_development (Wikipedia). Provides a good overview and history.
+* "The New Methodology":http://martinfowler.com/articles/newMethodology.html. Fowler is the Chief Scientist at Thoughtworks. He's written several influential books on patterns, refactoring, DSLs, etc.
+* "Manifesto for Agile Software Development":http://agilemanifesto.org/. Very short read ;)
+* Jim Highsmith, "Agile Software Development Ecosystems", Addison-Wesley, 2002. ISBN: 0201760436.
+* Craig Larman, "Agile and Iterative Development: A Manager's Guide", Addison-Wesley, 2004. ISBN: 0131111558.
+</div>
+
+h1. Extreme Programming
+
+<div class='small'>
 * Kent Beck, "Extreme Programming Explained: Embrace Change", 2nd Edition, Addison-Wesley, 2005. ISBN: 0321278658.
-* Mary and Tom Poppendieck, "Implementing Lean Software Development", Addison-Wesley, 2007. ISBN: 0321437381.
-* Mike Cohn, "User Stories Applied", Addison-Wesley, 2004. ISBN: 0321205685.
+* "Extreme Programming":http://en.wikipedia.org/wiki/Extreme_Programming (Wikipedia).
+* "extremeprogramming.org":http://extremeprogramming.org.
+* Kent Beck and Martin Fowler interview about XP with  "informit.com":http://www.informit.com/articles/article.aspx?p=20972.
+* "Extreme Programming":http://c2.com/cgi/wiki?ExtremeProgramming The discussion on the c2 wiki is interesting because it is more of a discussion than an encyclopedia entry, like on Wikipedia.
+</div>
 
-h1. Additional References: Business
+h1. Scrum
+
+<div class='small'>
+* Ken Schwaber,  "Agile Project Management with Scrum", Microsoft Press, 2004. ISBN 978-0-735-61993-7.
+* Ken Schwaber,  "Agile Project Management with Scrum", Microsoft Press, 2004. ISBN 978-0-735-61993-7.
+* "Scrum Development":http://en.wikipedia.org/wiki/Scrum_(development) (Wikipedia).
+</div>
+
+h1. Lean
+
+<div class='small'>
+* Mary and Tom Poppendieck, "Implementing Lean Software Development", Addison-Wesley, 2007. ISBN: 0321437381.
+* "Lean Software Development":http://en.wikipedia.org/wiki/Lean_software_development (Wikipedia).
+* "Kanban":http://en.wikipedia.org/wiki/Kanban
+</div>
+
+h1. Test-Driven Development and Refactoring
+
+<div class='small'>
+* "JUnit Test Infected: Programmers Love Writing Tests":http://junit.sourceforge.net/doc/testinfected/testing.htm.
+* "Test-Driven Development":http://en.wikipedia.org/wiki/Test-driven_development (Wikipedia).
+* Kent Beck. "Test Driven Development: By Example", Addison-Wesley, 2002. ISBN: 0321146530.
+* Michael Feathers, "Working Effectively with Legacy Code", Prentice Hall, 2004. ISBN 0131177052.
+* Gerard Meszaros, "xUnit Test Patterns", Addison-Wesley, 2007. ISBN - 0131495054.
+* Martin Fowler, "Refactoring - Improving the design of existing code", Addison Wesley Longman, Inc, 1999. ISBN 0-201-48567-2.
+</div>
+
+h1. Software Process: General
+
+<div class='small'>
+
+* Mike Cohn, "User Stories Applied", Addison-Wesley, 2004. ISBN: 0321205685.
+* Mike Cohn, "Agile Estimating and Planning", Addison-Wesley, 2006. ISBN: 0131479415.
+* Scott Berkun, "The Art of Project Management", O'Reilly, 2005. ISBN: 0596007868.
+</div>
+
+h1. Simplicity and Modularity
+
+* "Simplicity: a New Model":http://www.noop.nl/2010/09/simplicity-a-new-model.html.
+* "Simplicity, the Way of the Unusual Architect":http://www.infoq.com/presentations/Simplicity-Architect. A presentation given by Dan North, a DRW colleague of mine, discussing simplicity and architecture.
+* Carliss Y. Baldwin and Kim B. Clark, "Design Rules", MIT Press, 1999. ISBN: 0262024667.
+* A "timelapse video":http://gizmodo.com/5687521/chinese-build-15+story-hotel-in-just-six-days-rest-on-seventh of Chinese construction workers building a 15 story building _in just 6 days._
+
+h1. Business
+
+<div class='small'>
 
 * Carliss Y. Baldwin and Kim B. Clark, "Design Rules: Volume 1: The Power of Modularity", MIT Press, 2000. ISBN: 0262024667.
 * Clayton M. Christensen and Michael E. Raynor, "The Innovators Solution", Harvard Business School Press, 2003, ISBN: 1578518520.
+</div>
 
-h1.  Additional References: Misc.
+h1. Miscellaneous
+
+<div class='small'>
+
+* Christopher Alexander and co-authors wrote several books on design patterns in (building) architecture, which inspired a similar movement in software development. Here are two of them.
+** "The Timeless Way of Building", Oxford, 1979, ISBN 0195024028.
+** "A Pattern Language", Oxford, 1977, ISBN 0195019199.
+
+</div>
+
+h1. Off Topic: Career Advice
+
+<div class='small'>
 
 You might find useful...
 
 * Matt Might, "matt.might.net/articles/books-papers-materials-for-graduate-students/":http://matt.might.net/articles/books-papers-materials-for-graduate-students/.
-  
+* Nathan Marz, "How to get a job at a kick-ass startup for programmers":http://nathanmarz.com/blog/how-to-get-a-job-at-a-kick-ass-startup-for-programmers.html.
+* "InfoQ":http://infoq.com. My favorite tech news site. Other good ones are "Ars Technica":http://arstechnica.com/ (especially for in-depth reviews) and "Hacker News":http://news.ycombinator.com/.
+</div>

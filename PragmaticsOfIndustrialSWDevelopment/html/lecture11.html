@@ -49,10 +49,893 @@
 
 <div class="presentation">
 <div class="slide">
-<h1>Lecture 11: Object-Oriented Programming vs. Functional Programming: a Critique of Pure Programming</div></h1>
+<h1>Lecture 11: <span class="caps">OOP</span> vs. FP: a Critique of Pure Programming</h1>
+<p>Functional Programming is starting to go &#8220;mainstream&#8221; (it&#8217;s still very early in that process). This suggests that people are facing problems for which Object-Oriented Programming is not the best solution. This lecture explores this trend.</p>
+</div>
+<div class="slide">
+<h1>Why Is Industry Interest in FP Growing?</h1>
+<p>We&#8217;ve already discussed the root cause for this trend: <em>concurrency</em>. Multithreaded programming requires <em>synchronized access to shared, mutable state</em>. This is hard for all the reasons we&#8217;ve seen before.</p>
+<p>Since FP emphasizes immutable state and side-effect free functions, it makes concurrent applications far easier to implement.</p>
+</div>
+<div class="slide">
+<h1>A Little History</h1>
+<p><em>How Did <span class="caps">OOP</span> Go Mainstream?</em></p>
+<p>One common view is that <span class="caps">OOP</span> went mainstream in the 80&#8217;s and 90&#8217;s with the emergence of graphical user interfaces (GUIs). The object paradigm was a natural fit and it made the complexity of <span class="caps">GUI</span> development easier to manage.</p>
+<p>However, once people started using <span class="caps">OOP</span> for GUIs, they soon discovered that <span class="caps">OOP</span> is more broadly applicable. Soon, it became the &#8220;best practice&#8221; to use <span class="caps">OOP</span> to <em>modularize</em> most applications.</p>
+<p>A similar trend is happening with FP. Industry is looking at FP for concurrency, but recognizing broader applicability.</p>
+</div>
+<div class="slide">
+<h1>Were We Wrong About <span class="caps">OOP</span>?</h1>
+<p>Not necessarily, but times change. The kinds of applications we write today are different than they have been in the past. Similarly, competitive pressures, cost structures, etc. have evolved.</p>
+<p>Also, we learned lessons over the years about what works and what doesn&#8217;t.</p>
+</div>
+<div class="slide">
+<h1>Why <span class="caps">OOP</span> Then? Why FP Now?</h1>
+<p>Software development is still a young discipline, ~70 years old, compared to other forms of &#8220;engineering&#8221;.</p>
+<p>We&#8217;re still figuring out what works best. The problems we&#8217;re solving and the applications we&#8217;re building are changing rapidly, too.</p>
+<p>Here&#8217;s a very high level view of how things have evolved in the last 30 years.</p>
+</div>
+<div class="slide">
+<h1><span class="caps">GUI</span>, Pre-Internet Era, 1980s &#8211; 1995:</h1>
+<p>The characteristics of <span class="caps">GUI</span>-based applications before the Internet:</p>
+<table>
+	<tr>
+		<th>Dominant Apps </th>
+		<td> &#8220;Productivity&#8221; tools (e.g., MS Office). </td>
+	</tr>
+	<tr>
+		<th>UIs </th>
+		<td> &#8220;Thick&#8221; desktop UIs. </td>
+	</tr>
+	<tr>
+		<th>Architectures </th>
+		<td> Self-contained and autonomous. </td>
+	</tr>
+	<tr>
+		<th>Business Model </th>
+		<td> Dominated by commercial development. </td>
+	</tr>
+	<tr>
+		<th>Release Cycles </th>
+		<td> Relatively long. </td>
+	</tr>
+</table>
+</div>
+<div class="slide">
+<h1>Internet Era, 1995 &#8211; late 2000&#8217;s:</h1>
+<p>Application characteristics during the &#8220;formative&#8221; years of the Internet, dominated by e-commerce and search:</p>
+<table>
+	<tr>
+		<th>Dominant Apps </th>
+		<td> E-commerce and search. </td>
+	</tr>
+	<tr>
+		<th>UIs </th>
+		<td> &#8220;Thin&#8221; browser-based UIs. </td>
+	</tr>
+	<tr>
+		<th>Architectures </th>
+		<td> Large components, networked together. </td>
+	</tr>
+	<tr>
+		<th>Business Model </th>
+		<td> Dominated by open-source development. </td>
+	</tr>
+	<tr>
+		<th>Release Cycles </th>
+		<td> Relatively short release cycles. </td>
+	</tr>
+</table>
+</div>
+<div class="slide">
+<h1>Big Data Era, late 2000&#8217;s &#8211; ??:</h1>
+<p>Application characteristics as the Internet matures, where people try to leverage the vast data sets that are being accumulated (Web 2.0??):</p>
+<table>
+	<tr>
+		<th>Dominant Apps </th>
+		<td> Social networking, context-aware service delivery. </td>
+	</tr>
+	<tr>
+		<th>UIs </th>
+		<td> &#8220;Rich&#8221; browser-based UIs. </td>
+	</tr>
+	<tr>
+		<th>Architectures </th>
+		<td> Small services, choreographed together. </td>
+	</tr>
+	<tr>
+		<th>Business Model </th>
+		<td> Dominated by social networking and other data. </td>
+	</tr>
+	<tr>
+		<th>Release Cycles </th>
+		<td> Asymptotically towards zero-length release cycles (a.k.a continuous delivery). </td>
+	</tr>
+</table>
+</div>
+<div class="slide">
+<h1>Summarized Together</h1>
+<div class='tiny'>
+<table>
+	<tr>
+		<th> </th>
+		<th>Pre-Internet </th>
+		<th>Internet </th>
+		<th>Big Data </th>
+	</tr>
+	<tr>
+		<th>Apps </th>
+		<td> Productivity Tools </td>
+		<td> E-Commerce, search </td>
+		<td> Social networking, context-aware services </td>
+	</tr>
+	<tr>
+		<th>UIs </th>
+		<td> Thick desktop </td>
+		<td> Thin browser </td>
+		<td> Rich Browser </td>
+	</tr>
+	<tr>
+		<th>Architecture </th>
+		<td> Self-contained, autonomous </td>
+		<td> Large components, networked </td>
+		<td> Small services, choreographed </td>
+	</tr>
+	<tr>
+		<th>Dev Model </th>
+		<td> Commercial </td>
+		<td> Open-Source </td>
+		<td> Data aggregators </td>
+	</tr>
+	<tr>
+		<th>Cycle Times </th>
+		<td> Long </td>
+		<td> Short </td>
+		<td> Approaching 0 </td>
+	</tr>
+</table>
+</div>
+</div>
+<div class="slide">
+<h1>Trends</h1>
+<p>Note that most of the categories have been trending to lower/smaller/finer-grained values. Let&#8217;s discuss them in detail.</p>
+</div>
+<div class="slide">
+<h1>Trends (cont.)</h1>
+<div class='tiny'>
+<table>
+	<tr>
+		<th> </th>
+		<th>Pre-Internet </th>
+		<th>Internet </th>
+		<th>Big Data </th>
+	</tr>
+	<tr>
+		<th>Apps </th>
+		<td> Productivity Tools </td>
+		<td> E-Commerce, search </td>
+		<td> Social networking, context-aware services </td>
+	</tr>
+</table>
+</div>
+<p><strong>Then:</strong> Users work done in large, self-contained applications.<br />
+<strong>Now:</strong> Tasks done with small apps, with or without significant integration with other apps.</p>
+</div>
+<div class="slide">
+<h1>Trends (cont.)</h1>
+<div class='tiny'>
+<table>
+	<tr>
+		<th> </th>
+		<th>Pre-Internet </th>
+		<th>Internet </th>
+		<th>Big Data </th>
+	</tr>
+	<tr class="opacity_50">
+		<th>Apps </th>
+		<td> Productivity Tools </td>
+		<td> E-Commerce, search </td>
+		<td> Social networking, context-aware services </td>
+	</tr>
+	<tr>
+		<th>UIs </th>
+		<td> Thick desktop </td>
+		<td> Thin browser </td>
+		<td> Rich Browser </td>
+	</tr>
+</table>
+</div>
+<p><strong>Then:</strong> Fat desktop toolkits with mundane features.<br />
+<strong>Now:</strong> Thin web-based toolkits with rich features.</p>
+</div>
+<div class="slide">
+<h1>Trends (cont.)</h1>
+<div class='tiny'>
+<table>
+	<tr>
+		<th> </th>
+		<th>Pre-Internet </th>
+		<th>Internet </th>
+		<th>Big Data </th>
+	</tr>
+	<tr class="opacity_50">
+		<th>Apps </th>
+		<td> Productivity Tools </td>
+		<td> E-Commerce, search </td>
+		<td> Social networking, context-aware services </td>
+	</tr>
+	<tr class="opacity_50">
+		<th>UIs </th>
+		<td> Thick desktop </td>
+		<td> Thin browser </td>
+		<td> Rich Browser </td>
+	</tr>
+	<tr>
+		<th>Architecture </th>
+		<td> Self-contained, autonomous </td>
+		<td> Large components, networked </td>
+		<td> Small services, choreographed </td>
+	</tr>
+</table>
+</div>
+<p><strong>Then:</strong> Fat, compiled binaries with poor modularity, minimal interoperability.<br />
+<strong>Now:</strong> Small, focused web-based services, integrated together to provide rich features.</p>
+</div>
+<div class="slide">
+<h1>Trends (cont.)</h1>
+<div class='tiny'>
+<table>
+	<tr>
+		<th> </th>
+		<th>Pre-Internet </th>
+		<th>Internet </th>
+		<th>Big Data </th>
+	</tr>
+	<tr class="opacity_50">
+		<th>Apps </th>
+		<td> Productivity Tools </td>
+		<td> E-Commerce, search </td>
+		<td> Social networking, context-aware services </td>
+	</tr>
+	<tr class="opacity_50">
+		<th>UIs </th>
+		<td> Thick desktop </td>
+		<td> Thin browser </td>
+		<td> Rich Browser </td>
+	</tr>
+	<tr class="opacity_50">
+		<th>Architecture </th>
+		<td> Self-contained, autonomous </td>
+		<td> Large components, networked </td>
+		<td> Small services, choreographed </td>
+	</tr>
+	<tr>
+		<th>Dev Model </th>
+		<td> Commercial </td>
+		<td> Open-Source </td>
+		<td> Data aggregators </td>
+	</tr>
+</table>
+</div>
+<p><strong>Then:</strong> Large development teams, separate QA. Lots of feature and release planning, baroque feature sets to justify high retail prices.<br />
+<strong>Now:</strong> Open source development is lean, efficient, quality conscious from day one. Data aggregators build their own apps and provide controlled access to third-party developers.</p>
+</div>
+<div class="slide">
+<h1>Trends (cont.)</h1>
+<div class='tiny'>
+<table>
+	<tr>
+		<th> </th>
+		<th>Pre-Internet </th>
+		<th>Internet </th>
+		<th>Big Data </th>
+	</tr>
+	<tr class="opacity_50">
+		<th>Apps </th>
+		<td> Productivity Tools </td>
+		<td> E-Commerce, search </td>
+		<td> Social networking, context-aware services </td>
+	</tr>
+	<tr class="opacity_50">
+		<th>UIs </th>
+		<td> Thick desktop </td>
+		<td> Thin browser </td>
+		<td> Rich Browser </td>
+	</tr>
+	<tr class="opacity_50">
+		<th>Architecture </th>
+		<td> Self-contained, autonomous </td>
+		<td> Large components, networked </td>
+		<td> Small services, choreographed </td>
+	</tr>
+	<tr class="opacity_50">
+		<th>Dev Model </th>
+		<td> Commercial </td>
+		<td> Open-Source </td>
+		<td> Data aggregators </td>
+	</tr>
+	<tr>
+		<th>Cycle Times </th>
+		<td> Long </td>
+		<td> Short </td>
+		<td> Approaching 0 </td>
+	</tr>
+</table>
+</div>
+<p><strong>Then:</strong> Long release cycles (6-12 months or longer). <br />
+<strong>Now:</strong> Internet time + developer testing (e.g., <span class="caps">TDD</span>, continuous integration/delivery) = asymptotically 0-length release times.</p>
+</div>
+<div class="slide">
+<h1>Trends (cont.)</h1>
+<p>For <span class="caps">OOP</span> vs. FP, the smaller components and faster cycles means there is less incentive for building object models and more incentive for exploiting the collections and other types we already have.</p>
+<ul>
+	<li>Time to implement new features is <em>shrinking</em>.
+	<ul>
+		<li>Large object models require more modifications for new features, while functional code is very succinct and expressive.</li>
+	</ul></li>
+	<li>Smaller services only care about a <em>thin slice</em> of each &#8220;object&#8221;.</li>
+	<li>Scaling for <em>massive</em> numbers of slices requires that we <em>minimize</em> overhead.</li>
+</ul>
+</div>
+<div class="slide">
+<h1>OO Design</h1>
+<p>In the 90&#8217;s, it was believed that modeling your system before implementing it minimized errors.</p>
+<ul>
+	<li>Now, such modeling (e.g., with <span class="caps">UML</span> diagrams) is seen as too inefficient and time consuming.</li>
+	<li>Instead, design is done as part of the testing and coding (yes, in that order, using <em>test-driven development</em> &#8211; <span class="caps">TDD</span>) gives us the quality we need <em>and</em> delivers working software as quickly as possible.</li>
+</ul>
+</div>
+<div class="slide">
+<h1>OO Design vs. Functional Design</h1>
+<p>If you look at our project app, there aren&#8217;t many classes that model financial domain concepts (and some of those present could be removed without great loss&#8230;).</p>
+<p>Most of the uses of object-orientation are in the service infrastructure itself, with relatively flat type hierarchies for collections, actors, messages, errors, etc. In a language without objects, like Clojure or Haskell, these &#8220;objects&#8221; would just be abstract data types, type classes, etc.</p>
+</div>
+<div class="slide">
+<h1>Software Reuse</h1>
+<p>I&#8217;ll show an example later that compares modeling domain concepts with <em>classes</em> vs. representing objects as <em>maps</em> (which is how objects <em>are</em> represented in languages like JavaScript and Perl).</p>
+<p>There are some significant benefits for <em>reuse</em> when using such functional data structures<sup class="footnote"><a href="#fn1">1</a></sup>.</p>
+<ul>
+	<li>These types are very well tested.</li>
+	<li>They provide a variety of functions for computations over the collections.</li>
+	<li>They define a few usage <em>protocols</em> that are flexible and powerful.</li>
+</ul>
+<p><sup class="footnote"><a href="#fn1">1</a></sup> As opposed to the dumbed-down versions found in Java, etc.</p>
+</div>
+<div class="slide">
+<h1>Software Reuse (cont.)</h1>
+<p>Objects are great for mapping our real-world concepts directly to code, but they have drawbacks for reuse.</p>
+<ul>
+	<li>Each object has to be designed, implemented, and tested.
+	<ul>
+		<li>Often it re-implements or just delegates to familiar collections and their functions.</li>
+	</ul></li>
+	<li>Each object defines an ad-hoc <em>protocol</em> (signature) that must be learned and conformed to.
+	<ul>
+		<li>This is actually the biggest barrier to object reuse. Paradoxically, <em>the more flexibility you have for variation, the less opportunity you have for reuse.</em></li>
+	</ul></li>
+</ul>
+</div>
+<div class="slide">
+<h1>Software Process</h1>
+<p>I mentioned a few cases where these trends have affected software process itself (e.g., cycle times, <span class="caps">TDD</span>). In fact, these trends have forced top-to-bottom changes in our thinking about software process. We&#8217;ll explore this topic more fully in the next lecture.</p>
+</div>
+<div class="slide">
+<h1>How FP Affects Architecture</h1>
+<p>In <a href="http://lorgonblog.wordpress.com/2008/09/22/how-does-functional-programming-affect-the-structure-of-your-code/">How does functional programming affect the structure of your code?</a>, Brian McNamara argues that FP makes code better at all levels of the architecture.</p>
+<p>(reading assignment)</p>
+</div>
+<div class="slide">
+<h1>Other Modularity Ideas</h1>
+<p>Let&#8217;s conclude by examining two other important trends in software development in the last few decades.</p>
+<ul>
+	<li><strong>Design Patterns</strong>: Does FP make them obsolete?</li>
+	<li><strong>Aspect-Oriented Programming (<span class="caps">AOP</span>)</strong>: Addressing <em>cross-cutting concerns</em>.</li>
+</ul>
+</div>
+<div class="slide">
+<h1>Design Patterns</h1>
+<p>A <em>solution</em> to a <em>problem</em> in a <em>context</em>.</p>
+<p>Patterns are &#8220;templates&#8221; for solving recurring problems in similar, but often slightly different ways. For example, a software design issue that occurs in different languages.</p>
+<p>The <em>context</em> part is important. Part of a pattern&#8217;s description is the context information about when it is applicable and when it <em>isn&#8217;t</em>. These details are designed to prevent the misapplication of a pattern.</p>
+</div>
+<div class="slide">
+<h1>Design Patterns (cont.)</h1>
+<p>Design Patterns actually originated with the building architect, Christopher Alexander, who cataloged recurring ideas in buildings, even those built by non-professionals.</p>
+<p>Kent Beck and Ward Cunningham, who would later invent <em>Extreme Programming</em>, first began applying Alexander&#8217;s work to software in the mid-1980s. The &#8220;Gang of Four&#8221; book in 1994 exposed them to the wider world.</p>
+</div>
+<div class="slide">
+<h1>Criticisms of Patterns</h1>
+<p>Not everyone thinks patterns are a good idea. <a href="http://www.c2.com/cgi/wiki?AreDesignPatternsMissingLanguageFeatures">Are Design Patterns Missing Language Features</a> is a good starting place for the discussion.</p>
+<p>Peter Norvig <a href="http://www.norvig.com/design-patterns">argues</a> that dynamic languages like Lisp are so powerful that most of the patterns aren&#8217;t needed. In particular, he claims that 16 of the 23 GoF patterns are unnecessary in Lisp.</p>
+<p>For example, I mentioned last week that <em>Visitor</em> is very ugly and invasive, where a functional approach, like type classes, is much more elegant.</p>
+</div>
+<div class="slide">
+<h1>Criticisms of Patterns (cont.)</h1>
+<p>Here is a list of &#8220;unnecessary&#8221; patterns, adapted from <a href="http://www.c2.com/cgi/wiki?AreDesignPatternsMissingLanguageFeatures">AreDesignPatternsMissingLanguageFeatures</a> on the <a href="http://www.c2.com">c2 wiki</a>.</p>
+<div class='tiny'>
+<table>
+	<tr>
+		<th>Visitor  </th>
+		<td> Generic functions (multiple dispatch), type classes </td>
+		<td> </td>
+	</tr>
+	<tr>
+		<th>Factory  </th>
+		<td> Meta classes, closures, companion objects (Scala) </td>
+		<td> </td>
+	</tr>
+	<tr>
+		<th>Singleton </th>
+		<td> Meta classes, object declarations (Scala) </td>
+		<td> </td>
+	</tr>
+	<tr>
+		<th>Iterator </th>
+		<td> Anonymous functions </td>
+		<td> used with higher order functions, like map, filter, etc.) </td>
+	</tr>
+	<tr>
+		<th>Interpreter </th>
+		<td> Macros (extending the language), <code>eval</code> functions, meta-circular interpreters, support for parser generation (for differing syntax) </td>
+		<td> </td>
+	</tr>
+	<tr>
+		<th>Command </th>
+		<td> Closures, anonymous functions, first-class functions, lexical scope </td>
+		<td> </td>
+	</tr>
+	<tr>
+		<th>Adapter </th>
+		<td> Delegation, macros, meta classes </td>
+		<td> a.k.a. Handle-Body </td>
+	</tr>
+</table>
+</div>
+</div>
+<div class="slide">
+<h1>Table (cont.)</h1>
+<div class='tiny'>
+<table>
+	<tr>
+		<th>Run and return successor </th>
+		<td> Tail-call optimization </td>
+		<td> </td>
+	</tr>
+	<tr>
+		<th>Abstract factory </th>
+		<td> First-class types </td>
+		<td> </td>
+	</tr>
+	<tr>
+		<th>Flyweight </th>
+		<td> First-class types </td>
+		<td> </td>
+	</tr>
+	<tr>
+		<th>Factory method </th>
+		<td> First-class types </td>
+		<td> </td>
+	</tr>
+	<tr>
+		<th>State </th>
+		<td> First-class types </td>
+		<td> </td>
+	</tr>
+	<tr>
+		<th>Proxy </th>
+		<td> First-class types </td>
+		<td> </td>
+	</tr>
+	<tr>
+		<th>Chain of responsibility </th>
+		<td> First-class types </td>
+		<td> </td>
+	</tr>
+	<tr>
+		<th>Mediator, Observer </th>
+		<td> Method combination </td>
+		<td> </td>
+	</tr>
+	<tr>
+		<th>Builder Pattern </th>
+		<td> Multi Methods </td>
+		<td> </td>
+	</tr>
+	<tr>
+		<th>Facade Pattern </th>
+		<td> Modules </td>
+		<td> </td>
+	</tr>
+	<tr>
+		<th>Strategy Pattern </th>
+		<td> higher-order functions </td>
+		<td> </td>
+	</tr>
+</table>
+</div>
+<p>The patterns and their functional replacements go by numerous names in different languages and contexts.</p>
+</div>
+<div class="slide">
+<h1>Criticisms of Patterns (cont.)</h1>
+<p>The problem with the criticisms of design patterns, in my view, is that they tend to confuse the concepts with how they are implemented. Some patterns are clearly of dubious value, like <em>Visitor</em>, and should be used only as a last resort. Other patterns, like <em>Observer</em>, are far more useful and powerful. Different languages make these &#8220;good&#8221; patterns easier or harder to implement. Sometimes a pattern is just a built-in feature, like <em>Singleton</em> in Scala, and <em>Command</em> in any language with closures.</p>
+<p>Some of the OO patterns are redundant with functional concepts. Others aren&#8217;t. Functional programming has its own patterns, although the community has not adopted the patterns terminology.</p>
+</div>
+<div class="slide">
+<h1>Aspect-Oriented Programming</h1>
+<p><span class="caps">AOP</span> is an approach for certain modularity problems that became evident in the latter half of the 1990s.</p>
+</div>
+<div class="slide">
+<h1><span class="caps">AOP</span>: An Example Problem</h1>
+<p>Consider this object model:</p>
+<div class="code-tiny">
+<pre name="code" id="code" class="brush: scala;">// Typical OO, with lots of mutability, also poor encapsulation, etc...
+case class Money(value: BigDecimal) {
+  def + (m: Money) = Money(value + m.value)
+  def - (m: Money) = Money(value - m.value)
+}
+
+case class Customer(var name: String)
+
+trait Account {
+  val customer: Customer
+  var balance: Money
+  def deposit(amount: Money) = balance += amount
+  def withdraw(amount: Money) = balance -= amount
+}
+
+case class CheckingAccount(customer: Customer, var balance: Money) extends Account 
+case class SavingsAccount(customer: Customer, var balance: Money, 
+  var interestRate: Double) extends Account 
+</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/dwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/bank-account.scala">code/bank-account.scala</a></div></p>
+</div>
+<div class="slide">
+<h1><span class="caps">AOP</span>: An Example Problem (cont.)</h1>
+<div class="code-tiny">
+<pre name="code" id="code" class="brush: scala;">val customer = Customer("Dean")
+
+val ca = CheckingAccount(customer, Money(1000.0))
+println("Checking: initial account: " + ca)
+ca.deposit(Money(1000.0))
+ca.withdraw(Money(500.0))
+println("Checking: final account: " + ca)
+
+val sa = SavingsAccount(customer, Money(2000.0), .02)
+println("Savings: initial account: " + sa)
+sa.withdraw(Money(1200.0))
+sa.deposit(Money(100.0))
+sa.interestRate = 0.3
+println("Checking: final account: " + sa)
+
+// Checking: initial account: CheckingAccount(Customer(Dean),Money(1000.0))
+// Checking: final account: CheckingAccount(Customer(Dean),Money(1500.0))
+// Savings: initial account: SavingsAccount(Customer(Dean),Money(2000.0),0.02)
+// Checking: final account: SavingsAccount(Customer(Dean),Money(900.0),0.3)</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/dwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/bank-account-usage.scala">code/bank-account-usage.scala</a></div></p>
+</div>
+<div class="slide">
+<h1><span class="caps">AOP</span> and Modularity</h1>
+<p><em>Aspect-Oriented Programming</em> addresses a particular kind of modularity problem. Imagine I need to have all state changes to <code>Customers</code> and <code>Accounts</code> persisted? I could do this:</p>
+<div class="code-tiny">
+<pre name="code" id="code" class="brush: scala;">trait Persister {
+  def getFromDataBase[A](key: String): Option[A] =  { /* nasty */ }
+  // Returns optional previous value (like Scala's mutable map.put())
+  def putToDatabase[A](key: String, value: A): Option[A] =  { /* nasty */ }
+}
+...
+case class Customer(initialName: String) extends Persister{
+  protected var _name = initialName
+  def name = {
+    _name = getFromDataBase("name")  // avoid stale data
+    _name
+  }
+  def name_=(newName: String) = {
+    _name = newName
+    putToDatabase("name", _name)
+  }
+}</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/dwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/bank-account-bad-persistence.scala">code/bank-account-bad-persistence.scala</a></div></p>
+</div>
+<div class="slide">
+<h1>Modularity Breakdown</h1>
+<p>Recall that <code>Customer</code> was:</p>
+<div class="code-small">
+<pre name="code" id="code" class="brush: scala,;">
+
+case class Customer(var name: String)
+</pre></div>
+<p>The code is now <em>significantly</em> more complicated, making it much harder to develop, test, maintain, etc., etc.</p>
+<p>Worse, I would require similar code for <em>every</em> class that was backed by a datastore. (I just showed only one of the classes, <code>Customer</code>.)</p>
+</div>
+<div class="slide">
+<h1>Cross-Cutting Concerns</h1>
+<p>Because the persistence code is basically the same in every class that uses it, we say it is a <em>cross-cutting concern</em>. It cuts right across the modularity (class) boundaries of the domain model. <em>System</em> modularity is compromised.</p>
+<p>There are other kinds of cross-cutting concerns:</p>
+<ul>
+	<li>Transactions</li>
+	<li>Security</li>
+	<li>Logging</li>
+	<li>Error handling</li>
+</ul>
+</div>
+<div class="slide">
+<h1>Enterprise Java Beans</h1>
+<p><em>Enterprise Java Beans</em> (EJBs) where a flawed attempt to address this problem (the flaws were mostly fixed in the v3.0 redo<sup class="footnote"><a href="#fn1">1</a></sup>). This model let you specify some data for persistence, transactions, security, etc. in <span class="caps">XML</span> configuration files, but you still had very invasive code in your domain objects.</p>
+<p>Specifically, while the model &#8220;separated concerns&#8221; such as persistence from the domain model, the model objects needed to subclass <span class="caps">EJB</span> container types, implement methods to support lifecycle management, etc.</p>
+<p>That is, EJBs traded one set of problems for another set.</p>
+<p><sup class="footnote"><a href="#fn1">1</a></sup> But only after the Spring Framework and the <span class="caps">AOP</span> community showed a better way.</p>
+</div>
+<div class="slide">
+<h1>Aspect-Oriented Programming</h1>
+<p>The idea behind aspects is that the domain model shouldn&#8217;t need to know the details of persistence, transactions, etc. <em>and</em> it shouldn&#8217;t be necessary to introduce framework code, either.</p>
+<p>Instead, you should be able to <em>inject</em> the behavior where needed through tools or even language support.</p>
+</div>
+<div class="slide">
+<h1><span class="caps">AOP</span> Schematic View: Before</h1>
+<center>
+<span style="width: 100%;">
+<img src="images/tangled-code.png"></img>
+</span>
+</center>
+</div>
+<div class="slide">
+<h1><span class="caps">AOP</span> Schematic View: After</h1>
+<center>
+<span style="width: 100%;">
+<img src="images/aspects.png"></img>
+</span>
+</center>
+</div>
+<div class="slide">
+<h1>Characteristics of <span class="caps">AOP</span> Solutions</h1>
+<p>An aspect framework has two parts.</p>
+<ul>
+	<li><strong>Quantification:</strong> The ability to specify, in a succinct way (programmatically or declaratively), which &#8220;points of execution&#8221; to observe or modify. It&#8217;s analogous to a query language over the set of execution points.</li>
+	<li><strong>Behavior Modification</strong>: Once the set of execution points is identified, you need ways to observe or modify the behavior, <em>without modifying the original code</em><sup class="footnote"><a href="#fn1">1</a></sup>.</li>
+</ul>
+<p><sup class="footnote"><a href="#fn1">1</a></sup> I.e., this a special case of the Expression Problem, a.k.a Open-Closed Principle.</p>
+</div>
+<div class="slide">
+<h1><span class="caps">AOP</span> Terminology</h1>
+<ul>
+	<li><strong>Join Point:</strong> A point of execution where observation or modification might be needed.</li>
+	<li><strong>Pointcut:</strong> (yes, one word.) A set of join points, like a result set for a query over all <em>join points</em>.</li>
+	<li><strong>Advice:</strong> The behavior modification inserted by an <em>aspect</em>. (Think: &#8220;I&#8217;m advising this class to persist its state changes.&#8221;)</li>
+	<li><strong>Aspect:</strong> A class-like type that encapsulates related <em>pointcuts</em> and <em>advice</em>.</li>
+</ul>
+</div>
+<div class="slide">
+<h1>Code for <span class="caps">AOP</span></h1>
+<p>Conceptually, the code might look something like this (Pseudo-Scala):</p>
+<div class="code-tiny">
+<pre name="code" id="code" class="brush: scala;">trait Named { 
+  def name: String
+  def name_=(n:String):Unit
+}
+case class Customer(var name: String) extends Named
+
+class InstrumentedCustomer(customer: Customer) 
+    extends Named with Persister {
+  def name = {
+    getFromDataBase("name") match {  // avoid stale data
+      case Some(x) =&gt; customer.name = x   // call customer.name_=()
+      case None =&gt;
+    }
+    customer.name  // call customer.name method
+  }
+  def name_=(newName: String) = {
+    customer.name = newName
+    putToDatabase("name", newName)
+  }
+}</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/dwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/bank-account-instrumented.scala">code/bank-account-instrumented.scala</a></div></p>
+</div>
+<div class="slide">
+<h1><span class="caps">AOP</span> Tools</h1>
+<p>But this code isn&#8217;t much better than the original hack. So, we want to minimize writing this kind of code.</p>
+<p>Also, we don&#8217;t want to require that objects must be created with special factories, in order to return &#8220;wrapped&#8221; objects, as illustrated. Instead, we want to inject the behavior in objects that are constructed &#8220;normally&#8221;.</p>
+<p>Several techniques are available:</p>
+<ul>
+	<li><strong>AspectJ:</strong> Superset of Java with declarative aspects.</li>
+	<li><strong>Byte Code Instrumentation:</strong> e.g., Spring (early versions), JBoss, etc.</li>
+</ul>
+</div>
+<div class="slide">
+<h1>AspectJ Example</h1>
+<p>Here is a &#8220;schematic&#8221; AspectJ aspect:</p>
+<div class="code-tiny">
+<pre name="code" id="code" class="brush: scala;">// Pseudo-AspectJ and Scala syntax. (AspectJ only understands Java.)
+// (I don't expect you to fully understand this code...)
+public aspect PersisentCustomer {
+  public pointcut setName(Customer c, String newName) :
+    call(Customer.name_=(*)) &amp;&amp; this(c) &amp;&amp; args(newName);
+
+  public pointcut getName(Customer c) :
+    call(Customer.name()) &amp;&amp; this(c);
+  
+  after(Customer c, String newName) returning : setName(c, newName) {
+    // Use a singleton version of Persister
+    PersisterSingleton.putToDatabase(c, "name", newName);
+  }
+  
+  before(Customer c) : getName(c) {
+    PersisterSingleton.getFromDatabase(c, "name") match {
+      case Some(x) =&gt; c.name = x
+      case None =&gt;
+    }
+  }
+}</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/dwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/bank-account-aspect.scala">code/bank-account-aspect.scala</a></div></p>
+</div>
+<div class="slide">
+<h1>Aspects Beyond Cross-Cutting Concerns</h1>
+<p>Note that the cross-cutting concerns that we mentioned, persistence, transactions, security, and logging, are sometimes called <em>non-functional requirements</em>, because they mostly relate to implementation concerns, rather than business requirements.<sup class="footnote"><a href="#fn1">1</a></sup></p>
+<p>Is this the only use for aspects?</p>
+<p><sup class="footnote"><a href="#fn1">1</a></sup> This is not really an accurate distinction; everything we do is ultimately tied in some way to business requirements.</p>
+</div>
+<div class="slide">
+<h1>Aspects Beyond Cross-Cutting Concerns</h1>
+<p>We could imagine implementing &#8220;functional&#8221; requirements, too:</p>
+<ul>
+	<li>Treat interest calculations as a feature that is mixed into the basic account type. Note that we didn&#8217;t show <code>CheckingAccount</code> with interest, but often checking accounts do pay interest.</li>
+	<li>Mix-in overdraft handling, perhaps on a per-account basis. (That is, &#8220;premium&#8221; account holders get better overdraft protection than others.)<br />
+<br/><br/></li>
+</ul>
+<p>(Notice that I used the terms &#8220;mixed&#8221; and &#8220;mix-in&#8221;. Hmm&#8230;)</p>
+</div>
+<div class="slide">
+<h1>Do We Really Need Aspects?</h1>
+<p>I was actively involved in the <span class="caps">AOP</span> community between 2002 and 2008. I expected <span class="caps">AOP</span> to have broad applicability as a technique for composing applications from &#8220;features&#8221;, beyond the sorts of cross-cutting concerns shown here. I even wrote an <a href="http://aquarium.rubyforge.org"><span class="caps">AOP</span> framework for Ruby</a> and a <a href="http://contract4j.org">Design by Contract tool for Java</a> in AspectJ.</p>
+<p>However, broader applicability never materialized. Why?</p>
+</div>
+<div class="slide">
+<h1>Why Isn&#8217;t <span class="caps">AOP</span> Pervasive?</h1>
+<p>First, while the vision of feature composition is attractive, attempts to make it work proved difficult. One ambitious approach, <a href="http://www.research.ibm.com/hyperspace/">Multidimensional Separation of Concerns</a>, tried to compose software from individual feature &#8220;dimensions&#8221;. It even attempted to merge overlaps (e.g., fields that effectively supported state in both features). It never proved practical, though.</p>
+<p>It wasn&#8217;t a <em>killer app</em>, either. Most of the time, developers don&#8217;t really need feature composition. Traditional coding approaches, i.e., regular classes, are good enough.</p>
+</div>
+<div class="slide">
+<h1>Why Isn&#8217;t <span class="caps">AOP</span> Pervasive? (cont.)</h1>
+<p>Second, <span class="caps">AOP</span> was originally invented by people seeing modularity problems due to cross-cutting concerns in large-scale, Internet and enterprise Java applications. In the end, <span class="caps">AOP</span> really only gained traction in the Java community, with some penetration in .<span class="caps">NET</span>.</p>
+<p>In dynamically-typed languages with open classes, like Ruby, it&#8217;s quite easy to implement &#8220;advice-like&#8221; behavior, using the <em>metaprogramming</em> features of the languages.</p>
+<p>A good example is the <code>ActiveRecord</code> persistence framework in Ruby on Rails.</p>
+</div>
+<div class="slide">
+<h1>Why Isn&#8217;t <span class="caps">AOP</span> Pervasive? (cont.)</h1>
+<p>Third, the <em>advice</em> feature of <span class="caps">AOP</span> can be implemented by <em>mixins</em>.</p>
+<p>Languages like Scala, Ruby, Python, JavaScript, and many others let you create and use mixins (<code>traits</code> in Scala, <code>modules</code> in ruby).</p>
+</div>
+<div class="slide">
+<h1>&#8220;Advice&#8221; in Scala, Using Traits</h1>
+<div class="code-tiny">
+<pre name="code" id="code" class="brush: scala;">trait Persister {
+  def getFromDataBase[A](key: String): Option[A] =  { /* nasty */ }
+  def putToDatabase[A](key: String, value: A): Option[A] =  { /* nasty */ }
+}
+
+trait Named { 
+  def name: String
+  def name_=(n:String):Unit
+}
+
+trait PersistentName extends Named with Persister {
+  def name = {
+    getFromDataBase("name") match {  // avoid stale data
+      case Some(x) =&gt; super.name = x   // call parent's setter
+      case None =&gt;
+    }
+    super.name  // call parent's getter
+  }
+  def name_=(newName: String) = {
+    super.name = newName
+    putToDatabase("name", newName)
+  }
+}
+
+case class Customer(var name: String) extends Named
+
+val dean = new Customer("Dean") with PersistentName</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/dwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/bank-account-mixin.scala">code/bank-account-mixin.scala</a></div></p>
+</div>
+<div class="slide">
+<h1>Why Isn&#8217;t <span class="caps">AOP</span> Pervasive? (cont.)</h1>
+<p>So we can get <em>advice</em> without aspects, although it&#8217;s still tedious to write all these special cases. However, we still don&#8217;t have <em>quantification</em>.</p>
+<p>Functional data structures can address both limitations.</p>
+<p>Objects are just ad hoc groupings of collections and &#8220;atoms&#8221; (numbers, strings, etc.), recursively. More specifically, they work like <em>maps</em> and in languages like JavaScript, they <em>are</em> maps!</p>
+<p>So, if we create a <code>PersistentMap</code><sup class="footnote"><a href="#fn1">1</a></sup>, in this case, and represent our objects as maps, we&#8217;ve solved the quantification problem!</p>
+<p><sup class="footnote"><a href="#fn1">1</a></sup> In this case, meaning persistent to a database, not as in the <em><span class="caps">STM</span></em> case.</p>
+</div>
+<div class="slide">
+<h1>Why Isn&#8217;t <span class="caps">AOP</span> Pervasive? (cont.)</h1>
+<div class="code-tiny">
+<pre name="code" id="code" class="brush: scala;">trait KeyValuePersister[K,V] {
+  def getFromDataBase(key: K): Option[V] = { /* nasty */ }
+  def putToDatabase(key: K, value: V): Option[V] = { /* nasty */ }
+}
+
+import scala.collection.mutable._
+trait PersistentMap[K,V] extends Map[K,V] with KeyValuePersister[K,V] {
+  override def get(key: K) = {
+    val newValue = getFromDataBase(key)  // avoid stale data
+    newValue match {
+      case Some(x) =&gt; super.put(key, x)
+      case None =&gt;
+    }
+    newValue
+  }
+  override def put(key: K, newValue: V) = {
+    super.put(key, newValue)
+    putToDatabase(key, newValue)
+  }
+}
+
+val dean = new HashMap[String,Any] with PersistentMap[String,Any]
+dean.put("name", "Dean")</pre><p></div><div class="codeurl"><a href="txmt://open?url=file:///Users/dwampler/projects/Loyola/COMP388-488/Presentations/PragmaticsOfIndustrialSWDevelopment/code/persistent-map.scala">code/persistent-map.scala</a></div></p>
+</div>
+<div class="slide">
+<h1>Why Isn&#8217;t <span class="caps">AOP</span> Pervasive? (cont.)</h1>
+<p>What this means is that if we just use <code>Maps</code> (and perhaps a few other fundamental collections), we can instrument them as needed with less effort than instrumenting lots of ad-hoc classes. The quantification problem is reduced.</p>
+<p>The key point here is that working with more &#8220;primitive&#8221; building blocks; functions, and core data structures, it is actually easier to <em>generate</em> the variations of behavior we need.<sup class="footnote"><a href="#fn1">1</a></sup> We&#8217;ll return to this point in a few weeks when we talk about <em>simplicity</em> in systems, etc.</p>
+<p><sup class="footnote"><a href="#fn1">1</a></sup> We can make the behaviors more <em>composable</em> using advanced techniques like <em>monads</em>.</p>
+</div>
+<div class="slide">
+<h1>Conclusions: <span class="caps">OOP</span> vs. FP (vs. <span class="caps">AOP</span>)</h1>
+<ul>
+	<li>Types of applications have changed.</li>
+	<li>The &#8220;business&#8221; side of development has changed.</li>
+	<li>Rich object models make less sense today.</li>
+	<li>Functional programming actually fits todays problems better.</li>
+	<li>&#8230; and there&#8217;s still the concurrency problem.</li>
+</ul>
+</div>
+<div class="slide">
+<h1>Reading Assignment</h1>
+<p>Brian McNamara, <a href="http://lorgonblog.wordpress.com/2008/09/22/how-does-functional-programming-affect-the-structure-of-your-code/">How does functional programming affect the structure of your code?</a></p>
+</div>
+<div class="slide">
+<h1>Reading Assignment: Agile Methods</h1>
+<p>Next week we&#8217;ll talk about software process, focusing on <em>Agile Methods</em>.</p>
+<ul>
+	<li><a href="http://en.wikipedia.org/wiki/Agile_software_development">Agile Software Development</a> (Wikipedia). Provides a good overview and history.</li>
+	<li><a href="http://martinfowler.com/articles/newMethodology.html">The New Methodology</a>. Fowler is the Chief Scientist at Thoughtworks. He&#8217;s written several influential books on patterns, refactoring, DSLs, etc.</li>
+	<li><a href="http://agilemanifesto.org/">Manifesto for Agile Software Development</a>. Very short read ;)</li>
+</ul>
+</div>
+<div class="slide">
+<h1>Optional Reading: Functional Javascript</h1>
+<p>Since JavaScript is becoming an essential language to know, at least for web developers, here are some links for functional programming in JavaScript, a language more like Scheme than Java.</p>
+<ul>
+	<li><a href="http://bayfp.org/talks/slides/douglas_crockford_15_oct_08_bayfp.pdf">Functional Javascript</a>. A talk by Douglas Crockford, who wrote the valuable &#8220;JavaScript: The Good Parts&#8221; and also defined the <span class="caps">JSON</span> standard.</li>
+	<li><a href="http://www.hunlock.com/blogs/Functional_Javascript">Functional Javascript</a>.</li>
+	<li><a href="http://www.ibm.com/developerworks/library/wa-javascript.html">Use functional programming techniques to write elegant JavaScript</a>. This one has some <span class="caps">ASCII</span> characters that are incorrectly rendered in the source listings.</li>
+</ul>
+</div>
+<div class="slide">
+<h1>Optional Reading: Functional Javascript</h1>
+<ul>
+	<li><a href="http://documentcloud.github.com/underscore/">Underscore.js</a>. Provides many of the functions expected in a functional language that are missing in JavaScript. Nice complement to the indispensable <a href="http://jquery.com">JQuery</a> library.</li>
+</ul>
+</div>
+<div class="slide">
+<h1>Exercise: Maps vs. Classes</h1>
+<p>The Akka project defines a <code>CriteriaMap</code> class and object in the  <code>org.chicagoscala.awse.domain.finance</code> package. It wraps an ordinary <em>immutable</em> Map with <em>builder</em> methods for adding different kinds of criteria: instruments, statistics (e.g., moving averages), start and end times.</p>
+<p>I could have just used a plain Map as the inputs to methods that currently take a criteria object. The disadvantages of introducing <code>CriteriaMap</code> are the ones we discussed for using classes in general: it has to be designed, implemented, and tested, which take time, and it introduces an ad hoc &#8220;protocol&#8221; the user has to understand.</p>
+</div>
+<div class="slide">
+<h1>Exercise: Maps vs. Classes (cont.)</h1>
+<p>However, it also has advantages. Read the implementation of this type and find where it is used in the code base, e.g., in method calls. Ask yourself the following questions.</p>
+<ol>
+	<li>If I were learning this code for the first time, would it be quicker to understand what&#8217;s going on with a plain map or a <code>CriteriaMap</code>?</li>
+	<li>What mistakes might I make if the code just used a plain map that <code>CriteriaMap</code> helps prevent?</li>
+</ol>
+<p>Based on your answers, write down as many benefits of using <code>CriteriaMap</code> that you can think of.</p>
+</div>
+<div class="slide">
+<h1>Mini-Project</h1>
+<p>Your &#8220;non-reading&#8221; homework after this week will be the project. Our last class in three weeks, when you&#8217;ll present your results and turn in your work. Here are the milestones I want you to meet.</p>
+<ul>
+	<li>11/23: Turn in an outline of the specific items you will research and write up (for research projects) or implement (for coding projects). Also briefly describe what you have completed so far.</li>
+	<li>11/30: Turn in an refined outline and a summary of your progress so far.</li>
+	<li>12/5 (Sunday): Turn in a draft of your presentation slides for the 15-minute talk. (You can still work on them until Tuesday.)</li>
+	<li>12/7: Last class &#8211; presentations and turn in your writeup or code (GitHub preferred).</div></li>
+</ul>
 
   <!-- Syntax Highlighter -->
   <script language="javascript" type="text/javascript" src="../lib/scripts/shCore.js"></script>
+  <script language="javascript" type="text/javascript" src="../lib/scripts/shBrushBash.js"></script>
   <script language="javascript" type="text/javascript" src="../lib/scripts/shBrushCpp.js"></script>
   <script language="javascript" type="text/javascript" src="../lib/scripts/shBrushCSharp.js"></script>
   <script language="javascript" type="text/javascript" src="../lib/scripts/shBrushCss.js"></script>
@@ -60,6 +943,7 @@
   <script language="javascript" type="text/javascript" src="../lib/scripts/shBrushJava.js"></script>
   <script language="javascript" type="text/javascript" src="../lib/scripts/shBrushJScript.js"></script>
   <script language="javascript" type="text/javascript" src="../lib/scripts/shBrushPhp.js"></script>
+  <script language="javascript" type="text/javascript" src="../lib/scripts/shBrushPlain.js"></script>
   <script language="javascript" type="text/javascript" src="../lib/scripts/shBrushPython.js"></script>
   <script language="javascript" type="text/javascript" src="../lib/scripts/shBrushRuby.js"></script>
   <script language="javascript" type="text/javascript" src="../lib/scripts/shBrushScala.js"></script>

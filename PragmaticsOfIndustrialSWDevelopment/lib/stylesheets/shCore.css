@@ -53,6 +53,10 @@
 	font-style: normal !important;
 	font-size: 1em !important;
 }
+/* Doesn't work: */
+div.lines {
+  -webkit-border-radius: 10px;
+}
 
 .syntaxhighlighter
 {

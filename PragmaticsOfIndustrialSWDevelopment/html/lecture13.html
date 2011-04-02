@@ -49,10 +49,456 @@
 
 <div class="presentation">
 <div class="slide">
-<h1>Lecture 13: Complexity vs. Simplicity Part II: Scrum, XP, and Lean</div></h1>
+<h1>Lecture 13: Complexity vs. Simplicity Part II: Simple Systems</h1>
+<p>First, we complete last week&#8217;s content on Agile software methods. Then we finish the course lectures with a discussion of the importance of simplicity in software systems.</p>
+</div>
+<div class="slide">
+<h1>Agile Methods</h1>
+<p><em>Lecture 12 notes, starting at slide 73.</em></p>
+</div>
+<div class="slide">
+<h1>Brewer&#8217;s <span class="caps">CAP</span> Theorem Keynote</h1>
+<p>I had you read the slides from Brewer&#8217;s keynote where he introduced the <span class="caps">CAP</span> theorem. His talk focused on what it takes to make Internet systems that work 24&#215;7 in the face of <em>certain danger</em>, such as network partitions.</p>
+<p>On page 4 (in the <span class="caps">PDF</span>), he compares <span class="caps">ACID</span> and <span class="caps">BASE</span>&#8230;</p>
+</div>
+<div class="slide">
+<h1><span class="caps">ACID</span> vs. <span class="caps">BASE</span></h1>
+<div class='small' style="float:left;">
+<p><strong><span class="caps">ACID</span></strong></p>
+<ul>
+	<li>Strong consistency</li>
+	<li>Isolation</li>
+	<li>Focus on &#8220;commit&#8221;</li>
+	<li>Nested transactions</li>
+	<li>Availability?</li>
+	<li>Conservative (pessimistic)</li>
+	<li>Difficult evolution (schema)<br />
+</div></li>
+</ul>
+<div class='small' style="float:right;">
+<p><strong><span class="caps">BASE</span></strong></p>
+<ul>
+	<li>Weak consistency</li>
+	<li>Availability first</li>
+	<li>Best effort</li>
+	<li>Approximate answers okay</li>
+	<li>Aggressive (optimistic)</li>
+	<li>Simpler</li>
+	<li>Faster</li>
+	<li>Easier evolution<br />
+</div></li>
+</ul>
+</div>
+<div class="slide">
+<h1>Qualities of <span class="caps">ACID</span> vs. <span class="caps">BASE</span> Systems</h1>
+<p><span class="caps">ACID</span> systems have some ideal properties, such as consistency, but they lack the scalability and resiliency of <span class="caps">BASE</span> systems. Also, <span class="caps">BASE</span> systems tend to be simpler, because they don&#8217;t have to &#8220;try as hard&#8221; to enforce consistency, etc. (but they do have to handle inconsistency&#8230;).</p>
+</div>
+<div class="slide">
+<h1>Qualities of <span class="caps">ACID</span> vs. <span class="caps">BASE</span> Systems</h1>
+<p><span class="caps">BASE</span> systems behave more like many analogs we can find in <em>meatspace</em>:</p>
+<ul>
+	<li><strong>Road closures</strong> &#8211; we find alternative routes to our destinations.</li>
+	<li><strong>Power failures</strong> &#8211; we postpone the tasks requiring power and do other things (like actually talk to our family members).</li>
+	<li><strong>An unanswered phone call</strong> &#8211; we leave a message and do something else until the person calls back.</li>
+</ul>
+</div>
+<div class="slide">
+<h1>Fragile Software</h1>
+<p>Historically, software has been <em>incredibly fragile</em>. One thing slightly wrong and the application crashes &#8230; and sometimes takes the whole computer goes with it.</p>
+<p><em>This does not scale.</em> Anything that is rare becomes commonplace when there are enough concurrent &#8220;instances&#8221; of it. For example, hard drive failures are a daily occurrence at very large-scale Internet sites (e.g., Google). What if every hard drive failure at Google caused it to go offline?</p>
+</div>
+<div class="slide">
+<h1>Successful Real-World Systems</h1>
+<p>There are certainly <em>meatspace</em> systems with similar flaws (e.g., we have one and only one heart&#8230;). Robust systems are:</p>
+<ul>
+	<li>Redundant against losses.</li>
+	<li>Resilient against errors.</li>
+	<li>Adaptable to change.</li>
+	<li>As simple as possible.</li>
+</ul>
+</div>
+<div class="slide">
+<h1>Redundancy Against Losses &#8211; Nature</h1>
+<p>Many (most?) plant and animal species produce far more offspring than will live to reproduce. At the extreme end, there can be millions of seeds produced for every tree that grows to maturity.</p>
+<p>Herd animals exhibit strength in numbers. While a percentage of the group is lost to predators or disease, the rest survive to reproduce.</p>
+</div>
+<div class="slide">
+<h1>Redundancy Against Losses &#8211; Accounting</h1>
+<p>Human error is common when doing arithmetic manually. Centuries ago, accountants invented <em>double entry bookkeeping</em> to catch most of these errors. A transaction is entered in at least two different accounts. For example, separate debits and credits are recorded, with the requirement that <code>equity = assets - liabilities</code>.</p>
+<p>At all times, the sum of debits must equal the sum of credits.</p>
+<p>It&#8217;s not foolproof &#8211; other kinds of errors can be masked by this method.</p>
+</div>
+<div class="slide">
+<h1>Resiliency Against Errors &#8211; Nature</h1>
+<p><span class="caps">DNA</span> in cells gets damaged often, due to copying errors, chemical or radiation damage. Normally, a cell repairs the damage, so it continues to function normally.</p>
+<p>Occasionally, the damage can&#8217;t be repaired and the cell either dies&#8230; or becomes cancerous.</p>
+</div>
+<div class="slide">
+<h1>Resiliency Against Errors &#8211; Power Distribution</h1>
+<p>Links in the power distribution grid fail occasionally. Normally, power is quickly rerouted through alternative links in the grid.</p>
+<p>Occasionally, a large enough subset of the links fail, leading to a power outages, like the 2003 Northeast Blackout.</p>
+</div>
+<div class="slide">
+<h1>Adaptable to Change &#8211; Nature</h1>
+<p>Evolution is of course the best example of adaptability. A trait that is slightly advantageous in particular circumstances makes it more likely that the possessor of the trait will survive to reproduce and pass that trait onto a new generation.</p>
+<p>Darwin didn&#8217;t understand the mechanism. Gregor Mendel was the first to characterize the concept of genes and their role in hereditary traits.</p>
+</div>
+<div class="slide">
+<h1>Adaptable to Change &#8211; Communications</h1>
+<p>As social creatures, communication is essential to our survival (as well as our mental well being). The <em>technology</em> we use to communicate has evolved over time, and very rapidly in the last ~150 years or so.</p>
+</div>
+<div class="slide">
+<h1>Simplicity</h1>
+<p>These systems work because they possess:</p>
+<ol>
+	<li>simplicity appropriate to the <em>context</em> and</li>
+	<li>sufficient abstraction from other mechanisms.</li>
+</ol>
+<p>For example:</p>
+<ul>
+	<li>Natural selection is loosely coupled to genetics.</li>
+	<li><span class="caps">DNA</span> repair is independent of how <span class="caps">DNA</span> encodes traits.</li>
+	<li>Communication requires little knowledge of how the technology works.</li>
+</ul>
+</div>
+<div class="slide">
+<h1>Architectures and Modularity</h1>
+<p>It&#8217;s a <em>universal</em> principle that building things from modules works better than hand-crafting a system as one, giant whole.</p>
+<ul>
+	<li>Smaller, simpler pieces are easier to design, evolve, test, and manufacture.</li>
+	<li>Production of modules can be done concurrently, in different locations.</li>
+	<li>The complexity of final assembly is reduced.</li>
+</ul>
+<p>Biological systems have these qualities, too, e.g., cells and organs.</p>
+</div>
+<div class="slide">
+<h1>Characteristics of a Good Module</h1>
+<ul>
+	<li>Focused behavior.</li>
+	<li>Exposes a clear, minimal interface to other modules.
+	<ul>
+		<li>Both to provide service and use services of other modules.</li>
+	</ul></li>
+	<li>Replaceable:
+	<ul>
+		<li>with copies, when the original &#8220;wears out&#8221;.</li>
+		<li>with &#8220;upgrades&#8221; conforming to the same interface.</li>
+	</ul></li>
+</ul>
+<p>Think about car parts, e.g., brake pads, tires, batteries, alternators, etc.</p>
+</div>
+<div class="slide">
+<h1>Milestones of Manufacturing Innovations</h1>
+<ul>
+	<li>1778: Honoré Blanc develops the first firearms with interchangeable parts. (It would take another ~70 years to successfully mass produce interchangeable gun parts.)</li>
+	<li>1803: Marc Isambard Brunel, Henry Maudslay, Simon Goodrich, and others mass produce interchangeable parts for ship assembly at Portsmouth Dockyard for the British Royal Navy during the Napoleonic War.</li>
+	<li>Civil War: Mass produced clothing in fixed sizes. (Standard sizing developed in the 1930s.)</li>
+	<li>1913: Ford&#8217;s moving assembly line.</li>
+</ul>
+</div>
+<div class="slide">
+<h1>Some Successful Modular Systems</h1>
+<ul>
+	<li>Buildings</li>
+	<li>Plumbing and Electricity</li>
+	<li>Digital Electronics</li>
+	<li>Unix</li>
+	<li><span class="caps">HTTP</span></li>
+	<li>Virtual Machines</li>
+</ul>
+</div>
+<div class="slide">
+<h1>Buildings</h1>
+<p>For most of human existence, each building we&#8217;ve built was a custom project, from top to bottom. Over time, more and more standardized parts have been invented, such as windows, sheet rock, roofing, 2&#215;4s, fasteners, etc., etc.</p>
+<p>Here is a <a href="http://gizmodo.com/5687521/chinese-build-15+story-hotel-in-just-six-days-rest-on-seventh">video</a> of Chinese construction workers building a 15-story hotel in <em>just 6 days.</em> All parts of the building were prefabricated offsite. Final assembly was the 6-day effort.</p>
+</div>
+<div class="slide">
+<h1>Plumbing and Electricity</h1>
+<p>We take running water, sewers, and always-on electrical power for granted. Yet, how is it possible for a big city to manage complex networks of fresh water pipes, sewers, and electrical power? <em>Standards</em>, of course.</p>
+</div>
+<div class="slide">
+<h1>Plumbing</h1>
+<p>Water and sewage are managed with a standardized network of pipes of particular sizes and strengths, chosen from centuries of experience (remember that the Romans built aqueducts).</p>
+<p>Large diameter pipes carry water from reservoirs and other sources to distribution sites, where the water is divided into smaller volumes and uniform pressures, eventually terminating at individual faucets.</p>
+</div>
+<div class="slide">
+<h1>Electricity</h1>
+<p>Similarly, electrical power is delivered over a large network. There are high-voltage trunks that carry power from generation plants to regional and local distribution centers. From there, smaller networks and &#8220;switches&#8221; divide the power and step down the voltages all the way to individual 115V and 225V outlets.</p>
+</div>
+<div class="slide">
+<h1>Digital Electronics</h1>
+<p>Digital electronics is arguably the most successful technology revolution ever. Transistors were invented in the 1950s. Less than 60 years later, we have <em>billions</em> of them on a single chip smaller than a square inch. Almost every physical &#8220;system&#8221; you buy today has digital electronics (e.g., toasters), not just actual &#8220;computers&#8221;.</p>
+<p>The amount of data manageable by digital systems and the processing throughput has also grown enormously, following Moore&#8217;s Law since the 1970s.</p>
+</div>
+<div class="slide">
+<h1>Modularity in Digital Electronics</h1>
+<p>How can we manage the complexity of <em>billions</em> of transistors, not to mention all the other &#8220;stuff&#8221; required for a working computer?</p>
+<p>Digital electronics has a very effective <em>component model</em> for modularizing complexity. The core is a very simple concept, a communications <em>bus</em> where each line is either turned on (voltage &gt; 0) or turned off (voltage = 0), corresponding to a logical <code>1</code> or <code>0</code>, respectively.</p>
+</div>
+<div class="slide">
+<h1>Modularity in Digital Electronics</h1>
+<p>As we all know, if you put 32 of these lines together, we can convey 2<sup>32</sup> or 4.295 <em>billion</em> different pieces of information (depending on how we interpret each value&#8230;). For 64 bits, it&#8217;s 1.845 &#215; 10<sup>19</sup> or 18.45 <em>billion billion</em> bits of information.</p>
+</div>
+<div class="slide">
+<h1>Modularity in Digital Electronics</h1>
+<p>Layered on top of this bit format are simple modularity protocols, such as encoding of integer and floating point numbers, characters, <em>opcodes</em> for CPUs, etc.</p>
+<p>Another dimension of this modularity is the way that transistors can be grouped into logical units, like <code>AND</code> and <code>OR</code> gates.</p>
+</div>
+<div class="slide">
+<h1>Circuit Symbols</h1>
+<p>Here are some standard symbols for basic electrical components.</p>
+<center>
+<img src="images/500px-Circuit_elements.png"></img>
+</center>
+</div>
+<div class="slide">
+<h1>Circuit Symbols</h1>
+<p><code>AND</code> and <code>OR</code> gates are implemented with transistors.</p>
+<center>
+<table>
+    <tr class="small"><td><span class="caps">AND</span> Gate</td><td>OR Gate</td></tr>
+<tr>
+<td>
+<img src="images/AND_gate.jpg"></img>
+</td>
+<td>
+<img src="images/OR_gate.jpg"></img>
+</td>
+</tr>
+</table>
+</center>
+</div>
+<div class="slide">
+<h1>Modularity in Digital Electronics</h1>
+<p>Recall that the inputs and outputs are the logical 0&#8217;s and 1&#8217;s. That simple &#8220;<span class="caps">API</span>&#8221; based on boolean-logic makes it easy to <em>compose</em> these modules together to create more sophisticated logic, up to the sophisticated behaviors of modern CPUs, GPUs, memory subsystems, etc.</p>
+<p><em>The &#8220;dumb&#8221; simplicity of this interface standard is the key to its power and success!</em></p>
+</div>
+<div class="slide">
+<h1>Modularity in Digital Electronics</h1>
+<p>For a detailed technical and business analysis on the digital electronics revolution and modularity, see the book by Baldwin and Clark, &#8220;Design Rules: Volume 1: The Power of Modularity&#8221;, <span class="caps">MIT</span> Press, 2000. <span class="caps">ISBN</span>: 0262024667.</p>
+</div>
+<div class="slide">
+<h1><span class="caps">UNIX</span></h1>
+<p>The <em><span class="caps">UNIX</span> philosophy</em> is to write small tools that do a focused task, then join them in <em>pipelines</em> to do complex behavior. Unix and derived systems treat every source or sync for data as a <em>file</em>, and it doesn&#8217;t even care very much if the file contents are plain text or binary!</p>
+</div>
+<div class="slide">
+<h1><span class="caps">UNIX</span> Philosophy</h1>
+<p>Here is a contrived example <code>bash</code> script that counts the number of source code lines in the Akka project that explicit reference the Scala <code>List</code> type.</p>
+<div class="code-small">
+<pre name="code" id="code" class="brush: shell,;">
+
+SRC_ROOT=.../AkkaWebSampleExercise/src
+find $SRC_ROOT -name '*.scala' | while read f
+do grep List $f
+done | wc -l
+</pre></div>
+<p>The answer is <code>140</code>.</p>
+<p>(There are many other ways to do this, too.)</p>
+</div>
+<div class="slide">
+<h1><span class="caps">UNIX</span> Philosophy</h1>
+<p>Even though not everything fits the file metaphor well, this <em>modularity paradigm</em> makes it easy to construct small, reusable utilities, like <code>find</code>, <code>grep</code>, <code>wc</code>, etc., and write scripts using them to complete nontrivial work  quickly.</p>
+<p>In contrast, if there were <em>no constraints to treat resources like files</em>, even simple tasks would require nontrivial programs and only after the ad hoc details of each resource were understood.</p>
+</div>
+<div class="slide">
+<h1><span class="caps">UNIX</span> Philosophy</h1>
+<p>In other words, the <em>paradox</em> of a <em>restriction</em> like the requirement to treat all resources uniformly (in this case, like files) actually <em>accelerates</em> reuse and productivity!</p>
+<p>Digital electronics would have the same problem if there was no binary &#8230; and voltage &#8230; standards.</p>
+</div>
+<div class="slide">
+<h1><span class="caps">HTTP</span></h1>
+<p><span class="caps">HTTP</span>, the <em>Hypertext Transfer Protocol</em>, has qualities similar to digital electronics.</p>
+<ul>
+	<li>A simple &#8220;signaling bus&#8221;, i.e., a communication protocol.</li>
+	<li>It is easy to build modularity protocols on top of the &#8220;bus&#8221;.</li>
+</ul>
+</div>
+<div class="slide">
+<h1><span class="caps">HTTP</span> Protocol</h1>
+<p><span class="caps">HTTP</span> supports only 9 <em>request methods</em> (a.k.a. &#8220;verbs&#8221;): <code>HEAD</code>, <code>GET</code>, <code>POST</code>, <code>PUT</code>, <code>DELETE</code>, <code>TRACE</code>, and <code>OPTIONS</code>. Just <code>GET</code> and <code>POST</code> are used to do the vast majority of work on the Interwebs&#8230;</p>
+<p>These nine methods let us do <em>everything</em><sup class="footnote" id="fnr1"><a href="#fn1">1</a></sup> we&#8217;ve been doing on the web for the last ~15 years!</p>
+<p><sup class="footnote" id="fnr1"><a href="#fn1">1</a></sup> I mean the <span class="caps">HTTP</span>-based <em>world-wide web</em>, as it was originally conceived, not including other <em>Internet</em> protocols that we also use, like those for email.</p>
+</div>
+<div class="slide">
+<h1><span class="caps">HTTP</span> Protocol</h1>
+<p><span class="caps">HTTP</span> request messages consist of a list of headers (key-value pairs), one per line, followed by a blank line, followed by the message body (which may be empty).</p>
+<p>Here&#8217;s the output when requesting the Wikipedia page for <span class="caps">HTTP</span>, using <code>curl</code><sup class="footnote" id="fnr1"><a href="#fn1">1</a></sup> and its <code>--include</code> option to also print the headers:</p>
+<div class="code-small">
+<pre name="code" id="code" class="brush: shell,;">
+
+curl --include http://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol
+</pre></div>
+<p><sup class="footnote" id="fnr1"><a href="#fn1">1</a></sup> <code>wget</code> is similar program available on many systems.</p>
+</div>
+<div class="slide">
+<h1><span class="caps">HTTP</span> Protocol</h1>
+<div class="code-tiny">
+<pre name="code" id="code" class="brush: java,;">
+
+HTTP/1.0 200 OK
+Date: Sun, 28 Nov 2010 21:05:50 GMT
+Server: Apache
+Cache-Control: private, s-maxage=0, max-age=0, must-revalidate
+Content-Language: en
+Vary: Accept-Encoding,Cookie
+Last-Modified: Sat, 27 Nov 2010 23:19:34 GMT
+Content-Length: 126184
+Content-Type: text/html; charset=UTF-8
+Age: 15500
+X-Cache: HIT from sq64.wikimedia.org
+X-Cache-Lookup: HIT from sq64.wikimedia.org:3128
+X-Cache: MISS from sq36.wikimedia.org
+X-Cache-Lookup: MISS from sq36.wikimedia.org:80
+Connection: close
+
+&lt;!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"&gt;
+&lt;html xmlns="http://www.w3.org/1999/xhtml" lang="en" dir="ltr"&gt;
+&lt;head&gt;
+&lt;title&gt;Hypertext Transfer Protocol - Wikipedia, the free encyclopedia&lt;/title&gt;
+...
+</pre></div>
+</div>
+<div class="slide">
+<h1><span class="caps">HTTP</span> Modularity</h1>
+<p>On top of this simple protocol, we can build modular structures.</p>
+<ul>
+	<li>Domains</li>
+	<li>Web sites</li>
+	<li>Security: <span class="caps">HTTPS</span></li>
+	<li>Sessions</li>
+</ul>
+<p>Some of these are standards (e.g., Domain URLs and <span class="caps">HTTPS</span>) and some are ad hoc (web site URLs and Session handling).</p>
+</div>
+<div class="slide">
+<h1><span class="caps">HTTP</span> Sessions</h1>
+<p><span class="caps">HTTP</span> is <em>sessionless</em>. People love to complain about how &#8220;inconvenient&#8221; this is, since much of the work done on the web involves a session (e.g., shopping). So, a number of schemes have been invented to simulate sessions.</p>
+<p>- Session simulation hacks had to be invented and used.</p>
+<p>+ <span class="caps">HTTP</span> is much simpler because it is stateless.<br />
++ <span class="caps">HTTP</span> supports many simulation hacks just fine.<br />
++ Lots of great alternatives have been invented.<br />
++ One size probably wouldn&#8217;t have fit all&#8230;</p>
+</div>
+<div class="slide">
+<h1>Virtual Machines</h1>
+<p>The last successful modularity system I&#8217;ll mention is the virtual machine. At first, it might appear that VMs, like the <span class="caps">JVM</span> and the .<span class="caps">NET</span> <span class="caps">CLR</span>, don&#8217;t have the same simple &#8220;signaling busses&#8221; as digital electronics or <span class="caps">HTTP</span>.</p>
+<p>In fact, they do have relatively small sets of <em>byte codes</em> (the VM&#8217;s instruction set) and they standardize primitive data types, like integers, floating point numbers and characters, upon which all more sophisticated data representations are built.</p>
+</div>
+<div class="slide">
+<h1>Virtual Machines</h1>
+<p>So, virtual machines are fertile hosting grounds for software written in a variety of languages that interoperate (relatively) seamlessly.</p>
+<p>This ability lets the developer leverage the best benefits of each language, such as a static-typing for larger, performance-sensitive features and dynamically-typed scripting for configurability, high productivity, etc.</p>
+</div>
+<div class="slide">
+<h1>Some Failed (or Failing) Modular Systems</h1>
+<ul>
+	<li>Distributes Objects</li>
+	<li>Web Services</li>
+	<li>The Semantic Web?</li>
+</ul>
+</div>
+<div class="slide">
+<h1>Distributed Objects</h1>
+<p><em>Objects are good, right? So are distributed services. Therefore, we should shoot objects around the network!</em></p>
+<p><span class="caps">CORBA</span> and <span class="caps">DCOM</span> were binary standards for moving objects (state <em>and</em> behavior) between distributed services. They suffered from all the problems we&#8217;ve described.</p>
+</div>
+<div class="slide">
+<h1>Distributed Objects</h1>
+<table>
+	<tr>
+		<th><span class="caps">CORBA</span>/<span class="caps">DCOM</span> Problem </th>
+		<th>AJAX+JSON Improvements (for example) </th>
+	</tr>
+	<tr>
+		<td> Complex protocols </td>
+		<td> Simple object notation, <span class="caps">AJAX</span> is a distribution model. </td>
+	</tr>
+	<tr>
+		<td> Fragile interfaces (binary) </td>
+		<td> Text-based interface is much more portable and robust as software evolves.</td>
+	</tr>
+	<tr>
+		<td> Poor performance </td>
+		<td> Just sending <em>state</em> (no behavior) is lighter and drives appropriate <em>decoupling</em> between services. </td>
+	</tr>
+</table>
+</div>
+<div class="slide">
+<h1><span class="caps">SOA</span> Web Services</h1>
+<p>The rise of <span class="caps">XML</span> in the 1990s and the failure of <span class="caps">CORBA</span>/<span class="caps">DCOM</span> led people to propose using <span class="caps">XML</span>-based <span class="caps">RPC</span> (remote procedure calls) as the distribution model.</p>
+<p>This was a good idea, until the big middleware vendors got involved and created a giant wad of <code>WS-*</code> standards under the <span class="caps">SOA</span> (service-oriented architecture) umbrella. They were happy to sell you expensive bloatware to support it all.</p>
+<p>In contrast, Internet companies like Google and Yahoo! use <span class="caps">REST</span>-based (REpresentational State Transfer) services on top of AJAX+JSON&#8230;</p>
+</div>
+<div class="slide">
+<h1>The Semantic Web?</h1>
+<p>(I might get in trouble for this one&#8230;) The Semantic Web is a current project of the World Wide Web Consortium (W3C) and led by Tim Berners-Lee. It wants to develop technologies to categorize the <em>semantics</em> of the information on the web and represent it in a way that can be machine exploitable.</p>
+<p>I predict failure, because <em>information just doesn&#8217;t fit into neat boxes and ontologies.</em></p>
+</div>
+<div class="slide">
+<h1>The Semantic Web?</h1>
+<p>Early crude attempts at something similar occurred during the <span class="caps">SOA</span> era. Early (and reasonably good) standards included <span class="caps">WSDL</span> (web service description language), which you would publish to describe your service for perspective clients, and <span class="caps">SOAP</span> (simple object access protocol), which clients would use when making service requests.</p>
+<p>It didn&#8217;t work all that well because <em>everybody had their own idea of the definition for their domains</em>. It was a <em>Tower of Babel</em> situation&#8230;</p>
+</div>
+<div class="slide">
+<h1>An &#8220;Unexpected&#8221; Modular System</h1>
+<p>As we raise the levels of abstraction in our systems, some &#8220;unexpected&#8221; things emerge as modules. An interesting example is the <em>virtualization of operating systems</em>.</p>
+</div>
+<div class="slide">
+<h1>OS Virtualization</h1>
+<p>If you rent time on Amazon&#8217;s EC2, you think you have your own machine, but actually you&#8217;re running a virtual OS instance, one of several on a given machine.</p>
+<p>Pioneers in this space, like VMWare, previously just emulated the &#8220;guest&#8221; OS on top of the &#8220;host&#8221; OS. For example, emulating Windows or Windows applications on the Mac was common in the 1990s.</p>
+<p>Today, CPUs provide hardware-level support for virtualization, which improves performance.</p>
+</div>
+<div class="slide">
+<h1>Simplicity: Conclusions</h1>
+<p>Recall from last week that there are two kinds of complexity:</p>
+<ul>
+	<li><strong>Essential</strong> &#8211; Inherent in the problem domain. Unavoidable.</li>
+	<li><strong>Accidental</strong> &#8211; Complexity added to the implementation that is not necessary and is detrimental.<br />
+<br/><br/></li>
+</ul>
+<blockquote>
+<p>Make everything as simple as possible,<br/>but not simpler.</p>
+</blockquote>
+<div class='cite'>&#8212; Albert Einstein</div>
+</div>
+<div class="slide">
+<h1>Simplicity: Conclusions</h1>
+<p>The successful &#8220;meatspace&#8221; and software systems we discussed <em>minimize accidental complexity</em>. For example, session support in <span class="caps">HTTP</span> would be handy, but it is <em>inessential</em>.</p>
+<p>The successful systems are always <em>modular</em>, with <em>well-defined interfaces</em> going out and coming in. These modules <em>compose</em> to form larger systems.</p>
+</div>
+<div class="slide">
+<h1>Reading Assignment</h1>
+<p>Reach Chapter 3, <em>Architecting for Scale</em>, in &#8220;Beautiful Architectures&#8221;, Spinellis and Gousios, O&#8217;Reilly. You can access this book on <a href="http://proquestcombo.safaribooksonline.com.flagship.luc.edu/software-engineering-and-development/9780596155780">Loyola&#8217;s Safari site</a>. This chapter discusses the design of a <em>massively multiplayer online</em> gaming system. The essay was written several years ago and several subsystems discussed sound like candidates for technologies we discussed in the course, such as NoSQL datastores for persistence and MapReduce for distributed computation.</p>
+<p>You might also find chapters 1 and 2 useful, but they aren&#8217;t required reading.</p>
+</div>
+<div class="slide">
+<h1>&#8220;Reading&#8221; Assignment</h1>
+<p>View this <a href="http://www.infoq.com/presentations/Simplicity-Architect">great presentation</a> from a <span class="caps">DRW</span> colleague, Dan North, discussing simplicity and architecture.</p>
+</div>
+<div class="slide">
+<h1>Mini-Project</h1>
+<ul>
+	<li><em>11/30</em>: Turn in a <em>refined</em> outline (or the first one, for some of you&#8230;) and a summary of your progress so far.</li>
+	<li><em>12/5 (Sunday)</em>: Turn in a draft of your presentation slides for the 15-minute talk. (You can still work on them until Tuesday.)</li>
+	<li><em>12/7</em>: Last class &#8211; presentations. Turn in your writeup or code (GitHub preferred).</li>
+</ul>
+</div>
+<div class="slide">
+<h1>Other Important Dates (1/2)</h1>
+<ul>
+	<li><em>12/10 (Friday)</em>: <strong>Last</strong> day to turn in any other remaining assignments (by Midnight&#8230;).</li>
+</ul>
+</div>
+<div class="slide">
+<h1>Other Important Dates (2/2)</h1>
+<ul>
+	<li><em>12/14</em>: Final Exam Due</li>
+</ul>
+<p>I have decided to give you a take-home, open-book final exam. I will hand it out at the end of class next week and it will be due at the beginning of class on 12/14. (I&#8217;ll be in our classroom at the usual time.)</div></p>
 
   <!-- Syntax Highlighter -->
   <script language="javascript" type="text/javascript" src="../lib/scripts/shCore.js"></script>
+  <script language="javascript" type="text/javascript" src="../lib/scripts/shBrushBash.js"></script>
   <script language="javascript" type="text/javascript" src="../lib/scripts/shBrushCpp.js"></script>
   <script language="javascript" type="text/javascript" src="../lib/scripts/shBrushCSharp.js"></script>
   <script language="javascript" type="text/javascript" src="../lib/scripts/shBrushCss.js"></script>
@@ -60,6 +506,7 @@
   <script language="javascript" type="text/javascript" src="../lib/scripts/shBrushJava.js"></script>
   <script language="javascript" type="text/javascript" src="../lib/scripts/shBrushJScript.js"></script>
   <script language="javascript" type="text/javascript" src="../lib/scripts/shBrushPhp.js"></script>
+  <script language="javascript" type="text/javascript" src="../lib/scripts/shBrushPlain.js"></script>
   <script language="javascript" type="text/javascript" src="../lib/scripts/shBrushPython.js"></script>
   <script language="javascript" type="text/javascript" src="../lib/scripts/shBrushRuby.js"></script>
   <script language="javascript" type="text/javascript" src="../lib/scripts/shBrushScala.js"></script>

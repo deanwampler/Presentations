@@ -37,7 +37,7 @@ h1. Course _Administrivia_
 | twitter: | "@deanwampler":http://twitter.com/deanwampler |
 | office hours: | Tuesday, 6:45 - ? and by appointment |
 
-h1. Schedule
+h1. Schedule (Revised 10/26)
 
 |  8/31 | Course Intro and Scaling Computation, Part I (Multithreaded Programming, Actor Concurrency) |
 |  9/07 | Scaling Computation, Part II (Agents, Software Transactional Memory, Memory is the New Disk) |
@@ -49,18 +49,18 @@ h1. Schedule (cont.)
 
 | 10/05 | Scaling Data, Part III (Example NoSQL databases) |
 | 10/12 | Midterm break |
-| 10/19 | Midterm, Scaling Systems, Part II (Map/Reduce and Their Kin) |
-| 10/26 | Recent Advances in Object-Oriented Programming |
-| 11/02 | Functional Programming: Into the Real World |
-| 11/09 |Object-Oriented Programming vs. Functional Programming: a Critique of Pure Programming |
+| 10/19 | Midterm, Scaling Systems, Part II (MapReduce) |
+| 10/26 | Effective Object-Oriented Programming, Part I |
+| 11/02 | Effective Object-Oriented Programming, Part II |
+| 11/09 | Functional Programming: Into the Real World |
+| 11/16 | Object-Oriented Programming vs. Functional Programming: a Critique of Pure Programming |
 
 h1. Schedule (cont.)
 
-| 11/16 | Complexity vs. Simplicity Part I: Effective Software Development Processes |
-| 11/23 | Complexity vs. Simplicity Part II: Scrum, XP, and Lean |
-| 11/30 | Complexity vs. Simplicity Part III: Simple Systems |
-| 12/07 | Student Presentations on the Code Project, Course Review |
-| 12/14 | Final Example (regular class time) |
+| 11/23 | Complexity vs. Simplicity Part I: Effective Software Development Processes, including Scrum, XP, and Lean |
+| 11/30 | Complexity vs. Simplicity Part II: Simple Systems |
+| 12/07 | Student Presentations on the Code Project |
+| 12/14 | Final Exam (regular class time) |
 
 h1. Readings
 
@@ -83,15 +83,15 @@ h1. Course Components: Grading
 h1. Course Components: Readings and Lecture
 
 * *Readings:*  Expand on the current week's topics and preview next week's topics. Please read them before coming to class.
-* *Lecture:*  Summarize and expand upon the readings, discuss the current project assignment. There will also be group discussions. The lecture notes will be posted to blackboard and "GitHub.com":http://github.com before each class.
+* *Lecture:*  Summarize and expand upon the readings, discuss the current project assignment. There will also be group discussions. The lecture notes will be posted to blackboard and "GitHub.com":http://github.com/deanwampler/Presentations/tree/master/PragmaticsOfIndustrialSWDevelopment/ before each class.
 
 h1. Course Components: Project Exercises
 
 * Start with a "running" 3-tier Scala application
- * Hosted on GitHub (http://github.com). 
+ * Hosted on "GitHub.com":http://github.com at "github.com/deanwampler/AkkaWebSampleExercise":http://github.com/deanwampler/AkkaWebSampleExercise. 
  * Uses _actors_ to scale computation over a NYSE data set.
  * Add features during the semester.
- * _Refactor_ the code to improve it and accomodate new features.
+ * _Refactor_ the code to improve it and accommodate new features.
 
 h1. Course Components: Project Exercises (cont.)
 
@@ -106,7 +106,7 @@ h1. Course Components: Project Exercises (cont.)
 * 1/2 the grade differences will be based on GitHub checkin logs and the quality of those checkins.
 * *If you _pair program_, include _both_ names in the commit comments!*
 
-  h1. Course Components: Project Exercises (cont.)
+h1. Course Components: Project Exercises (cont.)
 
 * 5% will be based on an *oral presentation* on 12/7.
 * 15 minutes or so, with time for questions and discussion.
@@ -129,11 +129,6 @@ h1. Miscellaneous
 * Use of Blackboard
 * Turning in Homework
 
-h1. Introduction to the semester project
-
-* Installing, building, and running the project skeleton.
-* Walkthrough of major components and features.
-
 h1. Scaling Computation, Part I
 
 * Two models of concurrency compared: 
@@ -150,29 +145,238 @@ h1. Multithreaded Programming
 * *Very* hard to get write.
 * Even experts stumble...
 
-h1. The importance of immutability
+h1. "Java Concurrency in Practice"
+
+Brian Goetz, et al.
+
+<p><img src="images/javaconcurrencyinpracticebook.jpg"><img>
+
+h1. Is This Safe?
+
+:code code/UnsafeSequence.java
+
+(credit: all Multithreading examples adapted from "Java Concurrency in Practice")
+
+h1. This Is Safe
+
+:code code/SafeSequence.java
+
+h1. Things Can Go Wrong
+
+* *Safety* - Nothing Bad Should Happen
+* *Liveness* - Something Good Should Eventually Happen
+
+h1. Ways to Lose Liveness
+
+* *Deadlock* 
+
+_You have a lock I want and I have a lock you want._
+
+h1. Deadlock Example
+
+:code code/LeftRightDeadlock.java
+
+h1. Other Deadlock Hazards
+
+* Don't call an external resource from a synchronized method, as it might try to acquire a lock... Make only _open calls._
+* Similarly, avoid resource acquisition during locks.
+* Don't lock on a mutable object from different locations. Localize the locking to one place, where it's easier to manage the policy for that object.
+
+h1. Starvation
+
+One thread can never get the resources it needs because other threads, often with inverted priorities, get too much access.
+
+* Avoid setting thread priorities. Operating Systems are already very good at this.
+
+h1. Livelock
+
+A thread is not blocked, but it can't complete work because of trying operations always fails.
+
+* A common example is repeated execution of a transaction that never succeeds.
+* One scenario is two contenders with identical strategies for trying again, often colliding in the same way. If one is _greedy_, both may succeed.
+ 
+h1. The Importance of Immutability
+
+What about access to _immutable_ state? All the synchronization issues go away. Immutable objects have these virtues:
+
+* No synchronized access is required.
+* They are automatically thread safe.
+
+h1. The Actor Model of Concurrency
+
+Autonomous "actors" receive messages, performing _local_ computations, and sending new messages.
+
+* Coordinates and localizes state transitions.
+* A higher-level abstraction than lock-based concurrency.
+* Successful practical implementations in Erlang, Scala, and other languages.
+* Mathematical model of concurrency going back to 1973.
+
+h1. Actors in Scala (Akka)
+
+:code code/manager-actor.scala
+
+h1. Actors in Scala (Akka)
+
+* This is an example using the Akka Framework ("akkasource.org":http://akkasource.org) (used in the project). 
+* Scala also comes with its own Actor library.
+
+h1. Actors in Scala (Akka)
+
+* Our example was contrived; Akka has a rich @Supervisor@ mechanism.
+* Inspired by Erlang's OTP (_Open Telecom Platform_).
+* A supervisor manages the lifecycle of N actors.
+
+h1. Supervisors and Lifecycle Management
+
+The Supervisor can
+
+* restart a failed actor (_One for One_).
+* restart a group of coordinated actors, if one fails (_All for One_).
+* itself be supervised (hierarchy)
+
+h1. "Let It Crash"
+
+For many systems, which is better?
+
+* A few, large processes that attempt error recovery, or
+* Many, small processes where if one has an error, it can just die and be restarted?
+
+Complex processes require complex error handling and recovery. The actor model makes _modules_ simpler and more robust, so the system is more robust.
+ 
+h1. Starting an Akka Actor
+
+:code code/manager-actor2.scala
+
+h1. Actor vs. ActorRef
+
+The @ActorRef@ returned by @actorOf@ is a _handle_ that separates clients from the actual Actor _body_. 
+
+This allows the supervisor to restart the _body_ without disrupting client connections!
+
+h1. Sending a Message to an Akka Actor
+
+First, define a _sealed_ collection of messages.
+
+:code code/actor-messages.scala
+
+h1. An Asynchronous (Fire and Forget) Message
+
+:code code/actor-asynch-message.scala
+
+If a response is required, the receiver can send a message to the sender.
+
+h1. An Synchronous (Wait) Message
+
+:code code/actor-synch-message.scala
+
+h1. An Synchronous (Wait) Message (cont.)
+
+Has the disadvantage of blocking!
+
+h1. An Asynchronous with a Future Message
+
+:code code/actor-future-message.scala
+
+h1. An Asynchronous with a Future Message (cont.)
+
+Actor can keep doing work (like firing off simultaneous pings).
+
+Eventually, it waits for the @Futures@ to complete and then proceeds. (It could also do work as each one finishes.)
+
+h1. Another Way to Write the Last Example
+
+:code code/actor-future-message2.scala
 
 
-h1. This Week's Assignment: Reading: 
+h1. Achieving Immutability
+
+* _Functional languages_ emphasize immutability. 
+* Scala encourages immutability, but also allows mutability, when needed.
+* Declare variables as constants when possible (@val@ in Scala, @const@ in C/C++/C#, @final@ in Java, etc.)
+
+h1. Introduction to the semester project
+
+* Installing, building, and running the project skeleton.
+* Walkthrough of major components and features.
+
+h1. This Week's Assignment: Reading
+
+* Brian Goetz, et al., Chapters 1 and 10 in "Java Concurrency in Practice" (see references - available through "Loyola's access to Safari Online Books":http://proquestcombo.safaribooksonline.com.flagship.luc.edu/).
+* _Actor Model_ on Wikipedia "wikipedia.org/wiki/Actor_model":http://en.wikipedia.org/wiki/Actor_model
+* Browse the Scala resources listed in the "References":references.html to learn more about Scala.
+* Browse the Akka framework documentation at "docs.akkasource.org":http://docs.akkasource.org, to learn more about Akka, which is the foundation for the project code.
+
+h1. This Week's Assignment: Reading (cont.)
+
+For Next Week's Lecture:
 
 * Simon Peyton Jones, "Beautiful Concurrency", Chapter 24 in _Beautiful Code_, pgs. 385-406. Online:  "http://research.microsoft.com/en-us/um/people/simonpj/papers/stm/#beautiful":http://research.microsoft.com/en-us/um/people/simonpj/papers/stm/#beautiful 
 * _Software Transactional Memory_ (STM) on Wikipedia "wikipedia.org/wiki/Software_transactional_memory":http://en.wikipedia.org/wiki/Software_transactional_memory.
 
-Browse the following Scala resources listed in the "References":references.html to learn more about Scala.
- 
-Browse the Akka framework documentation at "docs.akkasource.org":http://docs.akkasource.org, to learn more about Akka, which is the foundation for the project code.
-
 h1. This Week's Assignment: Project
 
-The main goal is to get the project code and get it running, and begin to understand how it works. It's not a trivial project to understand, especially if you're new to Scala, but don't be intimidated. 
+The main goal is to get the project code from GitHub, get it running, and begin to understand how it works. It's not a trivial project to understand, especially if you're new to Scala, but don't be intimidated. 
 
 Although you won't be asked to turn anything in next week, you should still go through the steps as far as you can, even if you don't finish, as they will set the stage for subsequent work.
 
-h1. Get the project code:
+h1. Get the Project Code
 
 * Create a personal "GitHub":http://github.com account, if you don't already have one.
-* "Fork" the project code.
-* "Clone" the code locally (on your computer), following the instructions provided by GitHub.
+* "Fork" the project code at "github.com/deanwampler/AkkaWebSampleExercise":http://github.com/deanwampler/AkkaWebSampleExercise
+* Follow the instructions provided by GitHub to "clone" the code locally on your computer. For example, at your local terminal prompt, you might be asked to run the following command (in a suitable directory of your choosing):
+
+<p><code>git clone git@github.com:myAwesomeUserName/AkkaWebSampleExercise.git</code></p>
+
+h1. Get the Project Code (cont.)
+
+* We will actually do our work on "branch" called @COMP-388-488@, not the @master@ branch:
+
+@git checkout COMP-388-488@
+
+* Type the following command to confirm you are on the correct branch:
+
+@git branch@
+
+* It should show the following:
+
+<pre>
+* COMP-388-488
+  master
+</pre>
+
+* The @*@ shows the current branch.
+
+h1. (Update) These steps were added after Lecture 2
+
+* Add the following 3 lines to the end of the project's @.git/config@ file.
+
+:inlinecode lang=scala, class=code-tiny
+[branch "COMP-388-488"]
+        remote = origin
+        merge = refs/heads/COMP-388-488
+:endinlinecode 
+
+* Run this command
+
+@git checkout origin COMP-388-488@
+
+h1. (Get the Lecture Notes!)
+
+I'm also keeping the lecture notes on GitHub. Unless you want to contribute patches ;) there's no need to fork this project.
+
+* Clone "github.com/deanwampler/Presentations":http://github.com/deanwampler/Presentations 
+
+@git clone http://github.com/deanwampler/Presentations@
+
+You'll see two directories:
+* @akka-intro@: an introduction to the Akka Framework, which you might find useful since we're using Akka for the project.
+* @PragmaticsOfIndustrialSWDevelopment@: The class notes.
+
+h1. (Get the Lecture Notes! - cont)
+
+* I will update the notes in the @PragmaticsOfIndustrialSWDevelopment@ directory before each class, and also upload the latest version to blackboard.
+* See the @README@ for instructions on building the presentation, or just
+* Open @html/all.html@ in your browser.
 
 h1. Build the Project
 
@@ -182,35 +386,44 @@ h1. Build the Project
 
 h1. Add New Functionality
 
+*The instructions after this point are repeated with modifications as the homework exercise for Lecture 2, since we deferred the assignment until then. So, please go to the Lecture 2 notes, "This Week's Assignment: Project" and proceed from there.*
+
+h1. Add New Functionality
+
 * In an editor, open the file @test/scala/server/finance/InstrumentAnalysisServerTest.scala@.
 * Find the two @TODO@ comments, one each before a @test@.
-* In the _first_ of those tests, comment out the line @pending@ (like Java, you can put a @//@ before the work @pending@).
+* In the _first_ of those tests, comment out the line @pending@ (like Java, you can put a @//@ before the word @pending@).
 
-h1. Add New Functionality (cont)
+h1. Add New Functionality (cont.)
 
 * Run the @test@ action in sbt. The two tests should now fail. You should see the following near the end of the output.
 
-    [error] Failed: : Total 96, Failed 1, Errors 0, Passed 91, Skipped 4
+@[error] Failed: : Total 96, Failed 1, Errors 0, Passed 91, Skipped 4@
 
-* Try to understand the error messages:
-* Look for the stack traces.
-* Ignore the verbose server messages (hint: most of those contain @akk@ and @thread@), but notice the @org.scalatest.TestFailedException@ messages.
-* Looking at the stack traces:
-* on what line _in the test file_ did the failure occur? (That is, not a line in the ScalaTest API.)
-* what did the server return and what was the expected value in those two cases? (a JSON string...)
+Try to understand the error messages:
 
-h1. Add New Functionality (cont)
+* Look for the stack trace.
+* Ignore the verbose server messages (hint: most of those contain the words @akka@ and @thread@), but notice the @org.scalatest.TestFailedException@ messages.
+
+h1. Add New Functionality (cont.)
+
+Looking at the stack trace:
+
+* On what line _in the test file_ did the failure occur? (That is, not a line in the _ScalaTest_ API.)
+* What did the server return and what was the expected value in those two cases? (hint: it's a JSON string...)
+
+h1. Add New Functionality (cont.)
 
 * In your editor, open the file @main/scala/server/finance/InstrumentAnalysisServer.scala@ (the file being tested...)
 * Find the @TODO@ before the method named @fetchPrices@.
 * This method already has the "instruments" (i.e., stocks) and statistics information.
-* In the line @Some(x) => filter(instruments, statistics, x)@, note that the @filter@ method below it simply returns the JSON string that was passed in to it. 
+* The line @Some(x) => filter(instruments, statistics, x)@ takes the result from the @DataStorageServer@ and passes it to a final @filter@ method. Note that @filter@ simply returns the JSON string that was passed in to it. 
 
-h1. Add New Functionality (cont)
+h1. Add New Functionality (cont - sort of...)
 
-* How could we modify @filter@ to filter by instruments? (To make it easier, assume there is only one instrument in the list, as in the test.)
+How could we modify @filter@ to filter by instruments? (To make it easier, assume there is only one instrument in the list, as in the test.)
 
-This is not easy, as we really need to parse the JSON into some representation, filter out the records (of the form @{"timestamp": 1283233404995, "symbol": "A", "price", "40.0"}@) using the @symbol@, then convert back to a string.
+This is not easy, as we really need to parse the JSON into some representation, filter out the records (which are of the form @{"timestamp": 1283233404995, "symbol": "A", "price", "40.0"}@) using the @symbol@, then convert back to a string.
 
 Can you figure out how to do this with the Lift JSON APIs used in the application and JSON helper types provided, or using other 3rd-party JSON libraries?
  

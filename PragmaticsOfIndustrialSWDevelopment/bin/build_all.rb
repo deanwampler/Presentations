@@ -36,7 +36,7 @@ File.open(op_name, "w") do |op|
   
   op.puts "h1. Contents\n\n"
   
-  op.puts %{<div style="font-size: 70%">\n\n}
+  op.puts %{<div style="font-size: 50%">\n\n}
 
   contents.each do |content|
     content =~ /h1.\s+(.*)/

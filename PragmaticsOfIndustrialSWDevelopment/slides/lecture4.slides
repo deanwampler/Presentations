@@ -1,1 +1,399 @@
 h1. Lecture 4: Scaling Data, Part I
+
+For decades, Relational Databases have been the dominate tool for data persistence. There are other models that are also decades old.
+
+You can find a short summary of many of them "here":http://www.unixspace.com/context/databases.html. We'll discuss a few of them now.
+
+h1. Hierarchical and Network Model
+
+* Hierarchical: 
+** Tree-based, parent-child relationships.
+** 1:N (one parent, N children).
+** Popular in the late 1960's through the 1970's.
+* Network: 
+** M:N (many to many).
+** Formally defined in 1971 at the Conference on Data Systems Languages (CODASYL).
+** Based on set theory.
+** Can have cycles in the network.
+
+h1. Relational Model
+
+* RDBMS - Relational Database Management System.
+* Devised by Edgar F. Codd at IBM in 1970.
+* A *relation*: a set of tuples (i.e., rows a table) that have the same "attributes" (i.e., columns).
+* Rows are unique.
+* Columns have types and unique names.
+* Each row has the same set of columns.
+* The sequence of rows and columns are not significant.
+* 1 or more columns may be indexed to speed up queries.
+
+h1. Object-Oriented Model
+
+* Attempts to unify the programming and persistence models for languages like C++, Java, Smalltalk, etc.
+* Supports inheritance.
+* Eliminates the _impedence mismatch_ required to persist objects to relational tables (inheritance is particularly tricky).
+* Emerged in the 90's.
+
+h1. Object-Oriented Model (cont.)
+
+* Never really displaced RDBMS, even though most IT development is done using OO languages!
+** Performance was a serious problem in early OODBMSs.
+** Database architects and developers tend to be conservative.
+** Using RDBMS continued to be "good enough".
+
+h1. Object/Relational Model
+
+* Adds to the relational model the ability to define new types and specify the unique operations on those types.
+* Examples include geospatial data, time-series data (e.g., stock prices), and binary media like images, audio, and video.
+* Doesn't support inheritance in the usual OOP sense.
+* Most of the big RDBMS vendors offer some O/R capabilities.
+* Compromise solution that also emerged in the 90's.
+
+h1. Requirements for Data Persistence 
+
+* ACID
+** *A*: Atomicity
+** *C*: Consistency
+** *I*: Isolation
+** *D*: Durability
+
+When we discussed ACID two weeks ago, we mostly talked about ACI in the context of _software transactional memory_. Let's talk a bit more about durability.
+
+h1. Durability
+
+_Committed transactions are permanent._
+
+...meaning they will survive system failure.
+
+Often implemented with a transaction log that can be "replayed" if recovery is required.
+
+But what if the log was on the system that failed? What if we can't wait for the time it takes to replay the log (after we fix the broken system)?
+
+h1. Requirements for "Web Scale" Data Persistence
+
+* *High Availability:* If there's one server, we can't tolerate it crashing.
+* *Horizontal Scaling:* No one server can "implement" Google.
+* *Flexibility, Extensibility:* So we can grow our business with minimal cost. 
+
+h1. Some Techniques We'll Discuss
+
+* Replication
+* Schema-less Design
+* MapReduce
+
+h1. Some Techniques We'll Discuss
+
+* *Replication*
+* Schema-less Design
+* MapReduce
+
+h1. Replication and Sharding
+
+*Replication:* Duplicate copies of the same data.
+
+* Replication Enables Failover
+* If you have duplicate data and duplicate software, then if one system goes down, the other(s) can take over the load.
+* Three of the possible configurations:
+** *Master-Slave:* One dominate server; if it fails, the slave takes over.
+** *Mated Pair:* Computation distributed between pairs. If one fails, the other takes the full load.
+** *N Peers:* Scaled up version of _mated pair_ to N servers.
+
+h1. Replication and Sharding
+
+*Sharding:* Splitting a large data set across multiple servers.
+* Customer orders on the East coast are stored in New Jersey.
+* Customer orders on the West coast are stored in Oregon.
+* ...
+or split _functionality_ across servers:
+* Customer orders on one server.
+* Inventory on another server.
+* ...
+
+h1. Sharding with Replication
+
+Get horizontal scalability and replication by combining both sharding with replication. Here's an example using MongoDB.
+
+<p><img src="images/mongodb_sharding_replica_sets.png"><img>
+
+h1. Distributed Data and Latency
+
+When you scale by sharding (or _partitioning_) your data. You would like to maintain ACID compliant transactions across the data shards. The traditional approach is to rely upon distributed transactions and two-phase commit. 
+
+h1. Distributed Transactions & Two-Phase Commit
+
+* *Distributed Transactions:* Join transactions on individual systems into a larger transaction that spans the systems.
+* *Two-Phase Commit:* A _consensus_ protocol for whether to complete or abort the distributed transaction:
+1. _Commit Request Phase:_ Ask all participants to prepare to commit and _vote_ whether or not to proceed.
+2. _Commit Phase:_ Complete the commit _if all_ participants vote yes, otherwise abort.
+
+h1. What Happens at Enormous Scales?
+
+Imagine you're Amazon. You have thousands (millions?) of customers shopping at your site every day. You are saving information about searches, products viewed, products put in wish lists, orders placed, credit cards charged, etc. 
+
+Massive sharding and replication don't eliminate new phenomena that happen at large scales...
+
+h1. CAP
+
+Eric Brewer (Professor at the University of California, Berkeley and the cofounder and chief scientist at Inktomi) conjectured in 2000 that you can't satisfy all three of the following properties at once in World-scale systems.
+
+* *C* - Consistency: To a client, an operation occurs all at once (Note: this is really _Atomicity_ in ACID).
+* *A* - Availability: Every operation completes to an expected result.
+* *P* - Partition Tolerance: Operations will complete, even if some system components are unavailable ("partitioned" from the others). 
+
+h1. CAP (cont.)
+
+In "The CAP Theorem":http://nosqlsummer.org/paper/cap-theorem, Seth Gilbert and Nancy Lynch elaborate on CAP, providing a proof of it, and offering real-world solutions.
+
+They point out:
+* Consistency: Distributed operations in a transaction appear as if they are on one node.
+* Availability: A weak form of availability is implied; there is no explicit limit on how long a transaction will take to complete and return a result!
+* Partition Tolerance: No set of failures less than total network failure is allowed to cause the system to respond incorrectly.
+
+h1. CAP: Pick Two
+
+Brewer observed that you can pick two of the three: CA, AP, or CP.
+
+(Section 3.2 of Gilbert and Lynch discuss these combinations.)
+
+h1. Consistency (Atomicity) and Availability
+
+... but not Partition Tolerance.
+
+E.g., distributed systems in a "reliable" LAN.
+
+* Atomicity is provided by distributed transactions and 2-phase commit.
+* Availability is ensured by system reliability.
+* But if a partition forms (e.g., a node goes down), atomicity and availability are not guaranteed.
+** I.e., these systems are usually designed with the assumption of no partitions and guaranteed atomicity, so they will appear unavailable when a partition forms.
+
+h1. Availability and Partition Tolerance
+
+... but not Consistency (Atomicity)
+
+E.g., Google, Amazon, ...
+
+* Systems remain available, even when someone cuts a trans-ocean data cable... 
+* However, the data seen on either side of the cut might be different.
+* Data caches can exhibit this property. You're local cache of search results might be slightly stale, but returning a result quickly is more important than taking longer to return a more accurate result.
+
+h1. Consistency (Atomicity) and Partition Tolerance
+
+... but not Availability. Useful when it's better to never allow stale data, even if it means that no service is available at all.
+
+E.g., a distributed DBMS in a LAN, using distributed locking.
+
+* There are rarely partitions, so it's usually "tolerant".
+* Atomicity is provided by the DBMS and distributed transaction framework.
+* But if a partition occurs (e.g., node crash), it might become unavailability, but it never returns inconsistent data.
+
+
+h1. Distributed Data and Latency
+
+Users expect fast responses (low latency), but the speed of light can't be increased. (It takes about 19ms for light to travel from New York to London) Also, to be globally available requires distribution of services for fault tolerance.
+
+h1. Distributed Data and Latency (cont.)
+
+To meet these goals, your architecture has to tolerate high latency ("Dan Pritchett":http://www.infoq.com/articles/pritchett-latency). A couple of techniques help.
+
+* Moving data and computing resources close to customers.
+** Lowers the round-trip time
+* Doing as much calculation asynchronously as possible.
+** E.g., google indexes the web asynchronously, so searches use precomputed data and are "instantaneous".
+
+<img src="images/google-search.png"><img>
+
+h1. Distributed Data and Latency (cont.)
+
+Suppose you scale by partitioning your data. You would like to maintain ACID compliant transactions across the data partitions. The traditional approach is to rely upon distributed transactions and two-phase commit. 
+
+h1. The Problem with Distributed Transactions
+
+But distributed transactions create _synchronous_ couplings across the databases, which can increase latency substantially
+
+When partitions are present, the transaction may never complete successfully!
+
+h1. The alternative to ACID is BASE:
+
+* <b>B</b>asically <b>A</b>vailable
+* <b>S</b>oft state
+* <b>E</b>ventually consistent
+
+(A contrived acronym, like ACID.)
+
+When availability is the top priority, then try to always provide some level of service, don't insist on absolutely consistent state (i.e., tolerate some stale data), and expect the system to become consistent, _eventually_.
+
+There's a spectrum between ACID and BASE for _each part_ of the system.
+
+h1. ACID vs BASE
+
+To be clear, BASE is a *compromise*.
+
+Everyone would prefer to always have ACID compliance, but they are willing to accept BASE when ACID can't be met.
+
+h1. Some Techniques We'll Discuss
+
+* Replication
+* *Schema-less Design*
+* MapReduce
+
+h1. Do We Need an RDBMS?
+
+The issues of scaling, CAP and BASE vs. ACID that we have just discussed apply equally to traditional RDBMS, as well as to newer persistence technologies.
+
+h1. Do We Need an RDBMS?
+
+* Amazon, Google, eBay, Yahoo!, and other large-scale Internet companies have found that the cost of scaling traditional RDBMS is high and not always "worth it".
+* Social networking sites like Twitter and Facebook have enormous _graphs_ of social relationships to manage.
+* If data is easily sharded, because the shards have no references spanning them, then is the relational model essential?
+* If ACID isn't essential for all operations, are there lighter-weight persistence alternatives?
+
+h1. "NoSQL"
+
+_Not SQL_ or _Not Only SQL_
+
+* If you have a graph of data, use a _graph_ database.
+* If you need great flexibility in the data format, use an "informal", easily-changed schema, use a _document-oriented_ or _column oriented_ database.
+* If an eventually-consistent, highly-scalable database is needed, consider ... several options
+
+h1. Categories of "NoSQL" Databases
+
+* Column Oriented (vs. the row orientation of RDBMS)
+* Document Oriented
+* Key-Value/Tuple Stores
+* Eventually Consistent Key-Value Stores
+* Graph Databases
+* Grid Databases
+
+(Compare with "NoSQL-Database.org":http://nosql-database.org/)
+
+h1. Column Oriented
+
+E.g., _Cassandra, Hadoop/HBase, Hypertable_
+
+*Column-oriented* storage is often better for OLAP (OnLine Analytical Processing), e.g., Data analytics using Data Warehouses. 
+
+*Row-oriented* storage if often better for OLTP (OnLine Transaction Processing), e.g., typical "live" transactions.
+
+h1. Column Oriented (cont.)
+
+*Column-oriented* storage is often better for...
+* optimizing space (compression) for very different-sized values in the same column (e.g., binary data).
+* optimizing disk access for small subsets of all columns.
+* Adding and removing columns frequently.
+
+Many of the largest NoSQL database instances are column databases.
+
+h1. Document Oriented
+
+E.g., _MongoDB, CouchDB, Terrastore_
+
+Stores _documents_, usually in the form of JSON (JavaScript Object Notation), YAML (Yet Another Markup Language), or XML (eXtensible Markup Language).
+* *Schemaless:* No fixed schema, _semistructured_ data. 
+** Contrast with RDBMS.
+** But the document must be "well formed" (valid JSON, YAML, or XML).
+* Often lightweight, so performance is often very good.
+** (We'll explore this topic more next week.)
+
+h1. Document Oriented (cont.)
+
+* Often support a query capability or language (even tough they're _schemaless_).
+* Often support a _MapReduce_ capability.
+* Excellent for medium-sized datasets with rapidly-evolving "schema".
+
+h1. Digression: Why the Term "Document"?
+
+* XML (and HTML) are simplified derivatives of SGML (Standard Generalized Markup Language).
+** Long-time standard in the publishing industry.
+** *Markup* is the term for editing and arranging content for publication.
+
+Hence, we store JSON _documents_ in MongoDB and CouchDB, etc. 
+
+Similarly, we store YAML or XML in documents tailored to them.
+
+h1. Key-Value Stores
+
+E.g., _Amazon SimpleDB, Riak, Redis, Tokyo Cabinet, Scalaris, MemcacheDB, BerkeleyDB, MNesia._
+ 
+Think of hash maps on _steroids_.
+* May be purely in-memory (with optional flushing to disk) and resident on one machine.
+* Excellent for "persisting" semi-structured data with shorter lifespans (e.g., web sessions).
+* Used when durability and consistency are lower priorities compared to speed.
+
+h1. Eventually Consistent Key-Value Stores
+
+E.g., _Amazon Dynamo, Dynomite, Voldemort_
+
+More emphasis on longer-lived objects that need to be persisted, but for which rapid retrieval is still important.
+* Transparent replication of data.
+* Transparent clustering of nodes.
+* Great for fault tolerance, especially for "active sessions".
+
+h1. Graph Databases
+
+E.g., _Neo4J, Flock_
+
+Built in semantics for representing graphs, including cycles.
+* First-class support for nodes, edges, and properties to associate information with nodes and edges.
+* Good when lots of expensive joins would be required in a RDBMS.
+* Handle evolving schema easily. 
+
+h1. Grid Databases
+
+E.g., _GridGain, HazelCast, Coherence_
+
+Less like a database in the usual sense and more of a virtualized space where data is transparently resident on more than one server/service. 
+
+
+h1. "Polyglot Persistence"
+
+A big trend today is that non-trivial systems mix different programming languages, libraries and tools. Do we use just one language to write all parts of a standard web application? No.[1]  
+
+The same phenomenon is now happening at the persistence level. Often, one persistence strategy doesn't fit all needs in complex, distributed systems. You might use a fast, key-value store for user sessions, then persist key "events" to an RDBMS, for example.
+
+[1] Well, maybe we could with JavaScript...
+
+h1. Some Techniques We'll Discuss
+
+* Replication
+* Schema-less Design
+* *MapReduce*
+
+We'll discuss MapReduce in a few weeks...
+
+h1. Reading Assignment: CAP and BASE
+
+* Julian Brown, "Brewer's CAP Theorem: The Kool Aid Amazon and eBay Have Been Drinking":http://www.julianbrowne.com/article/viewer/brewers-cap-theorem. Sometimes amusing discussion of Brewer's theorem. (We'll read Brewer's original presentation - a conference keynote - in a later assignment.)
+* Dan Pritchett, "BASE: An Acid Alternative":http://queue.acm.org/detail.cfm?id=1394128. Excellent discussion of the limitations of ACID for large-scale, distributed systems, and the alternative, BASE. Provides specific examples of techniques for relaxing consistency. 
+
+Also useful, but not required:
+
+* Coda Hale, "You Can't Sacrifice Partition Tolerance":http://codahale.com/you-cant-sacrifice-partition-tolerance/. A good discussion of CAP that clears up some common misunderstandings. Also mentions Brewer's other work on the concepts of _yield_ and _harvest_.
+
+h1. Reading Assignment: 
+
+Read the discussion on MongoDB _Replication_ and _Sharding_ (links on subsequent slides). MongoDB's implementations are representative examples of these general techniques and the reading will also help you get more familiar with MongoDB, which we'll discuss in depth next week. 
+
+Focus instead on the concepts discussed. The particular syntax details of MongoDB commands and the details of which techniques to use with particular versions of MongoDB, etc. aren't important. 
+
+h1. Reading Assignment: Replication
+
+"mongodb.org/display/DOCS/Replication":http://www.mongodb.org/display/DOCS/Replication
+
+Follow the link in the section _Verifying propagation of writes with getlasterror_.  What's important here is why this is an issue - why would a client care if propagation happens immediately or not?
+
+View the video or read the slides describing MongoDB's new approach to replication, called _replica sets_.
+
+* "Video":http://lacantine.ubicast.eu/videos/21-06-2010-130932-partie-6/
+* "Slides":http://www.slideshare.net/mongodb/mongodb-replica-sets
+
+(Yes, it appears that something is wrong with the last 5 or so slides, but the "good" slides have the content I care about...)
+
+h1. Reading Assignment: Sharding
+
+"mongodb.org/display/DOCS/Sharding+Introduction":http://www.mongodb.org/display/DOCS/Sharding+Introduction
+
+Make sure you understand the different goals of replication and sharding and how they also complement each other. Also, when combined, as discussed on the Sharding page, are there any _single points of failure_?
+
+h1. Exercise
+
+Complete exercise2, which was assigned last week. It is due by the start of the next class, September 28.

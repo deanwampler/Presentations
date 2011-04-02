@@ -1,3 +1,343 @@
-h1. Lecture 7: Midterm Break (No Class)
+h1. Lecture 7: Midterm and Scaling Systems, Part II
 
-Have a good break!
+In this lecture, we'll complete our discussion of distributed systems by examining the most popular framework for distributed data computation ("big data"): "MapReduce":http://en.wikipedia.org/wiki/MapReduce.
+
+h1. How Would You Index the Web?
+
+Google indexes the web by finding all the links to web pages related to particular keywords. A page with the most links for a given keyword will appear first in a search for that keyword.
+
+(Of course it's more complicated than this, but this is the basic idea.)
+
+By the way, how much data is out there??
+
+h1. Size of teh InterWebs
+
+<center>
+<img src="images/size-of-the-web.jpg"></img>
+</center>
+
+h1. Recall from Lecture 4: Scaling Data, Part I
+
+... your architecture has to tolerate high latency ("Dan Pritchett":http://www.infoq.com/articles/pritchett-latency). A couple of techniques help.
+
+* Moving data and computing resources close to customers.
+** Lowers the round-trip time
+* Doing as much calculation asynchronously as possible.
+** E.g., google indexes the web asynchronously, so searches use precomputed data and are "instantaneous".
+
+<img src="images/google-search.png"><img>
+
+h1. Pre-computation of Data
+
+Obviously you can't index the Internet on demand if you want to return results this fast. 
+
+In 2004, Google published a paper by Jeffrey Dean and Sanjay Ghemawat, called "MapReduce: Simplified Data Processing on Large Clusters":http://labs.google.com/papers/mapreduce.html, which introduced its approach, *MapReduce*. 
+
+The name is taken from the classic _map_ and _reduce_ operations over collections, but there are differences...
+
+h1. What Is MapReduce?
+
+MapReduce is inspired by the combination two classic operations on collections: @map@ and @reduce@.
+
+* @map@: Transforms each item in a collection to another value and builds a new collection of the same size as the original collection.
+
+:inlinecode lang=scala, class=code-tiny
+List(1,2,3,4,5) map (i => i*i)  // List(1,4,9,16,25)
+:endinlinecode 
+
+* @reduce@: Reduces a collection of items to a smaller collection or single value.
+
+:inlinecode lang=scala, class=code-tiny
+List(1,2,3,4,5) reduceLeft ((total,i) => total*i)  // 120 == 5!
+:endinlinecode 
+
+* (You might also @filter@: Create a new collection of some items from the original.)
+
+:inlinecode lang=scala, class=code-tiny
+List(1,2,3,4,5) filter (i => i%2 == 0)  // List(2,4)
+:endinlinecode 
+
+h1. What Is MapReduce?
+
+In the context of MapReduce the input collections are key-value pairs. I'll use the word _dictionary_, rather than _map_, to avoid confusion with the map _operation_.
+
+* @map@: Filters values of interest and partitions them based on some criteria, creating _new_ key-value pairs, where the new keys are often not the same keys as in the input dictionary. There can be multiple, tiered map steps.
+* The MapReduce framework sends the new key-value pairs with the _same_ key to the _same_ MapReduce instance in the cluster for processing. 
+* @reduce@: Reduces the results from the nodes to compute the final result.
+
+h1. Classic Example: Word Counts
+
+Count the appearance of each word in a set of documents (Pseudo-Java syntax).
+
+:inlinecode lang=scala, class=code-tiny
+void map(String, documentName, String documentContents) {
+  // documentName: the "key" (the name of the document, e.g., file)
+  // documentContents: the "value" (String for the doc's contents)
+  if (documentName.equals("Index")) return;
+  for (String word : tokenize(documentContents))
+    emitNewKeyValue(word, "1");  // new (key, value) pair: (word, count)
+}
+
+void reduce(String word, Iterator partialCounts) {
+  // word: a word "key" we handled in the map (tokenized from documents)
+  // partialCounts: a list of aggregated partial counts ("values")
+  int result = 0;
+  for (String pc : partialCounts)
+    result += ParseInt(pc);
+  emit(AsString(result));
+}
+:endinlinecode 
+
+h1. Classic Example: Word Counts (cont.)
+
+* @map@ returns void and calls @emitNewKeyValue@. 
+** You might not want to do anything with the input. 
+** In this case, we ignore the document if it is an "index" document.
+** Otherwise, we emit _new_ key-value pairs (1000's??), where the key is a word and the value is the count "1". Note that a duplicate word-"1" pair is emitted every time the same word appears.
+
+* @reduce@ is called for each unique word (as a key), with a list of all the "counts" emitted for that word. 
+** We parse those count strings and add the integers to compute the total count for the word across all the documents (except index documents...).
+
+h1. MapReduce Implementations: Hadoop
+
+Google's MapReduce is not open to the public. 
+
+Yahoo! open sourced "Hadoop":http://hadoop.apache.org/ in 2006, its implementation of MapReduce. It is now an "umbrella" "Apache Project":http://hadoop.apache.org/ that includes not only a MapReduce implementation, but additional support tools:
+
+* *HDFS*: A distributed file system that provides high throughput access to application data.
+* *ZooKeeper*: A high-performance coordination service for distributed applications.
+
+h1. Other Hadoop-related Apache Projects
+
+* *Avro*: A data serialization system.
+* *HBase*: A scalable, distributed database that supports structured data storage for large tables.
+* *Hive*: A data warehouse infrastructure that provides data summarization and ad hoc querying.
+* *Mahout*: A Scalable machine learning and data mining library.
+* *Pig*: A high-level data-flow language and execution framework for parallel computation.
+
+h1. Hadoop?
+
+The creator of Hadoop, Doug Cutting, named it after his young son's pet Elephant.
+
+_Mahout_ is the term for a person in India who tames and manages work Elephants.
+
+h1. Hadoop History
+
+|_.Year |_.Event |
+| 2005-2006 | Based on Google paper, MapReduce implementation, named "Hadoop", added to the _Nutch_ search project. |
+| 2006 | Moved Hadoop to a subproject of Apache _Lucence_. |
+| 2008 | Hadoop becomes a top-level Apache Project. |
+| 2008 | Yahoo! runs a 10,000 node Hadoop, Linux cluster to process data for its search engine. (Google's cluster is certainly larger.) |
+
+(Adapted from Tom White, "Hadoop: The Definitive Guide, Second Edition" - see the references.)
+
+h1. New York Times Hadoop Story
+
+Amazon offers Hadoop services in its Cloud Computing service, EC2. 
+
+In 2007, The New York Times wanted to convert to PDFs its microfiche of every issue ever published. They used 100 Amazon EC2 instances and a Hadoop application to process 4TB of raw image TIFF data (stored in Amazon's S3 datastore) into 11 million finished PDFs in the space of 24 hours at a computation cost of about $240 (not including bandwidth).
+ 
+h1. Aside: Cloud Computing (1/3)
+
+What if you don't want to own and manage a cluster, especially if you only need a lot of compute power occasionally? In cloud computing, you rent compute time and resources for short or long time intervals.
+
+The servers in the cloud are actually running _virtual images_ of the operating system, so you might actually share a "slice" of hardware, but be isolated as if you had the machine to yourself.
+
+These OS images sometimes come preconfigured with common applications required (like database servers, Java, etc.). 
+
+When you're done with an _instance_, it is safely thrown away.
+
+h1. Aside: Cloud Computing (2/3)
+
++ You don't worry about system administration, hardware, a datacenter.
++ You only buy the computing power you need.
++ You can scale up or down quickly, as needed.
+
+- Network bandwidth often inadequate for very high throughput applications.
+- Cost and performance of a cloud service eventually becomes higher than a self-owned datacenter for very large operations (e.g., Google).
+
+h1. Aside: Cloud Computing (3/3)
+
+*The Value Proposition*
+
+* Supports massive horizontal scaling of computation.
+* In a cloud environment, you can do tremendous computation in a short period of time without investing in your own computing infrastructure.
+
+h1. Hadoop Pros and Cons
+
++ Full-featured, high-scalable architecture for computation.
+
+- Some setup required...
+- Verbose syntax. See this "actual word count example":http://hadoop.apache.org/mapreduce/docs/r0.21.0/mapred_tutorial.html#Example%3A+WordCount+v1.0.
+
+Tools like "Pig":http://pig.apache.org/ and "Cascalog":http://github.com/nathanmarz/cascalog provide higher-levels of abstraction for creating Hadoop jobs.
+
+h1. Other MapReduce Implementations
+
+Many NoSQL databases are bundling MapReduce implementations. For example:
+
+* *CouchDB*: Used to build "views" incrementally, instead of providing a full, ad hoc query engine.
+* *MongoDB*: Used to do computations that would be done with GROUP BY clauses in SQL.
+
+The "Wikipedia":http://en.wikipedia.org/wiki/MapReduce page on MapReduce lists many other implementations.
+
+h1. Aside: SQL GROUP BY (1/3)
+
+Suppose you want to list the unique customers in the following table and sum up how much each customer has spent. (Adapted from "SQL Tutorial":http://www.sql-tutorial.com/sql-group-by-sql-tutorial/)
+
+<div class='small'>
+|_.OrderID|_.OrderDate|_.OrderPrice|_.OrderQuantity|_.CustomerName|
+| 1| 12/22/2005| 160 | 2| Smith |
+| 2| 08/10/2005| 190 | 2| Johnson |
+| 3| 07/13/2005| 500 | 5| Baldwin |
+| 4| 07/15/2005| 420 | 2| Smith |
+| 5| 12/22/2005| 1000| 4| Wood |
+| 6| 10/02/2005| 820 | 4| Smith |
+| 7| 11/03/2005| 2000| 2| Baldwin |
+</div>
+
+h1. Aside: SQL GROUP BY (2/3)
+
+Here's the query:
+
+:inlinecode lang=scala, class=code-tiny
+SELECT CustomerName, SUM(OrderPrice) FROM Sales
+GROUP BY CustomerName
+:endinlinecode 
+
+Note the _aggregate_ function @SUM@. Combined with @GROUP BY@, it effectively sums the totals for each customer.
+
+h1. Aside: SQL GROUP BY (3/3)
+
+Result of the query:
+
+<div class='small'>
+|_.CustomerName|_.OrderPrice|
+| Baldwin| 2500 |
+| Johnson| 190  |
+| Smith  | 1400 |
+| Wood   | 1000 |
+</div>
+
+h1. MapReduce Requirements
+
+* Must be able to chop data into pieces that can be processed independently, hence in parallel.
+** E.g., process microfiche images for each year on a separate server.
+** E.g., count things...
+* Must have a good @map@ function.
+** You want a balanced distribution of key-value pairs. 
+
+h1. Other MapReduce Characteristics
+
+* You're trading away resource efficiency for time efficiency.
+** You may duplicate _lots_ work in the parallel processing, thereby "wasting" resources, but you can get results much faster.
+* MapReduce frameworks handle distribution of processing to nodes, monitoring of nodes, including detection of node failures, and rerouting processes off failed nodes.
+
+h1. MapReduce Disadvantages
+
+* Not all computations fit the model.
+* Not ideal for _real-time_ computation; it's optimized for _batch_ processing.
+** Google is migrating to a new system called "Caffeine":http://googleblog.blogspot.com/2010/06/our-new-search-index-caffeine.html that provides more incremental and near-real time indexing.
+
+h1. Reading: Distributed Systems and "Big Data"
+
+To conclude our discussion of distributed systems and _big data_:
+
+* Arnon Rotem-Gal-Ozhttp, "Fallacies of Distributed Computing Explained"://www.rgoarchitects.com/Files/fallacies.pdf
+* Edd Dumbill, "The SMAQ stack for big data":http://radar.oreilly.com/2010/09/the-smaq-stack-for-big-data.html. Nice summary of some of the leading open-source technologies used for data processing.
+
+h1. Reading Assignment: MapReduce
+
+Start with the Wikipedia page on "MapReduce":http://en.wikipedia.org/wiki/MapReduce.
+
+Then read the classic paper that introduced the first MapReduce framework, used at Google.
+
+* Jeffrey Dean and Sanjay Ghemawat, "MapReduce: Simplified Data Processing on Large Clusters":http://labs.google.com/papers/mapreduce.html.
+
+These authors also wrote a chapter on MapReduce called _Distributed Programming with Mapreduce_, in "Beautiful Code", Chapter 23, pgs. 371-382. 
+
+h1. Other References
+
+Probably the best book on Hadoop, written by one of the core developers, Tom White:
+
+* Tom White, "Hadoop: The Definitive Guide, Second Edition", O'Reilly, 2010, ISBN: 9781449389734. Available on Loyola's "Safari Online":http://proquestcombo.safaribooksonline.com.flagship.luc.edu/9781449398644.
+* Google's new MapReduce replacement, "Caffeine":http://googleblog.blogspot.com/2010/06/our-new-search-index-caffeine.html.
+
+h1. Exercise: MongoDB's MapReduce
+
+It would be too much work to setup and use Hadoop, so we'll do an exercise this week using MongoDB's MapReduce implementation on our stock data. Use the MongoDB "MapReduce page":http://www.mongodb.org/display/DOCS/MapReduce as a reference.
+
+h1. Moving Averages of Asset Prices
+
+_Moving averages_ of asset prices are popular because they smooth out the noise in prices. Some technical analysts believe that the behavior of these averages can indicate likely turning points for the asset price.
+
+A moving average is the average of the price for the _last_ N days.
+
+h1. 50- and 200-Day Moving Averages
+
+<center>
+	<img src="images/mova-6-orclcross.png"></img>
+</center>
+
+h1. Calculating Moving Averages (1/3)
+
+Calculate the 50-day moving average for AA _ending_ on 1980-03-12. The following code would be entered in the @mongo@ console or put in a @.js@ file and piped into the console: @mongo < file.js@.
+
+:inlinecode lang=plain, class=code-small
+use stocks_yahoo_NYSE;
+
+var map1 = function () {
+  // Use the stock_symbol as the key and use a JavaScript
+  // Object as the value, which contains the closing price
+  // and the date.
+  emit(this.stock_symbol, {close: this.close, date: this.date});
+}
+:endinlinecode 
+
+h1. Calculating Moving Averages (2/3)
+
+:inlinecode lang=plain, class=code-small
+var reduce1 = function (key, values) {
+  // For this key (the stock symbol), and set of values
+  // (the object with the closing price and date), first
+  // grab the LAST date, which is the date for this
+  // moving average.
+  var date = values[values.length-1].date
+
+  // Now compute the moving average:
+  var sum = 0;
+  for (var n in values) {
+      sum += values[n].close;
+  }
+  var avg = sum / values.length
+
+  // Return the result, using the same keys as before!!
+  return {date: date, close: avg};
+}
+:endinlinecode 
+
+h1. Calculating Moving Averages (3/3)
+
+:inlinecode lang=plain, class=code-small
+// Invoke mapReduce with map1 and reduce1. 
+// The query limits the documents to 'AA',
+// the STARTING date of 1980-01-01, 
+// and 50-days worth of data.
+var result1 = db.A_prices.mapReduce(map1, reduce1, { query: {stock_symbol: 'AA', date: {$gte: '1980-01-01'}}, limit: 50})
+
+// Get the answer from result1. Note the find() call:
+db[result1.result].find()                                                 
+// Here is the answer:
+// { "_id" : "AA", "value" : { "date" : "1980-03-12", "close" : 63.235600000000005 } }
+
+:endinlinecode 
+
+h1. Exercise: Using MongoDB's MapReduce
+
+* Find the 200-day moving average of 'AA', _ending_ on the date 1990-10-15.
+
+* Calculate how many days since 2008-01-01 that 'AZZ' gained more than $1 in a single trading day.  Hints:
+** In your map function, filter out the days when the gains were less than $1, including loses. Also, what you "emit" will be much simpler and _very_ similar to the word counting example we discussed earlier in the lecture. (Big hint...)
+** In you filter function, all you need to do is count. 
+** Don't forget to adjust the query used when invoking the mapReduce function.
+** I picked the parameters to make the result fairly small, so you should be able to check the answer manually, using a simple "ordinary" query.

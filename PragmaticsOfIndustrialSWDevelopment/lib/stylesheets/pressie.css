@@ -4,7 +4,7 @@ code {
 
 div.slide code {
     font-weight: normal;
-    font-size: 85%;
+    font-size: 75%;
     color:  #228;
 }
     
@@ -67,15 +67,15 @@ div.slide td {
 }
 
 div.slide th {
-  background: #337;
+    background: #6181A4;
   color:      white;
   font-weight: bold;
-  padding:    0.2em 0em 0.2em 0em;    
+  padding:    0.2em 0.2em 0.2em 0.2em;    
 }
 
 
 body {
-	background: #FBFFEC;
+	background: #F4FDF3;
 }
 
 
@@ -122,7 +122,7 @@ div.slide h1.exercise {
 
 div#slide0,  div.title {
     height: 100%;
-    background-image: url(http://www.luc.edu/cs/supports/computer_science.jpg); /* scala_logo.png, ruby.png, ObjectMentorBallLogo.png, OMI_Logo.jpg, OMI_HeaderArea_Logo.png */
+    background-image: url(http://www.luc.edu/cs/supports/computer_science.jpg); /* scala_logo.png, ruby.png, ObjectMentorBallLogo.png */
     background-repeat: no-repeat;
     background-position: top right;
 }
@@ -131,7 +131,7 @@ div#slide0 h1, div.title h1 {
 	color: #292442;
     background:transparent none repeat scroll 0%;
     font-family:Helvetica,sans-serif;
-    font-size:2em;
+    font-size:2.0em;
     font-size-adjust:none;
     font-stretch:normal;
     font-style:normal;
@@ -152,6 +152,10 @@ div.code-large {
 }
 
 
+.medium {
+	font-size: 80% !important;  
+}
+
 div.code-normal {
 	font-size: 90% !important;
 	line-height: 2em !important;
@@ -159,6 +163,10 @@ div.code-normal {
 
 div.code-normal li {
 	margin-top: 0.6em;
+}
+
+.small {
+	font-size: 75% !important;  
 }
 
 div.code-small {
@@ -169,7 +177,13 @@ div.code-small {
 div.code-small li {
 	margin-top: 0.6em;
 }
+div.code-tiny li {
+	margin-top: 0.4em;
+}
 
+.tiny {
+	font-size: 60% !important;
+}
 div.code-tiny {
 	font-size: 50% !important;
 	line-height: 2em !important;
