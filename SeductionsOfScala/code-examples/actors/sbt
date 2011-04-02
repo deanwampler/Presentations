@@ -1,0 +1,11 @@
+#!/bin/bash
+#------------------------------------------------------------------
+# sbt driver script. 
+maxheap=1024M
+maxPermSize=256M
+
+# Ignore the user's Akka installation, if they have one.
+export AKKA_HOME=""
+
+# -XX:+CMSClassUnloadingEnabled -XX:MaxPermSize=256m is supposed to reduce PermGen errors.
+env java $JAVA_OPTIONS -Xmx$maxheap -XX:+CMSClassUnloadingEnabled -XX:MaxPermSize=$maxPermSize -jar sbt-launch-0.7.4.jar "$@"

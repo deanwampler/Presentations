@@ -1,0 +1,78 @@
+<html>
+<head><title>Seductions of Scala: Actors Example</title></head>
+<boday>
+<h1 id="readme">README</h1>
+
+<p>The Actors example for Dean Wampler&#8217;s <a href="https://github.com/deanwampler/Presentations/tree/master/SeductionsOfScala">Seductions of Scala</a> presentation. This code can be found in the <a href="https://github.com/deanwampler/Presentations/tree/master/SeductionsOfScala/code-examples/actors">code-examples/actors</a> subdirectory.</p>
+
+<p>This is a simple example using the <a href="http://akka.io">Akka Framework</a> for Scala and Java. I prefer this Actor library over Scala&#8217;s standard Actor library.</p>
+
+<p>The example is built and run using the ](http://code.google.com/p/simple-build-tool/), a.k.a <code>sbt</code>, which is included, for convenience.</p>
+
+<h2 id="instructions">Instructions</h2>
+
+<p>Change to the root directory for the actors example <code>SeductionsOfScala/code-examples/actors</code>. </p>
+
+<p>Using <code>bash</code> or a similar shell, run <code>./sbt</code>.</p>
+
+<p>At the <code>sbt</code> prompt (&#8220;>&#8221;), run the following commands. (The #&#8230; are comments).</p>
+
+<pre><code>update   # Download dependencies, such as the Akka libraries.
+compile  # Compile the code. (Expect a "success" message when done).
+run      # Run the actor example.
+quit     # Exit sbt.
+</code></pre>
+
+<p>The <code>update</code> command will take a long time the first time you run it. </p>
+
+<p>The verbose output of the run command will look something like this:</p>
+
+<pre><code>[info] == run ==
+[info] Running shapes.Driver 
+20:19:38.528 [run-main] INFO  akka.config.Config$ - Config [akka.conf] loaded from the application classpath.
+20:19:38.807 [run-main] DEBUG a.d.Dispatchers$globalExecutorBasedEventDrivenDispatcher$ - Starting up Dispatchers$globalExecutorBasedEventDrivenDispatcher$[akka:event-driven:dispatcher:global]
+        with throughput [5]
+20:19:38.809 [run-main] INFO  a.d.LazyExecutorServiceWrapper - Lazily initializing ExecutorService for 
+20:19:38.812 [akka:event-driven:dispatcher:global-1] DEBUG akka.dispatch.MonitorableThread - Created thread akka:event-driven:dispatcher:global-1
+20:19:38.871 [akka:event-driven:dispatcher:global-2] DEBUG akka.dispatch.MonitorableThread - Created thread akka:event-driven:dispatcher:global-2
+-&gt; drawing: Circle(Point(0.0,0.0),1.0)
+-&gt; drawing: Rectangle(Point(0.0,0.0),2.0,5.0)
+20:19:38.891 [akka:event-driven:dispatcher:global-3] DEBUG akka.dispatch.MonitorableThread - Created thread akka:event-driven:dispatcher:global-3
+&lt;- Shape drawn.
+&lt;- Shape drawn.
+-&gt; Error: 3.14159
+-&gt; exiting...
+20:19:38.893 [akka:event-driven:dispatcher:global-4] DEBUG akka.dispatch.MonitorableThread - Created thread akka:event-driven:dispatcher:global-4
+&lt;- Unknown message: 3.14159
+&lt;- cleaning up...
+20:19:38.925 [akka:event-driven:dispatcher:global-4] INFO  akka.actor.Scheduler$ - Starting up Scheduler
+20:19:39.928 [akka:scheduler-0] DEBUG a.d.Dispatchers$globalExecutorBasedEventDrivenDispatcher$ - Shutting down Dispatchers$globalExecutorBasedEventDrivenDispatcher$[akka:event-driven:dispatcher:global]
+20:19:39.928 [akka:event-driven:dispatcher:global-3] DEBUG akka.dispatch.MonitorableThread - Exiting thread akka:event-driven:dispatcher:global-3
+20:19:39.930 [akka:event-driven:dispatcher:global-4] DEBUG akka.dispatch.MonitorableThread - Exiting thread akka:event-driven:dispatcher:global-4
+20:19:39.930 [akka:event-driven:dispatcher:global-2] DEBUG akka.dispatch.MonitorableThread - Exiting thread akka:event-driven:dispatcher:global-2
+20:19:39.930 [akka:event-driven:dispatcher:global-1] DEBUG akka.dispatch.MonitorableThread - Exiting thread akka:event-driven:dispatcher:global-1
+[info] == run ==
+[success] Successful.
+[info] 
+[info] Total time: 2 s, completed Apr 1, 2011 8:19:39 PM
+</code></pre>
+
+<p>All the messages of the form <code>20:19:38.809 [...] ...</code> are Akka log messages. The actual output of the actor example is the following:</p>
+
+<pre><code>-&gt; drawing: Circle(Point(0.0,0.0),1.0)
+-&gt; drawing: Rectangle(Point(0.0,0.0),2.0,5.0)
+&lt;- Shape drawn.
+&lt;- Shape drawn.
+-&gt; Error: 3.14159
+-&gt; exiting...
+&lt;- Unknown message: 3.14159
+&lt;- cleaning up...
+</code></pre>
+
+<p>The messages starting with &#8220;->&#8221; are written by the <strong>drawing</strong> actor that receives drawing commands from the <strong>driver</strong> actor. The drawing actor is in <code>src/main/scala/shapes-actor.scala</code>, while the driver actor is in <code>src/main/scala/shapes-actor-driver.scala</code>.</p>
+
+<p>The messages starting with &#8220;&lt;-&#8221; are written by the driver actor. They are the replies received from the drawing actor.</p>
+
+<p>Note that the interleaving of &#8220;&lt;-&#8221; and &#8220;->&#8221; messages will be arbitrary, <strong>but</strong>, the &#8220;->&#8221; messages will always be in the same order and the &#8220;&lt;-&#8221; messages will <em>always</em> be in the same order! </p>
+</body>
+</html>
