@@ -1,7 +1,6 @@
 package shapes
 
 import akka.actor._
-import shapes._
 
 class ShapeDrawingActor extends Actor {  
   def receive: PartialFunction[Any, Unit] = {
