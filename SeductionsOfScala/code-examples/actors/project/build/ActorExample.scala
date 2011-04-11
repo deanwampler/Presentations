@@ -1,7 +1,7 @@
 import sbt._
 import sbt.CompileOrder._
 
-class AkkaWebSampleExercise(info: ProjectInfo) extends DefaultProject(info) with AkkaProject {
+class ActorExample(info: ProjectInfo) extends DefaultProject(info) with AkkaProject {
 
   lazy val EmbeddedRepo = MavenRepository("Embedded Repo", (info.projectPath / "embedded-repo").asURL.toString)
   lazy val LocalMavenRepo       = MavenRepository("Local Maven Repo", (Path.userHome / ".m2" / "repository").asURL.toString)
