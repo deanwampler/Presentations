@@ -2,7 +2,8 @@ import sbt._
 import sbt.CompileOrder._
 import de.element34.sbteclipsify._
 
-class ActorExample(info: ProjectInfo) extends DefaultProject(info) with AkkaProject with IdeaProject with Eclipsify with Exec {
+class ActorExample(info: ProjectInfo) extends DefaultProject(info)
+		with AkkaProject with IdeaProject with Eclipsify with Exec {
 
   lazy val EmbeddedRepo   = MavenRepository("Embedded Repo", (info.projectPath / "embedded-repo").asURL.toString)
   lazy val LocalMavenRepo = MavenRepository("Local Maven Repo", (Path.userHome / ".m2" / "repository").asURL.toString)

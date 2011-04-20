@@ -9,7 +9,7 @@ class ShapeDrawingActor extends Actor {
       s.draw()
       self.reply("Shape drawn.")
     
-    case "exit"  =>
+    case "exit" =>
       println("-> exiting...")
       self.reply("good bye!")
     
