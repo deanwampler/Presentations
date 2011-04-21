@@ -18,7 +18,7 @@ object GroupByFibs {
 
  protected def groupBy(max: Long) = {
 	 val fibs = fibsTo(max).reverse
-   (1L to max) groupBy {n => fibs.find(n % _ == 0).get}
+   (1L to max).groupBy {n => fibs.find(n % _ == 0).get}
  }
 
  // For our purposes, we only return one 1 at the beginning.
