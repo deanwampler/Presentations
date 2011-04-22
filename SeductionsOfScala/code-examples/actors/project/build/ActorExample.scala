@@ -28,6 +28,6 @@ class ActorExample(info: ProjectInfo) extends DefaultProject(info)
         "-encoding", "utf8")
         .map(x => CompileOption(x))
 
-//  override def mainClass = Some("shapes.ShapesDrawingDriver")
-  override def mainClass = Some("shapes.SyncShapesDrawingDriver")
+  override def mainClass = Some("shapes.ShapesDrawingDriver")
+//  override def mainClass = Some("shapes.SyncShapesDrawingDriver")
 }

@@ -4,7 +4,7 @@ import akka.actor._
 import akka.actor.Actor._
 
 object ShapesDrawingDriver {
-  def main2(args: Array[String]) {
+  def main(args: Array[String]) {
     val driver = actorOf[ShapesDrawingDriver].start()
     driver ! "go!"
   }
