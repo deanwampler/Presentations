@@ -3,3 +3,5 @@ lib_managed/
 src_managed/
 boot/
 logs/
+*.class
+.scala_dependencies
