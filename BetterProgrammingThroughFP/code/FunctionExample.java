@@ -6,6 +6,7 @@ public class FunctionExample {
   public static void usex(String x, Function1Void<String> f) {
     f.call(x);
   }
+  
   public static void main(String[] args) {
     Function1Void<String> f = new Function1Void<String>() {
       public void call(String arg) {

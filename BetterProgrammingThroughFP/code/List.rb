@@ -5,7 +5,7 @@ class List
   @head = head
   @tail = tail
  end
- @@count=0
+ 
  def List.make(*elements)
    elements = elements[0] if elements[0].kind_of?(Array)
    if elements.empty?
@@ -89,6 +89,7 @@ list = List.make(
   "BOB@YAHOO.COM", 
   "tom@Spammer.com", 
   "pete@yahoo.com")
+
 grouped = list.map {|x| 
   x.downcase
 }.filter {|x|
@@ -99,4 +100,18 @@ grouped = list.map {|x|
   groups[address] = List.new(name, l)
   groups
 }
+
 grouped.each {|k,v| puts "#{k}: #{v}"}
+
+grouped2 = list.map do |x| 
+  x.downcase
+end.filter do |x|
+  x !~ /spammer.com$/
+end.foldl({}) do |groups, x|
+  name, address = x.split('@')
+  l = groups[address] || List::EMPTY
+  groups[address] = List.new(name, l)
+  groups
+end
+
+grouped2.each {|k,v| puts "#{k}: #{v}"}
