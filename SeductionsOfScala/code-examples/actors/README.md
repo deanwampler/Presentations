@@ -1,8 +1,14 @@
-# README
+# README for the Actors Example in "Seductions of Scala"
 
-The Actors example for Dean Wampler's [Seductions of Scala](https://github.com/deanwampler/Presentations/tree/master/SeductionsOfScala) presentation. This code can be found in the [code-examples/actors](https://github.com/deanwampler/Presentations/tree/master/SeductionsOfScala/code-examples/actors) subdirectory.
+Dean Wampler<br/>
+[dean@deanwampler.com](mailto:dean@deanwampler.com)<br/>
+[@deanwampler](https://twitter.com/deanwampler)
 
-This is a simple example using the [Akka Framework](http://akka.io) for Scala and Java. I prefer this Actor library over Scala's standard Actor library.
+*Copyright (c) 2010-2013, Dean Wampler. All Rights Reserved*
+
+The Actors example for the [Seductions of Scala](https://github.com/deanwampler/Presentations/tree/master/SeductionsOfScala) presentation and tutorial. This code can be found in the [code-examples/actors](https://github.com/deanwampler/Presentations/tree/master/SeductionsOfScala/code-examples/actors) subdirectory.
+
+This is a simple example using the [Akka Framework](http://akka.io) for Scala and Java. The Scala library had its own Actor library, but it is now deprecated in favor of Akka's.
 
 The example is built and run using the ](http://code.google.com/p/simple-build-tool/), a.k.a `sbt`, which is included, for convenience.
 
