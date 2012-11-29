@@ -1,5 +1,6 @@
 // Implicit classes
 // New to Scala 2.10 (SIP-13)
+// https://docs.scala-lang.org/sips/pending/implicit-classes.html
 
 // Before 2.10, you had to write the following.
 // Note that with 2.10, you get this warning now for this
