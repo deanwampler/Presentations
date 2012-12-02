@@ -14,30 +14,30 @@ This hands-on tutorial introduces you to the Scala programming language, a moder
 
 A PDF of the slides, these instructions, and all the source code will be provided in class. You need to setup the following tools in advance.
 
-### Scala 2.10 RC2
+### Scala 2.10 RC3
 
-At the time of this writing, RC2 of version 2.10 is the latest available. Although this is not a production-ready release, the tutorial introduces you to new features in this release. We'll indicate what features are new. You'll need to install this release (or a more recent one, if available) before the tutorial.
+At the time of this writing, RC3 of version 2.10 is the latest available version of Scala. Although 2.10 is not (yet) a production-ready release, the tutorial introduces you to new features in this release, which will be in production soon. We'll indicate what features are new. You'll need to install this release (or a more recent one, if available) before the tutorial.
 
-Go to to the Scala [download page](http://www.scala-lang.org/downloads#RC) and download the 2.10 RCn installer for your platform. Download the API and samples archive, too.
+Go to to the Scala [download page](http://www.scala-lang.org/downloads#RC) and download the 2.10 RCn installer for your platform. Also, download the API archive that appears in the same list of download links.
 
 | NOTE |
 | :-- |
-| Be sure to grab the correct version of Scala, a 2.10 "release candidate". |
+| Be sure to grab the correct version of Scala, a 2.10 "release candidate". However, most of the tutorial will apply to the current production release, 2.9.2. |
 
-Install it somewhere convenience. We'll use `$SCALA_HOME` to refer to this location. Be sure to add `$SCALA_HOME/bin` to your `PATH`.
+Install Scala somewhere convenient. We'll use `$SCALA_HOME` to refer to this location. Be sure to add `$SCALA_HOME/bin` to your `PATH`.
 
 ### A Programmer's Editor or IDE
 
 You can use any editor you want, preferably one that supports Scala syntax highlighting. Most do these days, but you may need to install a Scala plugin for your favorite editor.
 
-If you like using Eclipse, consider installing the [Scala IDE](http://scala-ide.org/download/milestone.html). Be careful to pick to the version for Scala 2.10 and the version of Eclipse you have. IntelliJ IDEA also has good support for Scala. However, we won't need IDE features for the tutorial exercises.
+If you like using Eclipse, consider installing the [Scala IDE](http://scala-ide.org/download/milestone.html). Be careful to pick to the version of the IDE for your version of Scala (e.g., 2.10) and the version of Eclipse you have (e.g., Indigo). IntelliJ IDEA also has good support for Scala. However, we won't need IDE features for the tutorial exercises.
 
 ### Sanity Check
 
-Once Scala is installed, try running the REPL (real, eval, print, loop) to make sure everything is working. The commands you type outside the REPL (e.g., at the `bash` shell for Linux and Mac OS X) are shown with the `$` prompt. The `scala` prompt is `scala>`. Everything else is output.
+Once Scala is installed, try running the REPL (real, eval, print, loop) to make sure everything is working. The commands you type outside the REPL (e.g., at the `bash` shell for Linux and Mac OS X) are shown with the `$` prompt. The `scala` prompt is `scala>`. Everything else is output. Your version details my differ slightly.
 
 	$ scala
-	Welcome to Scala version 2.10.0-RC2 (Java HotSpot(TM) 64-Bit Server VM, Java 1.7.0_04).
+	Welcome to Scala version 2.10.0-RC3 (Java HotSpot(TM) 64-Bit Server VM, Java 1.7.0_04).
 	Type in expressions to have them evaluated.
 	Type :help for more information.
 
@@ -73,14 +73,66 @@ Once Scala is installed, try running the REPL (real, eval, print, loop) to make 
 
 	scala> ^D
 
-We use *control-d* (^D) to exit. (It's an old companion to ^C that means "end of input".)
+We use *control-d* (^D) to exit. It's an old terminal control, similar to ^C, that means "end of input". It's more "polite" than ^C...
 
-The REPL commands that begin with a colon (`:`) are used for non-code directives, like turning on the useful "power" mode, viewing help, etc.
+The REPL commands that begin with a colon (`:`) are used for non-code directives, like turning on the useful "power" mode, viewing help, loading source files, etc.
+
+### Open the API in your browser.
+
+It's convenient to open the API documentation you downloaded in a browser. The *Scaladocs* are analogous to *Javadocs*. See also the [References][References] below.
 
 ## That's It!
 
 You're ready to go. During the tutorial, we'll do the exercises in the `tutorial-execises` folder. The code examples that appear in the presentation are in the `code-examples` folder. The examples specific to Scala 2.10 are in the `code-examples/v2.10` folder.
 
 I welcome feedback on the tutorial. See my contact information at the beginning of this file.
+
+## References [References]
+
+### General Scala Resources
+
+[scala-lang.org](https://scala-lang.org)
+: The main website for Scala.
+
+[Typesafe](https://typesafe.com)
+: The official developer of Scala and other components that are part of the [Typesafe stack](https://typesafe.com/stack).
+
+[docs.scala-lang.org](https://docs.scala-lang.org)
+: Lots of documentation for Scala, including the [Scaladocs](https://scala-lang.org/archives/downloads/distrib/files/nightly/docs/library/index.html) tutorials, the *Scala Improvement Process* (SIP) proposals (for new features), etc.
+
+[akka.io](https://akka.io)
+: The website for the Akka distributed computing library that's part of the [Typesafe stack](https://typesafe.com/stack).
+
+[Play Framework](https://www.playframework.org/)
+: One of many web frameworks for Scala, this one is an official part of the [Typesafe stack](https://typesafe.com/stack).
+
+[Programming Scala](http://ofps.oreilly.com/titles/9780596155957/)
+: The book I co-wrote with Alex Payne. It's a bit dated, to be honest, but we have plans to update it soon. Links for other books can be found at [scala-lang.org](https://scala-lang.org).
+
+### What's New in Scala Version 2.10?
+
+Here are two nice lists of the new features with links to more details:
+
+* [http://ochsenreither.posterous.com/whats-new-in-210](http://ochsenreither.posterous.com/whats-new-in-210)
+* [http://scala-programming-language.1934581.n4.nabble.com/Scala-2-10-0-RC2-td4634084.html](http://scala-programming-language.1934581.n4.nabble.com/Scala-2-10-0-RC2-td4634084.html).
+
+### Specifically on *Macros*
+
+*Macros* provide a *hygienic macro* facility, somewhat like Lisp and not like C or C++. It's one of the most significant new features that promises to revolutionalize API and DSL development. It's an evolving feature. The principle documentation is available here:
+
+* [http://scalamacros.org](http://scalamacros.org)
+
+The following projects are using Macros. The first three are referenced on [this scalamacros.org "getting started" page](http://scalamacros.org/documentation/gettingstarted.html):
+
+* [https://github.com/retronym/macrocosm](https://github.com/retronym/macrocosm)
+* [https://github.com/pniederw/expecty](https://github.com/pniederw/expecty)
+* [http://slick.typesafe.com/](http://slick.typesafe.com/)
+* Play 2.1 JSON API: [http://mandubian.com/2012/11/11/JSON-inception/](http://mandubian.com/2012/11/11/JSON-inception/)
+
+### Slick
+
+Slick is a type-safe data access API inspired by .NET's [LINQ](http://msdn.microsoft.com/en-us/library/bb397926.aspx).
+
+* [http://slick.typesafe.com/](http://slick.typesafe.com/).
 
 

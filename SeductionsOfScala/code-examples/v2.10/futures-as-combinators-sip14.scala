@@ -1,5 +1,6 @@
 // Futures as Combinators
 // New to Scala 2.10 (SIP-14)
+// https://docs.scala-lang.org/sips/pending/futures-promises.html
 
 import scala.concurrent.{future, Future}
 import scala.concurrent.ExecutionContext.Implicits.global

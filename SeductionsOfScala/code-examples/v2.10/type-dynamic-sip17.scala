@@ -1,9 +1,12 @@
 // Dynamic Typing
 // New to Scala 2.10 (SIP-17)
 // https://docs.scala-lang.org/sips/pending/type-dynamic.html
-// Note: You can only run this code with the dynamic feature enabled:
-//   scala -language:dynamic ...
 
+// You can only use the dynamic feature if you start scala with
+// the language feature enabled:
+//   scala -language:dynamic ...
+// OR, you import the following:
+ 
 import scala.language.dynamics
 
 trait Updateable {
