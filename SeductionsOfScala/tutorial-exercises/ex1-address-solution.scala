@@ -59,7 +59,7 @@ class Address2(
     "Address2(" + number + " " + street + ", " + city + ", " + state + " " + zip + ")"
 }
 
-val address2 = new Address2(1, "Infinity Loop", "Cupertino", "CA", 99999)
+val address2 = new Address2(2, "Negative Infinity Way", "Los Gatos", "CA", 98888)
 println(address2)
 println(address2.number)
 println(address2.street)
@@ -72,3 +72,28 @@ println(address2.zip)
 // address2.city = "Redmond"
 // address2.state = "WA"
 // address2.zip = 98000
+
+// Sneak Preview:
+// We can simplify things further by declaring the class as a "case class",
+// which we'll discuss later.
+
+// Immutable Address
+// 1. The "val" (immutable) keywords are inferred. 
+// 2. A suitable toString is generated for us, as long with
+//    many other very useful methods, including hashCode,
+//    equals, and others we'll see.
+case class Address3(
+  number:  Int,
+  street:  String,
+  city:    String,
+  state:   String,
+  zip:     Int)
+
+// No "new" is required. We are effectively calling a "factory"
+// method here:
+val address3 = Address3(3, "Zero Street", "San Jose", "CA", 97777)
+println(address3)
+println(address3.number)
+println(address3.street)
+println(address3.city)
+println(address3.zip)

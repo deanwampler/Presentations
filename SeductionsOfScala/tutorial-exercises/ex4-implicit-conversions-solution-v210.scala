@@ -5,7 +5,6 @@
 // Hint:
 // list(n) returns the nth element (0-based).
 // You can run this file with "scala ex4-implicit-conversions-solution.scala"
-// Version for Scala before v2.10.
 
 // Here's the definition of "process":
 def process[A,B,C](t: Tuple3[A,B,C]) = {
@@ -19,7 +18,7 @@ process(new Tuple3(1,2,3))
 //process(List(4,5,6)) // fails
 
 // For our script, it would be sufficient to define an implicit conversion 
-// method here and just use it. For completeness, let's do a more realistic 
+// method here and just use it. For completeness, let's do more realistic 
 // implementation. You would normally put these methods in an object, then
 // import that method into the scope where we need it.
 
