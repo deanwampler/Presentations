@@ -5,6 +5,7 @@
 // Hint:
 // list(n) returns the nth element (0-based).
 // You can run this file with "scala ex4-implicit-conversions-solution.scala"
+// Scala v2.10 solution; uses the new implicit syntax.
 
 // Here's the definition of "process":
 def process[A,B,C](t: Tuple3[A,B,C]) = {
@@ -22,7 +23,7 @@ process(new Tuple3(1,2,3))
 // implementation. You would normally put these methods in an object, then
 // import that method into the scope where we need it.
 
-object List2TupleConverter {
+implicit class List2TupleConverter {
   // We'll assume that the input list always has 3 elements:
   implicit def list2Tuple[T](list: List[T]) = (list(0), list(1), list(2))
 }
