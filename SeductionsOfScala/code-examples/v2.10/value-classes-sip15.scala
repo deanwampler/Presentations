@@ -6,7 +6,7 @@
 
 class Meters(val length: Double) extends AnyVal {
   def +(m: Meters): Meters = new Meters(length + m.length)
-  ov/erride def toString = s"$length meters"
+  override def toString = s"$length meters"
 }
 
 class Feet(val length: Double) extends AnyVal {
