@@ -12,7 +12,7 @@ This hands-on tutorial introduces you to the Scala programming language, a moder
 
 ## Setup
 
-A PDF of the slides, these instructions, and all the source code will be provided in class. You need to setup the following tools in advance.
+A PDF of the tutorial slides and all the exercise source code will be provided in class. You need to setup the following tools in advance, if you can.
 
 ### Scala 2.10 RC3
 
@@ -83,7 +83,7 @@ It's convenient to open the API documentation you downloaded in a browser. The *
 
 ## That's It!
 
-You're ready to go. During the tutorial, we'll do the exercises in the `tutorial-execises` folder. The code examples that appear in the presentation are in the `code-examples` folder. The examples specific to Scala 2.10 are in the `code-examples/v2.10` folder.
+You're ready to go. 
 
 I welcome feedback on the tutorial. See my contact information at the beginning of this file.
 
