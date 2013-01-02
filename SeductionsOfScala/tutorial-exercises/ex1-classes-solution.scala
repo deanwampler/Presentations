@@ -34,7 +34,7 @@ class Book(
   val isbn: Long
 ) {
   override def toString = 
-    "MutableBook(author = %s, title = %s, publisher = %s, isbn = %d)".format(
+    "Book(author = %s, title = %s, publisher = %s, isbn = %d)".format(
       author, title, publisher, isbn)
 }
 
@@ -42,39 +42,40 @@ class Book(
 
 // Create some books and test the results.
 
+import CheapTests._
+
 val mutableBook = new MutableBook(
   "Charles Dickens", "A Tale of Two Cities", "Victorian Publishing", 1234567890)
-println(mutableBook)
-println(mutableBook.author)
 
-def is[T](expected: T, actual: T):Unit = (expected == actual) match {
-  case true =>
-  case false => 
-    println("ERROR! Expected \"%s\", but got \"%s\"".format(expected, actual))
-    sys.exit(1)
-}
-
-is (mutableBook.author, "Charles")
-println(mutableBook.title)
-println(mutableBook.publisher)
-println(mutableBook.isbn)
+mutableBook.toString is 
+    "MutableBook(author = Charles Dickens, title = A Tale of Two Cities, publisher = Victorian Publishing, isbn = 1234567890)"
+mutableBook.author is "Charles Dickens"
+mutableBook.title is "A Tale of Two Cities"
+mutableBook.publisher is "Victorian Publishing"
+mutableBook.isbn is 1234567890
 
 mutableBook.author    = "Evelyn Waugh"
 mutableBook.title     = "Brideshead Revisited"
 mutableBook.publisher = "Interwar Books"
 mutableBook.isbn      = 1122334455
-println(mutableBook)
-println(mutableBook.author)
-println(mutableBook.title)
-println(mutableBook.publisher)
-println(mutableBook.isbn)
+
+mutableBook.toString is 
+    "MutableBook(author = Evelyn Waugh, title = Brideshead Revisited, publisher = Interwar Books, isbn = 1122334455)"
+mutableBook.author is "Evelyn Waugh"
+mutableBook.title is "Brideshead Revisited"
+mutableBook.publisher is "Interwar Books"
+mutableBook.isbn is 1122334455
 
 val book = new Book(
   "Jane Austin", "Pride and Prejudice", "Edwardian Novels", 1234554321)
-println(book)
-println(book.author)
-println(book.title)
-println(book.publisher)
-println(book.isbn)
-// NOTE: It will fail with a compile error at this point, so comment it out.
-// book.author = "Emily Bronte"
+book.toString is 
+    "Book(author = Jane Austin, title = Pride and Prejudice, publisher = Edwardian Novels, isbn = 1234554321)"
+book.author is "Jane Austin"
+book.title is "Pride and Prejudice"
+book.publisher is "Edwardian Novels"
+book.isbn is 1234554321
+
+// NOTE: It will fail with a compile error at this point, so comment out this line:
+//book.author = "Emily Bronte"
+
+println("Success!")

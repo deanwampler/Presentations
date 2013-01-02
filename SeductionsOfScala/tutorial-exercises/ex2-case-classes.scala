@@ -18,26 +18,28 @@
 // Add methods for at least +, -, or all four operators if you want.
 // Do you like the output of the generated toString? If not, what would be better?
 // implement it.
+
 /* --------------------- */
 /* Define Rational here: */
 /* --------------------- */
 
 // The following should work.
 
+import CheapTests._
+
 val r1 = new Rational(22, 7)
 val r2 = new Rational(11, 3)
-println("r1: " + r1)
-println("r2: " + r2)
-println("r1.numerator:   " + r1.numerator)
-println("r1.denominator: " + r1.denominator)
-println("r2.numerator:   " + r2.numerator)
-println("r2.denominator: " + r2.denominator)
-println("r1 + r2: " + (r1 + r2))
-println("r2 + r1: " + (r2 + r1))
-println("r1 - r2: " + (r1 - r2))
-println("r2 - r1: " + (r2 - r1))
-println("r1 * r2: " + (r1 * r2))
-println("r2 * r1: " + (r2 * r1))
-println("r1 / r2: " + (r1 / r2))
-println("r2 / r1: " + (r2 / r1))
+r1.numerator   is 22
+r1.denominator is 7
+r1.numerator   is 11
+r1.denominator is 3
+(r1 + r2).toString is "143/21"
+(r2 + r1).toString is "143/21"
+(r1 - r2).toString is "-11/21"
+(r2 - r1).toString is "11/21"
+(r1 * r2).toString is "242/21"
+(r2 * r1).toString is "242/21"
+(r1 / r2).toString is "66/77"
+(r2 / r1).toString is "77/66"
 
+println("Success!")
