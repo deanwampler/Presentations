@@ -1,4 +1,6 @@
-package units
+package examples.units
+
+// Compile first with scalac.
 
 class Meters(val length: Double) extends AnyVal {
   def +(m: Meters): Meters = new Meters(length + m.length)

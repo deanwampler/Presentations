@@ -22,7 +22,25 @@
 // Then, when the code that follows references Print.printf from
 // macros-examples-sip16.scala, you'll see information about the transformation.
 
+// Using macros-Print-sip16.scala
+
+import examples.macros._
+
 for {
   i <- 1 to 3
   s = s"$i is an integer"
 } Print.printf("An int %d, a string \"%s\", and a literal %%.\n", i, s)
+
+
+// Using macros-ReflectiveClosure-sip16.scala adapted from 
+// https://gist.github.com/4542402
+// Output:  ((x: Int) => x.$percent(2).$eq$eq(0))
+
+implicit class PimpedList[T](val list: List[T]) {
+  def query(predicate: ReflectiveClosure[T, Boolean]): List[T] = {
+    println(predicate.tree)
+    list filter predicate
+  }
+}
+List(1, 2, 3).query((x: Int) => x % 2 == 0)
+ 

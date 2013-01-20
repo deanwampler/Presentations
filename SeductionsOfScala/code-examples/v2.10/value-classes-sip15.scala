@@ -4,6 +4,8 @@
 // How to could have prevented a Mars landers from pancaking...
 // https://docs.scala-lang.org/sips/pending/value-classes.html
 
+import examples.macros
+
 class Meters(val length: Double) extends AnyVal {
   def +(m: Meters): Meters = new Meters(length + m.length)
   override def toString = s"$length meters"

@@ -5,7 +5,9 @@
 // Then look at macros-sip16.scala.
 //
 // See macros-sip16.scala for more discussion.
-//
+
+package examples.macros
+
 // You can only use the dynamic feature if you start scala with
 // the language feature enabled:
 //   scala -language:experimental.macros ...
