@@ -1,7 +1,7 @@
-// Exercise 3: Implicits.
+// Exercise 3: Implicits - Units of feet vs. meters.
 // We'll look at two important uses of implicits:
 //   1. Type conversions.
-//   2. "Extension methods", "type classes"; two names used in different 
+//   2. "Extension methods" or "type classes"; two names used in different 
 //      languages for techniques that allow you to add new methods to types.
 // 
 // We'll accomplish both in one step. Let's define some basic types for
@@ -20,7 +20,6 @@
 // been written in either of the following ways:
 //   override def toString = ""+length+" meters"
 //   override def toString = "%f meters".format(length)
-// If you are using Scala v2.9.X, then use one of these versions!
 //
 // Now, here are the two Types, for starters:
 
@@ -80,13 +79,13 @@ object FeetMetersConverters {
 import FeetMetersConverters._
 import CheapTests._
 
-10.0.feet   is    Feet(10.0)
-10.0.meters is    Meters(10.0)
+10.0.feet   is Feet(10.0)
+10.0.meters is Meters(10.0)
 10.0.meters isnot Feet(10.0)
 10.0.feet   isnot Meters(10.0)
 
-10.0.feet   + 10.0.meters is    Feet(  10.0 + 10.0*FEET_IN_ONE_METER)
-10.0.meters + 10.0.feet   is    Meters(10.0 + 10.0/FEET_IN_ONE_METER)
+10.0.feet   + 10.0.meters is Feet(  10.0 + 10.0*FEET_IN_ONE_METER)
+10.0.meters + 10.0.feet   is Meters(10.0 + 10.0/FEET_IN_ONE_METER)
 10.0.feet   + 10.0.feet   isnot Meters(20.0/FEET_IN_ONE_METER)
 10.0.meters + 10.0.meters isnot Feet(  20.0*FEET_IN_ONE_METER)
 

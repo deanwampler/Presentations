@@ -1,7 +1,7 @@
-// Exercise 3: Implicits.
+// Exercise 3: Implicits - Units of feet vs. meters.
 // We'll look at two important uses of implicits:
 //   1. Type conversions.
-//   2. "Extension methods", "type classes"; two names used in different 
+//   2. "Extension methods" or "type classes"; two names used in different 
 //      languages for techniques that allow you to add new methods to types.
 // 
 // We'll accomplish both in one step. Let's define some basic types for
@@ -49,6 +49,12 @@ object FeetMetersConverters {
 
   /* ------------------------------- */
   /* Define the implicit class here: */
+
+  implicit class ToFeetMeters(d: Double) {
+    def feet: Feet = new Feet(d)
+    def meters: Meters = new Meters(d)
+  }
+
   /* ------------------------------- */
 
   // The next logical problem is to convert Feet to Meters and
@@ -63,6 +69,10 @@ object FeetMetersConverters {
 
   /* ----------------------------------- */
   /* Define implicit val functions here: */
+
+  implicit val toMeters = (f: Feet) => new Meters(f.length/FEET_IN_ONE_METER)
+  implicit val toFeet = (m: Meters) => new Feet(m.length*FEET_IN_ONE_METER)
+
   /* ----------------------------------- */
 
 }
