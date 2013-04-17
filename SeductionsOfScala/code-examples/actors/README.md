@@ -4,7 +4,7 @@ Dean Wampler<br/>
 [dean@deanwampler.com](mailto:dean@deanwampler.com)<br/>
 [@deanwampler](https://twitter.com/deanwampler)
 
-*Copyright (c) 2010-2013, Dean Wampler. All Rights Reserved*
+*Copyright (c) 2009-2013, Dean Wampler. All Rights Reserved*
 
 The Actors example for the [Seductions of Scala](https://github.com/deanwampler/Presentations/tree/master/SeductionsOfScala) presentation and tutorial. This code can be found in the [code-examples/actors](https://github.com/deanwampler/Presentations/tree/master/SeductionsOfScala/code-examples/actors) subdirectory.
 

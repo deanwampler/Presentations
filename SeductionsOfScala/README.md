@@ -4,7 +4,7 @@ Dean Wampler<br/>
 [dean@deanwampler.com](mailto:dean@deanwampler.com)<br/>
 [@deanwampler](https://twitter.com/deanwampler)
 
-*Copyright (c) 2010-2013, Dean Wampler. All Rights Reserved*
+*Copyright (c) 2009-2013, Dean Wampler. All Rights Reserved*
 
 ## Introduction
 
@@ -14,15 +14,15 @@ This hands-on tutorial introduces you to the Scala programming language, a moder
 
 A PDF of the tutorial slides and all the exercise source code will be provided in class. You need to setup the following tools in advance, if you can.
 
-### Scala 2.10 RC3
+### Scala 2.10
 
-At the time of this writing, RC3 of version 2.10 is the latest available version of Scala. Although 2.10 is not (yet) a production-ready release, the tutorial introduces you to new features in this release, which will be in production soon. We'll indicate what features are new. You'll need to install this release (or a more recent one, if available) before the tutorial.
+At the time of this writing, version 2.10 is the latest available version of Scala. Even if you have 2.9.X, we'll discuss some features new to 2.10, so I recommend installing it. I'll indicate what features are new. However, most of the material works for 2.9.X.
 
-Go to to the Scala [download page](http://www.scala-lang.org/downloads#RC) and download the 2.10 RCn installer for your platform. Also, download the API archive that appears in the same list of download links.
+Go to to the Scala [download page](http://www.scala-lang.org/downloads) and download the 2.10 installer for your platform. Also, download the API archive that appears in the same list of download links.
 
 | NOTE |
 | :-- |
-| Be sure to grab the correct version of Scala, a 2.10 "release candidate". However, most of the tutorial will apply to the current production release, 2.9.2. |
+| Be sure to grab the installer for version 2.10 of Scala. However, most of the tutorial will apply to the current production release, 2.9.X. |
 
 Install Scala somewhere convenient. We'll use `$SCALA_HOME` to refer to this location. Be sure to add `$SCALA_HOME/bin` to your `PATH`.
 
@@ -34,10 +34,10 @@ If you like using Eclipse, consider installing the [Scala IDE](http://scala-ide.
 
 ### Sanity Check
 
-Once Scala is installed, try running the REPL (real, eval, print, loop) to make sure everything is working. The commands you type outside the REPL (e.g., at the `bash` shell for Linux and Mac OS X) are shown with the `$` prompt. The `scala` prompt is `scala>`. Everything else is output. Your version details my differ slightly.
+Once Scala is installed, try running the REPL (Read, Eval, Print, Loop) to make sure everything is working. The commands you type outside the REPL (e.g., at the `bash` shell for Linux and Mac OS X) are shown with the `$` prompt. The `scala` prompt is `scala>`. Everything else is output. Your version details my differ slightly.
 
 	$ scala
-	Welcome to Scala version 2.10.0-RC3 (Java HotSpot(TM) 64-Bit Server VM, Java 1.7.0_04).
+	Welcome to Scala version 2.10.0 (Java HotSpot(TM) 64-Bit Server VM, Java 1.7.0).
 	Type in expressions to have them evaluated.
 	Type :help for more information.
 
@@ -73,7 +73,7 @@ Once Scala is installed, try running the REPL (real, eval, print, loop) to make 
 
 	scala> ^D
 
-We use *control-d* (^D) to exit. It's an old terminal control, similar to ^C, that means "end of input". It's more "polite" than ^C...
+I used *control-d* (^D) to exit. It's an old terminal control, similar to ^C, that means "end of input". It's more "polite" than ^C...
 
 The REPL commands that begin with a colon (`:`) are used for non-code directives, like turning on the useful "power" mode, viewing help, loading source files, etc.
 
@@ -131,7 +131,7 @@ The following projects are using Macros. The first three are referenced on [this
 
 ### Slick
 
-Slick is a type-safe data access API inspired by .NET's [LINQ](http://msdn.microsoft.com/en-us/library/bb397926.aspx).
+Slick is a type-safe, data-access API inspired by .NET's [LINQ](http://msdn.microsoft.com/en-us/library/bb397926.aspx).
 
 * [http://slick.typesafe.com/](http://slick.typesafe.com/).
 
