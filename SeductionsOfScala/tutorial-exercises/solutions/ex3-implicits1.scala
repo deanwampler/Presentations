@@ -42,7 +42,9 @@ case class Feet(val length: Double) {
 // finally, note that the implicit conversations have to be defined
 // within an enclosing type, object or class, so their scope is 
 // constrained. This avoids one potential disadvantage of implicits,
-// that they get applied unexpectedly in some global scope!
+// that they get applied unexpectedly in some global scope! However,
+// it's not required to embed them within an object. Compare the
+// solution for ex3-implicits2.
 
 object FeetMetersConverters {
 
@@ -88,5 +90,5 @@ import CheapTests._
 10.0.meters + 10.0.feet   is Meters(10.0 + 10.0/FEET_IN_ONE_METER)
 10.0.feet   + 10.0.feet   isnot Meters(20.0/FEET_IN_ONE_METER)
 10.0.meters + 10.0.meters isnot Feet(  20.0*FEET_IN_ONE_METER)
-
+println(10.0.feet   + 10.0.meters)
 println("Success!")

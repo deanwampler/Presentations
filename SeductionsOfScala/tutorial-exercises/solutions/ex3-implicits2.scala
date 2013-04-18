@@ -24,6 +24,8 @@
 
 /* ------------------------------- */
 /* Define the implicit class here. */
+/* Note the expected output and    */
+/* assumptions made below.         */
 /* ------------------------------- */
 
 // Hint: When traversing the map elements, get the keys,
@@ -31,6 +33,33 @@
 // sortBy(key => key.toString), since the keys aren't necessarily
 // strings), then use foreach to iterate through the keys, where
 // you should get the corresponding value and format the tag.
+
+implicit class ToXML[K,V](map: Map[K,V]) {
+ 
+  def toXML: String = {
+    val indent: String = "  "
+    val sb = new StringBuilder
+
+    def open(name:Any, level: Int = 0) = 
+      sb.append(indent * level).append("<").append(name).append(">\n")
+    def close(name:Any, level: Int = 0) = 
+      sb.append(indent * level).append("</").append(name).append(">\n")
+
+    // Accept any types for name and value; just call toString on them!
+    def tag(name: Any, value: Any) = {
+      open(name, 1)
+      sb.append(indent*2).append(value.toString).append("\n")
+      close(name, 1)
+    }
+
+    open("map")
+    map.keys.toList.sortBy(_.toString).foreach { key => 
+      tag(key, map(key))
+    }
+    close("map")
+    sb.toString
+  }
+}
 
 import CheapTests._
 

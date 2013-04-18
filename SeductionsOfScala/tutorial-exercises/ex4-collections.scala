@@ -60,9 +60,10 @@ expected8 is List(("now", 3), ("is", 2), ("the", 3), ("time", 4))
 val expected9 = list
 expected9 is "[now-is-the-time]"
 
-// Map the names map to a 3-element list where the 3 names are "first last".
-// The following anonymous function can be written several ways. Note that
-// the anonymous function expects a Tuple2 argument for the key and value:
+// Map the "names" above to a 3-element list where each name is "first last".
+// The anonymous function passed to map() can be written several ways. Note that
+// the anonymous function expects a Tuple2 argument for the key and value, OR
+// it can also be written as PartialFunction, which we'll discuss later:
 val expected10  = names 
 expected10 is List("Martin Odersky", "Joe Armstrong", "Simon Peyton Jones")
 
@@ -90,14 +91,21 @@ expected14 is Map(4 -> "unknown")
 
 import scala.collection.immutable.TreeSet
 
-// Extract all the unique characters (respecting case) into a list:
-object Uniq {
-  def main(args: Array[String]) = 
-    args.toList  // convert to list
-      .flatMap(_.toList)  // flatten the list of strings to single list of characters
-      .sort(_ < _)        // sort the list alphanumerically
-      .foldLeft(new TreeSet[Char])((set,s) => set + s)  // "fold" the list elements into a set
-      .toList             // convert to the final list
-}
+// Extract all the unique characters (respecting case) into a list.
+// You could also just return the TreeSet, which is a Red-Black tree.
+// Note the three function signatures. I'll explain why in class...
+def uniques(arg: String): List[Char] = uniques(List(arg))
+def uniques(arg: String, args: String*): List[Char] = uniques(arg +: (args.toSeq))
+def uniques(args: Seq[String]): List[Char] = 
+  args.flatMap(_.toList) // Flatten the sequence of strings to single list of chars.
+      .sortWith(_ < _)   // Sort alphanumerically then "fold" the elements into a set
+      .foldLeft(new TreeSet[Char])((set,s) => set + s)
+      .toList            // convert to the final list
+
+val expected15 = List('N', 'T', 'e', 'h', 'i', 'm', 'o', 's', 't', 'w')
+uniques("Now", "is", "the", "Time") is expected15
+uniques("Now" :: "is" :: "the" :: "Time" :: Nil) is expected15
+uniques(List("Now", "is", "the", "Time")) is expected15
+uniques("Now") is List('N', 'o', 'w')
 
 println("Success!")
