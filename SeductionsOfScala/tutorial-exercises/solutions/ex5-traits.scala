@@ -144,24 +144,25 @@ put(2)
 """
 
 // For the last example, replace StringQueueLogging with StdoutQueueLogging.
-// Note the output written to the console. (Uncomment the code first, of 
-// course, and fill in the missing bits...)
+// Note the output written to the console:
 
-// val sq4 = new StandardQueue[Int]  
-//     ... { 
-//   def veto(t: Int) = t < 0
-// }
-// println("\ndoubling, filtering, logging (to stdout)")
-// for (i <- -2 to 2) {  
-//   sq4.put(i)  
-// }  
-// println
-// println("The contents of the queue should be 001122:")
-// sq4 foreach print
-// println
+val sq4 = new StandardQueue[Int]  
+    with QueueDoubling[Int]
+    with QueueFiltering[Int]  
+    with StdoutQueueLogging[Int] { 
+  def veto(t: Int) = t < 0
+}
+println("\ndoubling, filtering, logging (to stdout)")
+for (i <- -2 to 2) {  
+  sq4.put(i)  
+}  
+println
+println("The contents of the queue should be 001122:")
+sq4 foreach print
+println
 
-// Add a nice toString message to a copy of StandardQueue,
-// so the foreach is no longer required:
+// Add a nice toString message to StandardQueue, so the foreach is 
+// no longer required:
 
 // A generic queue implementation, with a toString!
 class StandardQueue2[T] extends Queue[T] {  
@@ -174,7 +175,9 @@ class StandardQueue2[T] extends Queue[T] {
   // Add toList to make it easy to examine the queue contents.
   def toList: List[T] = ab.toList
 
-  override def toString = ???
+  // One of many possible approaches:
+  override def toString = 
+    ab.mkString("Queue(", ",", ")")
 }
 
 val sq5 = new StandardQueue2[Int]  
