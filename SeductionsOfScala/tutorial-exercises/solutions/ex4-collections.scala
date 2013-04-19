@@ -99,6 +99,7 @@ import scala.collection.immutable.TreeSet
 
 // Extract all the unique characters (respecting case) into a list.
 // You could also just return the TreeSet, which is a Red-Black tree.
+// Note the three function signatures. I'll explain why in class...
 def uniques(arg: String): List[Char] = uniques(List(arg))
 def uniques(arg: String, args: String*): List[Char] = uniques(arg +: (args.toSeq))
 def uniques(args: Seq[String]): List[Char] = 
