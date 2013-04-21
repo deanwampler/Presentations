@@ -4,13 +4,22 @@ import CheapTests._
 
 // Generate a list of 3-tuples that satisfy these properties:
 //   1) i >= j >= k 
-//   2) (i+j+k) % 3 == 0
+//   2) i > 0, j > 0, k > 0
+//   3) (i+j+k) % 3 == 0
+//   4) i <= 10
 // We'll ceate a list of tuples with the i,j,k elements.
 
 // Replace the right-hand side with the correct for comprehension.
-val actual1 = Vector[(Int,Int,Int)]()
+// actual1 will be of type Vector[(Int,Int,Int)], which is equivalent
+// to Vector[Tuple3[Int,Int,Int]]. That is, you can use the tuple
+// literal syntax in the type signature, too!
+val actual1 = for { 
+  // Iterate i from 1 to 10 (arbitrary), j and k as appropriate.
+  // Conditional for property #3 above.
+  ??? 
+}  yield ((i, j, k)) 
 
-// Note that a Vector should be created:  
+// Note that a Vector should have been created:  
 actual1 is Vector(
   (1,1,1), 
   (2,2,2), 
@@ -25,8 +34,10 @@ actual1 is Vector(
 
 // Iterate through a collection of Options and observe the "Monadic" behavior:
 
-val list = List(Option(1), None, None, Option(2), Option(3), None, None, Option(4), None)
-// Replace the right-hand side with the correct for comprehension.
+val list = List(Option(1), None, None, Option(2), Option(3), 
+  None, None, Option(4), None)
+// Replace the right-hand side of the next expression with the 
+// correct for comprehension.
 val actual2 = List[Int]()
 actual2 is List(1,2,3,4)
 
