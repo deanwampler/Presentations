@@ -1,20 +1,20 @@
 package shapes
 
-import akka.actor._
+import akka.actor.Actor
 
-class ShapeDrawingActor extends Actor {  
-  def receive: PartialFunction[Any, Unit] = {
-    case s:Shape =>
+class ShapesDrawingActor extends Actor {
+  def receive = {
+    case s: Shape ⇒
       print("-> ")
       s.draw()
-      self.reply("Shape drawn.")
-    
-    case "exit" =>
+      sender ! "Shape drawn."
+
+    case "exit" ⇒
       println("-> exiting...")
-      self.reply("good bye!")
-    
-    case x  => 
+      sender ! "good bye!"
+
+    case x ⇒
       println("-> Error: " + x)
-      self.reply("Unknown message: " + x)
+      sender ! s"Unknown message: $x"
   }
 }
