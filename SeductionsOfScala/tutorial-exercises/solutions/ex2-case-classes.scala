@@ -22,8 +22,6 @@
 /* --------------------- */
 /* Define Rational here: */
 
-// You can run this file with "scala ex2-case-classes-solution.scala"
-
 case class Rational(numerator: Int, denominator: Int) {
   def + (r2: Rational) = 
     new Rational(numerator * r2.denominator + r2.numerator * denominator, 
