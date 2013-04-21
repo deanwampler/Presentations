@@ -1,4 +1,4 @@
-// Exercise 5: Traits as Mixins
+// Exercise 7: Traits as Mixins
 // We discussed mixins for a Queue class. This "exercise" is more
 // of a demonstration of what's possible, to save class time.
 // Experiment with ordering the traits differently. Do the results
@@ -161,7 +161,9 @@ put(2)
 // println
 
 // Add a nice toString message to a copy of StandardQueue,
-// so the foreach is no longer required:
+// so the foreach is no longer required. 
+// Note that the override keyword is required, because toString
+// is already defined in core library classes:
 
 // A generic queue implementation, with a toString!
 class StandardQueue2[T] extends Queue[T] {  

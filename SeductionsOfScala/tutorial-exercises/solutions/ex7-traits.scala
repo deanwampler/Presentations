@@ -1,4 +1,4 @@
-// Exercise 5: Traits as Mixins
+// Exercise 7: Traits as Mixins
 // We discussed mixins for a Queue class. This "exercise" is more
 // of a demonstration of what's possible, to save class time.
 // Experiment with ordering the traits differently. Do the results
