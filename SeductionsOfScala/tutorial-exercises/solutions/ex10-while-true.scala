@@ -1,4 +1,4 @@
-// Exercise 8: Implement Your Own whileTrue Control
+// Exercise 10: Implement Your Own whileTrue Control
 //
 // Here is the declaration of the "DSL" function we want:
 // def whileTrue(condition: => Boolean)(block: => Unit): Unit
@@ -29,8 +29,6 @@ import CheapTests._
 
 // Why the call to reverse??
 accumulator.reverse is List(0,1,2,3,4,5,6,7,8,9)
-
-println("Success!")
 
 
 // Here is a slightly different form that uses a nested method. Note that

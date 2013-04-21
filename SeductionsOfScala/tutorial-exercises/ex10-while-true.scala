@@ -1,4 +1,4 @@
-// Exercise 8: Implement Your Own whileTrue Control
+// Exercise 10: Implement Your Own whileTrue Control
 //
 // Here is the declaration of the "DSL" function we want:
 // def whileTrue(condition: => Boolean)(block: => Unit): Unit
