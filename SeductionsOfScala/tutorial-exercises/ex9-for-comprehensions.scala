@@ -1,4 +1,4 @@
-// Exercise 9: For Loops
+// Exercise 6: For Comprehensions
 
 import CheapTests._
 
