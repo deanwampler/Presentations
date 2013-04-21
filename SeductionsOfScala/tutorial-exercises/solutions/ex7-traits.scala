@@ -144,7 +144,8 @@ put(2)
 """
 
 // For the last example, replace StringQueueLogging with StdoutQueueLogging.
-// Note the output written to the console:
+// Note the output written to the console. (Uncomment the code first, of 
+// course, and fill in the missing bits...)
 
 val sq4 = new StandardQueue[Int]  
     with QueueDoubling[Int]
@@ -161,8 +162,10 @@ println("The contents of the queue should be 001122:")
 sq4 foreach print
 println
 
-// Add a nice toString message to StandardQueue, so the foreach is 
-// no longer required:
+// Add a nice toString message to a copy of StandardQueue,
+// so the foreach is no longer required. 
+// Note that the override keyword is required, because toString
+// is already defined in core library classes:
 
 // A generic queue implementation, with a toString!
 class StandardQueue2[T] extends Queue[T] {  
