@@ -13,8 +13,8 @@ class ShapesDrawingActor extends Actor {
       println("-> exiting...")
       sender ! "good bye!"
 
-    case x ⇒
-      println("-> Error: " + x)
-      sender ! s"Unknown message: $x"
+    case other ⇒
+      println("-> Error: " + other)
+      sender ! s"Unknown message: $other"
   }
 }

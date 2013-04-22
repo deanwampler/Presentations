@@ -7,7 +7,7 @@ Dean Wampler<br/>
 
 *Copyright (c) 2009-2013, Dean Wampler. All Rights Reserved*
 
-The Actors example for the [Seductions of Scala](https://github.com/deanwampler/Presentations/tree/master/SeductionsOfScala) presentation and tutorial. This code can be found in the [code-examples/actors](https://github.com/deanwampler/Presentations/tree/master/SeductionsOfScala/code-examples/actors) subdirectory.
+The Actors example for the [Seductions of Scala](https://github.com/deanwampler/Presentations/tree/master/SeductionsOfScala) presentation and tutorial. This code can be found in the [tutorial-exercises/drawing-actors](https://github.com/deanwampler/Presentations/tree/master/SeductionsOfScala/tutorial-exercises/drawing-actors) subdirectory.
 
 This is a simple example using the [Akka Framework](http://akka.io) v2.1.X for Scala and Java, with Scala v2.10.X.
 
@@ -15,7 +15,7 @@ The example is built and run using the [sbt](http://www.scala-sbt.org/), the de 
 
 ## Instructions
 
-Change to the root directory for the actors example `SeductionsOfScala/code-examples/actors`. 
+Change to the root directory for the actors example `SeductionsOfScala/tutorial-examples/drawing-actors`. 
 
 Using `bash` or another command shell, run `sbt`, as instructed by the `sbt` installation process.
 
@@ -47,4 +47,17 @@ Note that the interleaving of `<-` and `->` messages will be *arbitrary*, **but*
 
 The drawing actor is in `src/main/scala/ShapesDrawingActor.scala`, while the driver actor is in `src/main/scala/ShapesDrawingDriver.scala`.
 
+## Extensions
 
+This is just the tip of the iceberg. The example doesn't demonstrate the user of actor supervisor hierarchies, remote actors, Akka's support for *dataflow* programming or *finite-state machines*, etc. A good, more complete *Kata* for Akka actors is [here](https://github.com/henrikengstrom/akka-meetup-sthlm).
+
+For now, there are a few extensions you can implement with this example:
+
+* Add a `Triangle` class. Actually, `shapes.scala` already defines one. Add messages that send triangles. What other code changes, if any are required?
+* Replace the ad-hoc strings used as messages with typed messages. This is a great use for case classes. Which ones can actually be case objects, rather than classes?
+* Instead of firing all the draw messages at once, send them one at a time when the acknowledgement for the last sent message is received. What are the pros and cons of these two strategies? 
+* Send other messages, e.g., a "clear screen" message, a "redraw" message, etc.
+* Replace the `println` statements with a Logging trait that saves the messages somehow (e.g., a `StringBuffer` and list of messages, etc.). Then use the `CheapTests` to write a test for the application. (Akka now comes with modules to support testing. In the general case, testing a distributed, non-deterministic application, is hard!)
+* Add logic to handle the case that the Drawing actor hasn't been sent to the Driver yet, e.g., cue up waiting messages, then send them when the Drawing actor is specified.
+* Start a second drawing actor and round-robin messages to the pair.
+* Advanced: Look at the 
