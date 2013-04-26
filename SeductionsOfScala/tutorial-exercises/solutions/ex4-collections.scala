@@ -27,11 +27,28 @@ val expected1 = list.reverse
 expected1 is List("time", "the", "is", "now")
 
 // Same things:
+// val expected2 = list.map (s => s.toUpperCase)
+// val expected2 = list map (s => s.toUpperCase)
+// val expected2 = list map {s => s.toUpperCase}
+// Use _ as a placeholder for EACH argument passed to
+// the function called by map:
 // val expected2 = list.map (_.toUpperCase)
 // val expected2 = list map (_.toUpperCase)
 // val expected2 = list map {_.toUpperCase}
 val expected2 = list map (_.toUpperCase)
 expected2 is List("NOW", "IS", "THE", "TIME")
+
+// Other implementations of the previous:
+// A function value that takes a string argument
+// and returns a new string:
+// val f: (String => String) = s.toUpperCase
+// Effectively the same thing, what it would look like
+// in Java. That is the byte code output the same:
+// val f: Function1[String,String] = new Function1[s,s] {
+//   def apply(s: String) = s.toUpperCase
+// }
+// Use f:
+// val expected2 = list.map (f)
 
 // Return the first element
 val expected3 = list.head
