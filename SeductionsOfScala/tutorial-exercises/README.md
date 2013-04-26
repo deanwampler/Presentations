@@ -21,3 +21,17 @@ If you get an error that `CheapTests` can't be found, then compile the "cheap te
     scalac -cp . cheap-tests.scala
 
 I welcome feedback on the tutorial and on these exercises!
+
+# Actors and Scalding Exercises
+
+The actor exercises are in the `tutorial-exercises/drawing-actors` directory. See the README there.
+
+The Scalding exercises mentioned in the slides are actually taken from my [Scalding-Workshop](https://github.com/deanwampler/scalding-workshop). Note that the [GitHub version of Scalding](https://github.com/twitter/scalding) builds with Scala 2.9.X, while this tutorial uses 2.10.X. Simply clone that repo, edit `target/Build.scala` and change the `scalaVersion` value to "2.10.1", then run these `sbt` commands:
+
+    sbt
+    > update
+    > test
+    > assembly
+
+Finally, **replace** the `lib/scalding-assembly-0.7.3.jar` in the `scalding-workshop` with the newly-built `scalding-core/target/scala-2.10/scalding-core-assembly-0.9.0-....jar` file. Now you can use Scala 2.10 with the `scalding-workshop` scripts. I'll update that project soon with these changes, so check the README there first...
+

@@ -169,8 +169,8 @@ pre .tex .formula {
       <h1 id="readmefortheactorsexampleinseductionsofscala">README for the Actors Example in &#8220;Seductions of Scala&#8221;</h1>
 
 <p>Dean Wampler<br/>
-<a href="&#109;&#x61;&#105;&#108;&#x74;&#111;&#x3a;&#100;&#101;&#97;&#110;&#64;&#99;&#111;&#x6e;&#x63;&#x75;&#x72;&#114;&#101;&#110;&#x74;&#x74;&#x68;&#111;&#117;&#x67;&#104;&#x74;&#x2e;&#x63;&#x6f;&#109;">&#x64;&#x65;&#x61;&#x6e;&#x40;&#x63;&#x6f;&#x6e;&#99;&#117;&#114;&#x72;&#x65;&#110;&#116;&#x74;&#104;&#111;&#x75;&#x67;&#x68;&#x74;&#x2e;&#x63;&#111;&#x6d;</a><br/>
-<a href="&#109;&#97;&#105;&#108;&#x74;&#x6f;&#x3a;&#x64;&#x65;&#x61;&#x6e;&#64;&#100;&#101;&#97;&#x6e;&#x77;&#x61;&#109;&#x70;&#x6c;&#x65;&#114;&#x2e;&#99;&#111;&#109;">&#x64;&#101;&#97;&#110;&#x40;&#x64;&#101;&#97;&#x6e;&#x77;&#x61;&#x6d;&#x70;&#108;&#101;&#114;&#x2e;&#x63;&#111;&#x6d;</a><br/>
+<a href="&#x6d;&#97;&#x69;&#108;&#x74;&#x6f;&#58;&#x64;&#x65;&#97;&#x6e;&#x40;&#x63;&#111;&#110;&#99;&#x75;&#x72;&#114;&#x65;&#x6e;&#116;&#x74;&#x68;&#x6f;&#x75;&#x67;&#104;&#116;&#46;&#x63;&#111;&#x6d;">&#x64;&#x65;&#x61;&#110;&#64;&#99;&#x6f;&#x6e;&#99;&#117;&#x72;&#x72;&#x65;&#110;&#x74;&#x74;&#x68;&#x6f;&#117;&#103;&#x68;&#116;&#x2e;&#x63;&#111;&#109;</a><br/>
+<a href="&#109;&#97;&#x69;&#108;&#116;&#x6f;&#58;&#100;&#x65;&#97;&#110;&#64;&#100;&#x65;&#x61;&#x6e;&#119;&#97;&#x6d;&#112;&#108;&#x65;&#114;&#x2e;&#99;&#111;&#109;">&#100;&#x65;&#x61;&#110;&#x40;&#x64;&#101;&#97;&#110;&#x77;&#x61;&#x6d;&#112;&#x6c;&#101;&#114;&#x2e;&#x63;&#x6f;&#x6d;</a><br/>
 <a href="https://twitter.com/deanwampler">@deanwampler</a></p>
 
 <p><em>Copyright (c) 2009&#8211;2013, Dean Wampler. All Rights Reserved</em></p>
@@ -180,6 +180,16 @@ pre .tex .formula {
 <p>This is a simple example using the <a href="http://akka.io">Akka Framework</a> v2.1.X for Scala and Java, with Scala v2.10.X.</p>
 
 <p>The example is built and run using the <a href="http://www.scala-sbt.org/">sbt</a>, the de facto standard build tool for Scala projects. You&#8217;ll need to install <code>sbt</code> to build this project. </p>
+
+<p>The Scalding exercises mentioned in the slides are actually taken from my <a href="https://github.com/deanwampler/scalding-workshop">Scalding-Workshop</a>. Note that the <a href="https://github.com/twitter/scalding">GitHub version of Scalding</a> builds with Scala 2.9.X, while this tutorial uses 2.10.X. Simply clone that repo, edit <code>target/Build.scala</code> and change the <code>scalaVersion</code> value to &#8220;2.10.1&#8221;, then run these <code>sbt</code> commands:</p>
+
+<pre><code>sbt
+&gt; update
+&gt; test
+&gt; assembly
+</code></pre>
+
+<p>Finally, <strong>replace</strong> the <code>lib/scalding-assembly-0.7.3.jar</code> in the <code>scalding-workshop</code> with the newly-built <code>scalding-core/target/scala-2.10/scalding-core-assembly-0.9.0-....jar</code> file. Now you can use Scala 2.10 with the <code>scalding-workshop</code> scripts. I&#8217;ll update that project soon with these changes, so check the README there first&#8230;</p>
 
 <h2 id="instructions">Instructions</h2>
 

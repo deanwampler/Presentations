@@ -13,6 +13,15 @@ This is a simple example using the [Akka Framework](http://akka.io) v2.1.X for S
 
 The example is built and run using the [sbt](http://www.scala-sbt.org/), the de facto standard build tool for Scala projects. You'll need to install `sbt` to build this project. 
 
+The Scalding exercises mentioned in the slides are actually taken from my [Scalding-Workshop](https://github.com/deanwampler/scalding-workshop). Note that the [GitHub version of Scalding](https://github.com/twitter/scalding) builds with Scala 2.9.X, while this tutorial uses 2.10.X. Simply clone that repo, edit `target/Build.scala` and change the `scalaVersion` value to "2.10.1", then run these `sbt` commands:
+
+    sbt
+    > update
+    > test
+    > assembly
+
+Finally, **replace** the `lib/scalding-assembly-0.7.3.jar` in the `scalding-workshop` with the newly-built `scalding-core/target/scala-2.10/scalding-core-assembly-0.9.0-....jar` file. Now you can use Scala 2.10 with the `scalding-workshop` scripts. I'll update that project soon with these changes, so check the README there first...
+
 ## Instructions
 
 Change to the root directory for the actors example `SeductionsOfScala/tutorial-examples/drawing-actors`. 
