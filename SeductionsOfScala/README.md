@@ -97,13 +97,13 @@ I welcome feedback on the tutorial. See my contact information at the beginning 
 [Typesafe](https://typesafe.com)
 : The official developer of Scala and other components that are part of the [Typesafe stack](https://typesafe.com/stack).
 
-[docs.scala-lang.org](https://docs.scala-lang.org)
-: Lots of documentation for Scala, including the [Scaladocs](https://scala-lang.org/archives/downloads/distrib/files/nightly/docs/library/index.html) tutorials, the *Scala Improvement Process* (SIP) proposals (for new features), etc.
+[docs.scala-lang.org](http://docs.scala-lang.org)
+: Lots of documentation for Scala, including the [Scaladocs](http://scala-lang.org/archives/downloads/distrib/files/nightly/docs/library/index.html) tutorials, the *Scala Improvement Process* (SIP) proposals (for new features), etc.
 
-[akka.io](https://akka.io)
+[akka.io](http://akka.io)
 : The website for the Akka distributed computing library that's part of the [Typesafe stack](https://typesafe.com/stack).
 
-[Play Framework](https://www.playframework.org/)
+[Play Framework](http://www.playframework.org/)
 : One of many web frameworks for Scala, this one is an official part of the [Typesafe stack](https://typesafe.com/stack).
 
 [Programming Scala](http://ofps.oreilly.com/titles/9780596155957/)
