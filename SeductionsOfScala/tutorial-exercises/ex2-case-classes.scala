@@ -31,8 +31,8 @@ val r1 = new Rational(22, 7)
 val r2 = new Rational(11, 3)
 r1.numerator   is 22
 r1.denominator is 7
-r1.numerator   is 11
-r1.denominator is 3
+r2.numerator   is 11
+r2.denominator is 3
 (r1 + r2).toString is "143/21"
 (r2 + r1).toString is "143/21"
 (r1 - r2).toString is "-11/21"
