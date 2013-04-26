@@ -23,12 +23,11 @@
 /* Define Rational here: */
 /* --------------------- */
 
-// The following should work.
-
 import CheapTests._
 
-val r1 = new Rational(22, 7)
-val r2 = new Rational(11, 3)
+// Note that we don't need to use new:
+val r1 = Rational(22, 7)
+val r2 = Rational(11, 3)
 r1.numerator   is 22
 r1.denominator is 7
 r2.numerator   is 11
@@ -41,5 +40,15 @@ r2.denominator is 3
 (r2 * r1).toString is "242/21"
 (r1 / r2).toString is "66/77"
 (r2 / r1).toString is "77/66"
+
+val r3 = r1.copy(denominator = 1)
+r3.numerator   is 22
+r3.denominator is 1
+
+// Add a default value of 1 for the "denominator" argument
+// to make the next line compile:
+val r4 = Rational(10)
+r4.numerator   is 10
+r4.denominator is 1
 
 println("Success!")
