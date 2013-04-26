@@ -26,6 +26,10 @@ val names  = Map(
 val expected1 = list.reverse
 expected1 is List("time", "the", "is", "now")
 
+// Same things:
+// val expected2 = list.map (_.toUpperCase)
+// val expected2 = list map (_.toUpperCase)
+// val expected2 = list map {_.toUpperCase}
 val expected2 = list map (_.toUpperCase)
 expected2 is List("NOW", "IS", "THE", "TIME")
 
