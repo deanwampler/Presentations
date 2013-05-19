@@ -34,13 +34,16 @@ for {
 
 // Using macros-ReflectiveClosure-sip16.scala adapted from 
 // https://gist.github.com/4542402
-// Output:  ((x: Int) => x.$percent(2).$eq$eq(0))
+// Output:  
+//   predicate.tree = ((x: Int) => x.$percent(2).$eq$eq(0))
+//   result = List(2)
 
 implicit class PimpedList[T](val list: List[T]) {
   def query(predicate: ReflectiveClosure[T, Boolean]): List[T] = {
-    println(predicate.tree)
+    println(s"predicate.tree = ${predicate.tree}")
     list filter predicate
   }
 }
-List(1, 2, 3).query((x: Int) => x % 2 == 0)
+val result = List(1, 2, 3).query((x: Int) => x % 2 == 0)
+println(s"result = $result")
  
