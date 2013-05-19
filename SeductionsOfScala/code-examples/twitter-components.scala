@@ -1,3 +1,5 @@
+// An simplistic example of the cake pattern.
+
 trait Tweeter {
   def tweet(message: String)
 }
