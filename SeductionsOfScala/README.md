@@ -12,7 +12,7 @@ This hands-on tutorial introduces you to the Scala programming language, a moder
 
 ## Setup
 
-A PDF of the tutorial slides and all the exercise source code will be provided in class. You need to setup the following tools in advance, if you can.
+PDFs of the tutorial slides and all the exercise source code will be provided in class. You need to setup the following tools in advance, if you can.
 
 ### Scala 2.10
 
@@ -134,5 +134,46 @@ The following projects are using Macros. The first three are referenced on [this
 Slick is a type-safe, data-access API inspired by .NET's [LINQ](http://msdn.microsoft.com/en-us/library/bb397926.aspx).
 
 * [http://slick.typesafe.com/](http://slick.typesafe.com/).
+
+## Working Through the Tutorial
+
+The slides are too long ;) So, we'll skip through them, allowing us to spend most of our time on the actual exercises. The following sections list the slides we'll actually look at in class. You might look at the skipped slides later for more background information.
+
+### SeductionsOfScala.pdf
+
+Note that the solutions for the exercises are in the `tutorial-exercises/solutions` folder. Also, we do the first few together as a class, then you'll work on your own.
+
+| Slides | Description | Exercise |
+| :----- | :---------- | :------- |
+| Slides 14-26 | Succinct code | 1 |
+| Slides 27-34 | Case classes | 2 |
+| Slides 35-61 | Objects as functions, implicits, etc. | 3* |
+| Slides 78-86, 91 | Recursion | 4, 5 (on slide 107) for extra credit |
+| Slides 109-117 | Option type | - |
+| Slides 121-122, 127-131 | For comprehensions | 6 |
+| Slides 135-142 | Traits ("mixins") | - |
+| Slides 184-214 | Companion object, pattern matching | 8 (optional) |
+
+* We'll discuss the solution to Exercise 3, but not work through it (for time's sake).
+
+That is, we'll cover about half the slides ;)
+
+### SeductionsOfScala-Applications.pdf
+
+This section discusses two important applications of Scala.
+
+1. The Akka Actor model for concurrency.
+2. Scalding, a DSL for Hadoop.
+
+We'll just discuss Akka today.
+
+| Slides | Description | Exercise |
+| :----- | :---------- | :------- |
+| Slides 4-22 | Akka and an example | `drawing-actors` |
+
+The `drawing-actors` exercise is in its own directory. See `tutorial-exercises/drawing-actors/README.html` for details. It also demonstrates the use of `sbt`, the *de-facto* build tool for Scala and one of several test frameworks, [ScalaTest](http://scalatest.org/).
+
+
+
 
 

@@ -11,32 +11,25 @@ The Actors example for the [Seductions of Scala](https://github.com/deanwampler/
 
 This is a simple example using the [Akka Framework](http://akka.io) v2.1.X for Scala and Java, with Scala v2.10.X.
 
-The example is built and run using the [sbt](http://www.scala-sbt.org/), the de facto standard build tool for Scala projects. You'll need to install `sbt` to build this project. 
-
-The Scalding exercises mentioned in the slides are actually taken from my [Scalding-Workshop](https://github.com/deanwampler/scalding-workshop). Note that the [GitHub version of Scalding](https://github.com/twitter/scalding) builds with Scala 2.9.X, while this tutorial uses 2.10.X. Simply clone that repo, edit `target/Build.scala` and change the `scalaVersion` value to "2.10.1", then run these `sbt` commands:
-
-    sbt
-    > update
-    > test
-    > assembly
-
-Finally, **replace** the `lib/scalding-assembly-0.7.3.jar` in the `scalding-workshop` with the newly-built `scalding-core/target/scala-2.10/scalding-core-assembly-0.9.0-....jar` file. Now you can use Scala 2.10 with the `scalding-workshop` scripts. I'll update that project soon with these changes, so check the README there first...
+The example is built and run using the [sbt](http://www.scala-sbt.org/), the de facto standard build tool for Scala projects. You'll need to install the `sbt` command to build this project. See [sbt](http://www.scala-sbt.org/) for installers. 
 
 ## Instructions
 
 Change to the root directory for the actors example `SeductionsOfScala/tutorial-examples/drawing-actors`. 
 
-Using `bash` or another command shell, run `sbt`, as instructed by the `sbt` installation process.
+Using a `bash` shell or Windows command window, run `sbt`, as instructed by the `sbt` installation process.
 
 At the `sbt` prompt (`>`), run the following commands. (The #... are comments and shouldn't be typed).
 
-    compile  # Compile the code. (Expect a "success" message when done).
+    update   # Pull down the other dependencies
+    compile  # Compile the code.
+    test     # Run the simple ScalaTest unit tests. (Also runs compile)
     run      # Run the actor example.
     quit     # Exit sbt.
 
-The first time start `sbt` and compile the code, it may take a long time to download the required dependencies. 
+The first time start `sbt` and run `update1`, it may take a while to download the dependencies (including the rest of the `sbt` code itself!). 
 
-The fairly verbose output of the commands should end with the following for a success run:
+The fairly verbose output of the commands should end with the following for a successful run:
 
     ...
     [info] Running shapes.ShapesDrawingDriver
@@ -64,9 +57,10 @@ For now, there are a few extensions you can implement with this example:
 
 * Add a `Triangle` class. Actually, `shapes.scala` already defines one. Add messages that send triangles. What other code changes, if any are required?
 * Replace the ad-hoc strings used as messages with typed messages. This is a great use for case classes. Which ones can actually be case objects, rather than classes?
-* Instead of firing all the draw messages at once, send them one at a time when the acknowledgement for the last sent message is received. What are the pros and cons of these two strategies? 
+* Instead of firing all the draw messages at once, send them synchronously, one at a time when the acknowledgement for the last sent message is received. What are the pros and cons of these two strategies? 
 * Send other messages, e.g., a "clear screen" message, a "redraw" message, etc.
-* Replace the `println` statements with a Logging trait that saves the messages somehow (e.g., a `StringBuffer` and list of messages, etc.). Then use the `CheapTests` to write a test for the application. (Akka now comes with modules to support testing. In the general case, testing a distributed, non-deterministic application, is hard!)
+* Replace the `println` statements with a Logging trait that saves the messages somehow (e.g., a `StringBuffer` and list of messages, etc.). Then write a `ScalaTest` for the actors. Hint: the synchronous change mentioned above will help! (Akka now comes with modules to support testing. In the general case, testing a distributed, non-deterministic application, is hard!)
 * Add logic to handle the case that the Drawing actor hasn't been sent to the Driver yet, e.g., cue up waiting messages, then send them when the Drawing actor is specified.
 * Start a second drawing actor and round-robin messages to the pair.
-* Advanced: Look at the 
+* Advanced: Look at the Akka documentation for supervising actors. Send a never-ending stream of shapes, but periodically kill the drawing actor and implement the logic to have it restarted by the supervisor automatically. 
+

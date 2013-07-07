@@ -8,7 +8,7 @@ import com.typesafe.sbt.SbtScalariform.ScalariformKeys
 object AkkaActorExampleBuild extends Build {
   val Organization = "ConcurrentThought"
   val Version      = "2.0"
-  val ScalaVersion = "2.10.1"
+  val ScalaVersion = "2.10.2"
 
   lazy val example = Project(
     id = "example",
@@ -56,7 +56,7 @@ object Dependencies {
 object Dependency {
   object Version {
     val Akka      = "2.1.2"
-    val Scalatest = "1.9.1"
+    val ScalaTest = "2.0.M5b"
     val JUnit     = "4.10"
   }
 
@@ -67,6 +67,6 @@ object Dependency {
 
   // ---- Test dependencies ----
 
-  val scalaTest   = "org.scalatest"       %% "scalatest"               % Version.Scalatest  % "test"
+  val scalaTest   = "org.scalatest"       %% "scalatest"               % Version.ScalaTest  % "test"
   val jUnit       = "junit"               % "junit"                    % Version.JUnit      % "test"
 }
