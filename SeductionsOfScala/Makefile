@@ -9,7 +9,7 @@ all: zip
 zip: stage
 
 stage: clean ${STAGE_DIR}
-	cp README.* ScalaResources.markdown SeductionsOfScalaTutorial*.pdf ${STAGE_DIR}
+	cp README.* ScalaResources.* SeductionsOfScalaTutorial*.pdf ${STAGE_DIR}
 	cp -r code-examples ${STAGE_DIR}/code-examples
 	cp -r tutorial-exercises ${STAGE_DIR}/tutorial-exercises
 
