@@ -5,3 +5,4 @@ boot/
 logs/
 *.class
 .scala_dependencies
+.DS_Store
