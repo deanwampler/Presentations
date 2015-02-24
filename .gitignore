@@ -6,3 +6,4 @@ logs/
 *.class
 .scala_dependencies
 .DS_Store
+tmp/images
