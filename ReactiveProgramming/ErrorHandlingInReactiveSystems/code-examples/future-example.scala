@@ -38,7 +38,7 @@ def getOrders(ids: Seq[Long]): Future[Seq[Order]] = Future {
 def ordersForAccount(accountId: Long): Future[Seq[Order]] = for {
   account <- getAccount(accountId)
   orders  <- getOrders(account.orderIds)
-} yield orders
+} yield orders.toVector  // Return an efficient sequence: Vector
 
 println("Expect an error for account #2:\n")
 
