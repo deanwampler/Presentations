@@ -1,3 +1,4 @@
+tmp/
 target/
 lib_managed/
 src_managed/
@@ -7,3 +8,9 @@ logs/
 .scala_dependencies
 .DS_Store
 tmp/images
+DataScienceAtScaleWithSpark/*.jpg
+DataScienceAtScaleWithSpark/*.gif
+ScalaJVMBigData-SparkLessons/*.tiff
+ScalaJVMBigData-SparkLessons/*.gif
+SparkOnMesos/*.jpg
+SparkOnMesos/*.gif
