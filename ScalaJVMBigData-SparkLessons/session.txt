@@ -1,0 +1,52 @@
+scala> val N2 = 995*1000*1000
+N2: Int = 995000000
+
+scala> val bigArray = Array.fill[Short](N2)(0)
+bigArray: Array[Short] = Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0...
+scala>
+
+scala> val size = SizeEstimator.estimate(bigArray)  // ~1.99GB
+size: Long = 1990000016
+
+scala>
+
+scala> val b = sc.broadcast(bigArray)
+b: org.apache.spark.broadcast.Broadcast[Array[Short]] = Broadcast(0)
+
+scala> SizeEstimator.estimate(b)   // ~1700B
+res0: Long = 2368
+
+scala> val rdd = sc.parallelize(0 until 100000).map(i => b.value(i))
+java.lang.OutOfMemoryError: Requested array size exceeds VM limit
+  at java.util.Arrays.copyOf(Arrays.java:3230)
+  at java.io.ByteArrayOutputStream.grow(ByteArrayOutputStream.java:113)
+  at java.io.ByteArrayOutputStream.ensureCapacity(ByteArrayOutputStream.java:93)
+  at java.io.ByteArrayOutputStream.write(ByteArrayOutputStream.java:140)
+  at java.io.ObjectOutputStream$BlockDataOutputStream.drain(ObjectOutputStream.java:1877)
+  at java.io.ObjectOutputStream$BlockDataOutputStream.setBlockDataMode(ObjectOutputStream.java:1786)
+  at java.io.ObjectOutputStream.writeObject0(ObjectOutputStream.java:1189)
+  at java.io.ObjectOutputStream.writeObject(ObjectOutputStream.java:348)
+  at org.apache.spark.serializer.JavaSerializationStream.writeObject(JavaSerializer.scala:44)
+  at org.apache.spark.serializer.JavaSerializerInstance.serialize(JavaSerializer.scala:101)
+  at org.apache.spark.util.ClosureCleaner$.ensureSerializable(ClosureCleaner.scala:301)
+  at org.apache.spark.util.ClosureCleaner$.org$apache$spark$util$ClosureCleaner$$clean(ClosureCleaner.scala:294)
+  at org.apache.spark.util.ClosureCleaner$.clean(ClosureCleaner.scala:122)
+  at org.apache.spark.SparkContext.clean(SparkContext.scala:2055)
+  at org.apache.spark.rdd.RDD$$anonfun$map$1.apply(RDD.scala:324)
+  at org.apache.spark.rdd.RDD$$anonfun$map$1.apply(RDD.scala:323)
+  at org.apache.spark.rdd.RDDOperationScope$.withScope(RDDOperationScope.scala:150)
+  at org.apache.spark.rdd.RDDOperationScope$.withScope(RDDOperationScope.scala:111)
+  at org.apache.spark.rdd.RDD.withScope(RDD.scala:316)
+  at org.apache.spark.rdd.RDD.map(RDD.scala:323)
+  at $iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.<init>(<console>:34)
+  at $iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.<init>(<console>:39)
+  at $iwC$$iwC$$iwC$$iwC$$iwC$$iwC.<init>(<console>:41)
+  at $iwC$$iwC$$iwC$$iwC$$iwC.<init>(<console>:43)
+  at $iwC$$iwC$$iwC$$iwC.<init>(<console>:45)
+  at $iwC$$iwC$$iwC.<init>(<console>:47)
+  at $iwC$$iwC.<init>(<console>:49)
+  at $iwC.<init>(<console>:51)
+  at <init>(<console>:53)
+  at .<init>(<console>:57)
+  at .<clinit>(<console>)
+  at .<init>(<console>:7)
