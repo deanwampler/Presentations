@@ -5,7 +5,7 @@
 ### Frameworks
 
 * [Ray RLlib](http://rllib.io)
-* [Hugging Face Transformer Reinforcement Learning (TRL)](https://huggingface.co/docs/trl/v0.7.2/en/index) - Biased towards the needs of RLHF.
+* [Hugging Face Transformer Reinforcement Learning (TRL)](https://huggingface.co/docs/trl/) - Biased towards the needs of RLHF.
 
 ### Courses
 * [Anyscale RL & RLlib course](https://applied-rl-course.netlify.app/en)
